@@ -170,3 +170,6 @@ public/images/personal/fabian-phil-artist-profile.jpg
 
 Ready to upload your actual photo? Just save it as `fabian-phil-artist-profile.jpg` in the `public/images/personal/` folder and it will appear on all three pages!
 
+
+
+

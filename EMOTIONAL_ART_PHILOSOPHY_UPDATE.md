@@ -166,3 +166,6 @@
 
 Ready to see your emotional art philosophy in action? Visit the About and Collectors pages to see how your heartfelt mission is now beautifully presented!
 
+
+
+

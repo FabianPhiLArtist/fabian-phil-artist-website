@@ -223,3 +223,6 @@
 
 Ready to see your professional artist website in action? Visit the About, Artist Statement, and CV pages to see how your authentic story is now beautifully presented!
 
+
+
+

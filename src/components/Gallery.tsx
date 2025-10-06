@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Filter, Grid, List, Search } from 'lucide-react'
+import { Filter, Grid, List, Search, ArrowUpDown, Calendar, DollarSign, Tag } from 'lucide-react'
 import ArtworkCard from './ArtworkCard'
 import { artworks, series } from '@/data/artworks'
 
@@ -14,6 +14,8 @@ const Gallery = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedSeries, setSelectedSeries] = useState<string>('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const [sortBy, setSortBy] = useState<'default' | 'year' | 'title' | 'price' | 'series'>('default')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
   // Handle URL parameters
   useEffect(() => {
@@ -32,10 +34,39 @@ const Gallery = () => {
     return matchesSeries && matchesSearch
   })
 
+  // Sort artworks
+  const sortedArtworks = [...filteredArtworks].sort((a, b) => {
+    if (sortBy === 'default') return 0 // Keep original order
+    
+    let comparison = 0
+    
+    switch (sortBy) {
+      case 'year':
+        comparison = parseInt(a.year) - parseInt(b.year)
+        break
+      case 'title':
+        comparison = a.title.localeCompare(b.title)
+        break
+      case 'price':
+        // Extract numeric value from price (remove € and ,)
+        const priceA = parseInt(a.price.replace(/[€,]/g, ''))
+        const priceB = parseInt(b.price.replace(/[€,]/g, ''))
+        comparison = priceA - priceB
+        break
+      case 'series':
+        comparison = a.series.localeCompare(b.series)
+        break
+    }
+    
+    return sortOrder === 'asc' ? comparison : -comparison
+  })
+
   // Debug logging (remove in production)
   if (process.env.NODE_ENV === 'development') {
     console.log('Selected series:', selectedSeries)
+    console.log('Sort by:', sortBy, 'Order:', sortOrder)
     console.log('Filtered artworks count:', filteredArtworks.length)
+    console.log('Sorted artworks count:', sortedArtworks.length)
     console.log('All artworks count:', artworks.length)
   }
 
@@ -62,7 +93,7 @@ const Gallery = () => {
               {selectedSeries !== 'all' && (
                 <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                   <p className="text-blue-800 font-medium">
-                    Showing {filteredArtworks.length} artwork{filteredArtworks.length !== 1 ? 's' : ''} from {selectedSeries}
+                    Showing {sortedArtworks.length} artwork{sortedArtworks.length !== 1 ? 's' : ''} from {selectedSeries}
                   </p>
                 </div>
               )}
@@ -120,6 +151,29 @@ const Gallery = () => {
               ))}
             </div>
 
+            {/* Sorting Controls */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600 font-medium">Sort by:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="default">Default Order</option>
+                <option value="year">Year</option>
+                <option value="title">Title</option>
+                <option value="price">Price</option>
+                <option value="series">Series</option>
+              </select>
+              <button
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                title={`Sort ${sortOrder === 'asc' ? 'Descending' : 'Ascending'}`}
+              >
+                <ArrowUpDown size={16} className={sortOrder === 'desc' ? 'rotate-180' : ''} />
+              </button>
+            </div>
+
             {/* View Mode Toggle */}
             <div className="flex bg-gray-100 rounded-lg p-1">
               <button
@@ -147,7 +201,7 @@ const Gallery = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArtworks.map((artwork, index) => (
+            {sortedArtworks.map((artwork, index) => (
               <ArtworkCard
                 key={artwork.id}
                 artwork={artwork}
@@ -157,7 +211,7 @@ const Gallery = () => {
           </div>
         ) : (
           <div className="space-y-6">
-            {filteredArtworks.map((artwork, index) => (
+            {sortedArtworks.map((artwork, index) => (
               <ArtworkCard
                 key={artwork.id}
                 artwork={artwork}
@@ -167,7 +221,7 @@ const Gallery = () => {
           </div>
         )}
 
-        {filteredArtworks.length === 0 && (
+        {sortedArtworks.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

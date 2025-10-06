@@ -204,3 +204,6 @@ Create `/behind-the-scenes` page showing:
 
 Ready to start capturing these moments? The photos will make your website even more compelling and help collectors connect with the real person behind the art!
 
+
+
+

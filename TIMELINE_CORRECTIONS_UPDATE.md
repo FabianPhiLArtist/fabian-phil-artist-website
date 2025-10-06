@@ -149,3 +149,6 @@
 
 Ready to see your accurate timeline in action? Visit the About, Artist Statement, and CV pages to see how your precise journey is now beautifully presented!
 
+
+
+

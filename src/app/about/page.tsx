@@ -56,10 +56,7 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Meet Fabian PhiL</h2>
               
               {/* Artist photo */}
-              <div 
-                className="relative h-96 rounded-xl mb-6 overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
-                onClick={() => openModal('/images/about/Fabian Phil Artist overview.png', 'Fabian PhiL Artist', 'Artist Portrait')}
-              >
+              <div className="relative h-96 rounded-xl mb-6 overflow-hidden">
                 <Image
                   src="/images/about/Fabian Phil Artist overview.png"
                   alt="Fabian PhiL Artist"

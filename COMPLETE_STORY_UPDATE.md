@@ -210,3 +210,6 @@
 
 Ready to see your complete authentic story in action? Visit the About, Artist Statement, and CV pages to see how your full journey is now beautifully presented!
 
+
+
+

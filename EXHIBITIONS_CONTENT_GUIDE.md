@@ -156,3 +156,6 @@
 
 **Your exhibitions and publications will significantly boost your credibility with collectors! These achievements show that your art is recognized internationally and by the media. Just add your photos and videos, and I'll make it look amazing!**
 
+
+
+

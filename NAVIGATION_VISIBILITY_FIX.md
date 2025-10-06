@@ -131,3 +131,6 @@ text-gray-900 hover:text-pink-600 transition-colors duration-200
 
 Ready to test? Navigate to any page (About, Artist Statement, CV, etc.) and you'll see the navigation menu is now clearly visible and easy to read!
 
+
+
+

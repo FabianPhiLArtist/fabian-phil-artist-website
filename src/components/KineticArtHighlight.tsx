@@ -168,3 +168,6 @@ const KineticArtHighlight = () => {
 
 export default KineticArtHighlight
 
+
+
+

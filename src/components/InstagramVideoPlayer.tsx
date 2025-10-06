@@ -116,3 +116,6 @@ const InstagramVideoPlayer = ({ videoUrl, title, className = '' }: InstagramVide
 
 export default InstagramVideoPlayer
 
+
+
+

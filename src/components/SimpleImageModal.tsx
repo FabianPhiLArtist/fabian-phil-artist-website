@@ -232,3 +232,5 @@ const SimpleImageModal = ({
 }
 
 export default SimpleImageModal
+
+

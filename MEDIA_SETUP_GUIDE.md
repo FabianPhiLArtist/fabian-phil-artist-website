@@ -183,3 +183,6 @@ const nextConfig = {
 
 This setup will give you a professional, modern website that effectively showcases your kinetic art to collectors and clients worldwide!
 
+
+
+

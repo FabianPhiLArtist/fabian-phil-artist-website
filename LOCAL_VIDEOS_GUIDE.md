@@ -155,3 +155,6 @@ public/videos/artworks/
 
 **Ready to showcase your kinetic artworks with professional video integration!**
 
+
+
+
