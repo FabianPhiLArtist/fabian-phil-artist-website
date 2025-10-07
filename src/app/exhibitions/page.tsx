@@ -105,7 +105,7 @@ const ExhibitionsPage = () => {
                   
                   <h3 className="text-xl font-semibold text-gray-900">My Participation</h3>
                   <p className="text-gray-600">
-                    I exhibited my latest kinetic pop art collection, featuring works from the "Luminous Vision" series. 
+                    I exhibited my latest kinetic pop art collection, featuring works from the "Pop glasses" series. 
                     The unique lighting effects of my fluorescent glasses created a mesmerizing display that captivated 
                     visitors and demonstrated the innovative potential of kinetic art in contemporary settings.
                   </p>
@@ -284,7 +284,7 @@ const ExhibitionsPage = () => {
                   <h3 className="text-xl font-semibold text-gray-900">My Participation</h3>
                   <p className="text-gray-600">
                     I exhibited my kinetic art collection, featuring works from the "Expressive Emotion" 
-                    and "Luminous Vision" series. The interactive nature of my artworks created a unique 
+                    and "Pop glasses" series. The interactive nature of my artworks created a unique 
                     experience for visitors, with many collectors drawn to the eye-following optical 
                     illusions and fluorescent effects.
                   </p>

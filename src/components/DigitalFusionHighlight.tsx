@@ -18,7 +18,7 @@ const DigitalFusionHighlight = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-              Digital Fusion Collection
+              Digital Design Collection
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
@@ -41,7 +41,7 @@ const DigitalFusionHighlight = () => {
             </h3>
             
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Fabian PhiL's Digital Fusion Collection represents a groundbreaking approach to contemporary art, 
+              Fabian PhiL's Digital Design Collection represents a groundbreaking approach to contemporary art, 
               where digital design meets traditional painting techniques. Each piece starts as a digital design 
               printed on acrylic sheets, then evolves through traditional painting, collage, and mixed media 
               applications, creating truly unique artworks that bridge the gap between digital and analog worlds.
@@ -93,7 +93,7 @@ const DigitalFusionHighlight = () => {
                 href="/gallery"
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
-                <span>Experience Digital Fusion</span>
+                <span>Experience Digital Design</span>
                 <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
               </Link>
             </div>

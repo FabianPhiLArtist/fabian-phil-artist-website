@@ -18,7 +18,7 @@ const LuminousVisionHighlight = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
-              Luminous Vision Collection
+              Pop glasses Collection
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
@@ -40,7 +40,7 @@ const LuminousVisionHighlight = () => {
             </h3>
             
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Fabian PhiL's Luminous Vision Collection features revolutionary fluorescent glasses 
+              Fabian PhiL's Pop glasses Collection features revolutionary fluorescent glasses 
               that glow in the dark, creating an otherworldly effect that illuminates emotions and 
               creates a luminous connection between viewer and artwork. Each piece literally glows 
               with personality and meaning.
@@ -92,7 +92,7 @@ const LuminousVisionHighlight = () => {
                 href="/gallery"
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
-                <span>Experience Luminous Vision</span>
+                <span>Experience Pop glasses</span>
                 <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
               </Link>
             </div>

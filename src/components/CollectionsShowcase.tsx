@@ -16,7 +16,7 @@ const CollectionsShowcase = () => {
       featured: "Wanted for Racing Life"
     },
     {
-      name: "Luminous Vision Collection",
+      name: "Pop glasses Collection",
       count: 10,
       description: "Revolutionary portraits featuring fluorescent glasses that glow in the dark. Each piece illuminates emotions and creates a luminous connection that transcends the physical artwork.",
       icon: Sparkles,
@@ -48,7 +48,7 @@ const CollectionsShowcase = () => {
       featured: "Wanted Panda PopArt Dealer"
     },
     {
-      name: "Digital Fusion Collection",
+      name: "Digital Design Collection",
       count: 2,
       description: "Revolutionary mixed media combining digital design with traditional techniques. Digital designs are printed on acrylic sheets, then enhanced with painting and collage elements.",
       icon: Monitor,

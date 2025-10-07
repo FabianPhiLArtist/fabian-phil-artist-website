@@ -213,11 +213,11 @@ export const artworks: Artwork[] = [
     category: 'expressive-emotion',
   },
 
-  // Luminous Vision Collection (10 artworks)
+  // Pop glasses Collection (10 artworks)
   {
     id: 15,
     title: "Wanted for Loving Art",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Loving Art_2023_18000aed.jpg",
     video: "/videos/artworks/Wanted for Loving Art.MOV",
     year: "2023",
@@ -231,7 +231,7 @@ export const artworks: Artwork[] = [
   {
     id: 16,
     title: "Wanted for Being Too Smart",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Being Too Smart_2023_18000aed.jpg",
     year: "2023",
     medium: "Acrylic paint and ink on two acrylic sheets",
@@ -244,7 +244,7 @@ export const artworks: Artwork[] = [
   {
     id: 17,
     title: "Wanted for Fashion Crimes",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Fashion Crimes_2023_18000aed.jpg",
     year: "2023",
     medium: "Acrylic paint and ink on two acrylic sheets",
@@ -257,7 +257,7 @@ export const artworks: Artwork[] = [
   {
     id: 18,
     title: "Wanted Smoking Rock Star",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wanted Smoking Rock Star_2024_18000aed_progress.jpg",
     video: "/videos/artworks/Wanted Smoking Rock Star.MOV",
     year: "2024",
@@ -271,7 +271,7 @@ export const artworks: Artwork[] = [
   {
     id: 19,
     title: "Wow… I Look Good in Green",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wow I look Good in Green_2020_18000aed.jpg",
     year: "2020",
     medium: "Acrylic paint on two acrylic sheets",
@@ -284,7 +284,7 @@ export const artworks: Artwork[] = [
   {
     id: 20,
     title: "That's the Way I Like it",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_That's the way I like it_2019_18000aed.jpg",
     year: "2019",
     medium: "Acrylic paint on two acrylic sheets",
@@ -297,7 +297,7 @@ export const artworks: Artwork[] = [
   {
     id: 21,
     title: "Maybe I will See Him",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL Maybe I Will See Him 2018.jpg",
     year: "2018",
     medium: "Acrylic paint on two acrylic sheets",
@@ -310,7 +310,7 @@ export const artworks: Artwork[] = [
   {
     id: 22,
     title: "Hi… What's your Number?",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Hi Whats your Number_2019_18000aed.jpg",
     year: "2019",
     medium: "Acrylic paint on two acrylic sheets",
@@ -323,7 +323,7 @@ export const artworks: Artwork[] = [
   {
     id: 23,
     title: "Wanted for Stealing the Blues",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL Wanted for Stealing the Blues 2024.jpg",
     video: "/videos/artworks/Wanted for stealing the blues.mov",
     year: "2024",
@@ -337,7 +337,7 @@ export const artworks: Artwork[] = [
   {
     id: 24,
     title: "You Call This Art…?",
-    series: "Luminous Vision Collection",
+    series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL You Call This Art 2024.png",
     video: "/videos/artworks/You call this Art.mov",
     year: "2024",
@@ -365,11 +365,11 @@ export const artworks: Artwork[] = [
     category: 'panda-pop',
   },
 
-  // Digital Fusion Collection (2 artworks)
+  // Digital Design Collection (2 artworks)
   {
     id: 26,
     title: "Wanted for Toon KnockOut",
-    series: "Digital Fusion Collection",
+    series: "Digital Design Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg",
     video: "/videos/artworks/Wanted for Toon KnockOut.mov",
     year: "2024",
@@ -383,7 +383,7 @@ export const artworks: Artwork[] = [
   {
     id: 27,
     title: "Fame or Peace",
-    series: "Digital Fusion Collection",
+    series: "Digital Design Collection",
     image: "/images/artworks/Fabian PhiL Fame or Peace 2024.png",
     year: "2024",
     medium: "Digital design printed on two acrylic sheets",
@@ -415,8 +415,8 @@ export const series = [
   { name: '100 USD Bill Collection', count: 2, category: '100-usd' },
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
-  { name: 'Luminous Vision Collection', count: 10, category: 'luminous-vision' },
+  { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
   { name: 'Panda Pop Collection', count: 1, category: 'panda-pop' },
-  { name: 'Digital Fusion Collection', count: 2, category: 'digital-fusion' },
+  { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' },
   { name: 'Abstract Series', count: 1, category: 'abstract' }
 ]
