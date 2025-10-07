@@ -22,10 +22,10 @@ const Hero = () => {
           }}
           priority
         />
-        {/* Very light overlay for text readability */}
-        <div className="absolute inset-0 bg-black/10" />
-        {/* Minimal gradient overlay for better text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/10" />
+        {/* Lighter overlay for text readability */}
+        <div className="absolute inset-0 bg-black/25" />
+        {/* Subtle gradient overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/20" />
       </div>
 
       {/* Main Content */}
