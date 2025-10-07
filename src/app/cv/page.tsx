@@ -166,7 +166,7 @@ const CVPage = () => {
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
                     <Calendar className="text-yellow-600" size={16} />
-                    <span className="font-semibold text-gray-900">2024-2025 - Digital Fusion</span>
+                    <span className="font-semibold text-gray-900">2024-2025 - Digital Design</span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-1">Mixed Media Innovation & Zen Pandas</h3>
                   <p className="text-gray-600">Started mixing digital design with traditional techniques, introducing cartoons, boxing themes, and fashion shows on catwalks. In 2025, seeking more peace after leaving corporate life, created pandas with zen Chinese landscapes - temples, lakes, cherry blossom trees</p>

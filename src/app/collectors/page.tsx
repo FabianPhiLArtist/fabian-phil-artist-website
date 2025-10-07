@@ -174,7 +174,7 @@ const CollectorsPage = () => {
                 <span className="text-4xl">💡</span>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Luminous Vision</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Pop glasses</h3>
                 <p className="text-gray-600 text-sm mb-4">Pop glasses bringing light and joy to our lives</p>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">4 pieces available</span>

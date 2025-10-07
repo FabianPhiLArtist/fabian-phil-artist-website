@@ -323,7 +323,7 @@ const AboutPage = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">💡</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Luminous Vision</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Pop glasses</h3>
               <p className="text-gray-600 text-sm">Pop glasses bringing light and joy to our lives</p>
             </div>
             
@@ -339,7 +339,7 @@ const AboutPage = () => {
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🎨</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Digital Fusion</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Digital Design</h3>
               <p className="text-gray-600 text-sm">Mixed media innovation exploring new possibilities</p>
             </div>
             
