@@ -3,61 +3,29 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Instagram } from 'lucide-react'
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      {/* Animated Background Elements */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
       <div className="absolute inset-0">
-        {/* Floating geometric shapes */}
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            rotate: [0, 180, 360],
+        <Image
+          src="/images/about/Wanted Smoking Rock Star_ZOOM.jpg"
+          alt="Wanted Smoking Rock Star - Fabian Phil"
+          fill
+          className="object-cover"
+          style={{ 
+            objectPosition: 'center center',
+            transform: 'scale(1.1)' // Slight zoom effect
           }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full opacity-20"
+          priority
         />
-        <motion.div
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 60, 0],
-            rotate: [0, -180, -360],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg opacity-20"
-        />
-        <motion.div
-          animate={{
-            x: [0, 60, 0],
-            y: [0, -80, 0],
-            rotate: [0, 90, 180, 270, 360],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute bottom-32 left-1/3 w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full opacity-20"
-        />
-        
-        {/* Simple grid pattern overlay */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="w-full h-full" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
-            backgroundSize: '20px 20px'
-          }} />
-        </div>
+        {/* Lighter overlay for text readability */}
+        <div className="absolute inset-0 bg-black/25" />
+        {/* Subtle gradient overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/20" />
       </div>
 
       {/* Main Content */}
@@ -67,9 +35,9 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
-            <span className="block">Kinetic</span>
-            <span className="block bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
+            <span className="block drop-shadow-lg">Kinetic</span>
+            <span className="block bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg">
               Pop Art
             </span>
           </h1>
@@ -79,7 +47,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+          className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg"
         >
           Contemporary art that moves, inspires, and transforms spaces. 
           From pandas to F1, discover the dynamic world of Fabian Phil.
@@ -93,7 +61,7 @@ const Hero = () => {
         >
           <Link
             href="/gallery"
-            className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
+            className="group bg-white/95 backdrop-blur-sm text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:scale-105 transition-all duration-300 flex items-center space-x-2 shadow-2xl border border-white/20"
           >
             <span>Explore Gallery</span>
             <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
@@ -103,7 +71,7 @@ const Hero = () => {
             href="https://instagram.com/fabianphilartist"
             target="_blank"
             rel="noopener noreferrer"
-            className="group border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 flex items-center space-x-2"
+            className="group border-2 border-white/80 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 hover:border-white transition-all duration-300 flex items-center space-x-2 shadow-xl"
           >
             <Instagram size={20} />
             <span>@fabianphilartist</span>
