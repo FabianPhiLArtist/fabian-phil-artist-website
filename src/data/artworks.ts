@@ -177,7 +177,7 @@ export const artworks: Artwork[] = [
     title: "Ooh!",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian PhiL_Ooh_2020_45000aed Copyright.jpg",
-    video: "/videos/artworks/Ooh.mp4",
+    video: "/videos/artworks/Ooh.mov",
     year: "2020",
     medium: "Acrylic paint on two acrylic sheets",
     size: "90x120cm",
