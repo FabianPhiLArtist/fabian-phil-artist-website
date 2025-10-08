@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Users, DollarSign, Heart, Eye, Palette, Sparkles, Monitor, Smile } from 'lucide-react'
 
 const CollectionsShowcase = () => {
@@ -12,72 +13,81 @@ const CollectionsShowcase = () => {
       count: 4,
       description: "A powerful series exploring themes of justice, rebellion, and social commentary through the lens of wanted posters. Features LED lighting and innovative acrylic techniques.",
       icon: Users,
-      color: "from-red-500 to-pink-600",
-      featured: "Wanted for Racing Life"
+      color: "from-gray-800 to-gray-900",
+      featured: "Wanted for Racing Life",
+      image: "/images/artworks/Fabian PhiL_Wanted for Racing Life_2024_18000ead_LightBlue_LED.jpg"
     },
     {
       name: "Pop glasses Collection",
       count: 10,
       description: "Revolutionary portraits featuring fluorescent glasses that glow in the dark. Each piece illuminates emotions and creates a luminous connection that transcends the physical artwork.",
       icon: Sparkles,
-      color: "from-yellow-500 to-orange-600",
-      featured: "Wanted for Loving Art"
+      color: "from-gray-800 to-gray-900",
+      featured: "Wanted for Loving Art",
+      image: "/images/artworks/Fabian PhiL_Wanted for Loving Art_2023_18000aed.jpg"
     },
     {
       name: "100 USD Bill Collection",
       count: 2,
       description: "Revolutionary tryptics that literally represent 100 USD bills with iconic figures as the central portrait. Each piece mimics currency structure while replacing traditional portraits with cultural icons, creating powerful statements about value and fame.",
       icon: DollarSign,
-      color: "from-green-500 to-emerald-600",
-      featured: "100 USD Mick Jagger"
+      color: "from-gray-800 to-gray-900",
+      featured: "100 USD Mick Jagger",
+      image: "/images/artworks/Fabian PhiL_100USD Mick Jagger_2022_54000aed.jpg"
     },
     {
       name: "Expressive Emotion Collection",
       count: 6,
       description: "Revolutionary large-format portraits with eyes that follow you as you move. Each piece creates an emotional connection that transcends the artwork through optical illusion.",
       icon: Eye,
-      color: "from-purple-500 to-indigo-600",
-      featured: "Why…?"
+      color: "from-gray-800 to-gray-900",
+      featured: "Why…?",
+      image: "/images/artworks/Fabian PhiL_Why_2021_72000aed.jpg"
     },
     {
       name: "Panda Pop Collection",
       count: 1,
       description: "Charming mixed media pieces featuring pandas in wanted poster format. Digital design printed on acrylic sheets enhanced with traditional painting techniques, creating playful yet thought-provoking art.",
       icon: Smile,
-      color: "from-pink-500 to-rose-600",
-      featured: "Wanted Panda PopArt Dealer"
+      color: "from-gray-800 to-gray-900",
+      featured: "Wanted Panda PopArt Dealer",
+      image: "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg"
     },
     {
       name: "Digital Design Collection",
       count: 2,
       description: "Revolutionary mixed media combining digital design with traditional techniques. Digital designs are printed on acrylic sheets, then enhanced with painting and collage elements.",
       icon: Monitor,
-      color: "from-cyan-500 to-blue-600",
-      featured: "Wanted for Toon KnockOut"
+      color: "from-gray-800 to-gray-900",
+      featured: "Wanted for Toon KnockOut",
+      image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg"
     },
     {
       name: "Moving Hair Collection",
       count: 2,
       description: "Revolutionary kinetic art featuring portraits with moving hair elements. Unique acrylic sheet technique creates living, breathing artworks.",
       icon: Eye,
-      color: "from-amber-500 to-orange-600",
-      featured: "Old Man in Peace"
+      color: "from-gray-800 to-gray-900",
+      featured: "Old Man in Peace",
+      image: "/images/artworks/Fabian PhiL_Old Man in Peace_2020_72400aed Copyright.jpg"
     },
     {
       name: "Pop Art Series",
       count: 4,
       description: "Vibrant works celebrating modern life, communication, and the joy of self-expression.",
       icon: Palette,
-      color: "from-blue-500 to-cyan-600",
-      featured: "Blue Lady"
+      color: "from-gray-800 to-gray-900",
+      featured: "Blue Lady",
+      image: "/images/artworks/Fabian Phil_Blue Lady 2013_37000aed.jpg"
     },
     {
       name: "Abstract Series",
       count: 3,
       description: "Thought-provoking abstract works exploring deeper philosophical and artistic concepts.",
       icon: Palette,
-      color: "from-gray-500 to-slate-600",
-      featured: "Maybe I Will See Him"
+      color: "from-gray-800 to-gray-900",
+      featured: "Maybe I Will See Him",
+      image: "/images/artworks/Fabian PhiL_Maybe I Will See Him_2018_58000aed 2.jpg"
     }
   ]
 
@@ -122,6 +132,16 @@ const CollectionsShowcase = () => {
                       <p className="text-white/80 text-sm">{collection.count} artworks</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Collection Image */}
+                <div className="h-48 relative overflow-hidden">
+                  <Image
+                    src={collection.image}
+                    alt={collection.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 grayscale hover:grayscale-0"
+                  />
                 </div>
 
                 {/* Collection Content */}
