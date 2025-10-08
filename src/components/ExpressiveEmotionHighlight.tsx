@@ -3,11 +3,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Eye, Move, Heart, Sparkles, ArrowRight } from 'lucide-react'
 
 const BigFormatsHighlight = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 text-white">
+    <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -17,7 +18,7 @@ const BigFormatsHighlight = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
               Expressive Emotion Collection
             </span>
           </h2>
@@ -48,7 +49,7 @@ const BigFormatsHighlight = () => {
 
             <div className="space-y-6 mb-8">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
                   <Eye className="text-white" size={24} />
                 </div>
                 <div>
@@ -61,7 +62,7 @@ const BigFormatsHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Move className="text-white" size={24} />
                 </div>
                 <div>
@@ -74,7 +75,7 @@ const BigFormatsHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Heart className="text-white" size={24} />
                 </div>
                 <div>
@@ -106,56 +107,18 @@ const BigFormatsHighlight = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden">
-              {/* Animated eye that follows cursor */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    opacity: [0.8, 1, 0.8]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="w-32 h-32 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full mx-auto mb-4 flex items-center justify-center"
-                >
-                  <Eye className="text-white text-4xl" />
-                </motion.div>
-                <div className="text-center">
-                  <p className="text-gray-600 font-medium">Eyes That Follow You</p>
-                  <p className="text-sm text-gray-500">Move around to experience</p>
-                </div>
+            <div className="relative h-96 bg-gray-900 rounded-2xl overflow-hidden">
+              <Image
+                src="/images/artworks/Fabian PhiL_Why_2021_72000aed.jpg"
+                alt="Expressive Emotion Collection - Why...?"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <p className="font-medium">Expressive Emotion Collection</p>
+                <p className="text-sm text-gray-300">Eyes that follow you</p>
               </div>
-              
-              {/* Animated elements showing movement */}
-              <motion.div
-                animate={{ 
-                  x: [0, 20, 0],
-                  y: [0, -10, 0],
-                  opacity: [0.3, 0.7, 0.3]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  delay: 0.5
-                }}
-                className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full opacity-30"
-              />
-              <motion.div
-                animate={{ 
-                  x: [0, -15, 0],
-                  y: [0, 15, 0],
-                  opacity: [0.2, 0.6, 0.2]
-                }}
-                transition={{ 
-                  duration: 5, 
-                  repeat: Infinity,
-                  delay: 1
-                }}
-                className="absolute bottom-8 left-8 w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full opacity-30"
-              />
             </div>
           </motion.div>
         </div>
@@ -169,7 +132,7 @@ const BigFormatsHighlight = () => {
           className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center"
         >
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white text-2xl font-bold">6</span>
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Artworks</h4>
@@ -177,7 +140,7 @@ const BigFormatsHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <Eye className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Eye Tracking</h4>
@@ -185,7 +148,7 @@ const BigFormatsHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <Heart className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Emotional</h4>
@@ -193,7 +156,7 @@ const BigFormatsHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
               <Sparkles className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Unique</h4>

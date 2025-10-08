@@ -3,11 +3,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Monitor, Palette, Layers, Zap, ArrowRight } from 'lucide-react'
 
 const DigitalFusionHighlight = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-cyan-900 via-blue-900 to-indigo-900 text-white">
+    <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -17,7 +18,7 @@ const DigitalFusionHighlight = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
               Digital Design Collection
             </span>
           </h2>
@@ -49,7 +50,7 @@ const DigitalFusionHighlight = () => {
 
             <div className="space-y-6 mb-8">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
                   <Monitor className="text-white" size={24} />
                 </div>
                 <div>
@@ -62,7 +63,7 @@ const DigitalFusionHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Palette className="text-white" size={24} />
                 </div>
                 <div>
@@ -75,7 +76,7 @@ const DigitalFusionHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Layers className="text-white" size={24} />
                 </div>
                 <div>
@@ -90,7 +91,7 @@ const DigitalFusionHighlight = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/gallery"
+                href="/gallery?series=Digital Design Collection"
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
                 <span>Experience Digital Design</span>
@@ -107,56 +108,18 @@ const DigitalFusionHighlight = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden">
-              {/* Digital/Traditional fusion visualization */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    opacity: [0.8, 1, 0.8]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="w-32 h-32 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center"
-                >
-                  <Monitor className="text-white text-4xl" />
-                </motion.div>
-                <div className="text-center">
-                  <p className="text-gray-600 font-medium">Digital + Traditional</p>
-                  <p className="text-sm text-gray-500">Mixed media fusion</p>
-                </div>
+            <div className="relative h-96 bg-gray-900 rounded-2xl overflow-hidden">
+              <Image
+                src="/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg"
+                alt="Digital Design Collection - Wanted for Toon KnockOut"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <p className="font-medium">Digital Design Collection</p>
+                <p className="text-sm text-gray-300">Digital + Traditional fusion</p>
               </div>
-              
-              {/* Animated elements showing the fusion process */}
-              <motion.div
-                animate={{ 
-                  x: [0, 20, 0],
-                  y: [0, -10, 0],
-                  opacity: [0.3, 0.7, 0.3]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  delay: 0.5
-                }}
-                className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full opacity-30"
-              />
-              <motion.div
-                animate={{ 
-                  x: [0, -15, 0],
-                  y: [0, 15, 0],
-                  opacity: [0.2, 0.6, 0.2]
-                }}
-                transition={{ 
-                  duration: 5, 
-                  repeat: Infinity,
-                  delay: 1
-                }}
-                className="absolute bottom-8 left-8 w-12 h-12 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full opacity-30"
-              />
             </div>
           </motion.div>
         </div>
@@ -170,7 +133,7 @@ const DigitalFusionHighlight = () => {
           className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center"
         >
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white text-2xl font-bold">2</span>
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Artworks</h4>
@@ -178,7 +141,7 @@ const DigitalFusionHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <Monitor className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Digital</h4>
@@ -186,7 +149,7 @@ const DigitalFusionHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <Palette className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Traditional</h4>
@@ -194,7 +157,7 @@ const DigitalFusionHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
               <Zap className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Fusion</h4>

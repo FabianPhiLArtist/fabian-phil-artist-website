@@ -3,11 +3,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Sparkles, Eye, Zap, Palette, ArrowRight } from 'lucide-react'
 
 const LuminousVisionHighlight = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-yellow-900 via-orange-900 to-red-900 text-white">
+    <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -17,7 +18,7 @@ const LuminousVisionHighlight = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
               Pop glasses Collection
             </span>
           </h2>
@@ -48,7 +49,7 @@ const LuminousVisionHighlight = () => {
 
             <div className="space-y-6 mb-8">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
                   <Sparkles className="text-white" size={24} />
                 </div>
                 <div>
@@ -61,7 +62,7 @@ const LuminousVisionHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Zap className="text-white" size={24} />
                 </div>
                 <div>
@@ -74,7 +75,7 @@ const LuminousVisionHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Palette className="text-white" size={24} />
                 </div>
                 <div>
@@ -89,7 +90,7 @@ const LuminousVisionHighlight = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/gallery"
+                href="/gallery?series=Pop glasses Collection"
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
                 <span>Experience Pop glasses</span>
@@ -106,62 +107,18 @@ const LuminousVisionHighlight = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative h-96 bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden">
-              {/* Animated glowing glasses */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.6, 1, 0.6],
-                    filter: ['brightness(1)', 'brightness(1.5)', 'brightness(1)']
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="w-32 h-32 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-2xl"
-                  style={{ boxShadow: '0 0 30px rgba(255, 165, 0, 0.8)' }}
-                >
-                  <Eye className="text-white text-4xl" />
-                </motion.div>
-                <div className="text-center">
-                  <p className="text-gray-300 font-medium">Fluorescent Glasses</p>
-                  <p className="text-sm text-gray-400">Glow in the dark effect</p>
-                </div>
+            <div className="relative h-96 bg-gray-900 rounded-2xl overflow-hidden">
+              <Image
+                src="/images/artworks/Fabian PhiL_Wanted for Loving Art_2023_18000aed.jpg"
+                alt="Pop glasses Collection - Wanted for Loving Art"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <p className="font-medium">Pop glasses Collection</p>
+                <p className="text-sm text-gray-300">Fluorescent glasses that glow in the dark</p>
               </div>
-              
-              {/* Animated glowing elements */}
-              <motion.div
-                animate={{ 
-                  x: [0, 20, 0],
-                  y: [0, -10, 0],
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  delay: 0.5
-                }}
-                className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-30"
-                style={{ boxShadow: '0 0 20px rgba(255, 165, 0, 0.6)' }}
-              />
-              <motion.div
-                animate={{ 
-                  x: [0, -15, 0],
-                  y: [0, 15, 0],
-                  opacity: [0.2, 0.7, 0.2],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ 
-                  duration: 5, 
-                  repeat: Infinity,
-                  delay: 1
-                }}
-                className="absolute bottom-8 left-8 w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full opacity-30"
-                style={{ boxShadow: '0 0 15px rgba(255, 69, 0, 0.6)' }}
-              />
             </div>
           </motion.div>
         </div>
@@ -175,7 +132,7 @@ const LuminousVisionHighlight = () => {
           className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center"
         >
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white text-2xl font-bold">8</span>
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Artworks</h4>
@@ -183,7 +140,7 @@ const LuminousVisionHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <Sparkles className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Fluorescent</h4>
@@ -191,7 +148,7 @@ const LuminousVisionHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <Zap className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Electric</h4>
@@ -199,7 +156,7 @@ const LuminousVisionHighlight = () => {
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
               <Eye className="text-white text-2xl" />
             </div>
             <h4 className="text-xl font-semibold text-white mb-2">Vision</h4>
