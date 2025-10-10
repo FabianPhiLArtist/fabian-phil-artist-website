@@ -36,7 +36,7 @@ const AboutPage = () => {
               The Artist Behind the Art
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-              From Business Executive to International Artist
+              From Corporate Executive to International Artist
             </p>
           </motion.div>
         </div>
@@ -73,7 +73,7 @@ const AboutPage = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <Award size={20} className="text-blue-600" />
-                  <span className="text-gray-700">Geophysicist & Former Shell Executive</span>
+                  <span className="text-gray-700">Geophysicist & Former Corporate Executive</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Palette size={20} className="text-purple-600" />
@@ -162,7 +162,7 @@ const AboutPage = () => {
                 <div className="border-l-4 border-purple-500 pl-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">The Blue Lady Discovery - Africa (2006-2010)</h3>
                   <p className="text-gray-600">
-                    As a geophysicist working with seismic waves, I wanted to translate their movement into paintings. I sought something 
+                    As a geophysicist by background working with seismic waves, I wanted to translate their movement into paintings. I sought something 
                     lean with transparency, where light would reflect the characters. By chance in 2010, I painted the Blue Lady twice on two 
                     plexiglass sheets. The vertical strokes created movement when you moved around the painting - the eyes followed you, 
                     like the Mona Lisa. This was my breakthrough into kinetic pop art.
@@ -189,7 +189,7 @@ const AboutPage = () => {
                 <div className="border-l-4 border-indigo-500 pl-6">
                   <h4 className="text-lg font-semibold text-gray-900 mb-2">From Science to Art</h4>
                   <p className="text-gray-600">
-                    As a geophysicist working with seismic waves, I found myself translating scientific concepts into visual art. 
+                    As a geophysicist by background working with seismic waves, I found myself translating scientific concepts into visual art. 
                     The movement, transparency, and light reflection I studied in geophysics became the foundation of my kinetic art technique.
                   </p>
                 </div>
