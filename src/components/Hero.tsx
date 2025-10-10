@@ -50,7 +50,7 @@ const Hero = () => {
           className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg"
         >
           Contemporary art that moves, inspires, and transforms spaces. 
-          From pandas to F1, discover the dynamic world of Fabian Phil.
+          From pandas to F1 driver, discover the dynamic world of Fabian Phil.
         </motion.p>
 
         <motion.div

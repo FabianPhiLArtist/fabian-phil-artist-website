@@ -26,7 +26,7 @@ const AboutPreview = () => {
             </h2>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Former Shell executive turned international artist, Fabian Phil creates 
+              Former Business executive turned international artist, Fabian Phil creates 
               kinetic pop art that challenges perceptions and moves the soul. His work 
               bridges the gap between corporate precision and artistic expression.
             </p>

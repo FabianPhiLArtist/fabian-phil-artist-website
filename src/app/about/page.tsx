@@ -36,7 +36,7 @@ const AboutPage = () => {
               The Artist Behind the Art
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-              From Shell Executive to International Artist
+              From Business Executive to International Artist
             </p>
           </motion.div>
         </div>
