@@ -120,8 +120,8 @@ const CVPage = () => {
                     <Calendar className="text-blue-600" size={16} />
                     <span className="font-semibold text-gray-900">2002-2006 - Brunei, Borneo</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Shell Executive & First Painting</h3>
-                  <p className="text-gray-600">Working as Shell executive in the jungle, painted first artwork in 2003 - a single painting that took one year to complete</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Business Executive & First Painting</h3>
+                  <p className="text-gray-600">Working as Corporate executive in the jungle, painted first artwork in 2003 - a single painting that took one year to complete</p>
                 </div>
               </div>
               
