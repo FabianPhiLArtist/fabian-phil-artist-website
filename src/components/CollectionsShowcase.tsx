@@ -82,11 +82,11 @@ const CollectionsShowcase = () => {
     },
     {
       name: "Abstract Series",
-      count: 3,
-      description: "Thought-provoking abstract works exploring deeper philosophical and artistic concepts.",
+      count: 0,
+      description: "Thought-provoking abstract works exploring deeper philosophical and artistic concepts. Currently under creation.",
       icon: Palette,
       color: "from-gray-800 to-gray-900",
-      featured: "Maybe I Will See Him",
+      featured: "Under Creation",
       image: "/images/artworks/Fabian PhiL_Maybe I Will See Him_2018_58000aed 2.jpg"
     }
   ]
@@ -129,7 +129,7 @@ const CollectionsShowcase = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-white">{collection.name}</h3>
-                      <p className="text-white/80 text-sm">{collection.count} artworks</p>
+                      <p className="text-white/80 text-sm">{collection.count === 0 ? 'Under Creation' : `${collection.count} artworks`}</p>
                     </div>
                   </div>
                 </div>

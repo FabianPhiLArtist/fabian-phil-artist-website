@@ -14,7 +14,7 @@ const Gallery = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedSeries, setSelectedSeries] = useState<string>('all')
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortBy, setSortBy] = useState<'default' | 'year' | 'title' | 'price' | 'series'>('default')
+  const [sortBy, setSortBy] = useState<'default' | 'year' | 'title' | 'series'>('default')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
   // Handle URL parameters
@@ -46,12 +46,6 @@ const Gallery = () => {
         break
       case 'title':
         comparison = a.title.localeCompare(b.title)
-        break
-      case 'price':
-        // Extract numeric value from price (remove € and ,)
-        const priceA = parseInt(a.price.replace(/[€,]/g, ''))
-        const priceB = parseInt(b.price.replace(/[€,]/g, ''))
-        comparison = priceA - priceB
         break
       case 'series':
         comparison = a.series.localeCompare(b.series)
@@ -162,7 +156,6 @@ const Gallery = () => {
                 <option value="default">Default Order</option>
                 <option value="year">Year</option>
                 <option value="title">Title</option>
-                <option value="price">Price</option>
                 <option value="series">Series</option>
               </select>
               <button
