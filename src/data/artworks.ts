@@ -349,18 +349,32 @@ export const artworks: Artwork[] = [
     category: 'luminous-vision',
   },
 
-  // Panda Pop Collection (1 artwork)
+  // Panda Pop Collection (2 artworks)
   {
     id: 25,
     title: "Wanted Panda PopArt Dealer",
     series: "Panda Pop Collection",
     image: "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg",
-    video: "/videos/artworks/Wanted Panda PopArt Dealer.MOV",
+    video: "/videos/artworks/Wanted Panda PopArt Dealer 2.mov",
     year: "2025",
     medium: "Paints, digital design printed on two acrylic sheets",
     size: "70x70cm",
     price: "€4,000",
     description: "A charming mixed media piece featuring a panda in a wanted poster format. Digital design printed on acrylic sheets is enhanced with traditional painting techniques, creating a playful yet thought-provoking commentary on art dealing and the commercialization of creativity.",
+    available: true,
+    category: 'panda-pop',
+  },
+  {
+    id: 28,
+    title: "Wanted Panda Zen Artist",
+    series: "Panda Pop Collection",
+    image: "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg",
+    video: "/videos/artworks/Wanted Panda Zen Artist 2025.MOV",
+    year: "2025",
+    medium: "Mixed media on acrylic sheets",
+    size: "70x70cm",
+    price: "€4,000",
+    description: "A unique zen-inspired piece featuring a contemplative panda against a serene cherry blossom mountain landscape. The artwork combines traditional zen aesthetics with modern wanted poster format, creating a peaceful yet playful meditation on artistic identity and the search for inner tranquility.",
     available: true,
     category: 'panda-pop',
   },
@@ -402,6 +416,6 @@ export const series = [
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
-  { name: 'Panda Pop Collection', count: 1, category: 'panda-pop' },
+  { name: 'Panda Pop Collection', count: 2, category: 'panda-pop' },
   { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' }
 ]

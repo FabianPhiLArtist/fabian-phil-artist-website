@@ -46,12 +46,12 @@ const CollectionsShowcase = () => {
     },
     {
       name: "Panda Pop Collection",
-      count: 1,
+      count: 2,
       description: "Charming mixed media pieces featuring pandas in wanted poster format. Digital design printed on acrylic sheets enhanced with traditional painting techniques, creating playful yet thought-provoking art.",
       icon: Smile,
       color: "from-gray-800 to-gray-900",
-      featured: "Wanted Panda PopArt Dealer",
-      image: "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg"
+      featured: "Wanted Panda Zen Artist",
+      image: "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg"
     },
     {
       name: "Digital Design Collection",
