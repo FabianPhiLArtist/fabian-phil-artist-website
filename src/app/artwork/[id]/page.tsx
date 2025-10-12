@@ -204,7 +204,11 @@ export default function ArtworkDetailPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Price:</span>
-                    <span className="font-bold text-lg text-gray-900">{artwork.price}</span>
+                    {artwork.available ? (
+                      <span className="font-bold text-lg text-blue-600">Price upon Inquiry</span>
+                    ) : (
+                      <span className="font-bold text-lg text-red-600">SOLD</span>
+                    )}
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Availability:</span>

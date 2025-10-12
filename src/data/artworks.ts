@@ -39,7 +39,7 @@ export const artworks: Artwork[] = [
     size: "70x70cm",
     price: "€3,000",
     description: "Exploring themes of rebellion, underground culture, and the fight against conformity through the lens of a wanted poster.",
-    available: true,
+    available: false,
     category: 'mugshot',
   },
   {
@@ -105,7 +105,7 @@ export const artworks: Artwork[] = [
     title: "Old Man in Peace",
     series: "Moving Hair Collection",
     image: "/images/artworks/Fabian PhiL_Old Man in Peace_2020_72400aed Copyright.jpg",
-    video: "/videos/artworks/Old man in Peace.MP4",
+    video: "/videos/artworks/Old man in Peace.MOV",
     year: "2020",
     medium: "Acrylic paint on two acrylic sheets",
     size: "120x90cm",
@@ -394,20 +394,6 @@ export const artworks: Artwork[] = [
     category: 'digital-fusion',
   },
 
-  // Abstract Series (1 artwork)
-  {
-    id: 28,
-    title: "The Last One",
-    series: "Abstract Series",
-    image: "/images/artworks/Fabian PhiL The Last One 2017.jpg",
-    year: "2017",
-    medium: "Mixed Media on Canvas",
-    size: "100x120cm",
-    price: "€8,000",
-    description: "A contemplative piece about endings, finality, and what remains.",
-    available: true,
-    category: 'abstract'
-  }
 ]
 
 export const series = [
@@ -417,6 +403,5 @@ export const series = [
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
   { name: 'Panda Pop Collection', count: 1, category: 'panda-pop' },
-  { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' },
-  { name: 'Abstract Series', count: 1, category: 'abstract' }
+  { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' }
 ]

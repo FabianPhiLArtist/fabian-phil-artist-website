@@ -24,6 +24,7 @@ const Navigation = () => {
     { name: 'CV', href: '/cv' },
     { name: 'Exhibitions', href: '/exhibitions' },
     { name: 'Collectors', href: '/collectors' },
+    { name: 'Price Inquiry', href: '/price-inquiry' },
     { name: 'Contact', href: '/contact' },
   ]
 
