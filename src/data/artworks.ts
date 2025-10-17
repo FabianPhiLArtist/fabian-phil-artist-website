@@ -90,6 +90,7 @@ export const artworks: Artwork[] = [
     title: "100 USD Andy Warhol",
     series: "100 USD Bill Collection",
     image: "/images/artworks/Fabian PhiL Andy Warhol 100 USD Bill 2017.png",
+    video: "/videos/artworks/Andy Warhol 100 USD Bill.MOV",
     year: "2017",
     medium: "Tryptic. Acrylic paint on two acrylic sheets",
     size: "70x180cm",
