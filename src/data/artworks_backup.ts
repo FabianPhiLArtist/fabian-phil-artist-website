@@ -471,11 +471,11 @@ export const artworks: Artwork[] = [
     isVideo: true
   },
 
-  // Digital Design Collection - Mixed Media Innovation
+  // Toon Clash Collection - Mixed Media Innovation
   {
     id: 30,
     title: "Wanted for Toon KnockOut",
-    series: "Digital Design Collection",
+    series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg",
     year: "2024",
     medium: "Digital design printed on two acrylic sheets",
@@ -489,7 +489,7 @@ export const artworks: Artwork[] = [
   {
     id: 31,
     title: "Fame or Peace",
-    series: "Digital Design Collection",
+    series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL Fame or Peace 2024.png",
     year: "2024",
     medium: "Digital design printed on two acrylic sheets",
@@ -522,7 +522,7 @@ export const series = [
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Panda Pop Collection', count: 1, category: 'panda-pop' },
-  { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' },
+  { name: 'Toon Clash Collection', count: 2, category: 'digital-fusion' },
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: '100 USD Bill Collection', count: 2, category: '100-usd' },
   { name: 'Abstract Series', count: 1, category: 'abstract' }
