@@ -25,8 +25,7 @@ const DigitalFusionHighlight = () => {
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
             What happens when cartoons crash into icons? Total chaos, and pure joy.
             This series is an explosion of pop culture, layering digital collage and comic chaos with vertical-stroke portraits of legends like Clint Eastwood or Brigitte Bardot. 
-            Each piece tells a tongue-in-cheek story: Clint faces off with Looney Tunes in a surreal Western ring, while cartoons gaze up at 90s supermodels with awe. 
-            It is nostalgia meets rebellion, printed on acrylic, then painted and collaged into a wild visual ride. 
+            Each piece tells a tongue-in-cheek story. It is nostalgia meets rebellion, printed on acrylic, then painted and collaged into a wild visual ride. 
             You will never look at cartoons—or icons—the same way again.
           </p>
         </motion.div>
