@@ -72,15 +72,6 @@ const CollectionsShowcase = () => {
       image: "/images/artworks/Fabian PhiL_Old Man in Peace_2020_72400aed Copyright.jpg"
     },
     {
-      name: "Pop Art Series",
-      count: 4,
-      description: "Vibrant works celebrating modern life, communication, and the joy of self-expression.",
-      icon: Palette,
-      color: "from-gray-800 to-gray-900",
-      featured: "Blue Lady",
-      image: "/images/artworks/Fabian Phil_Blue Lady 2013_37000aed.jpg"
-    },
-    {
       name: "Abstract Series",
       count: 0,
       description: "Thought-provoking abstract works exploring deeper philosophical and artistic concepts. Currently under creation.",
