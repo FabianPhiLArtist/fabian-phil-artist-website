@@ -65,7 +65,7 @@ const CollectionsShowcase = () => {
     {
       name: "Moving Hair Collection",
       count: 2,
-      description: "Revolutionary kinetic art featuring portraits with moving hair elements. Unique acrylic sheet technique creates living, breathing artworks.",
+      description: "Unique kinetic art featuring portraits with moving hair elements. Unique acrylic sheet technique creates living, breathing artworks.",
       icon: Eye,
       color: "from-gray-800 to-gray-900",
       featured: "Old Man in Peace",

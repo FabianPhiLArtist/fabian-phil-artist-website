@@ -18,13 +18,13 @@ const KineticArtHighlight = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Unique
+            Moving Hair Collection
             <span className="block bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
-              Kinetic Art
+              Kinetic Pop Art
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Experience the world's first Moving Hair Collection - where portraits come alive 
+            Experience my Moving Hair Collection - where portraits come alive 
             with dynamic hair movement, creating truly living artworks.
           </p>
         </motion.div>
