@@ -23,8 +23,12 @@ const LuminousVisionHighlight = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
-            Revolutionary portraits featuring fluorescent glasses that glow in the dark. 
-            Each piece illuminates emotions and creates a luminous connection that transcends the physical artwork.
+          They see you. Do you see them?
+          In this vibrant series, famous faces stare straight at you, through electrifying fluorescent glasses that glow in the dark. 
+          But it is not just about the fluo: it is about the gaze. 
+          These models and actresses have something to say, and their eyes follow you, question you, captivate you. 
+          With each step around the artwork, the perspective shifts, just like the emotion behind their glance. 
+          It is eye contact, reimagined in pop acrylic..
           </p>
         </motion.div>
 

@@ -18,7 +18,7 @@ const KineticArtHighlight = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Revolutionary
+            Unique
             <span className="block bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
               Kinetic Art
             </span>

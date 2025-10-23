@@ -19,13 +19,15 @@ const DigitalFusionHighlight = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
-              Digital Design Collection
+              Toon Clash Collection
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
-            Revolutionary mixed media combining digital design with traditional artistic techniques. 
-            Digital designs are printed on acrylic sheets, then enhanced with painting and collage elements, 
-            creating a unique fusion of analog and digital art.
+            What happens when cartoons crash into icons? Total chaos, and pure joy.
+            This series is an explosion of pop culture, layering digital collage and comic chaos with vertical-stroke portraits of legends like Clint Eastwood or Brigitte Bardot. 
+            Each piece tells a tongue-in-cheek story: Clint faces off with Looney Tunes in a surreal Western ring, while cartoons gaze up at 90s supermodels with awe. 
+            It is nostalgia meets rebellion, printed on acrylic, then painted and collaged into a wild visual ride. 
+            You will never look at cartoons—or icons—the same way again.
           </p>
         </motion.div>
 
@@ -42,7 +44,7 @@ const DigitalFusionHighlight = () => {
             </h3>
             
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Fabian PhiL's Digital Design Collection represents a groundbreaking approach to contemporary art, 
+              Fabian PhiL's Toon Clash Collection represents a groundbreaking approach to contemporary art, 
               where digital design meets traditional painting techniques. Each piece starts as a digital design 
               printed on acrylic sheets, then evolves through traditional painting, collage, and mixed media 
               applications, creating truly unique artworks that bridge the gap between digital and analog worlds.
@@ -91,7 +93,7 @@ const DigitalFusionHighlight = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/gallery?series=Digital Design Collection"
+                href="/gallery?series=Toon Clash Collection"
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
                 <span>Experience Digital Design</span>
@@ -111,13 +113,13 @@ const DigitalFusionHighlight = () => {
             <div className="relative h-96 bg-gray-900 rounded-2xl overflow-hidden">
               <Image
                 src="/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg"
-                alt="Digital Design Collection - Wanted for Toon KnockOut"
+                alt="Toon Clash Collection - Wanted for Toon KnockOut"
                 fill
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute inset-0 bg-black/40" />
               <div className="absolute bottom-4 left-4 right-4 text-white">
-                <p className="font-medium">Digital Design Collection</p>
+                <p className="font-medium">Toon Clash Collection</p>
                 <p className="text-sm text-gray-300">Digital + Traditional fusion</p>
               </div>
             </div>

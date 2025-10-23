@@ -11,7 +11,7 @@ const CollectionsShowcase = () => {
     {
       name: "Mugshot Collection",
       count: 4,
-      description: "A powerful series exploring themes of justice, rebellion, and social commentary through the lens of wanted posters. Features LED lighting and innovative acrylic techniques.",
+      description: "What if your favorite icons got caught... just for being themselves? This playful mugshot series capturing legendary faces in humorous ‘Wanted’ posters. From movie rebels to racing royalty, each portrait reimagines pop culture icons as if they were caught red-handed, for being too bold, too fast, or just too iconic. Painted with layered acrylics and some lit with LEDs, these pieces celebrate notoriety with a wink. What if being too fast, too smart, or too fabulous was a crime?",
       icon: Users,
       color: "from-gray-800 to-gray-900",
       featured: "Wanted for Racing Life",
@@ -20,7 +20,7 @@ const CollectionsShowcase = () => {
     {
       name: "Pop glasses Collection",
       count: 10,
-      description: "Revolutionary portraits featuring fluorescent glasses that glow in the dark. Each piece illuminates emotions and creates a luminous connection that transcends the physical artwork.",
+      description: "They see you. Do you see them? When the eyes do the talking... and the glasses glow. This collection captures the unforgettable stares of icons, muses and rebels, each frozen in a moment of emotion, attitude, or mistery. Their eyes seem to follow you around the room, piercing through layers of acrylic and vertical strokes... until you are the one being watched.",
       icon: Sparkles,
       color: "from-gray-800 to-gray-900",
       featured: "Wanted for Loving Art",
@@ -29,7 +29,7 @@ const CollectionsShowcase = () => {
     {
       name: "100 USD Bill Collection",
       count: 2,
-      description: "Revolutionary tryptics that literally represent 100 USD bills with iconic figures as the central portrait. Each piece mimics currency structure while replacing traditional portraits with cultural icons, creating powerful statements about value and fame.",
+      description: "Unique tryptics that literally represent 100 USD bills with iconic figures as the central portrait. Each piece mimics currency structure while replacing traditional portraits with cultural icons, creating powerful statements about value and fame.",
       icon: DollarSign,
       color: "from-gray-800 to-gray-900",
       featured: "100 USD Mick Jagger",
@@ -38,7 +38,7 @@ const CollectionsShowcase = () => {
     {
       name: "Expressive Emotion Collection",
       count: 6,
-      description: "Revolutionary large-format portraits with eyes that follow you as you move. Each piece creates an emotional connection that transcends the artwork through optical illusion.",
+      description: "Unique large-format portraits with eyes that follow you as you move. Each piece creates an emotional connection that transcends the artwork through optical illusion.",
       icon: Eye,
       color: "from-gray-800 to-gray-900",
       featured: "Why…?",
@@ -54,9 +54,9 @@ const CollectionsShowcase = () => {
       image: "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg"
     },
     {
-      name: "Digital Design Collection",
+      name: "Toon Clash Collection",
       count: 2,
-      description: "Revolutionary mixed media combining digital design with traditional techniques. Digital designs are printed on acrylic sheets, then enhanced with painting and collage elements.",
+      description: "What happens when cartoons crash into icons? Total chaos—and pure joy. This series is an explosion of pop culture, layering digital collage, print, and comic chaos with vertical-stroke portraits of legends like Clint Eastwood or Brigitte Bardot. Each piece tells a tongue-in-cheek story: Clint faces off Looney Tunes in a surreal Western ring, while cartoons gaze up at 90s supermodels with awe. It is nostalgia meet rebellion, Collage or printed on acrylic, then painted into a wild visual ride. You will never look at cartoons, or icons, the same way again.",
       icon: Monitor,
       color: "from-gray-800 to-gray-900",
       featured: "Wanted for Toon KnockOut",

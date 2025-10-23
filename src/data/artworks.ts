@@ -384,11 +384,11 @@ export const artworks: Artwork[] = [
     category: 'panda-pop',
   },
 
-  // Digital Design Collection (2 artworks)
+  // Toon Clash Collection (2 artworks)
   {
     id: 26,
     title: "Wanted for Toon KnockOut",
-    series: "Digital Design Collection",
+    series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg",
     video: "/videos/artworks/Wanted for Toon KnockOut.mov",
     year: "2024",
@@ -402,7 +402,7 @@ export const artworks: Artwork[] = [
   {
     id: 27,
     title: "Fame or Peace",
-    series: "Digital Design Collection",
+    series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL Fame or Peace 2024.png",
     year: "2024",
     medium: "Digital design printed on two acrylic sheets",
@@ -422,5 +422,5 @@ export const series = [
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
   { name: 'Panda Pop Collection', count: 2, category: 'panda-pop' },
-  { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' }
+  { name: 'Toon Clash Collection', count: 2, category: 'digital-fusion' }
 ]

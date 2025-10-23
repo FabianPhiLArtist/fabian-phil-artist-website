@@ -23,7 +23,7 @@ const BigFormatsHighlight = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
-            Revolutionary large-format portraits with eyes that follow you as you move around the room. 
+            Unique large-format portraits with eyes that follow you as you move around the room. 
             <em> "Le regard qui est capturé, expressif, insolite reflète une émotion qui transcende la pièce."</em>
           </p>
         </motion.div>
