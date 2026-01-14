@@ -354,7 +354,7 @@ export const artworks: Artwork[] = [
     category: 'luminous-vision',
   },
 
-  // Panda Pop Collection (2 artworks)
+  // Panda Pop Collection (3 artworks)
   {
     id: 25,
     title: "Wanted Panda PopArt Dealer",
@@ -383,8 +383,22 @@ export const artworks: Artwork[] = [
     available: true,
     category: 'panda-pop',
   },
+  {
+    id: 29,
+    title: "Wanted Panda Yin & Yang Fan",
+    series: "Panda Pop Collection",
+    image: "/images/artworks/Fabian Phil Wanted Panda Yin & Yang Fan 2025.jpg",
+    video: "/videos/artworks/Wanted Panda Yin & Yang Fan.MOV",
+    year: "2025",
+    medium: "Mixed media on acrylic sheets",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    description: "A contemplative panda piece set in a serene snowy zen winter landscape featuring a traditional village and majestic mountains. Rendered in an elegant monochromatic palette of black, white, and grey, this artwork embodies the yin and yang philosophy through its harmonious balance of light and shadow, creating a peaceful meditation on tranquility and inner balance.",
+    available: true,
+    category: 'panda-pop',
+  },
 
-  // Toon Clash Collection (2 artworks)
+  // Toon Clash Collection (3 artworks)
   {
     id: 26,
     title: "Wanted for Toon KnockOut",
@@ -412,6 +426,20 @@ export const artworks: Artwork[] = [
     available: true,
     category: 'digital-fusion',
   },
+  {
+    id: 30,
+    title: "Wanted Million Dollar Toon Fight",
+    series: "Toon Clash Collection",
+    image: "/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg",
+    video: "/videos/artworks/Wanted Million Dollar Toon Fight.MOV",
+    year: "2026",
+    medium: "Digital print on back of acrylic sheets with acrylic paint on front",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    description: "An enhanced version featuring Clint Eastwood in an epic confrontation with cartoon characters. The innovative technique prints the vibrant background—depicting Toons and Clint in a boxing ring and club preparing to fight—on the back of the plexiglass, while Clint's face is meticulously painted twice on the front acrylic sheet. This layered approach creates remarkable depth and dimension, bringing the chaotic energy of the fight to life with brilliant colors and dynamic composition.",
+    available: true,
+    category: 'digital-fusion',
+  },
 
 ]
 
@@ -421,6 +449,6 @@ export const series = [
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
-  { name: 'Panda Pop Collection', count: 2, category: 'panda-pop' },
-  { name: 'Toon Clash Collection', count: 2, category: 'digital-fusion' }
+  { name: 'Panda Pop Collection', count: 3, category: 'panda-pop' },
+  { name: 'Toon Clash Collection', count: 3, category: 'digital-fusion' }
 ]

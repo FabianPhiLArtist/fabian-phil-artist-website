@@ -46,7 +46,7 @@ const CollectionsShowcase = () => {
     },
     {
       name: "Panda Pop Collection",
-      count: 2,
+      count: 3,
       description: "Charming mixed media pieces featuring pandas in wanted poster format. Digital design printed on acrylic sheets enhanced with traditional painting techniques, creating playful yet thought-provoking art.",
       icon: Smile,
       color: "from-gray-800 to-gray-900",
@@ -55,7 +55,7 @@ const CollectionsShowcase = () => {
     },
     {
       name: "Toon Clash Collection",
-      count: 2,
+      count: 3,
       description: "What happens when cartoons crash into icons? Total chaos—and pure joy. This series is an explosion of pop culture, layering digital collage, print, and comic chaos with vertical-stroke portraits of legends like Clint Eastwood or Brigitte Bardot. Each piece tells a tongue-in-cheek story: Clint faces off Looney Tunes in a surreal Western ring, while cartoons gaze up at 90s supermodels with awe. It is nostalgia meet rebellion, Collage or printed on acrylic, then painted into a wild visual ride. You will never look at cartoons, or icons, the same way again.",
       icon: Monitor,
       color: "from-gray-800 to-gray-900",
