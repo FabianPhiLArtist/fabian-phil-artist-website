@@ -9,6 +9,7 @@ interface ImageZoomModalProps {
   isOpen: boolean
   onClose: () => void
   imageSrc: string
+  images?: string[]
   title: string
   series: string
   year: string
@@ -21,6 +22,7 @@ const ImageZoomModal = ({
   isOpen, 
   onClose, 
   imageSrc, 
+  images,
   title, 
   series, 
   year, 
@@ -28,6 +30,7 @@ const ImageZoomModal = ({
   size, 
   description 
 }: ImageZoomModalProps) => {
+  const galleryImages = images && images.length > 0 ? images : [imageSrc]
   const [zoomLevel, setZoomLevel] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -36,6 +39,7 @@ const ImageZoomModal = ({
   const [showLens, setShowLens] = useState(false)
   const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 })
   const [lensZoom, setLensZoom] = useState(2)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const minZoom = 0.5
   const maxZoom = 5
@@ -128,6 +132,8 @@ const ImageZoomModal = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      setCurrentIndex(0)
+      handleReset()
     } else {
       document.body.style.overflow = 'unset'
     }
@@ -136,6 +142,10 @@ const ImageZoomModal = ({
       document.body.style.overflow = 'unset'
     }
   }, [isOpen])
+
+  useEffect(() => {
+    setCurrentIndex(0)
+  }, [imageSrc, images])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -345,7 +355,7 @@ const ImageZoomModal = ({
                 }}
               >
               <Image
-                src={imageSrc}
+                src={galleryImages[currentIndex]}
                 alt={title}
                 width={1200}
                 height={1200}
@@ -368,6 +378,31 @@ const ImageZoomModal = ({
             transition={{ delay: 0.2 }}
             className="absolute bottom-4 left-4 right-4 bg-white/20 backdrop-blur-sm rounded-lg p-4 text-white"
           >
+            {galleryImages.length > 1 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {galleryImages.map((src, index) => (
+                  <button
+                    key={`${src}-${index}`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setCurrentIndex(index)
+                      handleReset()
+                    }}
+                    className={`relative h-14 w-14 overflow-hidden rounded border ${
+                      index === currentIndex ? 'border-white' : 'border-white/40'
+                    }`}
+                    title={`View image ${index + 1}`}
+                  >
+                    <Image
+                      src={src}
+                      alt={`${title} thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h3 className="text-xl font-bold mb-1">{title}</h3>

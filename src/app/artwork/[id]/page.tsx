@@ -14,6 +14,7 @@ import VideoPlayer from '@/components/VideoPlayer'
 export default function ArtworkDetailPage() {
   const params = useParams()
   const [artwork, setArtwork] = useState<any>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showZoom, setShowZoom] = useState(false)
   const [showInquiry, setShowInquiry] = useState(false)
   const [showQR, setShowQR] = useState(false)
@@ -23,6 +24,7 @@ export default function ArtworkDetailPage() {
     if (params.id) {
       const foundArtwork = artworks.find(art => art.id === parseInt(params.id as string))
       setArtwork(foundArtwork)
+      setCurrentImageIndex(0)
     }
   }, [params.id])
 
@@ -72,6 +74,12 @@ export default function ArtworkDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Image Section */}
             <div className="relative">
+              {artwork && (
+                <div className="sr-only">
+                  {/* For accessibility and consistency */}
+                  {artwork.images?.length ? `${artwork.images.length} images available` : '1 image available'}
+                </div>
+              )}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -80,7 +88,9 @@ export default function ArtworkDetailPage() {
               >
                 <div className="relative h-96 lg:h-[600px]">
                   <Image
-                    src={artwork.image}
+                    src={(artwork.images && artwork.images.length > 0)
+                      ? artwork.images[currentImageIndex]
+                      : artwork.image}
                     alt={artwork.title}
                     fill
                     className="object-cover"
@@ -154,6 +164,28 @@ export default function ArtworkDetailPage() {
                   </div>
                 </div>
               </motion.div>
+
+              {artwork.images && artwork.images.length > 1 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {artwork.images.map((src: string, index: number) => (
+                    <button
+                      key={`${src}-${index}`}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`relative h-16 w-16 overflow-hidden rounded border transition-colors ${
+                        index === currentImageIndex ? 'border-gray-900' : 'border-gray-300 hover:border-gray-500'
+                      }`}
+                      title={`View photo ${index + 1}`}
+                    >
+                      <Image
+                        src={src}
+                        alt={`${artwork.title} thumbnail ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {/* QR Code Display */}
               {showQR && artwork.qrCode && (
@@ -267,6 +299,7 @@ export default function ArtworkDetailPage() {
         isOpen={showZoom}
         onClose={() => setShowZoom(false)}
         imageSrc={artwork.image}
+        images={artwork.images}
         title={artwork.title}
         series={artwork.series}
         year={artwork.year}
