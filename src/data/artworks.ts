@@ -3,6 +3,7 @@ export interface Artwork {
   title: string
   series: string
   image: string
+  images?: string[]
   video?: string
   year: string
   medium: string
@@ -34,6 +35,10 @@ export const artworks: Artwork[] = [
     title: "Wanted for Fight Club",
     series: "Mugshot Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Fight Club_2024_18000ead.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Wanted for Fight Club_2024_18000ead.jpg",
+      "/images/artworks/Wanted for Fight Club_2024 - Wall.jpg"
+    ],
     video: "/videos/artworks/Wanted for Fight Club.MOV",
     year: "2024",
     medium: "Acrylic paint and ink on two acrylic sheets",
@@ -62,6 +67,10 @@ export const artworks: Artwork[] = [
     title: "Wanted for Racing in Monaco",
     series: "Mugshot Collection",
     image: "/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg",
+    images: [
+      "/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg",
+      "/images/artworks/Wanted for Racing in Monaco 2024 - Wall2.jpg"
+    ],
     video: "/videos/artworks/Wanted for Racing in Monaco.MOV",
     year: "2024",
     medium: "Acrylic paint on two acrylic sheets",
@@ -152,6 +161,10 @@ export const artworks: Artwork[] = [
     title: "Why…?",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian PhiL_Why_2021_72000aed.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Why_2021_72000aed.jpg",
+      "/images/artworks/Why_2021_Wall.jpg"
+    ],
     video: "/videos/artworks/Why.MOV",
     year: "2021",
     medium: "Acrylic paint on two acrylic sheets",
@@ -180,6 +193,10 @@ export const artworks: Artwork[] = [
     title: "Ooh!",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian PhiL_Ooh_2020_45000aed Copyright.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Ooh_2020_45000aed Copyright.jpg",
+      "/images/artworks/Ooh_2020 - Wall.jpg"
+    ],
     video: "/videos/artworks/Ooh.mov",
     year: "2020",
     medium: "Acrylic paint on two acrylic sheets",
@@ -238,6 +255,10 @@ export const artworks: Artwork[] = [
     title: "Wanted for Being Too Smart",
     series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Being Too Smart_2023_18000aed.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Wanted for Being Too Smart_2023_18000aed.jpg",
+      "/images/artworks/Wanted for Being Too Smart - WideWall.jpg"
+    ],
     year: "2023",
     medium: "Acrylic paint and ink on two acrylic sheets",
     size: "70x70cm",
@@ -360,6 +381,10 @@ export const artworks: Artwork[] = [
     title: "Wanted Panda PopArt Dealer",
     series: "Panda Pop Collection",
     image: "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg",
+    images: [
+      "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg",
+      "/images/artworks/Wanted Panda Popart Dealer 2025 - Wall.jpg"
+    ],
     video: "/videos/artworks/Wanted Panda PopArt Dealer 2.mov",
     year: "2025",
     medium: "Paints, digital design printed on two acrylic sheets",
@@ -374,6 +399,10 @@ export const artworks: Artwork[] = [
     title: "Wanted Panda Zen Artist",
     series: "Panda Pop Collection",
     image: "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg",
+      "/images/artworks/Wanted Panda Zen Artist 2025 - Wall.jpg"
+    ],
     video: "/videos/artworks/Wanted Panda Zen Artist 2025.MOV",
     year: "2025",
     medium: "Mixed media on acrylic sheets",
@@ -431,6 +460,10 @@ export const artworks: Artwork[] = [
     title: "Wanted Million Dollar Toon Fight",
     series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg",
+      "/images/artworks/Wanted Million Dollar Toon Fight - Wall.jpg"
+    ],
     video: "/videos/artworks/Wanted Million Dollar Toon Fight.MOV",
     year: "2026",
     medium: "Digital print on back of acrylic sheets with acrylic paint on front",

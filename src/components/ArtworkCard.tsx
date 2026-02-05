@@ -15,6 +15,7 @@ interface ArtworkCardProps {
     title: string
     series: string
     image: string
+    images?: string[]
     video?: string
     qrCode?: string
     year: string
@@ -242,6 +243,7 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
             isOpen={showZoom}
             onClose={() => setShowZoom(false)}
             imageSrc={artwork.image}
+            images={artwork.images}
             title={artwork.title}
             series={artwork.series}
             year={artwork.year || '2024'}
