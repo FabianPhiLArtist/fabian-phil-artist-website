@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Palette, Award, Users } from 'lucide-react'
 
 const AboutPreview = () => {
@@ -19,7 +20,7 @@ const AboutPreview = () => {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               From Corporate to
-              <span className="block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="block text-gray-800">
                 Canvas
               </span>
             </h2>
@@ -32,7 +33,7 @@ const AboutPreview = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
               <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Palette className="text-white" size={24} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">3 Series</h3>
@@ -40,7 +41,7 @@ const AboutPreview = () => {
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Award className="text-white" size={24} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">International</h3>
@@ -48,7 +49,7 @@ const AboutPreview = () => {
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Users className="text-white" size={24} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">Collectors</h3>
@@ -73,31 +74,19 @@ const AboutPreview = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden">
-              {/* Placeholder for artist photo or artwork */}
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-purple-500/20 to-blue-500/20" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-white text-4xl font-bold">FP</span>
-                  </div>
-                  <p className="text-gray-600 font-medium">Fabian Phil</p>
-                  <p className="text-sm text-gray-500">Artist & Former Executive</p>
-                </div>
+            <div className="relative h-96 bg-gray-900 rounded-2xl overflow-hidden">
+              <Image
+                src="/images/exhibitions/Fabian Studio Dubai.jpg"
+                alt="Fabian Phil in his Dubai studio"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <p className="font-medium text-lg">Fabian Phil</p>
+                <p className="text-sm text-gray-300">Artist & Former Executive</p>
               </div>
             </div>
-            
-            {/* Floating elements */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-80"
-            />
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-              className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full opacity-80"
-            />
           </motion.div>
         </div>
       </div>

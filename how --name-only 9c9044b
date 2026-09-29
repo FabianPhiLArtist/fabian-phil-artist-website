@@ -1,0 +1,43 @@
+[33mcommit 9c9044b935ef80dd638c9fae2d659eb855dba75a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Fabian PhiL <fabianphilartist@gmail.com>
+Date:   Tue Oct 7 16:02:19 2025 +0400
+
+    Remove src folder to prepare for fresh upload
+
+src/app/about/page.tsx
+src/app/artist-statement/page.tsx
+src/app/artwork/[id]/loading.tsx
+src/app/artwork/[id]/page.tsx
+src/app/collectors/page.tsx
+src/app/contact/page.tsx
+src/app/cv/page.tsx
+src/app/exhibitions/page.tsx
+src/app/gallery/page.tsx
+src/app/globals.css
+src/app/layout.tsx
+src/app/page.tsx
+src/components/AboutPreview.tsx
+src/components/ArtworkCard.tsx
+src/components/BigFormatsHighlight.tsx
+src/components/CollectionsShowcase.tsx
+src/components/CollectorCTA.tsx
+src/components/CollectorInquiry.tsx
+src/components/ContactInfo.tsx
+src/components/DigitalFusionHighlight.tsx
+src/components/ExpressiveEmotionHighlight.tsx
+src/components/FeaturedArtworks.tsx
+src/components/Footer.tsx
+src/components/Gallery.tsx
+src/components/Hero.tsx
+src/components/ImageZoomModal.tsx
+src/components/InstagramVideoPlayer.tsx
+src/components/KineticArtHighlight.tsx
+src/components/LuminousVisionHighlight.tsx
+src/components/Navigation.tsx
+src/components/SimpleImageModal.tsx
+src/components/TrypticCollectionHighlight.tsx
+src/components/VideoModal.tsx
+src/components/VideoPlayer.tsx
+src/data/artworks.ts
+src/data/artworks_backup.ts
+src/data/artworks_clean.ts

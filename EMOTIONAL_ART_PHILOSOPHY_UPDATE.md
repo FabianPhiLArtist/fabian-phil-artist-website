@@ -169,3 +169,4 @@ Ready to see your emotional art philosophy in action? Visit the About and Collec
 
 
 
+

@@ -17,6 +17,7 @@ const VideoPlayer = ({ videoUrl, title, className = '' }: VideoPlayerProps) => {
   const [isLoading, setIsLoading] = useState(true)
   const [showControls, setShowControls] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const [isClient, setIsClient] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -25,8 +26,9 @@ const VideoPlayer = ({ videoUrl, title, className = '' }: VideoPlayerProps) => {
   const isLocalVideo = videoUrl && (videoUrl.endsWith('.mp4') || videoUrl.endsWith('.mov') || videoUrl.endsWith('.webm'))
   const isInstagramVideo = videoUrl && (videoUrl.includes('instagram.com') || videoUrl.includes('instagr.am'))
 
-  // Detect mobile device
+  // Ensure we're on the client side to prevent hydration mismatch
   useEffect(() => {
+    setIsClient(true)
     const checkMobile = () => {
       setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
                  ('ontouchstart' in window) || 
@@ -258,7 +260,7 @@ const VideoPlayer = ({ videoUrl, title, className = '' }: VideoPlayerProps) => {
 
         {/* Video Controls Overlay */}
         <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${
-          showControls || isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          showControls || (isClient && isMobile) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
         }`}>
           <div className="absolute inset-0 flex items-center justify-center">
             <button
@@ -276,7 +278,7 @@ const VideoPlayer = ({ videoUrl, title, className = '' }: VideoPlayerProps) => {
 
         {/* Bottom Controls */}
         <div className={`absolute bottom-4 left-4 right-4 flex items-center justify-between transition-opacity duration-300 ${
-          showControls || isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          showControls || (isClient && isMobile) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
         }`}>
           <div className="flex items-center space-x-2">
             <button

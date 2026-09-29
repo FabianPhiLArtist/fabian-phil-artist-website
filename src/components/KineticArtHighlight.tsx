@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Play, Zap, Wind } from 'lucide-react'
 
 const KineticArtHighlight = () => {
@@ -18,7 +19,7 @@ const KineticArtHighlight = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Revolutionary
-            <span className="block bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100 bg-clip-text text-transparent">
               Kinetic Art
             </span>
           </h2>
@@ -49,7 +50,7 @@ const KineticArtHighlight = () => {
 
             <div className="space-y-6 mb-8">
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
                   <Wind className="text-white" size={24} />
                 </div>
                 <div>
@@ -62,7 +63,7 @@ const KineticArtHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Zap className="text-white" size={24} />
                 </div>
                 <div>
@@ -75,7 +76,7 @@ const KineticArtHighlight = () => {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
                   <Play className="text-white" size={24} />
                 </div>
                 <div>
@@ -90,7 +91,7 @@ const KineticArtHighlight = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/gallery"
+                href="/gallery?series=Moving Hair Collection"
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
                 <span>View Moving Hair Collection</span>
@@ -107,57 +108,18 @@ const KineticArtHighlight = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden">
-              {/* Placeholder for video or animated GIF */}
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-orange-500/20 to-red-500/20" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <motion.div
-                    animate={{ 
-                      scale: [1, 1.1, 1],
-                      rotate: [0, 5, -5, 0]
-                    }}
-                    transition={{ 
-                      duration: 4, 
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="w-32 h-32 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full mx-auto mb-4 flex items-center justify-center"
-                  >
-                    <Wind className="text-white text-4xl" />
-                  </motion.div>
-                  <p className="text-gray-600 font-medium">Moving Hair Art</p>
-                  <p className="text-sm text-gray-500">Kinetic Movement</p>
-                </div>
+            <div className="relative h-96 bg-gray-900 rounded-2xl overflow-hidden">
+              <Image
+                src="/images/artworks/Fabian PhiL_Old Man in Peace_2020_72400aed Copyright.jpg"
+                alt="Moving Hair Collection - Old Man in Peace"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <p className="font-medium">Moving Hair Collection</p>
+                <p className="text-sm text-gray-300">Kinetic art in motion</p>
               </div>
-              
-              {/* Animated elements */}
-              <motion.div
-                animate={{ 
-                  x: [0, 20, 0],
-                  y: [0, -10, 0],
-                  opacity: [0.3, 0.7, 0.3]
-                }}
-                transition={{ 
-                  duration: 3, 
-                  repeat: Infinity,
-                  delay: 0.5
-                }}
-                className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full opacity-30"
-              />
-              <motion.div
-                animate={{ 
-                  x: [0, -15, 0],
-                  y: [0, 15, 0],
-                  opacity: [0.2, 0.6, 0.2]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  delay: 1
-                }}
-                className="absolute bottom-8 left-8 w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-30"
-              />
             </div>
           </motion.div>
         </div>
