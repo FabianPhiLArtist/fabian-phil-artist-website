@@ -153,9 +153,9 @@ const TrypticCollectionHighlight = () => {
 
           <div className="bg-white rounded-2xl p-6 shadow-lg">
             <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-white text-2xl font-bold">€54K</span>
+              <DollarSign className="text-white" size={24} />
             </div>
-            <h4 className="text-xl font-semibold text-gray-900 mb-2">Price Range</h4>
+            <h4 className="text-xl font-semibold text-gray-900 mb-2">Price upon Inquiry</h4>
             <p className="text-gray-600">Premium collector pieces</p>
           </div>
 

@@ -138,6 +138,7 @@ const FeaturedArtworks = () => {
             isOpen={showZoom}
             onClose={() => setShowZoom(false)}
             imageSrc={selectedArtwork.image}
+            images={selectedArtwork.images}
             title={selectedArtwork.title}
             series={selectedArtwork.series}
             year={selectedArtwork.year}

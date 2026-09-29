@@ -1,9 +1,16 @@
 import React, { Suspense } from 'react'
+import type { Metadata } from 'next'
 import Gallery from '@/components/Gallery'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Gallery - Fabian Phil Artist',
   description: 'Explore the complete collection of kinetic pop art by Fabian Phil. Browse by series: Pandas, F1, and Wanted Series.',
+  alternates: {
+    canonical: '/gallery',
+  },
+  openGraph: {
+    url: '/gallery',
+  },
 }
 
 export default function GalleryPage() {

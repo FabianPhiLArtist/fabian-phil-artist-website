@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3020",
+    "dev-alt": "next dev --port 3001",
+    "dev-alt2": "next dev --port 8080",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 3020",
+    "start-alt": "next start --port 3001",
+    "start-alt2": "next start --port 8080",
     "lint": "next lint"
   },
   "dependencies": {

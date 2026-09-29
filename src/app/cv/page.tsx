@@ -58,7 +58,7 @@ const CVPage = () => {
             <p className="text-lg text-gray-700 leading-relaxed">
               Fabian PhiL is a self-taught kinetic pop artist whose unique technique was discovered through a serendipitous 
               experiment with seismic wave concepts in Africa. Born into a family of art collectors, he transitioned from 
-              a successful career as a geophysicist and Shell executive to become a recognized contemporary artist. His 
+              a successful career as a geophysicist initially and Business executive to become a recognized contemporary artist. His 
               work has been exhibited internationally and featured in leading art publications.
             </p>
           </div>
@@ -88,7 +88,7 @@ const CVPage = () => {
                   <Briefcase className="text-green-600" size={20} />
                   <h3 className="text-xl font-semibold text-gray-900">Business Education</h3>
                 </div>
-                <p className="text-gray-600">Business studies complementing technical background, providing foundation for corporate leadership roles</p>
+                <p className="text-gray-600">Business studies (London Business School MBA) complementing technical background, providing foundation for corporate leadership roles</p>
               </div>
               
               <div className="border-l-4 border-purple-500 pl-6">
@@ -120,8 +120,8 @@ const CVPage = () => {
                     <Calendar className="text-blue-600" size={16} />
                     <span className="font-semibold text-gray-900">2002-2006 - Brunei, Borneo</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Shell Executive & First Painting</h3>
-                  <p className="text-gray-600">Working as Shell executive in the jungle, painted first artwork in 2003 - a single painting that took one year to complete</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Business Executive & First Painting</h3>
+                  <p className="text-gray-600">Working as Corporate executive in the jungle, painted first artwork in 2003 - a single painting that took one year to complete</p>
                 </div>
               </div>
               

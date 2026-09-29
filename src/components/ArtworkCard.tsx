@@ -15,6 +15,7 @@ interface ArtworkCardProps {
     title: string
     series: string
     image: string
+    images?: string[]
     video?: string
     qrCode?: string
     year: string
@@ -157,14 +158,6 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
               <p className="text-xs text-gray-200">{artwork.year} • {artwork.medium}</p>
             </div>
 
-            {/* Sold Overlay */}
-            {!artwork.available && (
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <span className="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-medium">
-                  Sold
-                </span>
-              </div>
-            )}
           </div>
 
           {/* Content */}
@@ -173,7 +166,11 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
               <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                 {artwork.title}
               </h3>
-              <p className="text-2xl font-bold text-gray-900">{artwork.price}</p>
+              {artwork.available ? (
+                <p className="text-lg font-medium text-blue-600">Price upon Inquiry</p>
+              ) : (
+                <p className="text-lg font-bold text-red-600">SOLD</p>
+              )}
             </div>
             <p className="text-gray-600 text-sm mb-2">{artwork.size}</p>
             <p className="text-gray-500 text-sm line-clamp-2 mb-4">{artwork.description}</p>
@@ -246,6 +243,7 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
             isOpen={showZoom}
             onClose={() => setShowZoom(false)}
             imageSrc={artwork.image}
+            images={artwork.images}
             title={artwork.title}
             series={artwork.series}
             year={artwork.year || '2024'}

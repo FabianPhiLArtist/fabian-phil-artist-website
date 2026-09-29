@@ -3,6 +3,7 @@ export interface Artwork {
   title: string
   series: string
   image: string
+  images?: string[]
   video?: string
   year: string
   medium: string
@@ -34,12 +35,17 @@ export const artworks: Artwork[] = [
     title: "Wanted for Fight Club",
     series: "Mugshot Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Fight Club_2024_18000ead.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Wanted for Fight Club_2024_18000ead.jpg",
+      "/images/artworks/Wanted for Fight Club_2024 - Wall.jpg"
+    ],
+    video: "/videos/artworks/Wanted for Fight Club.MOV",
     year: "2024",
     medium: "Acrylic paint and ink on two acrylic sheets",
     size: "70x70cm",
     price: "€3,000",
     description: "Exploring themes of rebellion, underground culture, and the fight against conformity through the lens of a wanted poster.",
-    available: true,
+    available: false,
     category: 'mugshot',
   },
   {
@@ -47,6 +53,7 @@ export const artworks: Artwork[] = [
     title: "Wanted $$Reward$$",
     series: "Mugshot Collection",
     image: "/images/artworks/Fabian PhiL_Wanted $$Reward$$_2023_18000aed.jpg",
+    video: "/videos/artworks/Wanted Woody Allen.MOV",
     year: "2023",
     medium: "Acrylic paint on two acrylic sheets",
     size: "70x70cm",
@@ -59,7 +66,11 @@ export const artworks: Artwork[] = [
     id: 4,
     title: "Wanted for Racing in Monaco",
     series: "Mugshot Collection",
-    image: "/images/artworks/Fabian PhiL_WAnted for Racing in Monaco_2024.jpg",
+    image: "/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg",
+    images: [
+      "/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg",
+      "/images/artworks/Wanted for Racing in Monaco 2024 - Wall2.jpg"
+    ],
     video: "/videos/artworks/Wanted for Racing in Monaco.MOV",
     year: "2024",
     medium: "Acrylic paint on two acrylic sheets",
@@ -90,6 +101,7 @@ export const artworks: Artwork[] = [
     title: "100 USD Andy Warhol",
     series: "100 USD Bill Collection",
     image: "/images/artworks/Fabian PhiL Andy Warhol 100 USD Bill 2017.png",
+    video: "/videos/artworks/Andy Warhol 100 USD Bill.MOV",
     year: "2017",
     medium: "Tryptic. Acrylic paint on two acrylic sheets",
     size: "70x180cm",
@@ -105,7 +117,7 @@ export const artworks: Artwork[] = [
     title: "Old Man in Peace",
     series: "Moving Hair Collection",
     image: "/images/artworks/Fabian PhiL_Old Man in Peace_2020_72400aed Copyright.jpg",
-    video: "/videos/artworks/Old man in Peace.MP4",
+    video: "/videos/artworks/Old man in Peace.MOV",
     year: "2020",
     medium: "Acrylic paint on two acrylic sheets",
     size: "120x90cm",
@@ -149,6 +161,10 @@ export const artworks: Artwork[] = [
     title: "Why…?",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian PhiL_Why_2021_72000aed.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Why_2021_72000aed.jpg",
+      "/images/artworks/Why_2021_Wall.jpg"
+    ],
     video: "/videos/artworks/Why.MOV",
     year: "2021",
     medium: "Acrylic paint on two acrylic sheets",
@@ -177,6 +193,10 @@ export const artworks: Artwork[] = [
     title: "Ooh!",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian PhiL_Ooh_2020_45000aed Copyright.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Ooh_2020_45000aed Copyright.jpg",
+      "/images/artworks/Ooh_2020 - Wall.jpg"
+    ],
     video: "/videos/artworks/Ooh.mov",
     year: "2020",
     medium: "Acrylic paint on two acrylic sheets",
@@ -191,6 +211,7 @@ export const artworks: Artwork[] = [
     title: "Blue Lady",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian Phil_Blue Lady 2013_37000aed.jpg",
+    video: "/videos/artworks/BlueLady_2013.mov",
     year: "2011",
     medium: "Acrylic paint on two acrylic sheets",
     size: "90x120cm",
@@ -204,6 +225,7 @@ export const artworks: Artwork[] = [
     title: "The Last One!",
     series: "Expressive Emotion Collection",
     image: "/images/artworks/Fabian PhiL The Last One 2017.jpg",
+    video: "/videos/artworks/The Last One.MP4",
     year: "2017",
     medium: "Acrylic paint on two acrylic sheets",
     size: "120x90cm",
@@ -233,6 +255,10 @@ export const artworks: Artwork[] = [
     title: "Wanted for Being Too Smart",
     series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Being Too Smart_2023_18000aed.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Wanted for Being Too Smart_2023_18000aed.jpg",
+      "/images/artworks/Wanted for Being Too Smart - WideWall.jpg"
+    ],
     year: "2023",
     medium: "Acrylic paint and ink on two acrylic sheets",
     size: "70x70cm",
@@ -349,13 +375,17 @@ export const artworks: Artwork[] = [
     category: 'luminous-vision',
   },
 
-  // Panda Pop Collection (1 artwork)
+  // Panda Pop Collection (3 artworks)
   {
     id: 25,
     title: "Wanted Panda PopArt Dealer",
     series: "Panda Pop Collection",
     image: "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg",
-    video: "/videos/artworks/Wanted Panda PopArt Dealer.MOV",
+    images: [
+      "/images/artworks/Fabian Phil Wanted Panda Popart Dealer 2025 5.jpg",
+      "/images/artworks/Wanted Panda Popart Dealer 2025 - Wall.jpg"
+    ],
+    video: "/videos/artworks/Wanted Panda PopArt Dealer 2.mov",
     year: "2025",
     medium: "Paints, digital design printed on two acrylic sheets",
     size: "70x70cm",
@@ -364,12 +394,44 @@ export const artworks: Artwork[] = [
     available: true,
     category: 'panda-pop',
   },
+  {
+    id: 28,
+    title: "Wanted Panda Zen Artist",
+    series: "Panda Pop Collection",
+    image: "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg",
+      "/images/artworks/Wanted Panda Zen Artist 2025 - Wall.jpg"
+    ],
+    video: "/videos/artworks/Wanted Panda Zen Artist 2025.MOV",
+    year: "2025",
+    medium: "Mixed media on acrylic sheets",
+    size: "70x70cm",
+    price: "€4,000",
+    description: "A unique zen-inspired piece featuring a contemplative panda against a serene cherry blossom mountain landscape. The artwork combines traditional zen aesthetics with modern wanted poster format, creating a peaceful yet playful meditation on artistic identity and the search for inner tranquility.",
+    available: true,
+    category: 'panda-pop',
+  },
+  {
+    id: 29,
+    title: "Wanted Panda Yin & Yang Fan",
+    series: "Panda Pop Collection",
+    image: "/images/artworks/Fabian Phil Wanted Panda Yin & Yang Fan 2025.jpg",
+    video: "/videos/artworks/Wanted Panda Yin & Yang Fan.MOV",
+    year: "2025",
+    medium: "Mixed media on acrylic sheets",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    description: "A contemplative panda piece set in a serene snowy zen winter landscape featuring a traditional village and majestic mountains. Rendered in an elegant monochromatic palette of black, white, and grey, this artwork embodies the yin and yang philosophy through its harmonious balance of light and shadow, creating a peaceful meditation on tranquility and inner balance.",
+    available: true,
+    category: 'panda-pop',
+  },
 
-  // Digital Design Collection (2 artworks)
+  // Toon Clash Collection (3 artworks)
   {
     id: 26,
     title: "Wanted for Toon KnockOut",
-    series: "Digital Design Collection",
+    series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg",
     video: "/videos/artworks/Wanted for Toon KnockOut.mov",
     year: "2024",
@@ -383,7 +445,7 @@ export const artworks: Artwork[] = [
   {
     id: 27,
     title: "Fame or Peace",
-    series: "Digital Design Collection",
+    series: "Toon Clash Collection",
     image: "/images/artworks/Fabian PhiL Fame or Peace 2024.png",
     year: "2024",
     medium: "Digital design printed on two acrylic sheets",
@@ -393,21 +455,25 @@ export const artworks: Artwork[] = [
     available: true,
     category: 'digital-fusion',
   },
-
-  // Abstract Series (1 artwork)
   {
-    id: 28,
-    title: "The Last One",
-    series: "Abstract Series",
-    image: "/images/artworks/Fabian PhiL The Last One 2017.jpg",
-    year: "2017",
-    medium: "Mixed Media on Canvas",
-    size: "100x120cm",
-    price: "€8,000",
-    description: "A contemplative piece about endings, finality, and what remains.",
+    id: 30,
+    title: "Wanted Million Dollar Toon Fight",
+    series: "Toon Clash Collection",
+    image: "/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg",
+      "/images/artworks/Wanted Million Dollar Toon Fight - Wall.jpg"
+    ],
+    video: "/videos/artworks/Wanted Million Dollar Toon Fight.MOV",
+    year: "2026",
+    medium: "Digital print on back of acrylic sheets with acrylic paint on front",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    description: "An enhanced version featuring Clint Eastwood in an epic confrontation with cartoon characters. The innovative technique prints the vibrant background—depicting Toons and Clint in a boxing ring and club preparing to fight—on the back of the plexiglass, while Clint's face is meticulously painted twice on the front acrylic sheet. This layered approach creates remarkable depth and dimension, bringing the chaotic energy of the fight to life with brilliant colors and dynamic composition.",
     available: true,
-    category: 'abstract'
-  }
+    category: 'digital-fusion',
+  },
+
 ]
 
 export const series = [
@@ -416,7 +482,6 @@ export const series = [
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
-  { name: 'Panda Pop Collection', count: 1, category: 'panda-pop' },
-  { name: 'Digital Design Collection', count: 2, category: 'digital-fusion' },
-  { name: 'Abstract Series', count: 1, category: 'abstract' }
+  { name: 'Panda Pop Collection', count: 3, category: 'panda-pop' },
+  { name: 'Toon Clash Collection', count: 3, category: 'digital-fusion' }
 ]

@@ -4,10 +4,12 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { SITE_URL } from '@/lib/site'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Fabian Phil Artist - Kinetic Pop Art',
   description: 'Contemporary kinetic pop art by Fabian Phil. Explore dynamic artworks featuring pandas, F1, and the Wanted series. Available for collectors worldwide.',
   keywords: 'kinetic art, pop art, contemporary art, Fabian Phil, pandas, F1, wanted series, art collector',
@@ -17,6 +19,8 @@ export const metadata: Metadata = {
     description: 'Contemporary kinetic pop art by Fabian Phil. Explore dynamic artworks featuring pandas, F1, and the Wanted series.',
     type: 'website',
     locale: 'en_US',
+    siteName: 'Fabian Phil Artist',
+    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
