@@ -1,107 +1,54 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Instagram } from 'lucide-react'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 const Hero = () => {
+  const locale = useLocale()
+
   return (
-    <section className="relative min-h-screen bg-white flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left Side - Artwork Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative w-full aspect-[4/3] lg:aspect-[5/4]"
-          >
-            <div className="relative w-full h-full bg-gray-50 rounded-lg overflow-hidden shadow-lg">
-              <Image
-                src="/images/artworks/Wanted for Being Too Smart - WideWall.jpg"
-                alt="Wanted for Being Too Smart - Fabian PhiL"
-                fill
-                className="object-cover"
-                style={{ objectPosition: 'center center' }}
-                priority
-              />
+    <section className="bg-white pt-[4.5rem] pb-8 lg:pt-28 lg:pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5 lg:gap-16 lg:items-center">
+          <div className="order-2 lg:order-2 space-y-2.5 lg:space-y-5 max-w-xl">
+            <h1 className="text-[1.7rem] sm:text-5xl lg:text-6xl font-light tracking-[0.04em] uppercase text-gray-900 leading-[1.12]">
+              Pop art that moves.
+            </h1>
+            <div className="space-y-0.5 lg:space-y-2 text-[13px] sm:text-base lg:text-lg text-gray-600 font-light leading-snug lg:leading-relaxed">
+              <p>Kinetic portraits and icons on layered plexiglass.</p>
+              <p>French contemporary artist based in Dubai.</p>
             </div>
-          </motion.div>
-
-          {/* Right Side - Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-7 lg:pt-4"
-          >
-            {/* Title */}
-            <div className="max-w-xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-4 leading-tight tracking-tight">
-                Fabian PhiL
-              </h1>
-              <div className="h-px w-24 bg-gray-900 mb-6"></div>
-              <p className="text-xl md:text-2xl text-gray-700 font-light mb-2">
-                Kinetic Pop Artist
-              </p>
-              <p className="text-lg md:text-xl text-gray-600 font-light">
-                Painter on Layered Plexiglass
-              </p>
-            </div>
-
-            {/* Bio */}
-            <div className="space-y-4">
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed font-light">
-                Fabian PhiL is a Dubai-based contemporary artist of French origin whose work invites viewers to slow down and look beyond first impressions. Drawing from pop culture imagery and iconic figures, he creates layered compositions that shift with light, perspective, and movement.
-              </p>
-            </div>
-
-            {/* Call to Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 pt-4"
-            >
+            <div className="pt-1.5 lg:pt-2 space-y-2.5 lg:space-y-4">
               <Link
-                href="/gallery"
-                className="group inline-flex items-center justify-center bg-gray-900 text-white px-8 py-3 rounded-sm font-medium text-sm hover:bg-gray-800 transition-all duration-300 uppercase tracking-wider"
+                href={localizedHref(locale, 'gallery')}
+                className="inline-flex items-center justify-center bg-gray-900 text-white px-5 py-2.5 lg:px-7 lg:py-3 text-[11px] lg:text-xs tracking-[0.18em] uppercase hover:bg-gray-800 transition-colors"
               >
-                <span>View Collection</span>
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" size={18} />
+                View available art →
               </Link>
-              
-              <a
-                href="https://instagram.com/fabianphilartist"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center border border-gray-900 text-gray-900 px-8 py-3 rounded-sm font-medium text-sm hover:bg-gray-900 hover:text-white transition-all duration-300 uppercase tracking-wider"
-              >
-                <Instagram size={18} className="mr-2" />
-                <span>Instagram</span>
-              </a>
-            </motion.div>
-
-            {/* Additional Links */}
-            <div className="pt-4 border-t border-gray-200">
-              <div className="flex flex-wrap gap-6 text-sm text-gray-600">
-                <Link href="/about" className="hover:text-gray-900 transition-colors duration-200">
-                  About
-                </Link>
-                <Link href="/artist-statement" className="hover:text-gray-900 transition-colors duration-200">
-                  Artist Statement
-                </Link>
-                <Link href="/exhibitions" className="hover:text-gray-900 transition-colors duration-200">
-                  Exhibitions
-                </Link>
-                <Link href="/contact" className="hover:text-gray-900 transition-colors duration-200">
-                  Contact
+              <div>
+                <Link
+                  href={localizedHref(locale, 'collaborations')}
+                  className="text-[13px] lg:text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Interiors & collaborations →
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
+
+          <div className="order-1 lg:order-1 relative w-full aspect-[3/2] bg-gray-50 overflow-hidden">
+            <Image
+              src="/images/artworks/Wanted for Being Too Smart - WideWall.jpg"
+              alt="Wanted for Being Too Smart, kinetic pop artwork by Fabian PhiL, staged in a contemporary interior"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>

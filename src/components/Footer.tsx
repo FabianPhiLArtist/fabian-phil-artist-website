@@ -1,124 +1,68 @@
 import React from 'react'
 import Link from 'next/link'
-import { Instagram, Mail, Phone, MapPin, Facebook } from 'lucide-react'
+import type { Locale } from '@/i18n/locales'
+import { localizedHref } from '@/i18n/pathnames'
 
-const Footer = () => {
+const Footer = ({ locale }: { locale: Locale }) => {
+  const links = [
+    { name: 'Artworks', href: localizedHref(locale, 'gallery') },
+    { name: 'Artist', href: localizedHref(locale, 'about') },
+    { name: 'Exhibitions', href: localizedHref(locale, 'exhibitions') },
+    { name: 'Collaborations', href: localizedHref(locale, 'collaborations') },
+    { name: 'Price Inquiry', href: localizedHref(locale, 'price-inquiry') },
+    { name: 'Contact', href: localizedHref(locale, 'contact') },
+  ]
+
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[#fafafa] border-t border-gray-200 text-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Fabian Phil</h3>
-            <p className="text-gray-300 mb-4">
-              Contemporary kinetic pop art that moves and inspires. 
-              From former business executive to international artist.
+            <p className="text-sm tracking-[0.18em] uppercase text-gray-900 mb-3">
+              Fabian Phil
             </p>
-            <div className="flex space-x-4">
+            <p className="text-sm font-light text-gray-600 leading-relaxed">
+              Kinetic pop art on layered plexiglass.
+              <br />
+              Dubai, UAE.
+            </p>
+            <div className="mt-5 space-y-2">
               <a
                 href="https://instagram.com/fabianphilartist"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-pink-400 transition-colors duration-200"
-                title="Follow on Instagram"
+                className="block text-xs tracking-[0.16em] uppercase text-gray-900 hover:text-gray-500 transition-colors"
               >
-                <Instagram size={24} />
+                Instagram
               </a>
-              <a
-                href="https://facebook.com/fabianphilartist"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-blue-400 transition-colors duration-200"
-                title="Follow on Facebook"
+              <Link
+                href={localizedHref(locale, 'contact')}
+                className="block text-xs tracking-[0.16em] uppercase text-gray-900 hover:text-gray-500 transition-colors"
               >
-                <Facebook size={24} />
-              </a>
+                Contact
+              </Link>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+          <nav aria-label="Footer">
             <ul className="space-y-2">
-              <li>
-                <Link href="/gallery" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Gallery
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/artist-statement" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Artist Statement
-                </Link>
-              </li>
-              <li>
-                <Link href="/cv" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  CV
-                </Link>
-              </li>
-              <li>
-                <Link href="/exhibitions" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Exhibitions
-                </Link>
-              </li>
-              <li>
-                <Link href="/collectors" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Collectors
-                </Link>
-              </li>
-              <li>
-                <Link href="/price-inquiry" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Price Inquiry
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Contact
-                </Link>
-              </li>
+              {links.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-xs tracking-[0.16em] uppercase text-gray-900 hover:text-gray-500 transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Get In Touch</h4>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Mail size={20} className="text-gray-300" />
-                <a
-                  href="mailto:fabianphilartist@gmail.com"
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  fabianphilartist@gmail.com
-                </a>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone size={20} className="text-gray-300" />
-                <a
-                  href="https://wa.me/971567594229"
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  +971 567594229 (WhatsApp)
-                </a>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin size={20} className="text-gray-300 mt-1" />
-                <div className="text-gray-300">
-                  <p>70 Lowaina Street</p>
-                  <p>Umm Suqeim 1, Dubai, UAE</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          </nav>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">
-            © {new Date().getFullYear()} Fabian Phil Artist. All rights reserved.
+        <div className="mt-10 pt-6 border-t border-gray-200">
+          <p className="text-xs tracking-wide text-gray-500">
+            © {new Date().getFullYear()} Fabian PhiL
           </p>
         </div>
       </div>

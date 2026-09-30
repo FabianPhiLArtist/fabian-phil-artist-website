@@ -7,12 +7,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Filter, Grid, List, Search, ArrowUpDown, Calendar, DollarSign, Tag } from 'lucide-react'
 import ArtworkCard from './ArtworkCard'
-import { artworks, series } from '@/data/artworks'
+import { artworks, series, galleryGroups, isInSeries } from '@/data/artworks'
 
 const Gallery = () => {
   const searchParams = useSearchParams()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedSeries, setSelectedSeries] = useState<string>('all')
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState<'default' | 'year' | 'title' | 'series'>('default')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
@@ -20,15 +21,26 @@ const Gallery = () => {
   // Handle URL parameters
   useEffect(() => {
     const seriesParam = searchParams.get('series')
-    if (seriesParam) {
+    const groupParam = searchParams.get('group')
+    if (groupParam && galleryGroups.some(g => g.slug === groupParam)) {
+      setSelectedGroup(groupParam)
+      setSelectedSeries('all')
+    } else if (seriesParam) {
       setSelectedSeries(seriesParam)
     }
   }, [searchParams])
 
   const seriesOptions = ['all', ...series.map(s => s.name)]
+  const activeGroup = galleryGroups.find(g => g.slug === selectedGroup)
+  const selectSeries = (seriesName: string) => {
+    setSelectedGroup(null)
+    setSelectedSeries(seriesName)
+  }
 
   const filteredArtworks = artworks.filter(artwork => {
-    const matchesSeries = selectedSeries === 'all' || artwork.series === selectedSeries
+    const matchesSeries = activeGroup
+      ? activeGroup.series.some(name => isInSeries(artwork, name))
+      : selectedSeries === 'all' || isInSeries(artwork, selectedSeries)
     const matchesSearch = artwork.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          artwork.description.toLowerCase().includes(searchTerm.toLowerCase())
     return matchesSeries && matchesSearch
@@ -84,10 +96,10 @@ const Gallery = () => {
                 Explore the complete collection of kinetic pop art by Fabian Phil. 
                 Each piece represents a unique fusion of movement, color, and contemporary culture.
               </p>
-              {selectedSeries !== 'all' && (
+              {(activeGroup || selectedSeries !== 'all') && (
                 <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                   <p className="text-blue-800 font-medium">
-                    Showing {sortedArtworks.length} artwork{sortedArtworks.length !== 1 ? 's' : ''} from {selectedSeries}
+                    Showing {sortedArtworks.length} artwork{sortedArtworks.length !== 1 ? 's' : ''} from {activeGroup ? activeGroup.name : selectedSeries}
                   </p>
                 </div>
               )}
@@ -133,9 +145,9 @@ const Gallery = () => {
               {seriesOptions.map((seriesName) => (
                 <button
                   key={seriesName}
-                  onClick={() => setSelectedSeries(seriesName)}
+                  onClick={() => selectSeries(seriesName)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                    selectedSeries === seriesName
+                    !activeGroup && selectedSeries === seriesName
                       ? 'bg-gray-900 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}

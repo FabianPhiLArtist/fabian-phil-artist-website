@@ -6,8 +6,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ZoomIn } from 'lucide-react'
 import ImageZoomModal from './ImageZoomModal'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 const FeaturedArtworks = () => {
+  const locale = useLocale()
   const [showZoom, setShowZoom] = useState(false)
   const [selectedArtwork, setSelectedArtwork] = useState<any>(null)
 
@@ -75,7 +78,7 @@ const FeaturedArtworks = () => {
               viewport={{ once: true }}
               className="group"
             >
-              <Link href={`/artwork/${artwork.id}`}>
+              <Link href={localizedHref(locale, 'artwork', { id: artwork.id })}>
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
                       <div className="relative h-80 overflow-hidden">
                         <Image
@@ -120,7 +123,7 @@ const FeaturedArtworks = () => {
           className="text-center mt-12"
         >
           <Link
-            href="/gallery"
+            href={localizedHref(locale, 'gallery')}
             className="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-full font-semibold text-lg hover:bg-gray-800 transition-colors duration-300"
           >
             View All Artworks

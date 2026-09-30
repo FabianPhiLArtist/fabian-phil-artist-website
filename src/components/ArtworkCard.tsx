@@ -8,6 +8,8 @@ import { Play, Heart, Share2, QrCode, ExternalLink, MessageSquare, ZoomIn, Video
 import CollectorInquiry from './CollectorInquiry'
 import ImageZoomModal from './ImageZoomModal'
 import VideoPlayer from './VideoPlayer'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 interface ArtworkCardProps {
   artwork: {
@@ -29,6 +31,7 @@ interface ArtworkCardProps {
 }
 
 const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
+  const locale = useLocale()
   const [showQR, setShowQR] = useState(false)
   const [showInquiry, setShowInquiry] = useState(false)
   const [showZoom, setShowZoom] = useState(false)
@@ -53,7 +56,7 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
       transition={{ duration: 0.6 }}
       className="group"
     >
-      <Link href={`/artwork/${artwork.id}`}>
+      <Link href={localizedHref(locale, 'artwork', { id: artwork.id })}>
         <div className={`bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group-hover:scale-105 ${
           viewMode === 'list' ? 'flex flex-col md:flex-row' : ''
         }`}>
@@ -177,12 +180,11 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
             
             {/* Action Buttons */}
             <div className="flex space-x-2">
-              <Link
-                href={`/artwork/${artwork.id}`}
+              <span
                 className="flex-1 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors duration-200 text-center"
               >
                 View Details
-              </Link>
+              </span>
               <button
                 onClick={() => setShowInquiry(true)}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-1"

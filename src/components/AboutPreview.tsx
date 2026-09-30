@@ -5,8 +5,11 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Palette, Award, Users } from 'lucide-react'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 const AboutPreview = () => {
+  const locale = useLocale()
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +61,7 @@ const AboutPreview = () => {
             </div>
 
             <Link
-              href="/about"
+              href={localizedHref(locale, 'about')}
               className="group inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-full font-semibold text-lg hover:bg-gray-800 transition-all duration-300"
             >
               <span>Learn More</span>

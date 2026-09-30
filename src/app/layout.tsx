@@ -1,12 +1,7 @@
-import React from 'react'
+import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { SITE_URL } from '@/lib/site'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -20,7 +15,6 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     siteName: 'Fabian Phil Artist',
-    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
@@ -32,17 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} antialiased`}>
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-      </body>
-    </html>
-  )
+  return children
 }

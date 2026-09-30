@@ -2,6 +2,7 @@ export interface Artwork {
   id: number
   title: string
   series: string
+  additionalSeries?: string[]
   image: string
   images?: string[]
   video?: string
@@ -11,7 +12,7 @@ export interface Artwork {
   price: string
   description: string
   available: boolean
-  category: 'mugshot' | 'luminous-vision' | 'panda-pop' | 'moving-hair' | '100-usd' | 'expressive-emotion' | 'digital-fusion' | 'emotional' | 'pop-art' | 'abstract'
+  category: 'mugshot' | 'f1' | 'luminous-vision' | 'panda-pop' | 'moving-hair' | '100-usd' | 'expressive-emotion' | 'digital-fusion' | 'emotional' | 'pop-art' | 'abstract'
 }
 
 export const artworks: Artwork[] = [
@@ -66,6 +67,7 @@ export const artworks: Artwork[] = [
     id: 4,
     title: "Wanted for Racing in Monaco",
     series: "Mugshot Collection",
+    additionalSeries: ["F1 Collection"],
     image: "/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg",
     images: [
       "/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg",
@@ -474,10 +476,56 @@ export const artworks: Artwork[] = [
     category: 'digital-fusion',
   },
 
+  // F1 Collection
+  {
+    id: 31,
+    title: "Wanted for Speeding in Monza",
+    series: "F1 Collection",
+    image: "/images/artworks/Wanted for Speeding in Monza.jpeg",
+    images: [
+      "/images/artworks/Wanted for Speeding in Monza.jpeg",
+      "/images/artworks/Wanted for Speeding in Monza Angle1.jpeg",
+      "/images/artworks/Wanted for Speeding in Monza Angle2.jpeg"
+    ],
+    video: "/videos/artworks/Wanted for Speeding in Monza.mp4",
+    year: "2026",
+    medium: "Paints, digital design printed on two acrylic sheets",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    description: "Playful portrait of C. Leclerc after winning at Monza, surrounded by colorful cartoons cheering him up. Unique original piece.",
+    available: true,
+    category: 'f1',
+  },
+  {
+    id: 32,
+    title: "Wanted Ayrton vs Toons Racing",
+    series: "F1 Collection",
+    image: "/images/artworks/Wanted Ayrton vs Toons Racing 2026.jpg",
+    year: "2026",
+    medium: "Paints, digital design printed on two acrylic sheets",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    description: "The intense presence of a racing legend emerges against a vibrant background of playful cartoons and graphic energy. The piece creates a striking tension between speed and stillness, nostalgia and spectacle, transforming the memory of F1 into dynamic pop art. Unique original piece.",
+    available: true,
+    category: 'f1',
+  },
+
+]
+
+export const isInSeries = (artwork: Artwork, seriesName: string) =>
+  artwork.series === seriesName || (artwork.additionalSeries?.includes(seriesName) ?? false)
+
+export const galleryGroups = [
+  {
+    slug: 'triptych-mugshots',
+    name: 'Triptych & Mugshots',
+    series: ['100 USD Bill Collection', 'Mugshot Collection'],
+  },
 ]
 
 export const series = [
   { name: 'Mugshot Collection', count: 4, category: 'mugshot' },
+  { name: 'F1 Collection', count: 3, category: 'f1' },
   { name: '100 USD Bill Collection', count: 2, category: '100-usd' },
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },

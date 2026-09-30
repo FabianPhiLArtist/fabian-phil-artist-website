@@ -5,8 +5,11 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Sparkles, Eye, Zap, Palette, ArrowRight } from 'lucide-react'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 const LuminousVisionHighlight = () => {
+  const locale = useLocale()
   return (
     <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,7 +97,7 @@ const LuminousVisionHighlight = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/gallery?series=Pop glasses Collection"
+                href={localizedHref(locale, 'gallery', { query: { series: 'Pop glasses Collection' } })}
                 className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
               >
                 <span>Experience Pop glasses</span>

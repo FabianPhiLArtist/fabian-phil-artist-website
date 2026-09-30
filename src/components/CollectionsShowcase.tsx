@@ -5,8 +5,11 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Users, DollarSign, Heart, Eye, Palette, Sparkles, Monitor, Smile } from 'lucide-react'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 const CollectionsShowcase = () => {
+  const locale = useLocale()
   const collections = [
     {
       name: "Mugshot Collection",
@@ -147,7 +150,7 @@ const CollectionsShowcase = () => {
                   </div>
 
                   <Link
-                    href="/gallery"
+                    href={localizedHref(locale, 'gallery')}
                     className="group inline-flex items-center text-gray-900 hover:text-blue-600 transition-colors duration-200 font-medium"
                   >
                     <span>View Collection</span>
@@ -167,7 +170,7 @@ const CollectionsShowcase = () => {
           className="text-center mt-12"
         >
           <Link
-            href="/gallery"
+            href={localizedHref(locale, 'gallery')}
             className="inline-flex items-center px-8 py-4 bg-gray-900 text-white rounded-full font-semibold text-lg hover:bg-gray-800 transition-colors duration-300"
           >
             Explore All Collections
