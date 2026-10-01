@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Instagram, MessageSquare } from 'lucide-react'
 import { submitEnquiry } from '@/lib/submitEnquiry'
 import { WHATSAPP_URL } from '@/lib/whatsapp'
+import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 
 const emptyForm = {
   firstName: '',
@@ -15,6 +14,9 @@ const emptyForm = {
   message: '',
   website: '',
 }
+
+const infoLabelClass = 'text-[11px] tracking-[0.16em] uppercase text-gray-500 mb-1.5'
+const infoLinkClass = 'text-base text-gray-900 font-light hover:text-gray-500 transition-colors'
 
 const ContactPage = () => {
   const [formData, setFormData] = useState(emptyForm)
@@ -52,133 +54,81 @@ const ContactPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 pt-32">
+    <div className="min-h-screen bg-white pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Get In Touch
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Ready to add a Fabian PhiL artwork to your collection? 
-            Have questions about my kinetic art? I'd love to hear from you.
+        <header className="max-w-3xl mb-12 md:mb-16">
+          <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-6">Get In Touch</h1>
+          <p className="text-xl md:text-2xl font-light text-gray-900 leading-relaxed">
+            Ready to add a Fabian PhiL artwork to your collection? Have questions about my kinetic art? I&apos;d love to hear from you.
           </p>
-        </motion.div>
+        </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-xl p-8"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h2>
-            
-            <div className="space-y-6">
-              {/* Email */}
-              <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-full">
-                  <Mail className="text-blue-600" size={24} />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <section className="lg:col-span-4" aria-labelledby="contact-information">
+            <h2 id="contact-information" className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-8">
+              Contact Information
+            </h2>
+
+            <div className="space-y-7">
+              <div>
+                <h3 className={infoLabelClass}>Email</h3>
+                <a href="mailto:fabianphilartist@gmail.com" className={`${infoLinkClass} break-all`}>
+                  fabianphilartist@gmail.com
+                </a>
+                <p className="text-sm text-gray-500 font-light mt-1">For inquiries and commissions</p>
+              </div>
+
+              <div>
+                <h3 className={infoLabelClass}>WhatsApp</h3>
+                <a href="https://wa.me/971567594229" className={infoLinkClass}>
+                  +971 567594229
+                </a>
+                <p className="text-sm text-gray-500 font-light mt-1">Quick messages and calls</p>
+              </div>
+
+              <div>
+                <h3 className={infoLabelClass}>Gallery Address</h3>
+                <div className="text-base text-gray-900 font-light leading-relaxed">
+                  <p>70 Lowaina Street</p>
+                  <p>Umm Suqeim 1, Dubai, UAE</p>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Email</h3>
+                <p className="text-sm text-gray-500 font-light mt-1">Visit by appointment</p>
+              </div>
+
+              <div>
+                <h3 className={infoLabelClass}>Social Media</h3>
+                <div className="space-y-1">
                   <a
-                    href="mailto:fabianphilartist@gmail.com"
-                    className="text-blue-600 hover:text-blue-800 transition-colors duration-200 text-lg"
+                    href="https://instagram.com/fabianphilartist"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block ${infoLinkClass}`}
                   >
-                    fabianphilartist@gmail.com
+                    @fabianphilartist
                   </a>
-                  <p className="text-gray-600 mt-1">For inquiries and commissions</p>
-                </div>
-              </div>
-
-              {/* WhatsApp */}
-              <div className="flex items-start space-x-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <Phone className="text-green-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">WhatsApp</h3>
                   <a
-                    href="https://wa.me/971567594229"
-                    className="text-green-600 hover:text-green-800 transition-colors duration-200 text-lg"
+                    href="https://facebook.com/fabianphilartist"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block ${infoLinkClass}`}
                   >
-                    +971 567594229
+                    Fabian PhiL Artist
                   </a>
-                  <p className="text-gray-600 mt-1">Quick messages and calls</p>
                 </div>
-              </div>
-
-              {/* Gallery Address */}
-              <div className="flex items-start space-x-4">
-                <div className="bg-purple-100 p-3 rounded-full">
-                  <MapPin className="text-purple-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Gallery Address</h3>
-                  <div className="text-gray-700">
-                    <p>70 Lowaina Street</p>
-                    <p>Umm Suqeim 1, Dubai, UAE</p>
-                  </div>
-                  <p className="text-gray-600 mt-1">Visit by appointment</p>
-                </div>
-              </div>
-
-              {/* Social Media */}
-              <div className="flex items-start space-x-4">
-                <div className="bg-pink-100 p-3 rounded-full">
-                  <Instagram className="text-pink-600" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Social Media</h3>
-                  <div className="space-y-2">
-                    <a
-                      href="https://instagram.com/fabianphilartist"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-pink-600 hover:text-pink-800 transition-colors duration-200"
-                    >
-                      @fabianphilartist
-                    </a>
-                    <a
-                      href="https://facebook.com/fabianphilartist"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-blue-600 hover:text-blue-800 transition-colors duration-200"
-                    >
-                      Fabian PhiL Artist
-                    </a>
-                  </div>
-                  <p className="text-gray-600 mt-1">Follow for latest updates</p>
-                </div>
+                <p className="text-sm text-gray-500 font-light mt-1">Follow for latest updates</p>
               </div>
             </div>
-          </motion.div>
+          </section>
 
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-white rounded-2xl shadow-xl p-8"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Send a Message</h2>
-            
+          <section className="lg:col-span-8 lg:border-l lg:border-gray-100 lg:pl-16" aria-labelledby="send-a-message">
+            <h2 id="send-a-message" className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-8">
+              Send a Message
+            </h2>
+
             {status === 'sent' ? (
-              <div role="status" className="text-center py-10">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Message sent</h3>
-                <p className="text-gray-600 mb-6">
+              <div role="status" className="py-10 border-t border-gray-100">
+                <h3 className="text-2xl font-light uppercase tracking-[0.04em] text-gray-900 mb-3">Message sent</h3>
+                <p className="text-base text-gray-600 font-light leading-relaxed mb-8">
                   Thank you for getting in touch. Fabian will reply to you by email.
                 </p>
                 <button
@@ -187,205 +137,189 @@ const ContactPage = () => {
                     startedAt.current = Date.now()
                     setStatus('idle')
                   }}
-                  className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
+                  className={textLinkClass}
                 >
-                  Send another message
+                  Send another message →
                 </button>
               </div>
             ) : (
-            <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-6">
-              <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
-                <label htmlFor="contact-website">Leave this field empty</label>
-                <input
-                  type="text"
-                  id="contact-website"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={formData.website}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
-                  </label>
+              <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-6">
+                <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                  <label htmlFor="contact-website">Leave this field empty</label>
                   <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
-                    required
-                    maxLength={100}
-                    autoComplete="given-name"
-                    value={formData.firstName}
+                    id="contact-website"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.website}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                    placeholder="Your first name"
                   />
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="firstName" className={labelClass}>
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      required
+                      maxLength={100}
+                      autoComplete="given-name"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className={fieldClass}
+                      placeholder="Your first name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className={labelClass}>
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      maxLength={100}
+                      autoComplete="family-name"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className={fieldClass}
+                      placeholder="Your last name"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="email" className={labelClass}>
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      maxLength={254}
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={fieldClass}
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className={labelClass}>
+                      Phone Number (Optional)
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      maxLength={40}
+                      autoComplete="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className={fieldClass}
+                      placeholder="+971 50 123 4567"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                  <label htmlFor="subject" className={labelClass}>
+                    Subject
                   </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    maxLength={100}
-                    autoComplete="family-name"
-                    value={formData.lastName}
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                    placeholder="Your last name"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  maxLength={254}
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number (Optional)
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  maxLength={40}
-                  autoComplete="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                  placeholder="+971 50 123 4567"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <select
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                >
-                  <option value="">Select a subject</option>
-                  <option value="inquiry">Artwork Inquiry</option>
-                  <option value="commission">Commission Request</option>
-                  <option value="exhibition">Exhibition Opportunity</option>
-                  <option value="press">Press & Media</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={6}
-                  required
-                  maxLength={5000}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                  placeholder="Tell me about your interest in my art, specific artworks you're interested in, or any questions you have..."
-                ></textarea>
-              </div>
-
-              {status === 'error' && (
-                <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
-                  <p>{errorMessage}</p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-2 font-semibold text-green-700 hover:text-green-900 underline"
+                    className={fieldClass}
                   >
-                    Message Fabian on WhatsApp
-                  </a>
+                    <option value="">Select a subject</option>
+                    <option value="inquiry">Artwork Inquiry</option>
+                    <option value="commission">Commission Request</option>
+                    <option value="exhibition">Exhibition Opportunity</option>
+                    <option value="press">Press & Media</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
-              )}
 
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                aria-busy={status === 'sending'}
-                className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {status === 'sending' ? (
-                  <>
-                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  <>
-                    <MessageSquare size={20} />
-                    <span>Send Message</span>
-                  </>
+                <div>
+                  <label htmlFor="message" className={labelClass}>
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    required
+                    maxLength={5000}
+                    value={formData.message}
+                    onChange={handleChange}
+                    className={fieldClass}
+                    placeholder="Tell me about your interest in my art, specific artworks you're interested in, or any questions you have..."
+                  ></textarea>
+                </div>
+
+                {status === 'error' && (
+                  <div role="alert" className={errorBoxClass}>
+                    <p>{errorMessage}</p>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-2 text-xs tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-0.5 hover:text-gray-600 hover:border-gray-600 transition-colors"
+                    >
+                      Message Fabian on WhatsApp
+                    </a>
+                  </div>
                 )}
-              </button>
-            </form>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    aria-busy={status === 'sending'}
+                    className={`${primaryButtonClass} w-full sm:w-auto`}
+                  >
+                    {status === 'sending' ? (
+                      <>
+                        <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <span>Send Message</span>
+                    )}
+                  </button>
+                </div>
+              </form>
             )}
 
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-blue-800">
-                <strong>Note:</strong> For immediate assistance, please call or WhatsApp me directly at +971 567594229
-              </p>
-            </div>
-          </motion.div>
+            <p className="mt-8 text-sm text-gray-500 font-light leading-relaxed">
+              For immediate assistance, please call or WhatsApp me directly at +971 567594229
+            </p>
+          </section>
         </div>
 
-        {/* Additional Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center"
-        >
-          <h3 className="text-2xl font-bold mb-4">Ready to Start Your Collection?</h3>
-          <p className="text-lg mb-6 opacity-90">
-            I'm always excited to work with new collectors and art enthusiasts. 
-            Whether you're looking for a specific piece or want to commission something unique, 
-            I'm here to help you find the perfect artwork.
+        <section className="mt-20 md:mt-24 pt-12 border-t border-gray-100 max-w-3xl">
+          <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-5">Ready to Start Your Collection?</h2>
+          <p className="text-base md:text-lg text-gray-600 font-light leading-relaxed mb-8">
+            I&apos;m always excited to work with new collectors and art enthusiasts. Whether you&apos;re looking for a specific piece or want to commission something unique, I&apos;m here to help you find the perfect artwork.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://wa.me/971567594229"
-              className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200"
-            >
-              WhatsApp Me Now
+          <div className="flex flex-col sm:flex-row gap-5 sm:gap-10">
+            <a href={WHATSAPP_URL} className={textLinkClass}>
+              WhatsApp Me Now →
             </a>
-            <a
-              href="mailto:fabianphilartist@gmail.com"
-              className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-200"
-            >
-              Send Email
+            <a href="mailto:fabianphilartist@gmail.com" className={textLinkClass}>
+              Send Email →
             </a>
           </div>
-        </motion.div>
+        </section>
       </div>
     </div>
   )

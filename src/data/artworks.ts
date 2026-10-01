@@ -367,7 +367,7 @@ export const artworks: Artwork[] = [
     title: "You Call This Art…?",
     series: "Pop glasses Collection",
     image: "/images/artworks/Fabian PhiL You Call This Art 2024.png",
-    video: "/videos/artworks/You call this Art.mov",
+    video: "/videos/artworks/You call this art.MOV",
     year: "2024",
     medium: "Paints, print and collage on two acrylic sheets",
     size: "70x70cm",

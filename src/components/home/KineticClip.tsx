@@ -5,9 +5,10 @@ import React, { useEffect, useRef, useState } from 'react'
 type Props = {
   src: string
   label: string
+  onError?: () => void
 }
 
-const KineticClip = ({ src, label }: Props) => {
+const KineticClip = ({ src, label, onError }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [shouldLoad, setShouldLoad] = useState(false)
 
@@ -68,7 +69,7 @@ const KineticClip = ({ src, label }: Props) => {
       className="absolute inset-0 w-full h-full object-contain bg-black"
       aria-label={label}
     >
-      {shouldLoad && <source src={src} type="video/mp4" />}
+      {shouldLoad && <source src={src} type="video/mp4" onError={onError} />}
     </video>
   )
 }

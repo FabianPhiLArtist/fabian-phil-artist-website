@@ -88,7 +88,7 @@ const FaqAccordion = ({ only }: Props) => {
             Yes. Galleries and curators are welcome to contact Fabian regarding exhibitions, available works and curatorial opportunities. A price-free artist book/portfolio is available on request.
           </p>
           <p>
-            Currently, Fabian exhibits his works at Noor Royal Gallery (2026, Mar. – Dec.) and at Alliance Française Dubai (2026, Oct 1 – 14).
+            Currently, Fabian exhibits his works at Noor Royal Gallery (2026, Mar. – Dec.) and at Alliance Française Dubai (30 September – 14 October 2026).
           </p>
         </>
       ),

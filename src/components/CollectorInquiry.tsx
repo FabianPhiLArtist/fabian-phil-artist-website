@@ -2,9 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, Send, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { submitEnquiry } from '@/lib/submitEnquiry'
 import { WHATSAPP_URL, whatsappHref } from '@/lib/whatsapp'
+import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 
 interface CollectorInquiryProps {
   artworkTitle?: string
@@ -19,7 +20,6 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
     phone: '',
     message: '',
     artwork: artworkTitle || '',
-    budget: '',
     timeline: '',
     location: '',
     website: ''
@@ -67,28 +67,20 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
   if (isSubmitted) {
     return (
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-2xl p-8 text-center max-w-md mx-auto"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white px-6 py-10 sm:px-10 text-center max-w-md w-full mx-auto"
       >
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h3>
-        <p className="text-gray-600 mb-4">
+        <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-4">Artwork inquiry</p>
+        <h3 className="text-2xl font-light uppercase tracking-[0.04em] text-gray-900 mb-4">Thank You!</h3>
+        <p className="text-sm text-gray-600 font-light leading-relaxed mb-3">
           Your inquiry has been sent successfully. Fabian will contact you within 24 hours.
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-xs text-gray-500 font-light leading-relaxed">
           You can also reach Fabian directly at fabianphilartist@gmail.com or +971 567594229
         </p>
         {onClose && (
-          <button
-            type="button"
-            onClick={onClose}
-            className="mt-6 bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200"
-          >
+          <button type="button" onClick={onClose} className={`${primaryButtonClass} mt-8`}>
             Close
           </button>
         )}
@@ -98,40 +90,40 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="bg-white rounded-2xl p-8 max-w-2xl mx-auto relative"
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white px-5 py-8 sm:px-10 sm:py-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-auto relative"
     >
       {onClose && (
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+          aria-label="Close"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors"
         >
-          <X size={24} />
+          <X size={20} />
         </button>
       )}
 
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-bold text-gray-900 mb-2">Artwork Inquiry</h3>
-        <p className="text-gray-600">
+      <div className="mb-8 pr-8">
+        <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-3">Artwork inquiry</p>
+        <h3 className="text-xl md:text-2xl font-light text-gray-900 leading-snug">
           {artworkTitle ? `Interested in "${artworkTitle}"?` : 'Interested in a specific artwork?'}
-        </p>
-        <p className="text-sm text-gray-500 mt-2">
+        </h3>
+        <p className="text-sm text-gray-600 font-light leading-relaxed mt-3">
           Fill out the form below and Fabian will get back to you personally.
         </p>
-        <div className="flex justify-center space-x-6 text-sm text-gray-500 mt-4">
-          <a href="mailto:fabianphilartist@gmail.com" className="flex items-center space-x-1 hover:text-blue-600 transition-colors">
-            <Mail size={16} />
-            <span>fabianphilartist@gmail.com</span>
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-500 font-light mt-4">
+          <a href="mailto:fabianphilartist@gmail.com" className="hover:text-gray-900 transition-colors">
+            fabianphilartist@gmail.com
           </a>
-          <a href="https://wa.me/971567594229" className="flex items-center space-x-1 hover:text-green-600 transition-colors">
-            <Phone size={16} />
-            <span>+971 567594229</span>
+          <a href="https://wa.me/971567594229" className="hover:text-gray-900 transition-colors">
+            +971 567594229
           </a>
         </div>
       </div>
 
-      <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-6">
+      <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-5">
         <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
           <label htmlFor="inquiry-website">Leave this field empty</label>
           <input
@@ -145,9 +137,9 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="name" className={labelClass}>
               Full Name *
             </label>
             <input
@@ -159,13 +151,13 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               autoComplete="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={fieldClass}
               placeholder="Your full name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="email" className={labelClass}>
               Email Address *
             </label>
             <input
@@ -177,15 +169,15 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               autoComplete="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={fieldClass}
               placeholder="your@email.com"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="phone" className={labelClass}>
               Phone Number
             </label>
             <input
@@ -196,13 +188,13 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               autoComplete="tel"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={fieldClass}
               placeholder="+1 (555) 123-4567"
             />
           </div>
 
           <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="location" className={labelClass}>
               Location
             </label>
             <input
@@ -212,51 +204,31 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               maxLength={150}
               value={formData.location}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={fieldClass}
               placeholder="City, Country"
             />
           </div>
         </div>
 
-        <div>
-          <label htmlFor="artwork" className="block text-sm font-medium text-gray-700 mb-2">
-            Artwork of Interest
-          </label>
-          <input
-            type="text"
-            id="artwork"
-            name="artwork"
-            maxLength={300}
-            value={formData.artwork}
-            onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Artwork title or series"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
-              Budget Range
+            <label htmlFor="artwork" className={labelClass}>
+              Artwork of Interest
             </label>
-            <select
-              id="budget"
-              name="budget"
-              value={formData.budget}
+            <input
+              type="text"
+              id="artwork"
+              name="artwork"
+              maxLength={300}
+              value={formData.artwork}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Select budget range</option>
-              <option value="under-1000">Under €1,000</option>
-              <option value="1000-2500">€1,000 - €2,500</option>
-              <option value="2500-5000">€2,500 - €5,000</option>
-              <option value="5000-10000">€5,000 - €10,000</option>
-              <option value="over-10000">Over €10,000</option>
-            </select>
+              className={fieldClass}
+              placeholder="Artwork title or series"
+            />
           </div>
 
           <div>
-            <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="timeline" className={labelClass}>
               Timeline
             </label>
             <select
@@ -264,7 +236,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               name="timeline"
               value={formData.timeline}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={fieldClass}
             >
               <option value="">Select timeline</option>
               <option value="immediate">Immediate</option>
@@ -277,7 +249,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="message" className={labelClass}>
             Message
           </label>
           <textarea
@@ -287,51 +259,40 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
             maxLength={5000}
             value={formData.message}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={fieldClass}
             placeholder="Tell us more about your interest in this artwork..."
           />
         </div>
 
         {errorMessage && (
-          <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+          <div role="alert" className={errorBoxClass}>
             <p>{errorMessage}</p>
             <a
               href={whatsappFallback}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-2 font-semibold text-green-700 hover:text-green-900 underline"
+              className="inline-block mt-2 text-xs tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-0.5 hover:text-gray-600 hover:border-gray-600 transition-colors"
             >
               Message Fabian on WhatsApp
             </a>
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            aria-busy={isSubmitting}
-            className="flex-1 bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
-          >
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+          <button type="submit" disabled={isSubmitting} aria-busy={isSubmitting} className={primaryButtonClass}>
             {isSubmitting ? (
               <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
                 <span>Sending...</span>
               </>
             ) : (
-              <>
-                <Send size={20} />
-                <span>Send Inquiry</span>
-              </>
+              <span>Send Inquiry</span>
             )}
           </button>
 
-          <div className="flex space-x-4 text-sm text-gray-500">
-            <a href={whatsappFallback} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:text-green-600 transition-colors">
-              <Phone size={16} />
-              <span>Prefer WhatsApp?</span>
-            </a>
-          </div>
+          <a href={whatsappFallback} target="_blank" rel="noopener noreferrer" className={textLinkClass}>
+            Prefer WhatsApp? →
+          </a>
         </div>
       </form>
     </motion.div>

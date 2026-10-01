@@ -5,13 +5,18 @@ import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ZoomIn, Heart, Share2, MessageSquare, QrCode, Video, X } from 'lucide-react'
+import { ArrowLeft, ZoomIn, Heart, Share2, MessageSquare, QrCode, Video, Play, X } from 'lucide-react'
 import { artworks } from '@/data/artworks'
 import ImageZoomModal from '@/components/ImageZoomModal'
 import CollectorInquiry from '@/components/CollectorInquiry'
 import VideoPlayer from '@/components/VideoPlayer'
+import KineticClip from '@/components/home/KineticClip'
 import { useLocale } from '@/i18n/useLocale'
 import { localizedHref } from '@/i18n/pathnames'
+import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
+
+const overlayButtonClass = 'p-2.5 bg-white/90 text-gray-900 hover:bg-white transition-colors'
+const secondaryButtonClass = 'inline-flex items-center justify-center gap-2 border border-gray-900 text-gray-900 px-7 py-3 text-xs tracking-[0.18em] uppercase hover:bg-gray-900 hover:text-white transition-colors'
 
 export default function ArtworkDetailPage() {
   const params = useParams()
@@ -22,27 +27,25 @@ export default function ArtworkDetailPage() {
   const [showInquiry, setShowInquiry] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
+  const [clipFailed, setClipFailed] = useState(false)
 
   useEffect(() => {
     if (params.id) {
       const foundArtwork = artworks.find(art => art.id === parseInt(params.id as string))
       setArtwork(foundArtwork)
       setCurrentImageIndex(0)
+      setClipFailed(false)
     }
   }, [params.id])
 
   if (!artwork) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center px-4">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Artwork Not Found</h1>
-          <p className="text-gray-600 mb-8">The artwork you're looking for doesn't exist.</p>
-          <Link
-            href={localizedHref(locale, 'gallery')}
-            className="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors duration-200"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to Gallery
+          <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">Artwork Not Found</h1>
+          <p className="text-sm text-gray-600 font-light mb-8">The artwork you&apos;re looking for doesn&apos;t exist.</p>
+          <Link href={localizedHref(locale, 'gallery')} className={textLinkClass}>
+            ← Back to Gallery
           </Link>
         </div>
       </div>
@@ -51,120 +54,87 @@ export default function ArtworkDetailPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <div className="bg-white shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <Link
-                href={localizedHref(locale, 'gallery')}
-                className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200"
-              >
-                <ArrowLeft size={20} className="mr-2" />
-                Back to Gallery
-              </Link>
-              
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-500">{artwork.series}</span>
-                <span className="text-sm text-gray-400">•</span>
-                <span className="text-sm text-gray-500">{artwork.year}</span>
-              </div>
-            </div>
+      <div className="min-h-screen bg-white pt-24 md:pt-28 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="pb-6 md:pb-8">
+            <Link
+              href={localizedHref(locale, 'gallery')}
+              className={`${textLinkClass} inline-flex items-center gap-2`}
+            >
+              <ArrowLeft size={14} />
+              Back to Gallery
+            </Link>
           </div>
-        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
             {/* Image Section */}
-            <div className="relative">
-              {artwork && (
-                <div className="sr-only">
-                  {/* For accessibility and consistency */}
-                  {artwork.images?.length ? `${artwork.images.length} images available` : '1 image available'}
-                </div>
-              )}
+            <div className="lg:col-span-7">
+              <div className="sr-only">
+                {artwork.images?.length ? `${artwork.images.length} images available` : '1 image available'}
+              </div>
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
-                className="relative bg-white rounded-2xl shadow-lg overflow-hidden"
+                className="relative bg-[#fafafa] aspect-square"
               >
-                <div className="relative h-96 lg:h-[600px]">
-                  <Image
-                    src={(artwork.images && artwork.images.length > 0)
-                      ? artwork.images[currentImageIndex]
-                      : artwork.image}
-                    alt={artwork.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  
-                  {/* Video Indicator */}
-                  {artwork.video && (
-                    <button
-                      onClick={() => setShowVideo(true)}
-                      className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-2 shadow-lg hover:from-red-600 hover:to-pink-600 transition-all duration-200 cursor-pointer animate-pulse"
-                      title="Click to watch video"
-                    >
-                      <Video size={16} />
-                      <span>Video Available</span>
+                <Image
+                  src={(artwork.images && artwork.images.length > 0)
+                    ? artwork.images[currentImageIndex]
+                    : artwork.image}
+                  alt={artwork.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  className="object-contain"
+                  priority
+                />
+
+                {artwork.video && (
+                  <button
+                    onClick={() => setShowVideo(true)}
+                    className="absolute top-4 left-4 bg-gray-900/85 text-white px-3 py-1.5 text-[10px] tracking-[0.16em] uppercase flex items-center gap-2 hover:bg-gray-900 transition-colors"
+                    title="Click to watch video"
+                  >
+                    <Play size={10} fill="currentColor" />
+                    <span>Video Available</span>
+                  </button>
+                )}
+
+                <div className="absolute top-4 right-4 flex gap-1.5">
+                  <button onClick={() => setShowZoom(true)} className={overlayButtonClass} title="Zoom in to see details">
+                    <ZoomIn size={16} />
+                  </button>
+                  <button onClick={() => setShowInquiry(true)} className={overlayButtonClass} title="Inquire about this artwork">
+                    <MessageSquare size={16} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Wishlist functionality
+                    }}
+                    className={overlayButtonClass}
+                    title="Add to wishlist"
+                  >
+                    <Heart size={16} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Share functionality
+                    }}
+                    className={overlayButtonClass}
+                    title="Share artwork"
+                  >
+                    <Share2 size={16} />
+                  </button>
+                  {artwork.qrCode && (
+                    <button onClick={() => setShowQR(!showQR)} className={overlayButtonClass} title="View QR code">
+                      <QrCode size={16} />
                     </button>
                   )}
-                  
-                  {/* Action Buttons */}
-                  <div className="absolute top-4 right-4 flex space-x-2">
-                    <button
-                      onClick={() => setShowZoom(true)}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
-                      title="Zoom in to see details"
-                    >
-                      <ZoomIn size={20} className="text-white" />
+                  {artwork.video && (
+                    <button onClick={() => setShowVideo(true)} className={overlayButtonClass} title="Watch video">
+                      <Video size={16} />
                     </button>
-                    <button
-                      onClick={() => setShowInquiry(true)}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
-                      title="Inquire about this artwork"
-                    >
-                      <MessageSquare size={20} className="text-white" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        // Wishlist functionality
-                      }}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
-                      title="Add to wishlist"
-                    >
-                      <Heart size={20} className="text-white" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        // Share functionality
-                      }}
-                      className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
-                      title="Share artwork"
-                    >
-                      <Share2 size={20} className="text-white" />
-                    </button>
-                    {artwork.qrCode && (
-                      <button
-                        onClick={() => setShowQR(!showQR)}
-                        className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
-                        title="View QR code"
-                      >
-                        <QrCode size={20} className="text-white" />
-                      </button>
-                    )}
-                    {artwork.video && (
-                      <button
-                        onClick={() => setShowVideo(true)}
-                        className="p-3 bg-red-500/80 backdrop-blur-sm rounded-full hover:bg-red-600/90 transition-colors duration-200 shadow-lg"
-                        title="Watch video"
-                      >
-                        <Video size={20} className="text-white" />
-                      </button>
-                    )}
-                  </div>
+                  )}
                 </div>
               </motion.div>
 
@@ -174,8 +144,8 @@ export default function ArtworkDetailPage() {
                     <button
                       key={`${src}-${index}`}
                       onClick={() => setCurrentImageIndex(index)}
-                      className={`relative h-16 w-16 overflow-hidden rounded border transition-colors ${
-                        index === currentImageIndex ? 'border-gray-900' : 'border-gray-300 hover:border-gray-500'
+                      className={`relative h-16 w-16 overflow-hidden bg-[#fafafa] border transition-colors ${
+                        index === currentImageIndex ? 'border-gray-900' : 'border-transparent hover:border-gray-300'
                       }`}
                       title={`View photo ${index + 1}`}
                     >
@@ -183,6 +153,7 @@ export default function ArtworkDetailPage() {
                         src={src}
                         alt={`${artwork.title} thumbnail ${index + 1}`}
                         fill
+                        sizes="64px"
                         className="object-cover"
                       />
                     </button>
@@ -190,18 +161,41 @@ export default function ArtworkDetailPage() {
                 </div>
               )}
 
-              {/* QR Code Display */}
+              {artwork.video && !clipFailed && (
+                <figure className="mt-10 md:mt-12 flex gap-5 md:gap-8 items-start">
+                  <button
+                    type="button"
+                    onClick={() => setShowVideo(true)}
+                    className="relative shrink-0 w-[44%] max-w-[300px] aspect-[9/16] bg-black overflow-hidden"
+                    title="Watch with controls"
+                  >
+                    <KineticClip
+                      src={encodeURI(artwork.video)}
+                      label={`${artwork.title}, filmed as the viewer moves`}
+                      onError={() => setClipFailed(true)}
+                    />
+                  </button>
+                  <figcaption className="pt-1">
+                    <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">In motion</h2>
+                    <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed mb-5">
+                      Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.
+                    </p>
+                    <button type="button" onClick={() => setShowVideo(true)} className={textLinkClass}>
+                      Watch full screen →
+                    </button>
+                  </figcaption>
+                </figure>
+              )}
+
               {showQR && artwork.qrCode && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-6 bg-white rounded-2xl shadow-lg p-6 text-center"
+                  className="mt-6 border border-gray-200 p-6 text-center"
                 >
-                  <h3 className="text-xl font-bold mb-4">Scan QR Code</h3>
-                  <div className="mb-4">
-                    <img src={artwork.qrCode} alt="QR Code" className="w-48 h-48 mx-auto" />
-                  </div>
-                  <p className="text-gray-600 text-sm">
+                  <h3 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">Scan QR Code</h3>
+                  <img src={artwork.qrCode} alt="QR Code" className="w-48 h-48 mx-auto mb-4" />
+                  <p className="text-sm text-gray-600 font-light">
                     Scan this QR code to view the video of this artwork
                   </p>
                 </motion.div>
@@ -210,86 +204,68 @@ export default function ArtworkDetailPage() {
 
             {/* Details Section */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-8"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="lg:col-span-5"
             >
-              {/* Title and Series */}
-              <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">{artwork.title}</h1>
-                <div className="flex items-center space-x-4 text-lg text-gray-600">
-                  <span className="font-medium">{artwork.series}</span>
-                  <span>•</span>
-                  <span>{artwork.year}</span>
+              <p className="text-[11px] tracking-[0.18em] uppercase text-gray-500 mb-3">
+                {artwork.series} · {artwork.year}
+              </p>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-light uppercase tracking-[0.03em] text-gray-900 leading-[1.1] break-words mb-8 md:mb-10">
+                {artwork.title}
+              </h1>
+
+              <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">Artwork Details</h2>
+              <dl className="border-t border-gray-200 divide-y divide-gray-200 mb-10">
+                <div className="flex justify-between gap-6 py-3.5">
+                  <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">Medium</dt>
+                  <dd className="text-sm text-gray-900 font-light text-right">{artwork.medium}</dd>
                 </div>
-              </div>
-
-              {/* Technical Details */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Artwork Details</h2>
-                <div className="space-y-4">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Medium:</span>
-                    <span className="font-medium">{artwork.medium}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Dimensions:</span>
-                    <span className="font-medium">{artwork.size}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Price:</span>
-                    {artwork.available ? (
-                      <span className="font-bold text-lg text-blue-600">Price upon Inquiry</span>
-                    ) : (
-                      <span className="font-bold text-lg text-red-600">SOLD</span>
-                    )}
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Availability:</span>
-                    <span className={`font-medium ${artwork.available ? 'text-green-600' : 'text-red-600'}`}>
-                      {artwork.available ? 'Available' : 'Sold'}
-                    </span>
-                  </div>
+                <div className="flex justify-between gap-6 py-3.5">
+                  <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">Dimensions</dt>
+                  <dd className="text-sm text-gray-900 font-light text-right">{artwork.size}</dd>
                 </div>
-              </div>
+                <div className="flex justify-between gap-6 py-3.5">
+                  <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">Price</dt>
+                  <dd className="text-sm text-gray-900 text-right">
+                    {artwork.available ? 'Price upon Inquiry' : 'SOLD'}
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-6 py-3.5 border-b border-gray-200">
+                  <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">Availability</dt>
+                  <dd className="text-sm text-gray-900 font-light text-right">
+                    {artwork.available ? 'Available' : 'Sold'}
+                  </dd>
+                </div>
+              </dl>
 
-              {/* Description */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">About This Artwork</h2>
-                <p className="text-gray-700 leading-relaxed text-lg">{artwork.description}</p>
-              </div>
+              <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">About This Artwork</h2>
+              <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed mb-10">
+                {artwork.description}
+              </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => setShowInquiry(true)}
-                  className="flex-1 bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2"
-                >
-                  <MessageSquare size={20} />
-                  <span>Inquire About This Artwork</span>
+              <div className="flex flex-col gap-3 mb-12">
+                <button onClick={() => setShowInquiry(true)} className={`${primaryButtonClass} w-full`}>
+                  Inquire About This Artwork
                 </button>
-                <button
-                  onClick={() => setShowZoom(true)}
-                  className="flex-1 border-2 border-gray-900 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-900 hover:text-white transition-colors duration-200 flex items-center justify-center space-x-2"
-                >
-                  <ZoomIn size={20} />
-                  <span>View Full Details</span>
+                <button onClick={() => setShowZoom(true)} className={`${secondaryButtonClass} w-full`}>
+                  View Full Details
                 </button>
               </div>
 
-              {/* Collection Info */}
-              <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-6 text-white">
-                <h3 className="text-xl font-bold mb-2">Part of {artwork.series}</h3>
-                <p className="text-gray-300 mb-4">
+              <div className="border-t border-gray-200 pt-6">
+                <h3 className="text-[13px] md:text-sm tracking-[0.12em] uppercase text-gray-900 mb-2">
+                  Part of {artwork.series}
+                </h3>
+                <p className="text-sm text-gray-600 font-light leading-relaxed mb-4">
                   This artwork is part of a curated collection showcasing {artwork.series.toLowerCase()}.
                 </p>
                 <Link
                   href={localizedHref(locale, 'gallery', { query: { series: artwork.series } })}
-                  className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                  className={textLinkClass}
                 >
-                  View all artworks in this collection
-                  <ArrowLeft size={16} className="ml-2 rotate-180" />
+                  View all artworks in this collection →
                 </Link>
               </div>
             </motion.div>
@@ -313,7 +289,7 @@ export default function ArtworkDetailPage() {
 
       {/* Inquiry Modal */}
       {showInquiry && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <CollectorInquiry
             artworkTitle={artwork.title}
             artworkId={artwork.id}
@@ -328,9 +304,10 @@ export default function ArtworkDetailPage() {
           <div className="relative w-full max-w-6xl max-h-[90vh]">
             <button
               onClick={() => setShowVideo(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
+              className="absolute top-4 right-4 z-10 p-2 bg-white/15 hover:bg-white/30 transition-colors"
+              aria-label="Close video"
             >
-              <X size={24} className="text-white" />
+              <X size={22} className="text-white" />
             </button>
             <VideoPlayer
               videoUrl={artwork.video}
@@ -338,9 +315,9 @@ export default function ArtworkDetailPage() {
               className="w-full h-[80vh]"
             />
             <div className="mt-4 text-center text-white">
-              <h3 className="text-2xl font-bold mb-2">{artwork.title}</h3>
-              <p className="text-gray-300 text-lg">{artwork.series} • {artwork.year}</p>
-              <p className="text-gray-400 mt-2">{artwork.medium}</p>
+              <h3 className="text-sm tracking-[0.16em] uppercase mb-1">{artwork.title}</h3>
+              <p className="text-[11px] tracking-[0.16em] uppercase text-gray-400">{artwork.series} · {artwork.year}</p>
+              <p className="text-xs text-gray-500 mt-1 font-light">{artwork.medium}</p>
             </div>
           </div>
         </div>

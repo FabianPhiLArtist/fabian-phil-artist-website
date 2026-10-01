@@ -17,14 +17,6 @@ const CONTACT_SUBJECTS: Record<string, string> = {
   other: 'Other',
 }
 
-const BUDGETS: Record<string, string> = {
-  'under-1000': 'Under €1,000',
-  '1000-2500': '€1,000 - €2,500',
-  '2500-5000': '€2,500 - €5,000',
-  '5000-10000': '€5,000 - €10,000',
-  'over-10000': 'Over €10,000',
-}
-
 const TIMELINES: Record<string, string> = {
   immediate: 'Immediate',
   '1-3-months': '1-3 months',
@@ -119,7 +111,6 @@ function parseArtwork(data: Record<string, unknown>): Enquiry {
   const phone = text(data, 'phone', 'Phone number', { max: 40 })
   const location = text(data, 'location', 'Location', { max: 150 })
   const artworkOfInterest = text(data, 'artwork', 'Artwork of interest', { max: 300 })
-  const budget = option(data, 'budget', 'Budget range', BUDGETS)
   const timeline = option(data, 'timeline', 'Timeline', TIMELINES)
   const message = text(data, 'message', 'Message', { max: 5000, multiline: true })
 
@@ -151,7 +142,6 @@ function parseArtwork(data: Record<string, unknown>): Enquiry {
       ['Email', replyTo],
       ['Phone', phone],
       ['Location', location],
-      ['Budget range', budget],
       ['Timeline', timeline],
     ],
     message,
