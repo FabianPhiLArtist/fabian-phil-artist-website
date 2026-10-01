@@ -46,14 +46,37 @@ const exhibitions: Exhibition[] = [
       },
     ],
     mediaHeading: 'Exhibition Photos',
-    leadImage: { src: '/images/exhibitions/Alliance 9.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
+    leadImage: { src: '/images/exhibitions/Alliance 8.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
     images: [
       { src: '/images/exhibitions/Alliance 4.jpg', alt: 'Installation view of Fabian PhiL portraits in Beyond the Gaze', orientation: 'landscape' },
       { src: '/images/exhibitions/Alliance 7.jpg', alt: 'Visitors looking closely at a Fabian PhiL artwork in Beyond the Gaze', orientation: 'landscape' },
       { src: '/images/exhibitions/Alliance 5.jpg', alt: 'Beyond the Gaze exhibition wall text at Alliance Française Dubai', orientation: 'portrait' },
-      { src: '/images/exhibitions/Alliance 12.jpg', alt: 'Visitors standing beside Fabian PhiL artworks, showing their scale', orientation: 'portrait' },
+      { src: '/images/exhibitions/Alliance Francaise 1.jpeg', alt: 'Wall of Fabian PhiL Pop glasses portraits around Oh Dear! in Beyond the Gaze', orientation: 'portrait' },
+      { src: '/images/exhibitions/Alliance 6.jpg', alt: 'Fabian PhiL artworks including Runaway Mood hung along the gallery wall in Beyond the Gaze', orientation: 'landscape' },
     ],
     videos: [],
+  },
+  {
+    title: 'Noor Royal Gallery',
+    date: 'March – December 2026',
+    location: 'Dubai, UAE',
+    sections: [
+      {
+        heading: 'About the presentation',
+        text: "A gallery presentation of Fabian PhiL's work at Noor Royal Gallery in Dubai.",
+      },
+    ],
+    mediaHeading: 'Gallery Photos & Video',
+    leadImage: { src: '/images/exhibitions/Noor 7.jpg', alt: 'Noor Royal Gallery interior with Fabian PhiL artworks installed' },
+    images: [
+      { src: '/images/exhibitions/Noor 1.jpg', alt: 'Fabian PhiL outside the entrance of Noor Royal Gallery in Dubai', orientation: 'portrait' },
+      { src: '/images/exhibitions/Noor 5.jpg', alt: 'Fabian PhiL beside his artwork Ooh! at Noor Royal Gallery', orientation: 'portrait' },
+      { src: '/images/exhibitions/Noor 4.jpg', alt: 'Fabian PhiL between Wanted Million Dollar Toon Fight and Wanted for Loving Art at Noor Royal Gallery', orientation: 'landscape' },
+      { src: '/images/exhibitions/Noor 2.jpg', alt: 'Fabian PhiL in front of his Andy Warhol 100 USD bill triptych at Noor Royal Gallery', orientation: 'landscape' },
+    ],
+    videos: [
+      { src: '/videos/exhibitions/Noor Gallery 1.mp4', title: 'Noor Royal Gallery - Gallery view', label: 'In the gallery' },
+    ],
   },
   {
     title: 'DIFC Art Night 2025',
@@ -258,24 +281,27 @@ const ExhibitionsPage = () => {
                     </button>
                   )}
                   <div className={`grid gap-3 md:gap-4 ${exhibition.leadImage ? 'grid-cols-2' : imageGridClass(exhibition.images.length)}`}>
-                    {exhibition.images.map((image) => (
+                    {exhibition.images.map((image, imageIndex) => {
+                      const spansRow = !!exhibition.leadImage && exhibition.images.length % 2 === 1 && imageIndex === exhibition.images.length - 1
+                      return (
                       <button
                         key={image.src}
                         type="button"
                         onClick={() => openImageModal(image.src, image.alt, exhibition.title)}
                         className={`relative block w-full bg-gray-100 overflow-hidden hover:opacity-90 transition-opacity ${
-                          image.orientation === 'landscape' ? 'aspect-[4/3]' : 'aspect-[3/4]'
+                          spansRow ? 'col-span-2 aspect-[16/9]' : image.orientation === 'landscape' ? 'aspect-[4/3]' : 'aspect-[3/4]'
                         }`}
                       >
                         <Image
                           src={image.src}
                           alt={image.alt}
                           fill
-                          sizes={exhibition.leadImage ? '(max-width: 1024px) 50vw, 30vw' : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 22vw'}
+                          sizes={spansRow ? '(max-width: 1024px) 100vw, 60vw' : exhibition.leadImage ? '(max-width: 1024px) 50vw, 30vw' : '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 22vw'}
                           className="object-cover"
                         />
                       </button>
-                    ))}
+                      )
+                    })}
                   </div>
 
                   {exhibition.videos.length > 0 && (
