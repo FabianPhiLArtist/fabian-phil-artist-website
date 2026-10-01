@@ -22,7 +22,7 @@ const CVPage = () => {
               <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-2xl border-4 border-white/20">
                 <Image
                   src="/images/personal/Photo Fabian PhiL artist.jpg"
-                  alt="Fabian Phil Artist"
+                  alt="Fabian PhiL Artist"
                   fill
                   className="object-cover"
                   style={{ objectPosition: '15% 40%', transform: 'scale(1.2)' }}

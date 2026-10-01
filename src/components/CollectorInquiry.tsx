@@ -1,8 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, MessageSquare, Send, X } from 'lucide-react'
+import { Mail, Phone, Send, X } from 'lucide-react'
+import { submitEnquiry } from '@/lib/submitEnquiry'
+import { WHATSAPP_URL, whatsappHref } from '@/lib/whatsapp'
 
 interface CollectorInquiryProps {
   artworkTitle?: string
@@ -19,36 +21,40 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
     artwork: artworkTitle || '',
     budget: '',
     timeline: '',
-    location: ''
+    location: '',
+    website: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const startedAt = useRef(0)
+  const sending = useRef(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  useEffect(() => {
+    startedAt.current = Date.now()
+  }, [])
+
+  const whatsappFallback = artworkTitle
+    ? whatsappHref(`Hello Fabian, I would like to enquire about the artwork "${artworkTitle}".`)
+    : WHATSAPP_URL
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (sending.current) return
+    sending.current = true
     setIsSubmitting(true)
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
+    setErrorMessage('')
+
+    const result = await submitEnquiry({ type: 'artwork', artworkId, ...formData }, startedAt.current)
+    sending.current = false
     setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: '',
-        artwork: artworkTitle || '',
-        budget: '',
-        timeline: '',
-        location: ''
-      })
-      if (onClose) onClose()
-    }, 3000)
+
+    if (result.ok) {
+      setIsSubmitted(true)
+      return
+    }
+    setErrorMessage(result.message)
+    if (result.field) document.getElementById(result.field)?.focus()
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -77,6 +83,15 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         <p className="text-sm text-gray-500">
           You can also reach Fabian directly at fabianphilartist@gmail.com or +971 567594229
         </p>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="mt-6 bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200"
+          >
+            Close
+          </button>
+        )}
       </motion.div>
     )
   }
@@ -116,7 +131,20 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-6">
+        <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+          <label htmlFor="inquiry-website">Leave this field empty</label>
+          <input
+            type="text"
+            id="inquiry-website"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={formData.website}
+            onChange={handleChange}
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -127,6 +155,8 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               id="name"
               name="name"
               required
+              maxLength={150}
+              autoComplete="name"
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -143,6 +173,8 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               id="email"
               name="email"
               required
+              maxLength={254}
+              autoComplete="email"
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -160,6 +192,8 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               type="tel"
               id="phone"
               name="phone"
+              maxLength={40}
+              autoComplete="tel"
               value={formData.phone}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -175,6 +209,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               type="text"
               id="location"
               name="location"
+              maxLength={150}
               value={formData.location}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -191,6 +226,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
             type="text"
             id="artwork"
             name="artwork"
+            maxLength={300}
             value={formData.artwork}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -248,6 +284,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
             id="message"
             name="message"
             rows={4}
+            maxLength={5000}
             value={formData.message}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -255,10 +292,25 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
           />
         </div>
 
+        {errorMessage && (
+          <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+            <p>{errorMessage}</p>
+            <a
+              href={whatsappFallback}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-2 font-semibold text-green-700 hover:text-green-900 underline"
+            >
+              Message Fabian on WhatsApp
+            </a>
+          </div>
+        )}
+
         <div className="flex flex-col sm:flex-row gap-4">
           <button
             type="submit"
             disabled={isSubmitting}
+            aria-busy={isSubmitting}
             className="flex-1 bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
           >
             {isSubmitting ? (
@@ -275,14 +327,10 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
           </button>
 
           <div className="flex space-x-4 text-sm text-gray-500">
-            <div className="flex items-center space-x-1">
-              <Mail size={16} />
-              <span>hello@fabianphil.com</span>
-            </div>
-            <div className="flex items-center space-x-1">
+            <a href={whatsappFallback} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 hover:text-green-600 transition-colors">
               <Phone size={16} />
-              <span>+33 1 23 45 67 89</span>
-            </div>
+              <span>Prefer WhatsApp?</span>
+            </a>
           </div>
         </div>
       </form>

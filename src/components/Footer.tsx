@@ -19,7 +19,7 @@ const Footer = ({ locale }: { locale: Locale }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
             <p className="text-sm tracking-[0.18em] uppercase text-gray-900 mb-3">
-              Fabian Phil
+              Fabian PhiL
             </p>
             <p className="text-sm font-light text-gray-600 leading-relaxed">
               Kinetic pop art on layered plexiglass.

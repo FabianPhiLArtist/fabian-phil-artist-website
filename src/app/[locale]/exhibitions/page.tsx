@@ -461,11 +461,11 @@ const ExhibitionsPage = () => {
                     </div>
                     <div 
                       className="relative h-24 rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-lg"
-                      onClick={() => openImageModal('/images/about/Fabian Phil Artist overview.png', 'Fabian Phil Artist overview', 'Artmosphere Magazine Feature')}
+                      onClick={() => openImageModal('/images/about/Fabian Phil Artist overview.png', 'Fabian PhiL Artist overview', 'Artmosphere Magazine Feature')}
                     >
                       <Image
                         src="/images/about/Fabian Phil Artist overview.png"
-                        alt="Fabian Phil Artist overview"
+                        alt="Fabian PhiL Artist overview"
                         fill
                         className="object-cover"
                       />

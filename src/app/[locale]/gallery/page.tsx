@@ -9,8 +9,8 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'gallery',
-    title: 'Gallery - Fabian Phil Artist',
-    description: 'Explore the complete collection of kinetic pop art by Fabian Phil. Browse by series: Pandas, F1, and Wanted Series.',
+    title: 'Gallery - Fabian PhiL Artist',
+    description: 'Explore the complete collection of kinetic pop art by Fabian PhiL. Browse by series: Pandas, F1, and Wanted Series.',
   })
 }
 

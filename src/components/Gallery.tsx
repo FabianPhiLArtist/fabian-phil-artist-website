@@ -93,7 +93,7 @@ const Gallery = () => {
                 Gallery
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl">
-                Explore the complete collection of kinetic pop art by Fabian Phil. 
+                Explore the complete collection of kinetic pop art by Fabian PhiL. 
                 Each piece represents a unique fusion of movement, color, and contemporary culture.
               </p>
               {(activeGroup || selectedSeries !== 'all') && (
@@ -110,14 +110,14 @@ const Gallery = () => {
               <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-lg">
                 <Image
                   src="/images/personal/Photo Fabian PhiL artist.jpg"
-                  alt="Fabian Phil Artist"
+                  alt="Fabian PhiL Artist"
                   fill
                   className="object-cover"
                   style={{ objectPosition: '15% 40%', transform: 'scale(1.2)' }}
                 />
               </div>
               <p className="text-center text-sm text-gray-600 mt-2 font-medium">
-                Fabian Phil Artist
+                Fabian PhiL Artist
               </p>
             </div>
           </motion.div>

@@ -8,7 +8,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'faq',
-    title: 'Common Questions - Fabian Phil Artist',
+    title: 'Common Questions - Fabian PhiL Artist',
     description:
       'Answers about artwork availability, prices, sizes, commissions, galleries and collaborations with Fabian PhiL.',
   })

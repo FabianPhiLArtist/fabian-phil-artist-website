@@ -1,10 +1,56 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Instagram, Facebook, MessageSquare } from 'lucide-react'
+import { Mail, Phone, MapPin, Instagram, MessageSquare } from 'lucide-react'
+import { submitEnquiry } from '@/lib/submitEnquiry'
+import { WHATSAPP_URL } from '@/lib/whatsapp'
+
+const emptyForm = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  subject: '',
+  message: '',
+  website: '',
+}
 
 const ContactPage = () => {
+  const [formData, setFormData] = useState(emptyForm)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+  const startedAt = useRef(0)
+  const sending = useRef(false)
+
+  useEffect(() => {
+    startedAt.current = Date.now()
+  }, [])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (sending.current) return
+    sending.current = true
+    setStatus('sending')
+    setErrorMessage('')
+
+    const result = await submitEnquiry({ type: 'contact', ...formData }, startedAt.current)
+    sending.current = false
+
+    if (result.ok) {
+      setStatus('sent')
+      setFormData(emptyForm)
+      return
+    }
+    setStatus('error')
+    setErrorMessage(result.message)
+    if (result.field) document.getElementById(result.field)?.focus()
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 pt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,7 +152,7 @@ const ContactPage = () => {
                       rel="noopener noreferrer"
                       className="block text-blue-600 hover:text-blue-800 transition-colors duration-200"
                     >
-                      Fabian Phil Artist
+                      Fabian PhiL Artist
                     </a>
                   </div>
                   <p className="text-gray-600 mt-1">Follow for latest updates</p>
@@ -124,7 +170,43 @@ const ContactPage = () => {
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Send a Message</h2>
             
-            <form className="space-y-6">
+            {status === 'sent' ? (
+              <div role="status" className="text-center py-10">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Message sent</h3>
+                <p className="text-gray-600 mb-6">
+                  Thank you for getting in touch. Fabian will reply to you by email.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    startedAt.current = Date.now()
+                    setStatus('idle')
+                  }}
+                  className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
+            <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-6">
+              <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                <label htmlFor="contact-website">Leave this field empty</label>
+                <input
+                  type="text"
+                  id="contact-website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={handleChange}
+                />
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
@@ -134,6 +216,11 @@ const ContactPage = () => {
                     type="text"
                     id="firstName"
                     name="firstName"
+                    required
+                    maxLength={100}
+                    autoComplete="given-name"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                     placeholder="Your first name"
                   />
@@ -146,6 +233,10 @@ const ContactPage = () => {
                     type="text"
                     id="lastName"
                     name="lastName"
+                    maxLength={100}
+                    autoComplete="family-name"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                     placeholder="Your last name"
                   />
@@ -160,6 +251,11 @@ const ContactPage = () => {
                   type="email"
                   id="email"
                   name="email"
+                  required
+                  maxLength={254}
+                  autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                   placeholder="your.email@example.com"
                 />
@@ -173,6 +269,10 @@ const ContactPage = () => {
                   type="tel"
                   id="phone"
                   name="phone"
+                  maxLength={40}
+                  autoComplete="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                   placeholder="+971 50 123 4567"
                 />
@@ -185,6 +285,8 @@ const ContactPage = () => {
                 <select
                   id="subject"
                   name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                 >
                   <option value="">Select a subject</option>
@@ -204,19 +306,49 @@ const ContactPage = () => {
                   id="message"
                   name="message"
                   rows={6}
+                  required
+                  maxLength={5000}
+                  value={formData.message}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                   placeholder="Tell me about your interest in my art, specific artworks you're interested in, or any questions you have..."
                 ></textarea>
               </div>
 
+              {status === 'error' && (
+                <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+                  <p>{errorMessage}</p>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 font-semibold text-green-700 hover:text-green-900 underline"
+                  >
+                    Message Fabian on WhatsApp
+                  </a>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2"
+                disabled={status === 'sending'}
+                aria-busy={status === 'sending'}
+                className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <MessageSquare size={20} />
-                <span>Send Message</span>
+                {status === 'sending' ? (
+                  <>
+                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <MessageSquare size={20} />
+                    <span>Send Message</span>
+                  </>
+                )}
               </button>
             </form>
+            )}
 
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-800">

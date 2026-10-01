@@ -43,7 +43,7 @@ const Navigation = ({ locale }: { locale: Locale }) => {
             href={localizedHref(locale, 'home')}
             className="text-lg sm:text-xl font-medium tracking-[0.12em] uppercase text-gray-900"
           >
-            Fabian Phil
+            Fabian PhiL
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">

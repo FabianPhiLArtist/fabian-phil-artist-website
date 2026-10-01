@@ -8,7 +8,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'cv',
-    title: 'CV - Fabian Phil Artist',
+    title: 'CV - Fabian PhiL Artist',
   })
 }
 
