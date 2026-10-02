@@ -12,7 +12,7 @@ export interface Collection {
   order?: number[]
 }
 
-const signatureWorkIds = [8, 10, 11, 12, 7, 6, 5]
+const signatureWorkIds = [8, 10, 11, 12, 7, 6, 5, 13, 9, 14]
 const toonClashIds = [33, 30, 32, 31, 26, 27]
 
 export const collections: Collection[] = [
