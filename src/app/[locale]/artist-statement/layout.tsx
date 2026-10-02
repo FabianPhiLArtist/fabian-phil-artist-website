@@ -8,6 +8,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'artist-statement',
+    noIndex: true,
     title: 'Artist Statement - Fabian PhiL Artist',
   })
 }

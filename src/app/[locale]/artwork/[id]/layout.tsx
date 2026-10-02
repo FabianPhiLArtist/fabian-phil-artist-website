@@ -2,8 +2,10 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { artworks } from '@/data/artworks'
+import JsonLd from '@/components/JsonLd'
 import { isLocale } from '@/i18n/locales'
 import { pageMetadata } from '@/i18n/seo'
+import { artworkStructuredData } from '@/lib/structuredData'
 
 type ArtworkLayoutProps = {
   children: ReactNode
@@ -12,6 +14,10 @@ type ArtworkLayoutProps = {
 
 function findArtwork(id: string) {
   return artworks.find((art) => String(art.id) === id)
+}
+
+export function generateStaticParams() {
+  return artworks.map((artwork) => ({ id: String(artwork.id) }))
 }
 
 export function generateMetadata({ params }: ArtworkLayoutProps): Metadata {
@@ -28,26 +34,26 @@ export function generateMetadata({ params }: ArtworkLayoutProps): Metadata {
     }
   }
 
-  const metadata = pageMetadata({
+  return pageMetadata({
     locale,
     route: 'artwork',
     id: params.id,
-    title: `${artwork.title} - Fabian PhiL Artist`,
+    title: `${artwork.title} | Fabian PhiL`,
+    description: `${artwork.title} (${artwork.year}) by Fabian PhiL. ${artwork.medium}, ${artwork.size}.`,
+    image: { url: artwork.image, alt: `${artwork.title}, layered plexiglass artwork by Fabian PhiL` },
   })
-
-  return {
-    ...metadata,
-    openGraph: {
-      ...metadata.openGraph,
-      title: `${artwork.title} - Fabian PhiL Artist`,
-    },
-  }
 }
 
 export default function ArtworkLayout({ children, params }: ArtworkLayoutProps) {
-  if (!findArtwork(params.id)) {
+  const artwork = findArtwork(params.id)
+  if (!artwork) {
     notFound()
   }
 
-  return children
+  return (
+    <>
+      <JsonLd data={artworkStructuredData(artwork)} />
+      {children}
+    </>
+  )
 }

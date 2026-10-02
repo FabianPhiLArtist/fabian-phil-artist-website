@@ -4,8 +4,10 @@ export interface Artwork {
   series: string
   additionalSeries?: string[]
   image: string
+  cardImage?: string
   images?: string[]
   video?: string
+  extraVideos?: string[]
   year: string
   medium: string
   size: string
@@ -89,6 +91,13 @@ export const artworks: Artwork[] = [
     title: "100 USD Mick Jagger",
     series: "100 USD Bill Collection",
     image: "/images/artworks/Fabian PhiL_100USD Mick Jagger_2022_54000aed.jpg",
+    cardImage: "/images/artworks/Jagger centre.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL_100USD Mick Jagger_2022_54000aed.jpg",
+      "/images/artworks/Jagger Left.jpg",
+      "/images/artworks/Jagger centre.jpg",
+      "/images/artworks/Jagger Right.jpg"
+    ],
     video: "/videos/artworks/Mick Jagger 100 USD Bill.mov",
     year: "2022",
     medium: "Tryptic. Acrylic paint on two acrylic sheets",
@@ -103,6 +112,13 @@ export const artworks: Artwork[] = [
     title: "100 USD Andy Warhol",
     series: "100 USD Bill Collection",
     image: "/images/artworks/Fabian PhiL Andy Warhol 100 USD Bill 2017.png",
+    cardImage: "/images/artworks/100USD Andy Centre.jpg",
+    images: [
+      "/images/artworks/Fabian PhiL Andy Warhol 100 USD Bill 2017.png",
+      "/images/artworks/100USD Andy Left.jpg",
+      "/images/artworks/100USD Andy Centre.jpg",
+      "/images/artworks/100USD Andy Right.jpg"
+    ],
     video: "/videos/artworks/Andy Warhol 100 USD Bill.MOV",
     year: "2017",
     medium: "Tryptic. Acrylic paint on two acrylic sheets",
@@ -429,34 +445,7 @@ export const artworks: Artwork[] = [
     category: 'panda-pop',
   },
 
-  // Toon Clash Collection (3 artworks)
-  {
-    id: 26,
-    title: "Wanted for Toon KnockOut",
-    series: "Toon Clash Collection",
-    image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg",
-    video: "/videos/artworks/Wanted for Toon KnockOut.mov",
-    year: "2024",
-    medium: "Digital design printed on two acrylic sheets",
-    size: "70x70cm",
-    price: "€3,000",
-    description: "A revolutionary mixed media piece featuring cartoon boxing with Clint Eastwood. Digital design is printed on acrylic sheets, then enhanced with traditional painting techniques and collage elements, creating a unique fusion of digital and analog art.",
-    available: true,
-    category: 'digital-fusion',
-  },
-  {
-    id: 27,
-    title: "Fame or Peace",
-    series: "Toon Clash Collection",
-    image: "/images/artworks/Fabian PhiL Fame or Peace 2024.png",
-    year: "2024",
-    medium: "Digital design printed on two acrylic sheets",
-    size: "100x70cm",
-    price: "€3,000",
-    description: "An exploration of the eternal choice between fame and inner peace. Digital design printed on acrylic sheets is enhanced with traditional painting techniques, creating a contemplative piece that questions the price of success and the value of tranquility.",
-    available: true,
-    category: 'digital-fusion',
-  },
+  // Toon Clash Collection (4 artworks)
   {
     id: 30,
     title: "Wanted Million Dollar Toon Fight",
@@ -475,6 +464,53 @@ export const artworks: Artwork[] = [
     available: true,
     category: 'digital-fusion',
   },
+  {
+    id: 33,
+    title: "Runaway Mood",
+    series: "Toon Clash Collection",
+    image: "/images/artworks/Runaway Mood 2026.jpeg",
+    images: [
+      "/images/artworks/Runaway Mood 2026.jpeg",
+      "/images/artworks/Runaway Mood 3.jpg",
+      "/images/artworks/Runaway Mood 4.jpg"
+    ],
+    video: "/videos/artworks/Runaway Mood2.mp4",
+    extraVideos: ["/videos/artworks/Runaway Mood Outside Short.mp4"],
+    year: "2026",
+    medium: "Paints, digital design printed on two acrylic sheets",
+    size: "100x70cm",
+    price: "Price upon inquiry",
+    description: "From the Toons & Pop Icon series: paints and digital design printed on two acrylic sheets. Unique original piece.",
+    available: true,
+    category: 'digital-fusion',
+  },
+  {
+    id: 27,
+    title: "Fame or Peace",
+    series: "Toon Clash Collection",
+    image: "/images/artworks/Fabian PhiL Fame or Peace 2024.png",
+    year: "2024",
+    medium: "Digital design printed on two acrylic sheets",
+    size: "100x70cm",
+    price: "€3,000",
+    description: "An exploration of the eternal choice between fame and inner peace. Digital design printed on acrylic sheets is enhanced with traditional painting techniques, creating a contemplative piece that questions the price of success and the value of tranquility.",
+    available: true,
+    category: 'digital-fusion',
+  },
+  {
+    id: 26,
+    title: "Wanted for Toon KnockOut",
+    series: "Toon Clash Collection",
+    image: "/images/artworks/Fabian PhiL_Wanted for Toon KO_2024.jpg",
+    video: "/videos/artworks/Wanted for Toon KnockOut.mov",
+    year: "2024",
+    medium: "Digital design printed on two acrylic sheets",
+    size: "70x70cm",
+    price: "€3,000",
+    description: "A revolutionary mixed media piece featuring cartoon boxing with Clint Eastwood. Digital design is printed on acrylic sheets, then enhanced with traditional painting techniques and collage elements, creating a unique fusion of digital and analog art.",
+    available: true,
+    category: 'digital-fusion',
+  },
 
   // F1 Collection
   {
@@ -488,6 +524,7 @@ export const artworks: Artwork[] = [
       "/images/artworks/Wanted for Speeding in Monza Angle2.jpeg"
     ],
     video: "/videos/artworks/Wanted for Speeding in Monza.mp4",
+    extraVideos: ["/videos/artworks/Cleclerc Monza 1.mp4"],
     year: "2026",
     medium: "Paints, digital design printed on two acrylic sheets",
     size: "70x70cm",
@@ -501,6 +538,14 @@ export const artworks: Artwork[] = [
     title: "Wanted Ayrton vs Toons Racing",
     series: "F1 Collection",
     image: "/images/artworks/Wanted Ayrton vs Toons Racing 2026.jpg",
+    images: [
+      "/images/artworks/Wanted Ayrton vs Toons Racing 2026.jpg",
+      "/images/artworks/Senna 10.jpg",
+      "/images/artworks/Senna 12.jpg",
+      "/images/artworks/Senna 13.jpg"
+    ],
+    video: "/videos/artworks/Senna 2.mp4",
+    extraVideos: ["/videos/artworks/Senna Led 5.mp4"],
     year: "2026",
     medium: "Paints, digital design printed on two acrylic sheets",
     size: "70x70cm",
@@ -531,5 +576,5 @@ export const series = [
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
   { name: 'Panda Pop Collection', count: 3, category: 'panda-pop' },
-  { name: 'Toon Clash Collection', count: 3, category: 'digital-fusion' }
+  { name: 'Toon Clash Collection', count: 4, category: 'digital-fusion' }
 ]

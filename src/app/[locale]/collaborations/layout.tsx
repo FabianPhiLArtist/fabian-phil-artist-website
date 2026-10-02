@@ -8,9 +8,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'collaborations',
-    title: 'Collaborations - Fabian PhiL Artist',
+    title: 'Art for Interiors & Design Projects | Fabian PhiL Dubai',
     description:
-      'Selected collaborations and commissions for distinctive interiors and significant residential, hospitality or architectural projects.',
+      'Original contemporary art and selected commissions by Fabian PhiL for interior designers, architects, luxury residences and hospitality projects in Dubai and internationally.',
   })
 }
 

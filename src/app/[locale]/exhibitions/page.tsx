@@ -6,6 +6,10 @@ import { Play } from 'lucide-react'
 import SimpleImageModal from '@/components/SimpleImageModal'
 import VideoModal from '@/components/VideoModal'
 import KineticClip from '@/components/home/KineticClip'
+import Link from 'next/link'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
+import { textLinkClass } from '@/lib/formStyles'
 
 interface ExhibitionImage {
   src: string
@@ -86,11 +90,11 @@ const exhibitions: Exhibition[] = [
     sections: [
       {
         heading: 'About DIFC Art Night',
-        text: "DIFC Art Night is a prestigious event that transforms the financial district into a vibrant art gallery. It brings together established and emerging artists to showcase their work in one of Dubai's most iconic locations, attracting art collectors, professionals, and art enthusiasts.",
+        text: 'DIFC Art Night is an art event held across Dubai International Financial Centre, presenting work by established and emerging artists.',
       },
       {
-        heading: 'My Participation',
-        text: 'I exhibited my latest kinetic pop art collection, featuring works from the "Pop glasses" series. The unique lighting effects of my fluorescent glasses created a mesmerizing display that captivated visitors and demonstrated the innovative potential of kinetic art in contemporary settings.',
+        heading: 'Participation',
+        text: 'Fabian presented kinetic pop artworks from the Pop glasses series, including Maybe I Will See Him, You Call This Art…? and Wanted Smoking Rock Star.',
       },
     ],
     mediaHeading: 'Exhibition Photos & Videos',
@@ -113,11 +117,11 @@ const exhibitions: Exhibition[] = [
     sections: [
       {
         heading: 'About World Art Dubai',
-        text: "World Art Dubai is the Middle East's largest contemporary art fair, attracting thousands of art collectors, galleries, and art enthusiasts from around the world. It's a prestigious platform for emerging and established artists to showcase their work.",
+        text: 'World Art Dubai is a contemporary art fair held at Dubai World Trade Centre, presenting emerging and established artists and galleries.',
       },
       {
-        heading: 'My Participation',
-        text: 'I exhibited my kinetic art collection, featuring works from the "Expressive Emotion" and "Pop glasses" series. The interactive nature of my artworks created a unique experience for visitors, with many collectors drawn to the eye-following optical illusions and fluorescent effects.',
+        heading: 'Participation',
+        text: 'Fabian presented kinetic artworks from the Expressive Emotion and Pop glasses series.',
       },
     ],
     mediaHeading: 'Exhibition Photos & Videos',
@@ -136,11 +140,11 @@ const exhibitions: Exhibition[] = [
     sections: [
       {
         heading: 'About Artmosphere',
-        text: 'Artmosphere is a leading art magazine that features contemporary artists, exhibitions, and art trends. Being published in Artmosphere is a significant recognition in the art world and helps artists reach a broader audience of collectors and art enthusiasts.',
+        text: 'Artmosphere is an art magazine covering contemporary artists, exhibitions and art trends.',
       },
       {
-        heading: 'My Feature',
-        text: 'I was featured in an article discussing the innovation of kinetic art and the unique techniques I use in my work. The article highlighted my transition from corporate life to art and the distinctive optical effects in my pieces.',
+        heading: 'Feature',
+        text: 'Fabian was featured in an article on kinetic art, discussing his layered plexiglass technique and the optical effects in his work.',
       },
     ],
     mediaHeading: 'Magazine Feature',
@@ -160,6 +164,7 @@ const imageGridClass = (count: number) => {
 }
 
 const ExhibitionsPage = () => {
+  const locale = useLocale()
   const [modalImage, setModalImage] = useState<{
     src: string
     alt: string
@@ -192,10 +197,10 @@ const ExhibitionsPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="max-w-3xl mb-14 md:mb-20">
           <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-6">
-            Exhibitions & Publications
+            Exhibitions
           </h1>
-          <p className="text-2xl md:text-3xl font-light uppercase tracking-[0.04em] text-gray-900 leading-snug">
-            Showcasing Kinetic Art on the World Stage
+          <p className="text-xl md:text-2xl font-light text-gray-900 leading-relaxed">
+            Selected exhibitions and gallery presentations of Fabian PhiL&apos;s contemporary and kinetic pop art in Dubai.
           </p>
         </header>
 
@@ -333,6 +338,12 @@ const ExhibitionsPage = () => {
               </article>
             )
           })}
+        </div>
+
+        <div className="mt-20 md:mt-28 border-t border-gray-200 pt-8">
+          <Link href={localizedHref(locale, 'gallery')} className={textLinkClass}>
+            View the artworks →
+          </Link>
         </div>
       </div>
 

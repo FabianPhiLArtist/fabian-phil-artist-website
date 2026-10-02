@@ -11,6 +11,7 @@ export type FaqId =
   | 'price'
   | 'sizes'
   | 'galleries'
+  | 'viewing'
   | 'artist-book'
   | 'contact'
   | 'commissions'
@@ -91,6 +92,23 @@ const FaqAccordion = ({ only }: Props) => {
             Currently, Fabian exhibits his works at Noor Royal Gallery (2026, Mar. – Dec.) and at Alliance Française Dubai (30 September – 14 October 2026).
           </p>
         </>
+      ),
+    },
+    {
+      id: 'viewing',
+      q: 'Where can I see Fabian PhiL’s artworks in Dubai?',
+      a: (
+        <p>
+          Current exhibitions and gallery presentations are listed on the{' '}
+          <Link href={localizedHref(locale, 'exhibitions')} className={linkClass}>
+            Exhibitions
+          </Link>{' '}
+          page. For other viewing enquiries,{' '}
+          <Link href={localizedHref(locale, 'contact')} className={linkClass}>
+            contact the studio
+          </Link>{' '}
+          directly.
+        </p>
       ),
     },
     {

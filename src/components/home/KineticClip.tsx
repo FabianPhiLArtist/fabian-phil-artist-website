@@ -6,9 +6,10 @@ type Props = {
   src: string
   label: string
   onError?: () => void
+  onDimensions?: (width: number, height: number) => void
 }
 
-const KineticClip = ({ src, label, onError }: Props) => {
+const KineticClip = ({ src, label, onError, onDimensions }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [shouldLoad, setShouldLoad] = useState(false)
 
@@ -68,6 +69,10 @@ const KineticClip = ({ src, label, onError }: Props) => {
       preload="none"
       className="absolute inset-0 w-full h-full object-contain bg-black"
       aria-label={label}
+      onLoadedMetadata={(event) => {
+        const { videoWidth, videoHeight } = event.currentTarget
+        if (onDimensions && videoWidth && videoHeight) onDimensions(videoWidth, videoHeight)
+      }}
     >
       {shouldLoad && <source src={src} type="video/mp4" onError={onError} />}
     </video>

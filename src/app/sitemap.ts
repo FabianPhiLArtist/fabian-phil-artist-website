@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { artworks } from '@/data/artworks'
+import { collections } from '@/data/collections'
 import { SITE_URL } from '@/lib/site'
 import { localizedPath, type AppRoute } from '@/i18n/pathnames'
 import { isFrenchRouteReady } from '@/i18n/readiness'
@@ -9,21 +10,17 @@ const englishStaticRoutes: AppRoute[] = [
   'home',
   'gallery',
   'about',
-  'artist-statement',
-  'cv',
   'exhibitions',
-  'collectors',
-  'professionals',
   'collaborations',
-  'faq',
-  'price-inquiry',
   'contact',
+  'price-inquiry',
+  'faq',
 ]
 
 function sitemapEntry(
   locale: Locale,
   route: AppRoute,
-  id?: number
+  id?: string | number
 ): MetadataRoute.Sitemap[number] {
   const path = localizedPath(locale, route, id !== undefined ? { id } : undefined)
   return {
@@ -31,22 +28,18 @@ function sitemapEntry(
   }
 }
 
+function entriesFor(route: AppRoute, id?: string | number) {
+  const entries = [sitemapEntry('en', route, id)]
+  if (isFrenchRouteReady(route)) {
+    entries.push(sitemapEntry('fr', route, id))
+  }
+  return entries
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticEntries = englishStaticRoutes.flatMap((route) => {
-    const entries = [sitemapEntry('en', route)]
-    if (isFrenchRouteReady(route)) {
-      entries.push(sitemapEntry('fr', route))
-    }
-    return entries
-  })
+  const staticEntries = englishStaticRoutes.flatMap((route) => entriesFor(route))
+  const collectionEntries = collections.flatMap((collection) => entriesFor('collection', collection.slug))
+  const artworkEntries = artworks.flatMap((artwork) => entriesFor('artwork', artwork.id))
 
-  const artworkEntries = artworks.flatMap((artwork) => {
-    const entries = [sitemapEntry('en', 'artwork', artwork.id)]
-    if (isFrenchRouteReady('artwork')) {
-      entries.push(sitemapEntry('fr', 'artwork', artwork.id))
-    }
-    return entries
-  })
-
-  return [...staticEntries, ...artworkEntries]
+  return [...staticEntries, ...collectionEntries, ...artworkEntries]
 }

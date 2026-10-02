@@ -8,7 +8,10 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'exhibitions',
-    title: 'Exhibitions - Fabian PhiL Artist',
+    title: 'Art Exhibitions in Dubai | Fabian PhiL',
+    description:
+      'Explore exhibitions and gallery presentations by French contemporary artist Fabian PhiL in Dubai, including Alliance Française, Noor Royal Gallery and World Art Dubai.',
+    image: { url: '/images/exhibitions/Alliance 8.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
   })
 }
 

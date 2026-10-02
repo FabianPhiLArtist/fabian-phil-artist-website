@@ -14,6 +14,7 @@ const frenchRouteReady: Record<AppRoute, boolean> = {
   'price-inquiry': false,
   contact: false,
   artwork: false,
+  collection: false,
 }
 
 export function isFrenchRouteReady(route: AppRoute): boolean {

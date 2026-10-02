@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SITE_URL } from '@/lib/site'
+import { SITE_URL, SITE_NAME, DEFAULT_SHARE_IMAGE } from '@/lib/site'
 import type { Locale } from './locales'
 import { localizedPath, type AppRoute } from './pathnames'
 import { isFrenchRouteReady } from './readiness'
@@ -27,27 +27,44 @@ export function pageMetadata({
   title,
   description,
   id,
+  image,
+  noIndex = false,
 }: {
   locale: Locale
   route: AppRoute
   title?: string
   description?: string
   id?: string | number
+  image?: { url: string; alt: string }
+  noIndex?: boolean
 }): Metadata {
   const path = localizedPath(locale, route, { id })
+  const canonical = new URL(path, SITE_URL).toString()
   const frenchReady = isFrenchRouteReady(route)
   const shouldNoIndexFrench = locale === 'fr' && !frenchReady
+  const shareImage = image ?? DEFAULT_SHARE_IMAGE
 
   return {
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
     alternates: {
-      canonical: path,
+      canonical,
       languages: languageAlternates(route, { id }),
     },
     openGraph: {
-      url: path,
+      url: canonical,
+      siteName: SITE_NAME,
+      type: 'website',
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+      images: [{ url: encodeURI(shareImage.url), alt: shareImage.alt }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+      images: [encodeURI(shareImage.url)],
     },
     ...(shouldNoIndexFrench
       ? {
@@ -56,6 +73,13 @@ export function pageMetadata({
             follow: false,
           },
         }
-      : {}),
+      : noIndex
+        ? {
+            robots: {
+              index: false,
+              follow: true,
+            },
+          }
+        : {}),
   }
 }

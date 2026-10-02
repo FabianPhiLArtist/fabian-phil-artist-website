@@ -8,7 +8,10 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'about',
-    title: 'About - Fabian PhiL Artist',
+    title: 'Fabian PhiL | French Contemporary Artist in Dubai',
+    description:
+      'Meet Fabian PhiL, the French contemporary artist based in Dubai whose international life and fascination with layers and movement led to kinetic portraits on plexiglass.',
+    image: { url: '/images/exhibitions/Fabian Studio Dubai.jpg', alt: 'Fabian PhiL in his Dubai studio' },
   })
 }
 

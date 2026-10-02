@@ -8,9 +8,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'faq',
-    title: 'Common Questions - Fabian PhiL Artist',
+    title: 'Fabian PhiL FAQ | Artwork Prices, Commissions & Availability',
     description:
-      'Answers about artwork availability, prices, sizes, commissions, galleries and collaborations with Fabian PhiL.',
+      'Answers about Fabian PhiL artwork availability, prices on request, sizes, commissions, exhibitions in Dubai and collaborations.',
   })
 }
 

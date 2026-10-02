@@ -14,7 +14,7 @@ const CollaborationsPage = () => {
           Interior Designers · Architects · Luxury Residential &amp; Hospitality
         </p>
         <p className="text-xl md:text-2xl font-light text-gray-900 leading-relaxed mb-8">
-          Selected collaborations and commissions can be discussed for distinctive interiors and significant residential, hospitality or architectural projects.
+          Fabian PhiL works with selected interior designers, architects and collectors seeking original contemporary artwork for distinctive residential, hospitality and architectural spaces.
         </p>
         <p className="text-base text-gray-600 font-light leading-relaxed mb-12">
           Fabian PhiL’s own body of work remains the centre of the practice. Selected projects are considered where they align with his kinetic pop language on layered plexiglass.

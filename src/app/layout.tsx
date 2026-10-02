@@ -1,25 +1,28 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import './globals.css'
-import { SITE_URL } from '@/lib/site'
+import { SITE_URL, SITE_NAME } from '@/lib/site'
+
+const defaultTitle = 'Fabian PhiL | Contemporary Pop Artist in Dubai'
+const defaultDescription =
+  'Discover Fabian PhiL, a French contemporary artist based in Dubai creating kinetic pop portraits on layered plexiglass that transform with movement, perspective and light.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Fabian PhiL Artist - Kinetic Pop Art',
-  description: 'Contemporary kinetic pop art by Fabian PhiL. Explore dynamic artworks featuring pandas, F1, and the Wanted series. Available for collectors worldwide.',
-  keywords: 'kinetic art, pop art, contemporary art, Fabian PhiL, pandas, F1, wanted series, art collector',
+  title: defaultTitle,
+  description: defaultDescription,
   authors: [{ name: 'Fabian PhiL' }],
   openGraph: {
-    title: 'Fabian PhiL Artist - Kinetic Pop Art',
-    description: 'Contemporary kinetic pop art by Fabian PhiL. Explore dynamic artworks featuring pandas, F1, and the Wanted series.',
+    title: defaultTitle,
+    description: defaultDescription,
     type: 'website',
     locale: 'en_US',
-    siteName: 'Fabian PhiL Artist',
+    siteName: SITE_NAME,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fabian PhiL Artist - Kinetic Pop Art',
-    description: 'Contemporary kinetic pop art by Fabian PhiL. Explore dynamic artworks featuring pandas, F1, and the Wanted series.',
+    title: defaultTitle,
+    description: defaultDescription,
   },
 }
 

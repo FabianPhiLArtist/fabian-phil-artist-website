@@ -5,11 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale } from '@/i18n/useLocale'
 import { localizedHref } from '@/i18n/pathnames'
+import type { CollectionSlug } from '@/data/collections'
 
 type Category = {
   name: string
   image: string
   alt: string
+  collection?: CollectionSlug
   query?: Record<string, string>
 }
 
@@ -18,36 +20,37 @@ const categories: Category[] = [
     name: 'Signature works',
     image: '/images/artworks/Fabian PhiL_I am the Last Samurai_2024_72400aed.jpg',
     alt: 'I am the Last Samurai, kinetic portrait by Fabian PhiL',
+    collection: 'signature-works',
   },
   {
     name: 'Pop glasses',
     image: '/images/artworks/Fabian PhiL_Wanted for Loving Art_2023_18000aed.jpg',
     alt: 'Wanted for Loving Art, Pop glasses portrait',
-    query: { series: 'Pop glasses Collection' },
+    collection: 'pop-glasses',
   },
   {
     name: 'Toon Clash',
     image: '/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg',
     alt: 'Wanted Million Dollar Toon Fight, Toon Clash artwork',
-    query: { series: 'Toon Clash Collection' },
+    collection: 'toon-clash',
   },
   {
     name: 'F1 / Motorsport',
-    image: '/images/artworks/Fabian Phil Wanted For Racing in Monaco 2024.jpg',
-    alt: 'Wanted for Racing in Monaco, F1 portrait',
-    query: { series: 'F1 Collection' },
+    image: '/images/artworks/Wanted Ayrton vs Toons Racing.jpg',
+    alt: 'Wanted Ayrton vs Toons Racing, F1 portrait',
+    collection: 'f1-motorsport',
   },
   {
     name: 'Triptych & Mugshots',
-    image: '/images/artworks/Fabian PhiL Andy Warhol 100 USD Bill 2017.png',
-    alt: '100 USD Andy Warhol, portrait triptych',
+    image: '/images/artworks/100USD Andy Centre.jpg',
+    alt: '100 USD Andy Warhol, centre panel of the triptych',
     query: { group: 'triptych-mugshots' },
   },
   {
     name: 'Panda / Zen',
     image: '/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg',
     alt: 'Wanted Panda Zen Artist',
-    query: { series: 'Panda Pop Collection' },
+    collection: 'panda-zen',
   },
 ]
 
@@ -65,11 +68,11 @@ const ExploreArtworks = () => {
           {categories.map((category) => (
             <Link
               key={category.name}
-              href={localizedHref(
-                locale,
-                'gallery',
-                category.query ? { query: category.query } : undefined
-              )}
+              href={
+                category.collection
+                  ? localizedHref(locale, 'collection', { id: category.collection })
+                  : localizedHref(locale, 'gallery', category.query ? { query: category.query } : undefined)
+              }
               className="group block"
             >
               <div className="relative overflow-hidden bg-gray-100 aspect-square">

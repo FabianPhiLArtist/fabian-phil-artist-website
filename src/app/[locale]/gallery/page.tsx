@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import type { Metadata } from 'next'
 import Gallery from '@/components/Gallery'
 import { isLocale } from '@/i18n/locales'
@@ -9,17 +9,19 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'gallery',
-    title: 'Gallery - Fabian PhiL Artist',
-    description: 'Explore the complete collection of kinetic pop art by Fabian PhiL. Browse by series: Pandas, F1, and Wanted Series.',
+    title: 'Original Art in Dubai | Fabian PhiL Artworks',
+    description:
+      'Explore original contemporary artworks by Dubai-based French artist Fabian PhiL, including kinetic portraits, Pop Glasses, Wanted, F1 and layered plexiglass works.',
   })
 }
 
-export default function GalleryPage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">
-      <p className="text-[11px] tracking-[0.16em] uppercase text-gray-500">Loading gallery...</p>
-    </div>}>
-      <Gallery />
-    </Suspense>
-  )
+// Rendered per request so ?series= / ?group= links arrive already filtered.
+export const dynamic = 'force-dynamic'
+
+type SearchParams = { series?: string | string[]; group?: string | string[] }
+
+const firstValue = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value) ?? null
+
+export default function GalleryPage({ searchParams }: { searchParams: SearchParams }) {
+  return <Gallery initialSeries={firstValue(searchParams.series)} initialGroup={firstValue(searchParams.group)} />
 }

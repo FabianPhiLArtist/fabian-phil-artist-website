@@ -8,7 +8,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'contact',
-    title: 'Contact - Fabian PhiL Artist',
+    title: 'Contact Fabian PhiL | Contemporary Artist Dubai',
+    description:
+      'Contact Dubai-based French contemporary artist Fabian PhiL regarding available artworks, collector enquiries, exhibitions, commissions and collaborations.',
   })
 }
 

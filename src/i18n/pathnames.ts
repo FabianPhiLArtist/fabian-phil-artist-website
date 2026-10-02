@@ -14,6 +14,9 @@ export type AppRoute =
   | 'price-inquiry'
   | 'contact'
   | 'artwork'
+  | 'collection'
+
+const routesWithId: AppRoute[] = ['artwork', 'collection']
 
 const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> = {
   en: {
@@ -29,6 +32,7 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     'price-inquiry': 'price-inquiry',
     contact: 'contact',
     artwork: 'artwork',
+    collection: 'collections',
   },
   fr: {
     gallery: 'galerie',
@@ -43,6 +47,7 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     'price-inquiry': 'demande-de-prix',
     contact: 'contact',
     artwork: 'oeuvre',
+    collection: 'collections',
   },
 }
 
@@ -65,7 +70,7 @@ export function localizedPath(
 
   const segment = publicSegments[locale][route]
   const path =
-    route === 'artwork'
+    routesWithId.includes(route)
       ? `${prefix}/${segment}/${options?.id}`
       : `${prefix}/${segment}`
 
@@ -91,7 +96,7 @@ export function internalPath(
   }
 
   const segment = internalSegments[route]
-  return route === 'artwork'
+  return routesWithId.includes(route)
     ? `${prefix}/${segment}/${options?.id}`
     : `${prefix}/${segment}`
 }
@@ -124,7 +129,7 @@ export function parsePublicPathname(pathname: string): ParsedPath | null {
     return null
   }
 
-  if (route === 'artwork') {
+  if (routesWithId.includes(route)) {
     if (parts.length !== 3) {
       return null
     }

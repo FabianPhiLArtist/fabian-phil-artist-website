@@ -1,40 +1,77 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Grid, List, Search, ArrowUpDown } from 'lucide-react'
 import ArtworkCard from './ArtworkCard'
+import CollectionLinks from './CollectionLinks'
 import { artworks, series, galleryGroups, isInSeries } from '@/data/artworks'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
+import { useRememberBrowseContext } from '@/lib/browseContext'
+import { textLinkClass } from '@/lib/formStyles'
 
-const Gallery = () => {
+type UrlFilter = { series: string | null; group: string | null }
+
+// useSearchParams lives in its own Suspense boundary so the artwork grid is still server-rendered.
+const UrlFilterSync = ({ onChange }: { onChange: (filter: UrlFilter) => void }) => {
   const searchParams = useSearchParams()
+  const seriesParam = searchParams.get('series')
+  const groupParam = searchParams.get('group')
+
+  useEffect(() => {
+    onChange({ series: seriesParam, group: groupParam })
+  }, [seriesParam, groupParam, onChange])
+
+  return null
+}
+
+const isGroupSlug = (value: string | null | undefined): value is string =>
+  Boolean(value && galleryGroups.some(g => g.slug === value))
+const isSeriesName = (value: string | null | undefined): value is string =>
+  Boolean(value && series.some(s => s.name === value))
+
+type GalleryProps = { initialSeries?: string | null; initialGroup?: string | null }
+
+const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) => {
+  const locale = useLocale()
+  const startGroup = isGroupSlug(initialGroup) ? initialGroup : null
+  const startSeries = !startGroup && isSeriesName(initialSeries) ? initialSeries : 'all'
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [selectedSeries, setSelectedSeries] = useState<string>('all')
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null)
+  const [selectedSeries, setSelectedSeries] = useState<string>(startSeries)
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(startGroup)
+  // Arriving with ?series= or ?group= shows only those works, without the browsing controls.
+  const [focused, setFocused] = useState(Boolean(startGroup) || startSeries !== 'all')
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState<'default' | 'year' | 'title' | 'series'>('default')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
-  // Handle URL parameters
-  useEffect(() => {
-    const seriesParam = searchParams.get('series')
-    const groupParam = searchParams.get('group')
-    if (groupParam && galleryGroups.some(g => g.slug === groupParam)) {
+  const applyUrlFilter = React.useCallback(({ series: seriesParam, group: groupParam }: UrlFilter) => {
+    if (isGroupSlug(groupParam)) {
       setSelectedGroup(groupParam)
       setSelectedSeries('all')
-    } else if (seriesParam) {
+      setFocused(true)
+    } else if (isSeriesName(seriesParam)) {
+      setSelectedGroup(null)
       setSelectedSeries(seriesParam)
+      setFocused(true)
+    } else {
+      setSelectedGroup(null)
+      setSelectedSeries('all')
+      setFocused(false)
     }
-  }, [searchParams])
+  }, [])
 
-  const seriesOptions = ['all', ...series.map(s => s.name)]
   const activeGroup = galleryGroups.find(g => g.slug === selectedGroup)
-  const selectSeries = (seriesName: string) => {
-    setSelectedGroup(null)
-    setSelectedSeries(seriesName)
-  }
 
+  useRememberBrowseContext({
+    label: 'Gallery',
+    href: localizedHref(locale, 'gallery', {
+      query: activeGroup ? { group: activeGroup.slug } : selectedSeries !== 'all' ? { series: selectedSeries } : undefined,
+    }),
+  })
   const filteredArtworks = artworks.filter(artwork => {
     const matchesSeries = activeGroup
       ? activeGroup.series.some(name => isInSeries(artwork, name))
@@ -79,38 +116,46 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-white pt-28 pb-20">
+      <Suspense fallback={null}>
+        <UrlFilterSync onChange={applyUrlFilter} />
+      </Suspense>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {focused ? (
+          <>
+            <div className="pb-8 md:pb-10">
+              <Link href={localizedHref(locale, 'gallery')} className={textLinkClass}>
+                ← All artworks
+              </Link>
+            </div>
+            <header className="max-w-3xl mb-10 md:mb-12">
+              <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-5">Original artworks</p>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-light uppercase tracking-[0.04em] text-gray-900 leading-[1.1]">
+                {activeGroup ? activeGroup.name : selectedSeries.replace(/ Collection$/, '')}
+              </h1>
+            </header>
+            <div className="border-t border-gray-200 pt-5 md:pt-6 mb-8 md:mb-10">
+              <p className="text-[11px] tracking-[0.16em] uppercase text-gray-500">
+                {sortedArtworks.length} work{sortedArtworks.length !== 1 ? 's' : ''}
+              </p>
+            </div>
+          </>
+        ) : (
+        <>
         <header className="max-w-3xl mb-10 md:mb-12">
           <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-6">
-            Gallery
+            Original artworks
           </h1>
           <p className="text-xl md:text-2xl font-light text-gray-900 leading-relaxed">
-            Explore the complete collection of kinetic pop art by Fabian PhiL.
-            Each piece represents a unique fusion of movement, color, and contemporary culture.
+            Explore original artworks by Fabian PhiL, a French contemporary artist based in Dubai. The collection spans kinetic portraits, Pop Glasses, Wanted, motorsport and pop icons, created across multiple layers of transparent plexiglass.
           </p>
         </header>
 
-        {/* Filters and Controls */}
-        <div className="border-t border-b border-gray-200 py-5 md:py-6 mb-6 space-y-5">
-          <div className="flex flex-wrap gap-x-5 gap-y-3">
-            {seriesOptions.map((seriesName) => {
-              const isActive = !activeGroup && selectedSeries === seriesName
-              return (
-                <button
-                  key={seriesName}
-                  onClick={() => selectSeries(seriesName)}
-                  className={`text-[11px] tracking-[0.16em] uppercase pb-0.5 border-b transition-colors ${
-                    isActive
-                      ? 'text-gray-900 border-gray-900'
-                      : 'text-gray-500 border-transparent hover:text-gray-900'
-                  }`}
-                >
-                  {seriesName === 'all' ? 'All Series' : seriesName}
-                </button>
-              )
-            })}
-          </div>
+        <div className="mb-8 md:mb-10">
+          <CollectionLinks locale={locale} />
+        </div>
 
+        {/* Filters and Controls */}
+        <div className="border-t border-b border-gray-200 py-5 md:py-6 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
@@ -163,6 +208,8 @@ const Gallery = () => {
             <> · {activeGroup ? activeGroup.name : selectedSeries}</>
           )}
         </p>
+        </>
+        )}
 
         {/* Artworks Grid/List */}
         {viewMode === 'grid' ? (
@@ -195,6 +242,15 @@ const Gallery = () => {
           >
             <p className="text-base text-gray-500 font-light">No artworks found matching your criteria.</p>
           </motion.div>
+        )}
+
+        {focused && (
+          <div className="mt-16 md:mt-20 border-t border-gray-200 pt-8 md:pt-10 space-y-8">
+            <CollectionLinks locale={locale} label="More collections" />
+            <Link href={localizedHref(locale, 'gallery')} className={textLinkClass}>
+              View all artworks →
+            </Link>
+          </div>
         )}
       </div>
     </div>

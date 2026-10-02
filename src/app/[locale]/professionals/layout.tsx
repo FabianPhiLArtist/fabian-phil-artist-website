@@ -8,6 +8,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'professionals',
+    noIndex: true,
     title: 'Professionals - Fabian PhiL Artist',
     description:
       'Original kinetic pop artworks on layered plexiglass for interior designers, architects, galleries and curated spaces.',

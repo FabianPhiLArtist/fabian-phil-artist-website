@@ -16,6 +16,13 @@ const exhibitionImages: LightboxImage[] = [
     caption: 'Noor Royal Gallery',
   },
   {
+    src: '/images/exhibitions/Alliance 8.jpg',
+    alt: 'Visitors viewing Fabian PhiL artworks at Alliance Française Dubai',
+    width: 4032,
+    height: 3024,
+    caption: 'Alliance Française Dubai',
+  },
+  {
     src: '/images/exhibitions/WAD_photos all paintings.jpg',
     alt: 'Fabian PhiL at World Art Dubai with a presentation of his artworks',
     width: 3024,
@@ -51,7 +58,7 @@ const ArtistCredibility = () => {
               The artist behind the work
             </h2>
             <p className="text-lg md:text-xl font-light text-gray-800 leading-relaxed mb-6">
-              Fabian PhiL (Fabian Philandrianos) is a French contemporary artist based in Dubai, where he works from his studio in Umm Suqeim 1. He creates his kinetic portraits by painting with chopsticks across multiple layers of transparent plexiglass, building images that shift as the viewer moves.
+              Fabian PhiL is a French contemporary artist based in Dubai, creating original pop portraits across multiple layers of transparent plexiglass. Faces, expressive gazes, colour and movement come together in works that transform as the viewer changes position.
             </p>
 
             <StudioImage className="mb-6 lg:hidden" />
@@ -63,7 +70,7 @@ const ArtistCredibility = () => {
               About the artist →
             </Link>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 max-w-sm">
+            <div className="mt-8 grid grid-cols-3 gap-3 max-w-md">
               {exhibitionImages.map((image) => (
                 <figure key={image.src} className="m-0">
                   <button
@@ -86,6 +93,13 @@ const ArtistCredibility = () => {
                 </figure>
               ))}
             </div>
+
+            <Link
+              href={localizedHref(locale, 'exhibitions')}
+              className="mt-5 inline-block text-xs tracking-[0.18em] uppercase text-gray-900 hover:text-gray-600 transition-colors"
+            >
+              Exhibitions →
+            </Link>
           </div>
 
           <StudioImage className="hidden lg:block" />

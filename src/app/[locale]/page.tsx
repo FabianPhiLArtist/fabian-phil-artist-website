@@ -12,7 +12,13 @@ import { pageMetadata } from '@/i18n/seo'
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
   const locale = isLocale(params.locale) ? params.locale : 'en'
-  return pageMetadata({ locale, route: 'home' })
+  return pageMetadata({
+    locale,
+    route: 'home',
+    title: 'Fabian PhiL | Contemporary Pop Artist in Dubai',
+    description:
+      'Discover Fabian PhiL, a French contemporary artist based in Dubai creating kinetic pop portraits on layered plexiglass that transform with movement, perspective and light.',
+  })
 }
 
 export default function Home() {

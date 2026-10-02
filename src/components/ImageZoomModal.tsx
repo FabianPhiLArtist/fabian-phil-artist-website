@@ -1,9 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, ZoomIn, ZoomOut, RotateCcw, Download, Maximize2, Minimize2, Search } from 'lucide-react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface ImageZoomModalProps {
   isOpen: boolean
@@ -18,427 +17,141 @@ interface ImageZoomModalProps {
   description: string
 }
 
-const ImageZoomModal = ({ 
-  isOpen, 
-  onClose, 
-  imageSrc, 
-  images,
-  title, 
-  series, 
-  year, 
-  medium, 
-  size, 
-  description 
-}: ImageZoomModalProps) => {
+const ZOOM = 2.5
+
+const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year, medium, size }: ImageZoomModalProps) => {
   const galleryImages = images && images.length > 0 ? images : [imageSrc]
-  const [zoomLevel, setZoomLevel] = useState(1)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
-  const [showLens, setShowLens] = useState(false)
-  const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 })
-  const [lensZoom, setLensZoom] = useState(2)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [zoomed, setZoomed] = useState(false)
+  const [origin, setOrigin] = useState({ x: 50, y: 50 })
+  const hasMultiple = galleryImages.length > 1
 
-  const minZoom = 0.5
-  const maxZoom = 5
-  const zoomStep = 0.25
-
-  const handleZoomIn = () => {
-    setZoomLevel(prev => Math.min(prev + zoomStep, maxZoom))
-  }
-
-  const handleZoomOut = () => {
-    setZoomLevel(prev => Math.max(prev - zoomStep, minZoom))
-  }
-
-  const handleReset = () => {
-    setZoomLevel(1)
-    setPosition({ x: 0, y: 0 })
-  }
-
-  const handleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen()
-      setIsFullscreen(true)
-    } else {
-      document.exitFullscreen()
-      setIsFullscreen(false)
-    }
-  }
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (zoomLevel > 1) {
-      setIsDragging(true)
-      setDragStart({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y
-      })
-    }
-  }
-
-
-  const handleMouseUp = () => {
-    setIsDragging(false)
-  }
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault()
-    if (e.deltaY < 0) {
-      handleZoomIn()
-    } else {
-      handleZoomOut()
-    }
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging && zoomLevel > 1) {
-      const newX = e.clientX - dragStart.x
-      const newY = e.clientY - dragStart.y
-      
-      // Calculate bounds based on zoom level and image size
-      const maxX = Math.max(0, (zoomLevel - 1) * 300)
-      const maxY = Math.max(0, (zoomLevel - 1) * 200)
-      
-      setPosition({
-        x: Math.max(-maxX, Math.min(maxX, newX)),
-        y: Math.max(-maxY, Math.min(maxY, newY))
-      })
-    }
-
-    // Update lens position
-    if (showLens) {
-      const rect = e.currentTarget.getBoundingClientRect()
-      setLensPosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      })
-    }
-  }
-
-  const toggleLens = () => {
-    setShowLens(!showLens)
-  }
-
-  const adjustLensZoom = (direction: 'in' | 'out') => {
-    if (direction === 'in') {
-      setLensZoom(prev => Math.min(prev + 0.5, 5))
-    } else {
-      setLensZoom(prev => Math.max(prev - 0.5, 1.5))
-    }
-  }
+  const show = useCallback((index: number) => {
+    setCurrentIndex((index + galleryImages.length) % galleryImages.length)
+    setZoomed(false)
+  }, [galleryImages.length])
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      setCurrentIndex(0)
-      handleReset()
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
-
-  useEffect(() => {
+    if (!isOpen) return
     setCurrentIndex(0)
-  }, [imageSrc, images])
+    setZoomed(false)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen, imageSrc])
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return
-
-      switch (e.key) {
-        case 'Escape':
-          onClose()
-          break
-        case '+':
-        case '=':
-          handleZoomIn()
-          break
-        case '-':
-          handleZoomOut()
-          break
-        case '0':
-          handleReset()
-          break
-        case 'f':
-        case 'F':
-          handleFullscreen()
-          break
-        case 'l':
-        case 'L':
-          toggleLens()
-          break
-        case 'ArrowLeft':
-          if (zoomLevel > 1) {
-            const maxX = Math.max(0, (zoomLevel - 1) * 300)
-            setPosition(prev => ({ ...prev, x: Math.min(prev.x + 50, maxX) }))
-          }
-          break
-        case 'ArrowRight':
-          if (zoomLevel > 1) {
-            const maxX = Math.max(0, (zoomLevel - 1) * 300)
-            setPosition(prev => ({ ...prev, x: Math.max(prev.x - 50, -maxX) }))
-          }
-          break
-        case 'ArrowUp':
-          if (zoomLevel > 1) {
-            const maxY = Math.max(0, (zoomLevel - 1) * 200)
-            setPosition(prev => ({ ...prev, y: Math.min(prev.y + 50, maxY) }))
-          }
-          break
-        case 'ArrowDown':
-          if (zoomLevel > 1) {
-            const maxY = Math.max(0, (zoomLevel - 1) * 200)
-            setPosition(prev => ({ ...prev, y: Math.max(prev.y - 50, -maxY) }))
-          }
-          break
-      }
+    if (!isOpen) return
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+      if (hasMultiple && event.key === 'ArrowLeft') show(currentIndex - 1)
+      if (hasMultiple && event.key === 'ArrowRight') show(currentIndex + 1)
     }
-
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, zoomLevel])
+  }, [isOpen, onClose, hasMultiple, show, currentIndex])
 
   if (!isOpen) return null
 
+  const updateOrigin = (clientX: number, clientY: number, element: HTMLElement) => {
+    const rect = element.getBoundingClientRect()
+    setOrigin({
+      x: Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100)),
+      y: Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100)),
+    })
+  }
+
+  const arrowClass = 'absolute top-1/2 -translate-y-1/2 z-10 p-2 text-white/60 hover:text-white transition-colors'
+
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm"
+    <div
+      className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center p-4 md:p-8"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
+      <button
         onClick={onClose}
+        className="absolute top-4 right-4 z-10 p-2 text-white/80 hover:text-white transition-colors"
+        aria-label="Close"
       >
-        <div className="relative w-full h-full flex items-center justify-center p-4">
-          {/* Close Button */}
+        <X size={24} />
+      </button>
+
+      {hasMultiple && (
+        <>
           <button
-            onClick={onClose}
-            className="absolute top-4 right-4 z-10 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
+            onClick={(event) => { event.stopPropagation(); show(currentIndex - 1) }}
+            className={`${arrowClass} left-2 md:left-6`}
+            aria-label="Previous photo"
           >
-            <X size={24} className="text-white" />
+            <ChevronLeft size={32} strokeWidth={1.25} />
           </button>
+          <button
+            onClick={(event) => { event.stopPropagation(); show(currentIndex + 1) }}
+            className={`${arrowClass} right-2 md:right-6`}
+            aria-label="Next photo"
+          >
+            <ChevronRight size={32} strokeWidth={1.25} />
+          </button>
+        </>
+      )}
 
-          {/* Zoom Controls */}
-          <div className="absolute top-4 left-4 z-10 flex flex-col space-y-2">
-            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 flex flex-col space-y-2">
+      <div
+        className={`relative overflow-hidden ${zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+        onClick={(event) => {
+          event.stopPropagation()
+          updateOrigin(event.clientX, event.clientY, event.currentTarget)
+          setZoomed((value) => !value)
+        }}
+        onMouseMove={(event) => zoomed && updateOrigin(event.clientX, event.clientY, event.currentTarget)}
+        onTouchMove={(event) => {
+          if (!zoomed) return
+          const touch = event.touches[0]
+          updateOrigin(touch.clientX, touch.clientY, event.currentTarget)
+        }}
+      >
+        <Image
+          key={galleryImages[currentIndex]}
+          src={galleryImages[currentIndex]}
+          alt={`${title}, layered plexiglass artwork by Fabian PhiL`}
+          width={2000}
+          height={2000}
+          sizes="90vw"
+          quality={90}
+          priority
+          className="block w-auto h-auto max-w-[90vw] max-h-[72vh] md:max-h-[76vh] object-contain transition-transform duration-300 ease-out"
+          style={{ transform: zoomed ? `scale(${ZOOM})` : 'scale(1)', transformOrigin: `${origin.x}% ${origin.y}%` }}
+        />
+      </div>
+
+      <div className="mt-5 text-center text-white max-w-2xl" onClick={(event) => event.stopPropagation()}>
+        {hasMultiple && (
+          <div className="flex justify-center gap-2 mb-4">
+            {galleryImages.map((src, index) => (
               <button
-                onClick={handleZoomIn}
-                disabled={zoomLevel >= maxZoom}
-                className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Zoom In (+)"
-              >
-                <ZoomIn size={20} className="text-white" />
-              </button>
-              
-              <button
-                onClick={handleZoomOut}
-                disabled={zoomLevel <= minZoom}
-                className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Zoom Out (-)"
-              >
-                <ZoomOut size={20} className="text-white" />
-              </button>
-              
-              <button
-                onClick={handleReset}
-                className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200"
-                title="Reset (0)"
-              >
-                <RotateCcw size={20} className="text-white" />
-              </button>
-              
-              <button
-                onClick={handleFullscreen}
-                className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200"
-                title="Fullscreen (F)"
-              >
-                {isFullscreen ? <Minimize2 size={20} className="text-white" /> : <Maximize2 size={20} className="text-white" />}
-              </button>
-              
-              <button
-                onClick={toggleLens}
-                className={`p-2 rounded-lg transition-colors duration-200 ${
-                  showLens ? 'bg-blue-500/50' : 'bg-white/20 hover:bg-white/30'
+                key={`${src}-${index}`}
+                onClick={() => show(index)}
+                className={`relative h-12 w-12 overflow-hidden border transition-colors ${
+                  index === currentIndex ? 'border-white' : 'border-white/20 hover:border-white/60'
                 }`}
-                title="Magnifying Lens (L)"
+                aria-label={`View photo ${index + 1}`}
               >
-                <Search size={20} className="text-white" />
+                <Image src={src} alt="" fill sizes="48px" className="object-cover" />
               </button>
-            </div>
+            ))}
           </div>
-
-          {/* Image Container */}
-          <div
-            className="relative max-w-full max-h-full overflow-hidden cursor-grab active:cursor-grabbing"
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onWheel={handleWheel}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Tryptic Panel Guide Overlay */}
-            {series.includes('100 USD Bill') && zoomLevel > 1.5 && (
-              <div className="absolute inset-0 pointer-events-none z-10">
-                <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-medium">
-                  Left Panel
-                </div>
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded text-sm font-medium">
-                  Center Panel
-                </div>
-                <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded text-sm font-medium">
-                  Right Panel
-                </div>
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded text-sm">
-                  Drag to explore each panel
-                </div>
-              </div>
-            )}
-
-            {/* Magnifying Lens Overlay */}
-            {showLens && (
-              <div className="absolute inset-0 pointer-events-none z-20">
-                <div
-                  className="absolute w-32 h-32 border-4 border-white rounded-full shadow-2xl overflow-hidden"
-                  style={{
-                    left: lensPosition.x - 64,
-                    top: lensPosition.y - 64,
-                    transform: `scale(${lensZoom})`,
-                    transformOrigin: 'center center'
-                  }}
-                >
-                  <div className="w-full h-full bg-black/20 backdrop-blur-sm flex items-center justify-center">
-                    <div className="text-white text-xs font-bold">
-                      {Math.round(lensZoom * 100)}%
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Lens controls */}
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-lg flex items-center space-x-4">
-                  <button
-                    onClick={() => adjustLensZoom('out')}
-                    className="p-1 bg-white/20 rounded hover:bg-white/30 transition-colors"
-                    title="Decrease lens zoom"
-                  >
-                    <ZoomOut size={16} />
-                  </button>
-                  <span className="text-sm font-medium">
-                    Lens: {Math.round(lensZoom * 100)}%
-                  </span>
-                  <button
-                    onClick={() => adjustLensZoom('in')}
-                    className="p-1 bg-white/20 rounded hover:bg-white/30 transition-colors"
-                    title="Increase lens zoom"
-                  >
-                    <ZoomIn size={16} />
-                  </button>
-                </div>
-              </div>
-            )}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="relative"
-                style={{
-                  transform: `scale(${zoomLevel}) translate(${position.x}px, ${position.y}px)`,
-                  transformOrigin: 'center center',
-                  cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
-                }}
-              >
-              <Image
-                src={galleryImages[currentIndex]}
-                alt={title}
-                width={1200}
-                height={1200}
-                className="max-w-none"
-                style={{
-                  width: 'auto',
-                  height: 'auto',
-                  maxWidth: '90vw',
-                  maxHeight: '90vh'
-                }}
-                priority
-              />
-            </motion.div>
-          </div>
-
-          {/* Artwork Info */}
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="absolute bottom-4 left-4 right-4 bg-white/20 backdrop-blur-sm rounded-lg p-4 text-white"
-          >
-            {galleryImages.length > 1 && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {galleryImages.map((src, index) => (
-                  <button
-                    key={`${src}-${index}`}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      setCurrentIndex(index)
-                      handleReset()
-                    }}
-                    className={`relative h-14 w-14 overflow-hidden rounded border ${
-                      index === currentIndex ? 'border-white' : 'border-white/40'
-                    }`}
-                    title={`View image ${index + 1}`}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${title} thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <h3 className="text-xl font-bold mb-1">{title}</h3>
-                <p className="text-sm opacity-90 mb-2">{series} • {year}</p>
-                <p className="text-sm opacity-80">{medium} • {size}</p>
-                <p className="text-sm opacity-80 mt-2 max-w-2xl">{description}</p>
-              </div>
-              
-              <div className="flex flex-col space-y-2 text-sm opacity-80">
-                <div className="flex items-center space-x-2">
-                  <span>Zoom: {Math.round(zoomLevel * 100)}%</span>
-                  <span>•</span>
-                  <span>Mouse wheel or +/- keys</span>
-                  <span>•</span>
-                  <span>Drag to pan when zoomed</span>
-                </div>
-                {series.includes('100 USD Bill') && (
-                  <div className="flex items-center space-x-2 text-yellow-400">
-                    <span>🎨 Tryptic Navigation:</span>
-                    <span>Drag mouse or use arrow keys to explore left/center/right panels</span>
-                  </div>
-                )}
-                <div className="flex items-center space-x-2 text-xs opacity-70">
-                  <span>Keyboard: +/- zoom, 0 reset, F fullscreen, L lens, arrows pan</span>
-                </div>
-                {showLens && (
-                  <div className="flex items-center space-x-2 text-xs text-blue-300">
-                    <span>🔍 Lens active: Move mouse to explore details</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        )}
+        <h3 className="text-sm tracking-[0.16em] uppercase mb-1">{title}</h3>
+        <p className="text-[11px] tracking-[0.16em] uppercase text-gray-400">{series} · {year}</p>
+        <p className="text-xs text-gray-500 mt-1 font-light">{[medium, size].filter(Boolean).join(' · ')}</p>
+        <p className="text-[10px] tracking-[0.16em] uppercase text-gray-600 mt-3">
+          {zoomed ? 'Tap or click to zoom out' : 'Tap or click the image to zoom'}
+        </p>
+      </div>
+    </div>
   )
 }
 
