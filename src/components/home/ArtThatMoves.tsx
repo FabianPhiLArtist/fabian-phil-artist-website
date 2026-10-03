@@ -10,8 +10,8 @@ const examples = [
     title: 'Why…?',
     series: 'Pop glasses',
     effect: 'Movement through perspective',
-    copy: 'The monochrome portrait shifts with the viewer’s position, as the glasses and layered lines move across the face.',
-    label: 'Why…?, monochrome kinetic portrait from the Pop glasses works, filmed as the viewer moves',
+    copy: 'Amanda Seyfried’s gaze never quite settles: as you move, the glasses and layered lines shift and the question stays open.',
+    label: 'Why…?, monochrome kinetic portrait of Amanda Seyfried from the Pop glasses works, filmed as the viewer moves',
   },
   {
     step: '02',
@@ -28,8 +28,8 @@ const examples = [
     title: 'Racing Life',
     series: 'Special LED work',
     effect: 'Perspective + colour + light',
-    copy: 'In this special LED work, light adds another dimension to the layered movement.',
-    label: 'Wanted for Racing Life, special LED kinetic artwork, filmed as the viewer moves',
+    copy: 'Steve McQueen, lit from within: in this special LED work, light and reflection add another dimension to the layered movement.',
+    label: 'Wanted for Racing Life, special LED kinetic portrait of Steve McQueen, filmed as the viewer moves',
   },
 ]
 

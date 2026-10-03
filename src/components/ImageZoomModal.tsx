@@ -15,11 +15,12 @@ interface ImageZoomModalProps {
   medium: string
   size: string
   description: string
+  mainImageAlt?: string
 }
 
 const ZOOM = 2.5
 
-const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year, medium, size }: ImageZoomModalProps) => {
+const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year, medium, size, mainImageAlt }: ImageZoomModalProps) => {
   const galleryImages = images && images.length > 0 ? images : [imageSrc]
   const [currentIndex, setCurrentIndex] = useState(0)
   const [zoomed, setZoomed] = useState(false)
@@ -116,7 +117,11 @@ const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year
         <Image
           key={galleryImages[currentIndex]}
           src={galleryImages[currentIndex]}
-          alt={`${title}, layered plexiglass artwork by Fabian PhiL`}
+          alt={
+            galleryImages[currentIndex] === imageSrc
+              ? mainImageAlt ?? `${title}, layered plexiglass artwork by Fabian PhiL`
+              : `${title} by Fabian PhiL, additional view ${currentIndex}`
+          }
           width={2000}
           height={2000}
           sizes="90vw"

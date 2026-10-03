@@ -38,9 +38,9 @@ export function generateMetadata({ params }: ArtworkLayoutProps): Metadata {
     locale,
     route: 'artwork',
     id: params.id,
-    title: `${artwork.title} | Fabian PhiL`,
-    description: `${artwork.title} (${artwork.year}) by Fabian PhiL. ${artwork.medium}, ${artwork.size}.`,
-    image: { url: artwork.image, alt: `${artwork.title}, layered plexiglass artwork by Fabian PhiL` },
+    title: artwork.seoTitle ?? `${artwork.title} | Fabian PhiL`,
+    description: artwork.metaDescription ?? `${artwork.title} (${artwork.year}) by Fabian PhiL. ${artwork.medium}, ${artwork.size}.`,
+    image: { url: artwork.image, alt: artwork.imageAlt ?? `${artwork.title}, layered plexiglass artwork by Fabian PhiL` },
   })
 }
 

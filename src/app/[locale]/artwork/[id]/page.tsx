@@ -64,6 +64,9 @@ export default function ArtworkDetailPage() {
   const previousId = sequence && position > 0 ? sequence[position - 1] : null
   const nextId = sequence && position >= 0 && position < sequence.length - 1 ? sequence[position + 1] : null
   const clipIsLandscape = clipRatio !== null && clipRatio > 1
+  const mainImageAlt = artwork?.imageAlt ?? `${artwork?.title}, layered plexiglass artwork by Fabian PhiL`
+  const photoAlt = (src: string, index: number) =>
+    src === artwork?.image ? mainImageAlt : `${artwork?.title} by Fabian PhiL, additional view ${index}`
 
   if (!artwork) {
     return (
@@ -117,9 +120,10 @@ export default function ArtworkDetailPage() {
               <div className="sr-only">
                 {artwork.images?.length ? `${artwork.images.length} images available` : '1 image available'}
               </div>
+              {/* The primary image must stay visible in server HTML for image search, so it is never faded from opacity 0. */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ scale: 0.985 }}
+                animate={{ scale: 1 }}
                 transition={{ duration: 0.6 }}
                 className="relative bg-[#fafafa] aspect-square"
               >
@@ -133,7 +137,9 @@ export default function ArtworkDetailPage() {
                     src={(artwork.images && artwork.images.length > 0)
                       ? artwork.images[currentImageIndex]
                       : artwork.image}
-                    alt={`${artwork.title}, layered plexiglass artwork by Fabian PhiL`}
+                    alt={(artwork.images && artwork.images.length > 0)
+                      ? photoAlt(artwork.images[currentImageIndex], currentImageIndex)
+                      : mainImageAlt}
                     fill
                     sizes="(max-width: 1024px) 100vw, 58vw"
                     className="object-contain"
@@ -184,7 +190,8 @@ export default function ArtworkDetailPage() {
                   <figcaption className="pt-1">
                     <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">In motion</h2>
                     <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed mb-5">
-                      Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.
+                      {artwork.inMotion ??
+                        'Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.'}
                     </p>
                     <button type="button" onClick={() => setActiveVideo(artwork.video)} className={textLinkClass}>
                       Watch full screen →
@@ -313,6 +320,7 @@ export default function ArtworkDetailPage() {
         medium={artwork.medium}
         size={artwork.size}
         description={artwork.description}
+        mainImageAlt={mainImageAlt}
       />
 
       {/* Inquiry Modal */}

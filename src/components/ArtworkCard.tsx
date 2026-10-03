@@ -15,6 +15,7 @@ interface ArtworkCardProps {
     series: string
     image: string
     cardImage?: string
+    imageAlt?: string
     images?: string[]
     video?: string
     qrCode?: string
@@ -50,7 +51,11 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
           }`}>
             <Image
               src={artwork.cardImage ?? artwork.image}
-              alt={`${artwork.title}, layered plexiglass artwork by Fabian PhiL`}
+              alt={
+                !artwork.cardImage && artwork.imageAlt
+                  ? artwork.imageAlt
+                  : `${artwork.title}, layered plexiglass artwork by Fabian PhiL`
+              }
               fill
               sizes={isList ? '(max-width: 640px) 100vw, 256px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
               className="object-cover group-hover:opacity-90 transition-opacity duration-300"
