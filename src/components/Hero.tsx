@@ -17,10 +17,9 @@ const Hero = () => {
             <h1 className="text-[1.7rem] sm:text-5xl lg:text-6xl font-light tracking-[0.04em] uppercase text-gray-900 leading-[1.12]">
               Pop art that moves.
             </h1>
-            <div className="space-y-0.5 lg:space-y-2 text-[13px] sm:text-base lg:text-lg text-gray-600 font-light leading-snug lg:leading-relaxed">
-              <p>Kinetic portraits and icons on layered plexiglass.</p>
-              <p>French contemporary artist based in Dubai.</p>
-            </div>
+            <p className="text-[13px] sm:text-base lg:text-lg text-gray-600 font-light leading-snug lg:leading-relaxed">
+              Fabian PhiL is a French contemporary pop artist based in Dubai, creating original figurative and kinetic artworks on layered plexiglass. His portraits and cultural icons combine colour, gaze and changing perspective in POP ART THAT MOVES.
+            </p>
             <div className="pt-1.5 lg:pt-2 space-y-2.5 lg:space-y-4">
               <Link
                 href={localizedHref(locale, 'gallery')}

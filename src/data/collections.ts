@@ -20,7 +20,7 @@ export const collections: Collection[] = [
   {
     slug: 'signature-works',
     name: 'Signature Works',
-    seoTitle: "Signature Works | Fabian PhiL Pop Art Dubai",
+    seoTitle: "Signature Works | Kinetic Pop Art by Fabian PhiL",
     description:
       'Explore signature works by Dubai-based French contemporary artist Fabian PhiL, including layered portraits, Pop Art icons and kinetic plexiglass artworks.',
     intro:
