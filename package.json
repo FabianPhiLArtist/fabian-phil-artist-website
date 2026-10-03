@@ -10,7 +10,8 @@
     "start": "next start --port 3020",
     "start-alt": "next start --port 3001",
     "start-alt2": "next start --port 8080",
-    "lint": "next lint"
+    "lint": "next lint",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "next": "^14.2.5",
