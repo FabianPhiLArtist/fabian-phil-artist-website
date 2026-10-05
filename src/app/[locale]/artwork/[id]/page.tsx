@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, X } from 'lucide-react'
 import { artworks } from '@/data/artworks'
+import { artworkSlugs } from '@/data/artworkSlugs'
 import { collectionsForArtwork } from '@/data/collections'
 import ImageZoomModal from '@/components/ImageZoomModal'
 import CollectorInquiry from '@/components/CollectorInquiry'
@@ -36,7 +37,7 @@ const secondaryButtonClass = 'inline-flex items-center justify-center gap-2 bord
 export default function ArtworkDetailPage() {
   const params = useParams()
   const locale = useLocale()
-  const artwork: any = artworks.find(art => String(art.id) === String(params.id)) ?? null
+  const artwork: any = artworks.find(art => artworkSlugs[art.id] === String(params.id)) ?? null
   const artworkCollections = artwork ? collectionsForArtwork(artwork) : []
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showZoom, setShowZoom] = useState(false)
@@ -53,14 +54,14 @@ export default function ArtworkDetailPage() {
     setClipRatio(null)
     setFailedExtras([])
     const context = readBrowseContext()
-    const belongs = context && (!context.ids || context.ids.includes(Number(params.id)))
+    const belongs = context && (!context.ids || context.ids.includes(artwork?.id))
     setBrowseContext(belongs ? context : null)
   }, [params.id])
 
   const backHref = browseContext?.href ?? localizedHref(locale, 'gallery')
   const backLabel = browseContext && browseContext.label !== 'Gallery' ? `Back to ${browseContext.label}` : 'Back to Gallery'
   const sequence = browseContext?.ids
-  const position = sequence ? sequence.indexOf(Number(params.id)) : -1
+  const position = sequence && artwork ? sequence.indexOf(artwork.id) : -1
   const previousId = sequence && position > 0 ? sequence[position - 1] : null
   const nextId = sequence && position >= 0 && position < sequence.length - 1 ? sequence[position + 1] : null
   const clipIsLandscape = clipRatio !== null && clipRatio > 1

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Usage:
-//   INDEXNOW_TRIGGER_SECRET=... npm run indexnow -- https://fabianphil.com/en/artwork/12 [more URLs]
+//   INDEXNOW_TRIGGER_SECRET=... npm run indexnow -- https://fabianphil.com/en/artwork/twiggy-pop-art [more URLs]
 //   INDEXNOW_TRIGGER_SECRET=... npm run indexnow -- --all
 // Options: --dry-run, --allow-removed, --base https://fabianphil.com
 

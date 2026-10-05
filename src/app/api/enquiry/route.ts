@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 import { artworks } from '@/data/artworks'
+import { localizedPath } from '@/i18n/pathnames'
+import { SITE_URL } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -136,7 +138,7 @@ function parseArtwork(data: Record<string, unknown>): Enquiry {
       ['Artwork', catalogue ? catalogue.title : ''],
       ['Artwork ID', catalogue ? String(catalogue.id) : ''],
       ['Series', catalogue ? catalogue.series : ''],
-      ['Artwork page', catalogue ? `https://fabianphil.com/en/artwork/${catalogue.id}` : ''],
+      ['Artwork page', catalogue ? new URL(localizedPath('en', 'artwork', { id: catalogue.id }), SITE_URL).toString() : ''],
       ['Artwork of interest (as typed)', artworkOfInterest],
       ['Name', name],
       ['Email', replyTo],

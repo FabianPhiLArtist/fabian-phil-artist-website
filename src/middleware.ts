@@ -6,6 +6,7 @@ import {
   parsePublicPathname,
 } from '@/i18n/pathnames'
 import { ENABLE_LEGACY_ENGLISH_REDIRECTS, isFrenchRouteReady } from '@/i18n/readiness'
+import { slugForLegacyArtworkId } from '@/data/artworkSlugs'
 
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
@@ -23,6 +24,17 @@ export function middleware(request: NextRequest) {
   const parsed = parsePublicPathname(pathname)
   if (!parsed) {
     return NextResponse.next()
+  }
+
+  const artworkSlug =
+    parsed.locale === 'en' && parsed.route === 'artwork' && parsed.id
+      ? slugForLegacyArtworkId(parsed.id)
+      : undefined
+  if (artworkSlug) {
+    const url = request.nextUrl.clone()
+    url.pathname = localizedPath('en', 'artwork', { id: artworkSlug })
+    url.search = search
+    return NextResponse.redirect(url, 301)
   }
 
   if (parsed.locale === 'fr' && !isFrenchRouteReady(parsed.route)) {

@@ -1,4 +1,5 @@
 import type { Locale } from './locales'
+import { slugForLegacyArtworkId } from '@/data/artworkSlugs'
 
 export type AppRoute =
   | 'home'
@@ -69,9 +70,13 @@ export function localizedPath(
   }
 
   const segment = publicSegments[locale][route]
+  const id =
+    route === 'artwork' && options?.id !== undefined
+      ? slugForLegacyArtworkId(options.id) ?? options.id
+      : options?.id
   const path =
     routesWithId.includes(route)
-      ? `${prefix}/${segment}/${options?.id}`
+      ? `${prefix}/${segment}/${id}`
       : `${prefix}/${segment}`
 
   return appendQuery(path, options?.query)
