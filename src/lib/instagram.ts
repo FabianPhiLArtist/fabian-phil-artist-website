@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache'
 import {
   INSTAGRAM_FEATURE_CACHE_TAG,
   INSTAGRAM_FEATURE_EPOCH,
@@ -25,6 +26,7 @@ export type InstagramFeature = {
   id: string
   permalink: string
   imageUrl: string
+  videoUrl?: string
   isReel: boolean
   excerpt: string
   timestamp: string
@@ -32,6 +34,8 @@ export type InstagramFeature = {
 }
 
 type Candidate = Omit<InstagramFeature, 'reason'> & { time: number; shortcode: string; preferred: boolean }
+
+const GRAPH_TIMEOUT_MS = 8000
 
 const FIELDS =
   'id,caption,media_type,media_product_type,media_url,thumbnail_url,permalink,timestamp,children{media_type,media_url,thumbnail_url}'
@@ -48,24 +52,23 @@ function mediaEndpoint(): string | null {
   return `${base}?${params}`
 }
 
-async function fetchRecentMedia(): Promise<GraphMedia[] | null> {
+// Throws on any failure: unstable_cache never stores a thrown result, so the last successful media list keeps
+// being served while Instagram is failing. Inside unstable_cache the request must not set `cache` or `next`,
+// otherwise it would mark the whole page as dynamic.
+export async function fetchRecentMedia(init: RequestInit = {}): Promise<GraphMedia[]> {
   const url = mediaEndpoint()
-  if (!url) return null
-  try {
-    const res = await fetch(url, {
-      next: { revalidate: INSTAGRAM_FEATURE_REVALIDATE_SECONDS, tags: [INSTAGRAM_FEATURE_CACHE_TAG] },
-    })
-    if (!res.ok) {
-      console.warn(`[instagram-feature] media request failed with status ${res.status}`)
-      return null
-    }
-    const body = (await res.json()) as { data?: GraphMedia[] }
-    return Array.isArray(body.data) ? body.data : null
-  } catch {
-    console.warn('[instagram-feature] media request failed')
-    return null
-  }
+  if (!url) throw new Error('INSTAGRAM_ACCESS_TOKEN is not set')
+  const res = await fetch(url, { ...init, signal: AbortSignal.timeout(GRAPH_TIMEOUT_MS) })
+  if (!res.ok) throw new Error(`media request failed with status ${res.status}`)
+  const body = (await res.json()) as { data?: GraphMedia[] }
+  if (!Array.isArray(body.data) || !body.data.length) throw new Error('media request returned no items')
+  return body.data
 }
+
+const getCachedMedia = unstable_cache(() => fetchRecentMedia(), ['instagram-media'], {
+  revalidate: INSTAGRAM_FEATURE_REVALIDATE_SECONDS,
+  tags: [INSTAGRAM_FEATURE_CACHE_TAG],
+})
 
 function shortcodeOf(value: string): string {
   return value.match(/instagram\.com\/(?:[^/]+\/)?(?:p|reel|reels|tv)\/([A-Za-z0-9_-]+)/)?.[1] ?? ''
@@ -87,6 +90,15 @@ function previewImage(media: GraphMedia): string | undefined {
   return first.media_type === 'VIDEO' ? first.thumbnail_url : first.media_url
 }
 
+function playableVideo(media: GraphMedia): string | undefined {
+  if (media.media_type !== 'VIDEO' || !media.media_url) return undefined
+  try {
+    return new URL(media.media_url).protocol === 'https:' ? media.media_url : undefined
+  } catch {
+    return undefined
+  }
+}
+
 function excerptOf(caption = ''): string {
   const firstLine = caption.split('\n').find((line) => line.trim()) ?? ''
   const text = firstLine.replace(/[#@][^\s#@]+/g, '').replace(/\s+/g, ' ').trim()
@@ -105,6 +117,7 @@ function toCandidate(media: GraphMedia): Candidate | null {
     id: media.id,
     permalink: media.permalink,
     imageUrl,
+    videoUrl: playableVideo(media),
     isReel: media.media_type === 'VIDEO',
     excerpt: excerptOf(media.caption),
     timestamp: media.timestamp,
@@ -157,13 +170,19 @@ export function selectFeature(candidates: Candidate[], now: number): InstagramFe
     }
   }
   if (!previous) return null
-  const { id, permalink, imageUrl, isReel, excerpt, timestamp } = previous
-  return { id, permalink, imageUrl, isReel, excerpt, timestamp, reason }
+  const { id, permalink, imageUrl, videoUrl, isReel, excerpt, timestamp } = previous
+  return { id, permalink, imageUrl, videoUrl, isReel, excerpt, timestamp, reason }
 }
 
+// Returns null only when no media list has ever been cached successfully (or the cache was just invalidated).
 export async function getInstagramFeature(now = Date.now()): Promise<InstagramFeature | null> {
-  const media = await fetchRecentMedia()
-  if (!media) return null
+  let media: GraphMedia[]
+  try {
+    media = await getCachedMedia()
+  } catch (error) {
+    console.warn(`[instagram-feature] ${error instanceof Error ? error.message : 'media request failed'}`)
+    return null
+  }
   const candidates = media.map(toCandidate).filter((c): c is Candidate => c !== null)
   return selectFeature(candidates, now)
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { Play } from 'lucide-react'
 import { getInstagramFeature } from '@/lib/instagram'
 import InstagramFeatureImage from '@/components/home/InstagramFeatureImage'
+import InstagramFeatureVideo from '@/components/home/InstagramFeatureVideo'
 
 export default async function InstagramFeature() {
   const feature = await getInstagramFeature()
@@ -10,6 +11,24 @@ export default async function InstagramFeature() {
   const kind = feature.isReel ? 'reel' : 'post'
   const alt = `Instagram ${kind} by Fabian PhiL${feature.excerpt ? `: ${feature.excerpt}` : ''}`
   const linkLabel = `Open this ${kind} on Instagram (opens in a new tab)`
+
+  const imageLink = (
+    <a
+      href={feature.permalink}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={linkLabel}
+      className="group relative block w-full max-w-md aspect-[4/5] overflow-hidden bg-gray-50"
+    >
+      <InstagramFeatureImage src={feature.imageUrl} alt={alt} />
+      {feature.isReel && (
+        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 px-2.5 py-1 text-[11px] tracking-[0.14em] uppercase text-gray-900">
+          <Play className="w-3 h-3" aria-hidden="true" />
+          Reel
+        </span>
+      )}
+    </a>
+  )
 
   return (
     <section className="bg-white py-12 md:py-16 border-t border-gray-100" aria-labelledby="from-the-studio">
@@ -37,21 +56,17 @@ export default async function InstagramFeature() {
           </div>
 
           <div className="lg:order-1">
-            <a
-              href={feature.permalink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={linkLabel}
-              className="group relative block w-full max-w-md aspect-[4/5] overflow-hidden bg-gray-50"
-            >
-              <InstagramFeatureImage src={feature.imageUrl} alt={alt} />
-              {feature.isReel && (
-                <span className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 px-2.5 py-1 text-[11px] tracking-[0.14em] uppercase text-gray-900">
+            {feature.videoUrl ? (
+              <InstagramFeatureVideo src={feature.videoUrl} poster={feature.imageUrl} label={alt} fallback={imageLink}>
+                {/* Top corner so the badge never covers the native control bar. */}
+                <span className="pointer-events-none absolute top-3 right-3 flex items-center gap-1.5 bg-white/90 px-2.5 py-1 text-[11px] tracking-[0.14em] uppercase text-gray-900">
                   <Play className="w-3 h-3" aria-hidden="true" />
                   Reel
                 </span>
-              )}
-            </a>
+              </InstagramFeatureVideo>
+            ) : (
+              imageLink
+            )}
             <a
               href={feature.permalink}
               target="_blank"
