@@ -1,11 +1,15 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import KineticClip from '@/components/home/KineticClip'
+import { useLocale } from '@/i18n/useLocale'
+import { localizedHref } from '@/i18n/pathnames'
 
 const examples = [
   {
     step: '01',
+    artworkId: 10,
     src: encodeURI('/videos/artworks/Why 2.mp4'),
     title: 'Why…?',
     series: 'Pop glasses',
@@ -15,6 +19,7 @@ const examples = [
   },
   {
     step: '02',
+    artworkId: 31,
     src: encodeURI('/videos/artworks/Cleclerc Monza 1.mp4'),
     title: 'Charles Leclerc in Monza',
     series: 'F1 / Motorsport',
@@ -24,6 +29,7 @@ const examples = [
   },
   {
     step: '03',
+    artworkId: 1,
     src: encodeURI('/videos/artworks/Racing Life Led on 2.mp4'),
     title: 'Racing Life',
     series: 'Special LED work',
@@ -34,6 +40,8 @@ const examples = [
 ]
 
 const ArtThatMoves = () => {
+  const locale = useLocale()
+
   return (
     <section className="bg-white py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,13 +63,22 @@ const ArtThatMoves = () => {
           {examples.map((example) => (
             <li key={example.step}>
               <figure className="m-0 flex md:block gap-4 items-start">
-                <div className="relative shrink-0 w-[42%] md:w-full md:max-w-[300px] md:mx-auto aspect-[9/16] bg-black overflow-hidden">
+                <Link
+                  href={localizedHref(locale, 'artwork', { id: example.artworkId })}
+                  aria-label={`View ${example.title}`}
+                  className="relative block shrink-0 w-[42%] md:w-full md:max-w-[300px] md:mx-auto aspect-[9/16] bg-black overflow-hidden"
+                >
                   <KineticClip src={example.src} label={example.label} />
-                </div>
+                </Link>
                 <figcaption className="md:mt-4 md:max-w-[300px] md:mx-auto">
                   <p className="text-[10px] tracking-[0.2em] text-gray-400 mb-2">{example.step}</p>
                   <h3 className="text-xs tracking-[0.16em] uppercase text-gray-900">
-                    {example.title}
+                    <Link
+                      href={localizedHref(locale, 'artwork', { id: example.artworkId })}
+                      className="hover:text-gray-600 transition-colors"
+                    >
+                      {example.title}
+                    </Link>
                   </h3>
                   <p className="mt-1 text-[10px] tracking-[0.18em] uppercase text-gray-500">
                     {example.series}
@@ -72,6 +89,12 @@ const ArtThatMoves = () => {
                   <p className="mt-3 text-[13px] text-gray-600 font-light leading-relaxed">
                     {example.copy}
                   </p>
+                  <Link
+                    href={localizedHref(locale, 'artwork', { id: example.artworkId })}
+                    className="mt-4 inline-block text-xs tracking-[0.18em] uppercase text-gray-900 hover:text-gray-600 transition-colors"
+                  >
+                    View artwork →
+                  </Link>
                 </figcaption>
               </figure>
             </li>

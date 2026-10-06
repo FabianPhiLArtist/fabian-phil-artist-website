@@ -17,6 +17,12 @@ type Category = {
 
 const categories: Category[] = [
   {
+    name: 'Panda / Zen',
+    image: '/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg',
+    alt: 'Wanted Panda Zen Artist',
+    collection: 'panda-zen',
+  },
+  {
     name: 'Signature works',
     image: '/images/artworks/Fabian PhiL_I am the Last Samurai_2024_72400aed.jpg',
     alt: 'I am the Last Samurai, kinetic portrait by Fabian PhiL',
@@ -45,12 +51,6 @@ const categories: Category[] = [
     image: '/images/artworks/100USD Andy Centre.jpg',
     alt: '100 USD Andy Warhol, centre panel of the triptych',
     query: { group: 'triptych-mugshots' },
-  },
-  {
-    name: 'Panda / Zen',
-    image: '/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg',
-    alt: 'Wanted Panda Zen Artist',
-    collection: 'panda-zen',
   },
 ]
 

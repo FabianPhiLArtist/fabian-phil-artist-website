@@ -6,6 +6,9 @@ import Image from 'next/image'
 import { useLocale } from '@/i18n/useLocale'
 import { localizedHref } from '@/i18n/pathnames'
 
+// Wanted for Being Too Smart; the hero photo is one of its gallery images.
+const HERO_ARTWORK_ID = 16
+
 const Hero = () => {
   const locale = useLocale()
 
@@ -38,7 +41,11 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="order-1 lg:order-1 relative w-full aspect-[3/2] bg-gray-50 overflow-hidden">
+          <Link
+            href={localizedHref(locale, 'artwork', { id: HERO_ARTWORK_ID })}
+            aria-label="View Wanted for Being Too Smart"
+            className="order-1 lg:order-1 relative block w-full aspect-[3/2] bg-gray-50 overflow-hidden"
+          >
             <Image
               src="/images/artworks/Wanted for Being Too Smart - WideWall.jpg"
               alt="Wanted for Being Too Smart, kinetic pop artwork by Fabian PhiL, staged in a contemporary interior"
@@ -47,7 +54,7 @@ const Hero = () => {
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
-          </div>
+          </Link>
         </div>
       </div>
     </section>

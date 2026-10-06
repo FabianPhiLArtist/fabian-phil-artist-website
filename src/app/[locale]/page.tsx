@@ -29,8 +29,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ArtThatMoves />
       <ExploreArtworks />
+      <ArtThatMoves />
       <ArtistCredibility />
       <GalleriesCurators />
       <InteriorsCollaborations />
