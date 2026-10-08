@@ -19,9 +19,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'home',
-    title: 'Fabian PhiL | French Pop Artist in Dubai',
+    title: 'Fabian PhiL | French Pop Artist in Dubai – Kinetic Pop Art',
     description:
-      'Fabian PhiL is a French contemporary pop artist based in Dubai, creating original figurative and kinetic artworks on layered plexiglass.',
+      'Fabian PhiL is a French pop artist based in Dubai, creating kinetic pop art on layered plexiglass: original figurative portraits that change as you move.',
   })
 }
 

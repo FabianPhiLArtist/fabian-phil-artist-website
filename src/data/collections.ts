@@ -20,7 +20,7 @@ export const collections: Collection[] = [
   {
     slug: 'signature-works',
     name: 'Signature Works',
-    seoTitle: "Signature Works | Kinetic Pop Art by Fabian PhiL",
+    seoTitle: "Signature Works | Kinetic Pop Art Portraits by Fabian PhiL",
     description:
       'Explore signature works by Dubai-based French contemporary artist Fabian PhiL, including layered portraits, Pop Art icons and kinetic plexiglass artworks.',
     intro:
@@ -31,17 +31,17 @@ export const collections: Collection[] = [
   {
     slug: 'pop-glasses',
     name: 'Pop Glasses',
-    seoTitle: "Pop Glasses | Kinetic Pop Art by Fabian PhiL",
+    seoTitle: "Pop Glasses | Contemporary Portrait Pop Art by Fabian PhiL",
     description:
       'Pop Glasses by Fabian PhiL: black-and-white kinetic portraits with fluorescent glasses, painted across layered plexiglass that changes with perspective.',
     intro:
-      "Pop Glasses is one of Fabian PhiL’s most recognisable visual languages, combining expressive portraiture, fluorescent colour and layered movement that changes with the viewer.",
+      "Pop Glasses is one of Fabian PhiL’s most recognisable visual languages, combining expressive portraiture, fluorescent colour and layered movement that changes with the viewer. The series includes Hollywood actresses Angelina Jolie, Emma Stone and Lucy Liu, alongside models Gigi Hadid and Kate Upton.",
     includes: (artwork) => isInSeries(artwork, 'Pop glasses Collection'),
   },
   {
     slug: 'wanted',
     name: 'Wanted',
-    seoTitle: "Wanted | Pop Art Portraits by Fabian PhiL",
+    seoTitle: "Wanted | Mugshot Pop Art by Fabian PhiL",
     description:
       'Wanted and mugshot portraits by Fabian PhiL: layered plexiglass artworks combining expressive faces, text and humorous or provocative titles.',
     intro:
@@ -58,7 +58,7 @@ export const collections: Collection[] = [
     description:
       'Explore original Formula 1 and motorsport art by Fabian PhiL, including kinetic portraits and layered plexiglass works inspired by racing, drivers and iconic circuits.',
     intro:
-      "Fabian PhiL’s F1 and motorsport works translate racing personalities and visual culture into layered pop compositions that shift with the viewer.",
+      "Fabian PhiL’s Formula 1 (F1) and motorsport works translate racing personalities and visual culture into layered pop compositions that shift with the viewer.",
     includes: (artwork) => isInSeries(artwork, 'F1 Collection'),
     order: [32, 31, 4],
   },

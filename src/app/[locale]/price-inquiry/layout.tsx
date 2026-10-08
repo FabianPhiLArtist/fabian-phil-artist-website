@@ -8,7 +8,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'price-inquiry',
-    title: 'Available Original Art in Dubai | Fabian PhiL',
+    title: 'Price Inquiry | Fabian PhiL Artwork Prices in Dubai',
     description:
       'Enquire about available original artworks by Dubai-based French contemporary artist Fabian PhiL, with indicative price ranges by format. All artworks are priced upon inquiry.',
   })
