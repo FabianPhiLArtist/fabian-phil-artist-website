@@ -10,7 +10,7 @@ const examples = [
   {
     step: '01',
     artworkId: 10,
-    src: encodeURI('/videos/artworks/Why 2.mp4'),
+    src: encodeURI('/videos/artworks/amanda-seyfried-fluo-glasses-pop-art-2-fabian-phil.mp4'),
     title: 'Why…?',
     series: 'Pop glasses',
     effect: 'Movement through perspective',
@@ -20,7 +20,7 @@ const examples = [
   {
     step: '02',
     artworkId: 31,
-    src: encodeURI('/videos/artworks/Cleclerc Monza 1.mp4'),
+    src: encodeURI('/videos/artworks/charles-leclerc-monza-f1-cartoon-ferrari-wanted-pop-art-2-fabian-phil.mp4'),
     title: 'Charles Leclerc in Monza',
     series: 'F1 / Motorsport',
     effect: 'Perspective + colour',
@@ -30,7 +30,7 @@ const examples = [
   {
     step: '03',
     artworkId: 1,
-    src: encodeURI('/videos/artworks/Racing Life Led on 2.mp4'),
+    src: encodeURI('/videos/artworks/steve-mcqueen-mugshot-pop-art-led-fabian-phil.mp4'),
     title: 'Racing Life',
     series: 'Special LED work',
     effect: 'Perspective + colour + light',

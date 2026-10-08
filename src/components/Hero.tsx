@@ -47,7 +47,7 @@ const Hero = () => {
             className="order-1 lg:order-1 relative block w-full aspect-[3/2] bg-gray-50 overflow-hidden"
           >
             <Image
-              src="/images/artworks/Wanted for Being Too Smart - WideWall.jpg"
+              src="/images/artworks/angelina-jolie-pop-art-fabian-phil-interior.jpg"
               alt="Wanted for Being Too Smart, kinetic pop artwork by Fabian PhiL, staged in a contemporary interior"
               fill
               className="object-cover object-center"

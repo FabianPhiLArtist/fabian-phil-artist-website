@@ -18,37 +18,37 @@ type Category = {
 const categories: Category[] = [
   {
     name: 'Panda / Zen',
-    image: '/images/artworks/Fabian PhiL_Wanted Panda Zen Artist 2025.jpg',
+    image: '/images/artworks/panda-wanted-meditation-zen-artist-pop-art-fabian-phil.jpg',
     alt: 'Wanted Panda Zen Artist',
     collection: 'panda-zen',
   },
   {
     name: 'Signature works',
-    image: '/images/artworks/Fabian PhiL_I am the Last Samurai_2024_72400aed.jpg',
+    image: '/images/artworks/last-samurai-japanese-pop-art-fabian-phil.jpg',
     alt: 'I am the Last Samurai, kinetic portrait by Fabian PhiL',
     collection: 'signature-works',
   },
   {
     name: 'Pop glasses',
-    image: '/images/artworks/Fabian PhiL_Wanted for Loving Art_2023_18000aed.jpg',
+    image: '/images/artworks/kate-upton-hollywood-pop-glasses-wanted-pop-art-fabian-phil.jpg',
     alt: 'Wanted for Loving Art, Pop glasses portrait',
     collection: 'pop-glasses',
   },
   {
     name: 'Toon Clash',
-    image: '/images/artworks/Fabian PhiL Wanted Million Dollar Toon Fight 2026.jpg',
+    image: '/images/artworks/clint-eastwood-wanted-boxing-cartoon-fight-pop-art-fabian-phil.jpg',
     alt: 'Wanted Million Dollar Toon Fight, Toon Clash artwork',
     collection: 'toon-clash',
   },
   {
     name: 'F1 / Motorsport',
-    image: '/images/artworks/Wanted Ayrton vs Toons Racing.jpg',
+    image: '/images/artworks/ayrton-senna-f1-cartoon-wanted-pop-art-fabian-phil-thumbnail.jpg',
     alt: 'Wanted Ayrton vs Toons Racing, F1 portrait',
     collection: 'f1-motorsport',
   },
   {
     name: 'Triptych & Mugshots',
-    image: '/images/artworks/100USD Andy Centre.jpg',
+    image: '/images/artworks/andy-warhol-100-usd-bill-pop-art-fabian-phil-triptych-centre.jpg',
     alt: '100 USD Andy Warhol, centre panel of the triptych',
     query: { group: 'triptych-mugshots' },
   },
