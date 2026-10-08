@@ -1,5 +1,10 @@
+const exhibitionMediaRedirects = require('./exhibition-media-redirects')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return exhibitionMediaRedirects
+  },
   images: {
     remotePatterns: [
       {

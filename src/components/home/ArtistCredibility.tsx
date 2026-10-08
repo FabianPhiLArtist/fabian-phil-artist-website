@@ -9,21 +9,21 @@ import ImageLightbox, { type LightboxImage } from '@/components/home/ImageLightb
 
 const exhibitionImages: LightboxImage[] = [
   {
-    src: '/images/exhibitions/Noor 7.jpg',
+    src: '/images/exhibitions/fabian-phil-noor-royal-gallery-dubai-2026-07.jpg',
     alt: 'Noor Royal Gallery interior with Fabian PhiL artworks installed',
     width: 2722,
     height: 2214,
     caption: 'Noor Royal Gallery',
   },
   {
-    src: '/images/exhibitions/Alliance 8.jpg',
+    src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-08.jpg',
     alt: 'Visitors viewing Fabian PhiL artworks at Alliance Française Dubai',
     width: 4032,
     height: 3024,
     caption: 'Alliance Française Dubai',
   },
   {
-    src: '/images/exhibitions/WAD_photos all paintings.jpg',
+    src: '/images/exhibitions/fabian-phil-world-art-dubai-2024-artworks.jpg',
     alt: 'Fabian PhiL at World Art Dubai with a presentation of his artworks',
     width: 3024,
     height: 4032,
@@ -35,7 +35,7 @@ const exhibitionImages: LightboxImage[] = [
 const StudioImage = ({ className }: { className?: string }) => (
   <div className={`relative w-full aspect-[4/5] overflow-hidden bg-gray-100 ${className ?? ''}`}>
     <Image
-      src="/images/exhibitions/Fabian Studio Dubai.jpg"
+      src="/images/exhibitions/fabian-phil-artist-studio-dubai.jpg"
       alt="Fabian PhiL in his Dubai studio at the worktable"
       fill
       className="object-cover object-top grayscale"

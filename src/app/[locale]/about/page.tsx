@@ -41,7 +41,7 @@ const sectionLabel = 'text-xs tracking-[0.24em] uppercase text-gray-900'
 const bodyText = 'text-sm md:text-base text-gray-600 font-light leading-relaxed'
 
 const studioImage = {
-  src: '/images/exhibitions/Fabian Studio Dubai.jpg',
+  src: '/images/exhibitions/fabian-phil-artist-studio-dubai.jpg',
   alt: 'Fabian PhiL in his Dubai studio at the worktable, with a layered plexiglass work in progress',
   title: 'Studio, Dubai',
 }

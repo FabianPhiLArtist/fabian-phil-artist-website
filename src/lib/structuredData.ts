@@ -25,7 +25,7 @@ export function siteStructuredData() {
         },
         url: SITE_URL,
         sameAs: [INSTAGRAM_URL],
-        image: absolute('/images/exhibitions/Fabian Studio Dubai.jpg'),
+        image: absolute('/images/exhibitions/fabian-phil-artist-studio-dubai.jpg'),
         description:
           'French contemporary artist based in Dubai, creating kinetic pop portraits across multiple layers of transparent plexiglass.',
       },

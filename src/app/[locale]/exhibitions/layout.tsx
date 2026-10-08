@@ -11,7 +11,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     title: 'Art Exhibitions in Dubai | Fabian PhiL',
     description:
       'Explore exhibitions and gallery presentations by French contemporary artist Fabian PhiL in Dubai, including Alliance Française, Noor Royal Gallery and World Art Dubai.',
-    image: { url: '/images/exhibitions/Alliance 8.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
+    image: { url: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-08.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
   })
 }
 
