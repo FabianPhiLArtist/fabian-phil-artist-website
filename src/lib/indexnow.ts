@@ -1,5 +1,5 @@
 // Server-only: import from route handlers, never from client components.
-import sitemap from '@/app/sitemap'
+import { sitemapEntries } from '@/lib/sitemap'
 
 export const HOST = 'fabianphil.com'
 export const KEY = '092b4fa5848744c9862c04737f0e1b1f'
@@ -35,7 +35,7 @@ export type SubmitResult = {
 }
 
 export function canonicalUrls(): string[] {
-  return sitemap().map((entry) => entry.url)
+  return sitemapEntries().map((entry) => entry.url)
 }
 
 export function validateUrls(
