@@ -133,8 +133,8 @@ const AboutPage = () => {
           </div>
           <blockquote className="border-l border-gray-900 pl-5 m-0">
             <p className="text-base md:text-lg font-light text-gray-900 leading-relaxed">
-              &ldquo;I am driven by emotions of the character. I try to capture the eyes movement, sometimes the air flow.
-              I love transparency, light and movement. We need more light in our lives.&rdquo;
+              &ldquo;What interests me is the emotion behind a face &mdash; the eyes, the expression, the sense that something is about to move.
+              I use transparency, light and layered images to give the portrait a changing presence.&rdquo;
             </p>
             <footer className="mt-3 text-[11px] tracking-[0.16em] uppercase text-gray-500">Fabian PhiL</footer>
           </blockquote>
