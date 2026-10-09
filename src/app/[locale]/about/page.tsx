@@ -29,7 +29,7 @@ const journey = [
   },
   {
     title: 'The Blue Lady — Africa',
-    text: 'Painting the Blue Lady twice, on two plexiglass sheets, he discovered that vertical strokes created movement as the viewer moved around the work: the eyes seemed to follow, like the Mona Lisa. This became the foundation of his kinetic technique.',
+    text: 'In 2011, painting the Blue Lady twice, on two plexiglass sheets, he discovered that vertical strokes created movement as the viewer moved around the work: the eyes seemed to follow, like the Mona Lisa. This became the foundation of his kinetic technique.',
   },
   {
     title: 'Evolution — Dubai',

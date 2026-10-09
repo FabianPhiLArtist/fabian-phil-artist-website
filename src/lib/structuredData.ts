@@ -1,7 +1,7 @@
 import type { Artwork } from '@/data/artworks'
 import type { Collection } from '@/data/collections'
 import { localizedPath } from '@/i18n/pathnames'
-import { SITE_URL, SITE_NAME, INSTAGRAM_URL } from './site'
+import { SITE_URL, SITE_NAME, INSTAGRAM_URL, FACEBOOK_URL } from './site'
 
 export const ARTIST_ID = `${SITE_URL}/#artist`
 export const WEBSITE_ID = `${SITE_URL}/#website`
@@ -24,7 +24,7 @@ export function siteStructuredData() {
           address: { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' },
         },
         url: SITE_URL,
-        sameAs: [INSTAGRAM_URL],
+        sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
         image: absolute('/images/exhibitions/fabian-phil-artist-studio-dubai.jpg'),
         description:
           'French contemporary artist based in Dubai, creating kinetic pop portraits across multiple layers of transparent plexiglass.',
