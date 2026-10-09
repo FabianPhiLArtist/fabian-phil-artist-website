@@ -36,7 +36,7 @@ const ContactInfo = ({ showTitle = true, className = '' }: ContactInfoProps) => 
           </a>
         </div>
 
-        {/* Gallery Address */}
+        {/* Studio Address */}
         <div className="flex items-start space-x-3">
           <MapPin size={20} className="text-purple-600 mt-1" />
           <div className="text-gray-700">

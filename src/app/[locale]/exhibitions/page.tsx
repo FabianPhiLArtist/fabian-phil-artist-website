@@ -6,10 +6,12 @@ import { Play } from 'lucide-react'
 import SimpleImageModal from '@/components/SimpleImageModal'
 import VideoModal from '@/components/VideoModal'
 import KineticClip from '@/components/home/KineticClip'
+import JsonLd from '@/components/JsonLd'
 import Link from 'next/link'
 import { useLocale } from '@/i18n/useLocale'
 import { localizedHref } from '@/i18n/pathnames'
 import { textLinkClass } from '@/lib/formStyles'
+import { exhibitionEventsStructuredData, type ExhibitionEventInput } from '@/lib/structuredData'
 
 interface ExhibitionImage {
   src: string
@@ -30,6 +32,8 @@ interface Exhibition {
   location?: string
   artists?: string
   link?: { href: string; label: string }
+  // ISO dates must match the visible `date`; leave unset for features that are not events.
+  event?: { slug: string; startDate: string; endDate?: string; venue: string }
   sections: { heading: string; text: string }[]
   mediaHeading: string
   images: ExhibitionImage[]
@@ -43,6 +47,8 @@ const exhibitions: Exhibition[] = [
     date: '30 September – 14 October 2026',
     location: 'Alliance Française Dubai',
     artists: 'Fabian PhiL & Pascal Navarro',
+    link: { href: 'https://www.afdubai.org', label: 'afdubai.org' },
+    event: { slug: 'beyond-the-gaze', startDate: '2026-09-30', endDate: '2026-10-14', venue: 'Alliance Française Dubai' },
     sections: [
       {
         heading: 'About the exhibition',
@@ -64,6 +70,8 @@ const exhibitions: Exhibition[] = [
     title: 'Noor Royal Gallery',
     date: 'March – December 2026',
     location: 'Dubai, UAE',
+    link: { href: 'https://noorroyalgallery.com', label: 'noorroyalgallery.com' },
+    event: { slug: 'noor-royal-gallery-2026', startDate: '2026-03', endDate: '2026-12', venue: 'Noor Royal Gallery' },
     sections: [
       {
         heading: 'About the presentation',
@@ -87,6 +95,7 @@ const exhibitions: Exhibition[] = [
     date: 'January 2025',
     location: 'Dubai International Financial Centre, UAE',
     link: { href: 'https://www.difc.ae', label: 'difc.ae' },
+    event: { slug: 'difc-art-night-2025', startDate: '2025-01', venue: 'Dubai International Financial Centre' },
     sections: [
       {
         heading: 'About DIFC Art Night',
@@ -114,6 +123,7 @@ const exhibitions: Exhibition[] = [
     date: 'May 2024',
     location: 'Dubai World Trade Centre, UAE',
     link: { href: 'https://www.worldartdubai.com', label: 'worldartdubai.com' },
+    event: { slug: 'world-art-dubai-2024', startDate: '2024-05', venue: 'Dubai World Trade Centre' },
     sections: [
       {
         heading: 'About World Art Dubai',
@@ -136,7 +146,6 @@ const exhibitions: Exhibition[] = [
   {
     title: 'Artmosphere Magazine',
     date: '2024',
-    link: { href: 'https://www.artmosphere.com', label: 'artmosphere.com' },
     sections: [
       {
         heading: 'About Artmosphere',
@@ -156,6 +165,12 @@ const exhibitions: Exhibition[] = [
     videos: [],
   },
 ]
+
+const exhibitionEvents: ExhibitionEventInput[] = exhibitions.flatMap((exhibition) =>
+  exhibition.event
+    ? [{ ...exhibition.event, name: exhibition.title, image: (exhibition.leadImage ?? exhibition.images[0])?.src }]
+    : []
+)
 
 const imageGridClass = (count: number) => {
   if (count >= 4) return 'grid-cols-2 sm:grid-cols-4'
@@ -194,6 +209,7 @@ const ExhibitionsPage = () => {
 
   return (
     <div className="min-h-screen bg-white pt-28 pb-20">
+      <JsonLd data={exhibitionEventsStructuredData(exhibitionEvents)} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="max-w-3xl mb-14 md:mb-20">
           <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-6">

@@ -17,17 +17,25 @@ export function siteStructuredData() {
         '@id': ARTIST_ID,
         name: 'Fabian PhiL',
         alternateName: 'Fabian Philandrianos',
-        jobTitle: 'Artist',
+        givenName: 'Fabian',
+        familyName: 'Philandrianos',
+        jobTitle: 'Contemporary pop artist',
         nationality: { '@type': 'Country', name: 'France' },
-        homeLocation: {
-          '@type': 'Place',
-          address: { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' },
-        },
+        homeLocation: DUBAI_PLACE,
+        workLocation: DUBAI_PLACE,
+        knowsAbout: [
+          'Contemporary art',
+          'Pop art',
+          'Kinetic art',
+          'Figurative art',
+          'Portrait art',
+          'Layered plexiglass',
+        ],
         url: SITE_URL,
         sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
         image: absolute('/images/exhibitions/fabian-phil-artist-studio-dubai.jpg'),
         description:
-          'French contemporary artist based in Dubai, creating kinetic pop portraits across multiple layers of transparent plexiglass.',
+          'French contemporary pop artist based in Dubai, UAE, creating kinetic and figurative pop art using layered plexiglass.',
       },
       {
         '@type': 'WebSite',
@@ -40,6 +48,12 @@ export function siteStructuredData() {
       },
     ],
   }
+}
+
+const DUBAI_PLACE = {
+  '@type': 'Place',
+  name: 'Dubai, UAE',
+  address: { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' },
 }
 
 export function artworkStructuredData(artwork: Artwork) {
@@ -80,5 +94,51 @@ export function collectionStructuredData(collection: Collection, members: Artwor
         name: artwork.title,
       })),
     },
+  }
+}
+
+export function faqStructuredData(items: { question: string; answer: string }[]) {
+  const url = new URL(localizedPath('en', 'faq'), SITE_URL).toString()
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    url,
+    about: { '@id': ARTIST_ID },
+    isPartOf: { '@id': WEBSITE_ID },
+    mainEntity: items.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  }
+}
+
+export type ExhibitionEventInput = {
+  slug: string
+  name: string
+  startDate: string
+  endDate?: string
+  venue: string
+  image?: string
+}
+
+export function exhibitionEventsStructuredData(events: ExhibitionEventInput[]) {
+  const url = new URL(localizedPath('en', 'exhibitions'), SITE_URL).toString()
+  return {
+    '@context': 'https://schema.org',
+    '@graph': events.map((event) => ({
+      '@type': 'ExhibitionEvent',
+      '@id': `${url}#${event.slug}`,
+      name: event.name,
+      url,
+      startDate: event.startDate,
+      ...(event.endDate ? { endDate: event.endDate } : {}),
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      location: { ...DUBAI_PLACE, name: event.venue },
+      performer: { '@id': ARTIST_ID },
+      ...(event.image ? { image: absolute(event.image) } : {}),
+    })),
   }
 }

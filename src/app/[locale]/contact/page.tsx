@@ -87,7 +87,7 @@ const ContactPage = () => {
               </div>
 
               <div>
-                <h3 className={infoLabelClass}>Gallery Address</h3>
+                <h3 className={infoLabelClass}>Studio Address</h3>
                 <div className="text-base text-gray-900 font-light leading-relaxed">
                   <p>70 Lowaina Street</p>
                   <p>Umm Suqeim 1, Dubai, UAE</p>
