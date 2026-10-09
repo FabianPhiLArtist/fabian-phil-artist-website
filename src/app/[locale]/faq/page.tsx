@@ -6,12 +6,11 @@ import { isLocale } from '@/i18n/locales'
 import { localizedHref } from '@/i18n/pathnames'
 import { textLinkClass } from '@/lib/formStyles'
 import { faqStructuredData } from '@/lib/structuredData'
-import { ARTIST_FAQ_IDS, FAQ_SCHEMA_EXCLUDED_IDS, WORK_FAQ_IDS, faqAnswerText, faqItemsById } from '@/data/faq'
+import { ARTIST_FAQ_IDS, WORK_FAQ_IDS, faqAnswerText, faqItemsById } from '@/data/faq'
 
 const groupHeadingClass = 'text-[11px] tracking-[0.16em] uppercase text-gray-500 mb-3'
 
 const schemaItems = faqItemsById([...ARTIST_FAQ_IDS, ...WORK_FAQ_IDS])
-  .filter((item) => !FAQ_SCHEMA_EXCLUDED_IDS.includes(item.id))
   .map((item) => ({ question: item.q, answer: faqAnswerText(item) }))
 
 export default function FaqPage({ params }: { params: { locale: string } }) {

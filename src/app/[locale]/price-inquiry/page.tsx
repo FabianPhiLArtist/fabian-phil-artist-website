@@ -8,9 +8,9 @@ import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 
 const formats = [
   { name: 'Small Format', size: '70x70cm', aed: 'AED 10,000 - 16,000', eur: '€2,500 - 4,000' },
-  { name: 'Triptych', size: '70x180cm', aed: 'AED 30,000 - 40,000', eur: '€8,000 - 10,000' },
+  { name: 'Triptych', size: '70x210cm', aed: 'AED 30,000 - 40,000', eur: '€8,000 - 10,000' },
   { name: 'Medium Format', size: '90x120cm', aed: 'AED 28,000 - 50,000', eur: '€7,000 - 13,000' },
-  { name: 'Large Format', size: '110x110cm+', aed: 'AED 35,000 - 45,000', eur: '€9,000 - 11,000' },
+  { name: 'Large Format', size: '110x110cm / 120x120cm', aed: 'AED 35,000 - 45,000', eur: '€9,000 - 11,000' },
 ]
 
 const PriceInquiryPage = () => {

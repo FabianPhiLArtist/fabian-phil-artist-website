@@ -157,15 +157,17 @@ export const faqItems: FaqItem[] = [
     a: [
       [
         'Each artwork page includes the dimensions of the original work. Fabian works across a range of formats, mainly ',
-        { size: '70 × 70' },
+        { size: '60 × 60' },
         ', ',
-        { size: '70 × 90' },
+        { size: '100 × 70' },
         ', ',
-        { size: '90 × 120' },
-        ', ',
+        { size: '120 × 90' },
+        ', large formats of ',
+        { size: '110 × 110' },
+        ' and ',
         { size: '120 × 120' },
-        ' and triptychs of ',
-        { size: '70 × 200' },
+        ', and triptychs of ',
+        { size: '70 × 210' },
         '.',
       ],
       [
@@ -279,9 +281,6 @@ export const ARTIST_FAQ_IDS: FaqId[] = [
 export const WORK_FAQ_IDS: FaqId[] = faqItems
   .map((item) => item.id)
   .filter((id) => !ARTIST_FAQ_IDS.includes(id))
-
-// Triptych dimensions are still unconfirmed, so the sizes answer stays out of the structured data.
-export const FAQ_SCHEMA_EXCLUDED_IDS: FaqId[] = ['sizes']
 
 export const faqItemsById = (ids: FaqId[]) =>
   ids.map((id) => faqItems.find((item) => item.id === id)).filter((item): item is FaqItem => Boolean(item))
