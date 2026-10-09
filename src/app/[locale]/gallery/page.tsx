@@ -12,6 +12,10 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     title: 'Original Art in Dubai | Fabian PhiL Artworks',
     description:
       'Explore original contemporary artworks by Dubai-based French artist Fabian PhiL, including kinetic portraits, Pop Glasses, Wanted, F1 and layered plexiglass works.',
+    image: {
+      url: '/images/artworks/angelina-jolie-pop-art-fabian-phil-interior.jpg',
+      alt: 'Wanted for Being Too Smart, kinetic pop artwork by Fabian PhiL, staged in a contemporary interior',
+    },
   })
 }
 

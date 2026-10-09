@@ -42,8 +42,8 @@ const bodyText = 'text-sm md:text-base text-gray-600 font-light leading-relaxed'
 
 const studioImage = {
   src: '/images/exhibitions/fabian-phil-artist-studio-dubai.jpg',
-  alt: 'Fabian PhiL in his Dubai studio at the worktable, with a layered plexiglass work in progress',
-  title: 'Studio, Dubai',
+  alt: 'Fabian PhiL, French contemporary pop artist, in his Dubai studio',
+  title: 'Fabian PhiL in his studio, Dubai',
 }
 
 const AboutPage = () => {

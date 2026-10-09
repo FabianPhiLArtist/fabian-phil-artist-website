@@ -35,7 +35,7 @@ export function pageMetadata({
   title?: string
   description?: string
   id?: string | number
-  image?: { url: string; alt: string }
+  image?: { url: string; alt: string; width?: number; height?: number }
   noIndex?: boolean
 }): Metadata {
   const path = localizedPath(locale, route, { id })
@@ -58,7 +58,13 @@ export function pageMetadata({
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
       ...(title ? { title } : {}),
       ...(description ? { description } : {}),
-      images: [{ url: encodeURI(shareImage.url), alt: shareImage.alt }],
+      images: [
+        {
+          url: encodeURI(shareImage.url),
+          alt: shareImage.alt,
+          ...(shareImage.width && shareImage.height ? { width: shareImage.width, height: shareImage.height } : {}),
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',

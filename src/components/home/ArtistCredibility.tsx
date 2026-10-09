@@ -36,7 +36,7 @@ const StudioImage = ({ className }: { className?: string }) => (
   <div className={`relative w-full aspect-[4/5] overflow-hidden bg-gray-100 ${className ?? ''}`}>
     <Image
       src="/images/exhibitions/fabian-phil-artist-studio-dubai.jpg"
-      alt="Fabian PhiL in his Dubai studio at the worktable"
+      alt="Fabian PhiL, French contemporary pop artist, in his Dubai studio"
       fill
       className="object-cover object-top grayscale"
       sizes="(max-width: 1024px) 100vw, 50vw"

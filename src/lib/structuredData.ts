@@ -1,10 +1,11 @@
 import type { Artwork } from '@/data/artworks'
 import type { Collection } from '@/data/collections'
 import { localizedPath } from '@/i18n/pathnames'
-import { SITE_URL, SITE_NAME, INSTAGRAM_URL, FACEBOOK_URL } from './site'
+import { SITE_URL, SITE_NAME, INSTAGRAM_URL, FACEBOOK_URL, ARTIST_PORTRAIT } from './site'
 
 export const ARTIST_ID = `${SITE_URL}/#artist`
 export const WEBSITE_ID = `${SITE_URL}/#website`
+export const ARTIST_PORTRAIT_ID = `${SITE_URL}/#artist-portrait`
 
 const absolute = (path: string) => new URL(encodeURI(path), SITE_URL).toString()
 
@@ -33,7 +34,15 @@ export function siteStructuredData() {
         ],
         url: SITE_URL,
         sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
-        image: absolute('/images/exhibitions/fabian-phil-artist-studio-dubai.jpg'),
+        image: {
+          '@type': 'ImageObject',
+          '@id': ARTIST_PORTRAIT_ID,
+          url: absolute(ARTIST_PORTRAIT.url),
+          contentUrl: absolute(ARTIST_PORTRAIT.url),
+          width: ARTIST_PORTRAIT.width,
+          height: ARTIST_PORTRAIT.height,
+          caption: ARTIST_PORTRAIT.alt,
+        },
         description:
           'French contemporary pop artist based in Dubai, UAE, creating kinetic and figurative pop art using layered plexiglass.',
       },
@@ -94,6 +103,20 @@ export function collectionStructuredData(collection: Collection, members: Artwor
         name: artwork.title,
       })),
     },
+  }
+}
+
+export function profilePageStructuredData(name: string) {
+  const url = new URL(localizedPath('en', 'about'), SITE_URL).toString()
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': `${url}#webpage`,
+    url,
+    name,
+    mainEntity: { '@id': ARTIST_ID },
+    primaryImageOfPage: { '@id': ARTIST_PORTRAIT_ID },
+    isPartOf: { '@id': WEBSITE_ID },
   }
 }
 
