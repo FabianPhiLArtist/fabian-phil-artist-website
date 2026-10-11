@@ -7,11 +7,15 @@ import JsonLd from '@/components/JsonLd'
 import { siteStructuredData } from '@/lib/structuredData'
 import { isLocale, locales } from '@/i18n/locales'
 import type { Locale } from '@/i18n/locales'
+import { hasLiveFrenchPages } from '@/i18n/readiness'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// French pages are only prerendered once at least one of them is live.
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }))
+  return locales
+    .filter((locale) => locale === 'en' || hasLiveFrenchPages())
+    .map((locale) => ({ locale }))
 }
 
 export default function LocaleLayout({
@@ -30,7 +34,7 @@ export default function LocaleLayout({
   return (
     <html lang={locale} className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
-        <JsonLd data={siteStructuredData()} />
+        <JsonLd data={siteStructuredData(locale)} />
         <Navigation locale={locale} />
         <main className="min-h-screen">
           {children}

@@ -209,7 +209,7 @@ const ExhibitionsPage = () => {
 
   return (
     <div className="min-h-screen bg-white pt-28 pb-20">
-      <JsonLd data={exhibitionEventsStructuredData(exhibitionEvents)} />
+      <JsonLd data={exhibitionEventsStructuredData(exhibitionEvents, locale)} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="max-w-3xl mb-14 md:mb-20">
           <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-6">

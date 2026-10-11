@@ -93,7 +93,7 @@ const CollectorCTA = () => {
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
-              href={localizedHref(locale, 'collectors')}
+              href={localizedHref(locale, 'about')}
               className="group bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 shadow-2xl"
             >
               <span>View Collection</span>

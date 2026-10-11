@@ -1,14 +1,12 @@
 import type { Locale } from './locales'
 import { slugForLegacyArtworkId } from '@/data/artworkSlugs'
+import { isFrenchPageLive } from './readiness'
 
 export type AppRoute =
   | 'home'
   | 'gallery'
   | 'about'
-  | 'artist-statement'
-  | 'cv'
   | 'exhibitions'
-  | 'collectors'
   | 'professionals'
   | 'collaborations'
   | 'faq'
@@ -17,16 +15,15 @@ export type AppRoute =
   | 'artwork'
   | 'collection'
 
+export type StaticRoute = Exclude<AppRoute, 'artwork' | 'collection'>
+
 const routesWithId: AppRoute[] = ['artwork', 'collection']
 
 const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> = {
   en: {
     gallery: 'gallery',
     about: 'about',
-    'artist-statement': 'artist-statement',
-    cv: 'cv',
     exhibitions: 'exhibitions',
-    collectors: 'collectors',
     professionals: 'professionals',
     collaborations: 'collaborations',
     faq: 'faq',
@@ -35,13 +32,11 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     artwork: 'artwork',
     collection: 'collections',
   },
+  // Collection and artwork slugs are shared across locales; only these route segments are translated.
   fr: {
-    gallery: 'galerie',
-    about: 'a-propos',
-    'artist-statement': 'demarche-artistique',
-    cv: 'cv',
+    gallery: 'oeuvres',
+    about: 'artiste',
     exhibitions: 'expositions',
-    collectors: 'collectionneurs',
     professionals: 'professionnels',
     collaborations: 'collaborations',
     faq: 'faq',
@@ -82,12 +77,31 @@ export function localizedPath(
   return appendQuery(path, options?.query)
 }
 
+// Link target for in-page navigation: a French page that is not live yet falls back to its English
+// equivalent, so French pages never link to a 404. Canonicals and alternates use localizedPath.
 export function localizedHref(
   locale: Locale,
   route: AppRoute,
   options?: LocalizedHrefOptions
 ): string {
+  if (locale === 'fr' && !isFrenchPageLive(route, options?.id)) {
+    return localizedPath('en', route, options)
+  }
   return localizedPath(locale, route, options)
+}
+
+// The same page in the other locale, or null when that version does not exist (French not live).
+export function alternateLocalePath(pathname: string): string | null {
+  const parsed = parsePublicPathname(pathname)
+  if (!parsed) {
+    return null
+  }
+  if (parsed.locale === 'fr') {
+    return localizedPath('en', parsed.route, { id: parsed.id })
+  }
+  return isFrenchPageLive(parsed.route, parsed.id)
+    ? localizedPath('fr', parsed.route, { id: parsed.id })
+    : null
 }
 
 export function internalPath(
@@ -175,10 +189,7 @@ export function matchLegacyEnglishPath(pathname: string): string | null {
   const legacy: Array<[RegExp, (match: RegExpMatchArray) => string]> = [
     [/^\/gallery$/, () => localizedPath('en', 'gallery')],
     [/^\/about$/, () => localizedPath('en', 'about')],
-    [/^\/artist-statement$/, () => localizedPath('en', 'artist-statement')],
-    [/^\/cv$/, () => localizedPath('en', 'cv')],
     [/^\/exhibitions$/, () => localizedPath('en', 'exhibitions')],
-    [/^\/collectors$/, () => localizedPath('en', 'collectors')],
     [/^\/professionals$/, () => localizedPath('en', 'professionals')],
     [/^\/collaborations$/, () => localizedPath('en', 'collaborations')],
     [/^\/faq$/, () => localizedPath('en', 'faq')],

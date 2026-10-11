@@ -2,36 +2,54 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import type { Locale } from '@/i18n/locales'
-import { localizedHref } from '@/i18n/pathnames'
+import { navLabel, type NavKey } from '@/i18n/navigation'
+import { alternateLocalePath, localizedHref } from '@/i18n/pathnames'
 
+const switchLinkClass = 'text-gray-400 hover:text-gray-900 transition-colors'
+
+// Links to the same page in the other language only when that version exists.
 function LocaleSwitch({ locale }: { locale: Locale }) {
+  const pathname = usePathname()
+  const alternate = pathname ? alternateLocalePath(pathname) : null
+
   return (
     <p className="text-xs tracking-[0.18em] uppercase text-gray-900" aria-label="Language">
-      <span className={locale === 'en' ? 'font-medium' : 'text-gray-400'}>EN</span>
+      {locale === 'fr' && alternate ? (
+        <Link href={alternate} hrefLang="en" className={switchLinkClass}>
+          EN
+        </Link>
+      ) : (
+        <span className={locale === 'en' ? 'font-medium' : 'text-gray-400'}>EN</span>
+      )}
       <span className="mx-1 text-gray-300">|</span>
-      <span
-        className="text-gray-400"
-        title="French version coming soon"
-        aria-disabled="true"
-      >
-        FR
-      </span>
+      {locale === 'fr' ? (
+        <span className="font-medium">FR</span>
+      ) : alternate ? (
+        <Link href={alternate} hrefLang="fr" className={switchLinkClass}>
+          FR
+        </Link>
+      ) : (
+        <span
+          className="text-gray-400"
+          title="French version coming soon"
+          aria-disabled="true"
+        >
+          FR
+        </span>
+      )}
     </p>
   )
 }
 
+const navKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'contact']
+
 const Navigation = ({ locale }: { locale: Locale }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const navItems = [
-    { name: 'Artworks', href: localizedHref(locale, 'gallery') },
-    { name: 'Artist', href: localizedHref(locale, 'about') },
-    { name: 'Exhibitions', href: localizedHref(locale, 'exhibitions') },
-    { name: 'Collaborations', href: localizedHref(locale, 'collaborations') },
-    { name: 'Contact', href: localizedHref(locale, 'contact') },
-  ]
+  const navItems = navKeys.map((key) => ({ name: navLabel(locale, key), href: localizedHref(locale, key) }))
 
   const priceInquiryHref = localizedHref(locale, 'price-inquiry')
 
@@ -60,7 +78,7 @@ const Navigation = ({ locale }: { locale: Locale }) => {
               href={priceInquiryHref}
               className="text-xs tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-0.5 hover:text-gray-600 hover:border-gray-600 transition-colors"
             >
-              Price Inquiry
+              {navLabel(locale, 'price-inquiry')}
             </Link>
             <LocaleSwitch locale={locale} />
           </div>
@@ -97,7 +115,7 @@ const Navigation = ({ locale }: { locale: Locale }) => {
               onClick={() => setIsOpen(false)}
               className="block text-sm tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-1 w-fit"
             >
-              Price Inquiry
+              {navLabel(locale, 'price-inquiry')}
             </Link>
           </div>
         </div>

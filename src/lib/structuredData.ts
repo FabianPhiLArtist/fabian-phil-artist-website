@@ -1,15 +1,37 @@
+import { notFound } from 'next/navigation'
 import type { Artwork } from '@/data/artworks'
 import type { Collection } from '@/data/collections'
-import { localizedPath } from '@/i18n/pathnames'
-import { SITE_URL, SITE_NAME, INSTAGRAM_URL, FACEBOOK_URL, ARTIST_PORTRAIT } from './site'
+import type { Locale } from '@/i18n/locales'
+import { localizedHref, localizedPath, type AppRoute, type LocalizedHrefOptions } from '@/i18n/pathnames'
+import {
+  frenchArtwork,
+  frenchCollection,
+  frenchFaqPage,
+  frenchStaticPage,
+  hasLiveFrenchPages,
+} from '@/i18n/readiness'
+import { frArtistEntity } from '@/i18n/fr/artist'
+import { SITE_URL, SITE_NAME, INSTAGRAM_URL, FACEBOOK_URL, ARTIST_PORTRAIT, absoluteUrl as absolute } from './site'
 
 export const ARTIST_ID = `${SITE_URL}/#artist`
 export const WEBSITE_ID = `${SITE_URL}/#website`
 export const ARTIST_PORTRAIT_ID = `${SITE_URL}/#artist-portrait`
 
-const absolute = (path: string) => new URL(encodeURI(path), SITE_URL).toString()
+const pageUrl = (locale: Locale, route: AppRoute, options?: LocalizedHrefOptions) =>
+  new URL(localizedPath(locale, route, options), SITE_URL).toString()
 
-export function siteStructuredData() {
+// French nodes are only built for live French pages; missing content means the page must not render.
+function requireFrench<T>(content: T | null | undefined): T {
+  if (content === null || content === undefined) {
+    notFound()
+  }
+  return content
+}
+
+// One Person (same @id) in every language; French pages localize its text fields only.
+export function siteStructuredData(locale: Locale = 'en') {
+  const french = locale === 'fr' ? requireFrench(frArtistEntity) : undefined
+  const place = french ? { ...DUBAI_PLACE, name: french.locationName } : DUBAI_PLACE
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -20,18 +42,20 @@ export function siteStructuredData() {
         alternateName: 'Fabian Philandrianos',
         givenName: 'Fabian',
         familyName: 'Philandrianos',
-        jobTitle: 'Contemporary pop artist',
+        jobTitle: french ? french.jobTitle : 'Contemporary pop artist',
         nationality: { '@type': 'Country', name: 'France' },
-        homeLocation: DUBAI_PLACE,
-        workLocation: DUBAI_PLACE,
-        knowsAbout: [
-          'Contemporary art',
-          'Pop art',
-          'Kinetic art',
-          'Figurative art',
-          'Portrait art',
-          'Layered plexiglass',
-        ],
+        homeLocation: place,
+        workLocation: place,
+        knowsAbout: french
+          ? french.knowsAbout
+          : [
+              'Contemporary art',
+              'Pop art',
+              'Kinetic art',
+              'Figurative art',
+              'Portrait art',
+              'Layered plexiglass',
+            ],
         url: SITE_URL,
         sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
         image: {
@@ -41,17 +65,18 @@ export function siteStructuredData() {
           contentUrl: absolute(ARTIST_PORTRAIT.url),
           width: ARTIST_PORTRAIT.width,
           height: ARTIST_PORTRAIT.height,
-          caption: ARTIST_PORTRAIT.alt,
+          caption: french ? french.portraitCaption : ARTIST_PORTRAIT.alt,
         },
-        description:
-          'French contemporary pop artist based in Dubai, UAE, creating kinetic and figurative pop art using layered plexiglass.',
+        description: french
+          ? french.description
+          : 'French contemporary pop artist based in Dubai, UAE, creating kinetic and figurative pop art using layered plexiglass.',
       },
       {
         '@type': 'WebSite',
         '@id': WEBSITE_ID,
         name: SITE_NAME,
         url: SITE_URL,
-        inLanguage: 'en',
+        inLanguage: hasLiveFrenchPages() ? ['en', 'fr'] : 'en',
         publisher: { '@id': ARTIST_ID },
         about: { '@id': ARTIST_ID },
       },
@@ -65,8 +90,9 @@ const DUBAI_PLACE = {
   address: { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' },
 }
 
-export function artworkStructuredData(artwork: Artwork) {
-  const url = new URL(localizedPath('en', 'artwork', { id: artwork.id }), SITE_URL).toString()
+export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
+  const french = locale === 'fr' ? requireFrench(frenchArtwork(artwork.id)) : undefined
+  const url = pageUrl(locale, 'artwork', { id: artwork.id })
   return {
     '@context': 'https://schema.org',
     '@type': 'VisualArtwork',
@@ -76,21 +102,23 @@ export function artworkStructuredData(artwork: Artwork) {
     image: absolute(artwork.image),
     creator: { '@id': ARTIST_ID },
     dateCreated: artwork.year,
-    artMedium: artwork.medium,
-    description: artwork.description,
+    artMedium: french ? french.medium : artwork.medium,
+    description: french ? french.description : artwork.description,
     isPartOf: { '@id': WEBSITE_ID },
+    ...(french ? { inLanguage: 'fr' } : {}),
   }
 }
 
-export function collectionStructuredData(collection: Collection, members: Artwork[]) {
-  const url = new URL(localizedPath('en', 'collection', { id: collection.slug }), SITE_URL).toString()
+export function collectionStructuredData(collection: Collection, members: Artwork[], locale: Locale = 'en') {
+  const french = locale === 'fr' ? requireFrench(frenchCollection(collection.slug)) : undefined
+  const url = pageUrl(locale, 'collection', { id: collection.slug })
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     '@id': url,
-    name: collection.name,
+    name: french ? french.name : collection.name,
     url,
-    description: collection.description,
+    description: french ? french.seo.description : collection.description,
     isPartOf: { '@id': WEBSITE_ID },
     about: { '@id': ARTIST_ID },
     mainEntity: {
@@ -99,29 +127,36 @@ export function collectionStructuredData(collection: Collection, members: Artwor
       itemListElement: members.map((artwork, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        url: new URL(localizedPath('en', 'artwork', { id: artwork.id }), SITE_URL).toString(),
+        url: new URL(localizedHref(locale, 'artwork', { id: artwork.id }), SITE_URL).toString(),
         name: artwork.title,
       })),
     },
+    ...(french ? { inLanguage: 'fr' } : {}),
   }
 }
 
-export function profilePageStructuredData(name: string) {
-  const url = new URL(localizedPath('en', 'about'), SITE_URL).toString()
+export function profilePageStructuredData(name: string, locale: Locale = 'en') {
+  const french = locale === 'fr' ? requireFrench(frenchStaticPage('about')) : undefined
+  const url = pageUrl(locale, 'about')
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
     '@id': `${url}#webpage`,
     url,
-    name,
+    name: french ? french.structuredDataName ?? french.seo.title : name,
     mainEntity: { '@id': ARTIST_ID },
     primaryImageOfPage: { '@id': ARTIST_PORTRAIT_ID },
     isPartOf: { '@id': WEBSITE_ID },
+    ...(french ? { inLanguage: 'fr' } : {}),
   }
 }
 
-export function faqStructuredData(items: { question: string; answer: string }[]) {
-  const url = new URL(localizedPath('en', 'faq'), SITE_URL).toString()
+// French callers pass the French FAQ items (frenchFaqPage().items), which must match the visible text.
+export function faqStructuredData(items: { question: string; answer: string }[], locale: Locale = 'en') {
+  if (locale === 'fr') {
+    requireFrench(frenchFaqPage())
+  }
+  const url = pageUrl(locale, 'faq')
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -134,6 +169,7 @@ export function faqStructuredData(items: { question: string; answer: string }[])
       name: question,
       acceptedAnswer: { '@type': 'Answer', text: answer },
     })),
+    ...(locale === 'fr' ? { inLanguage: 'fr' } : {}),
   }
 }
 
@@ -146,8 +182,12 @@ export type ExhibitionEventInput = {
   image?: string
 }
 
-export function exhibitionEventsStructuredData(events: ExhibitionEventInput[]) {
-  const url = new URL(localizedPath('en', 'exhibitions'), SITE_URL).toString()
+// Event names are official titles and stay as published (e.g. "Beyond the Gaze") in both languages.
+export function exhibitionEventsStructuredData(events: ExhibitionEventInput[], locale: Locale = 'en') {
+  if (locale === 'fr') {
+    requireFrench(frenchStaticPage('exhibitions'))
+  }
+  const url = pageUrl(locale, 'exhibitions')
   return {
     '@context': 'https://schema.org',
     '@graph': events.map((event) => ({

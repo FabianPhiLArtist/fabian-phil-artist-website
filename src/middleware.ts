@@ -5,7 +5,7 @@ import {
   matchLegacyEnglishPath,
   parsePublicPathname,
 } from '@/i18n/pathnames'
-import { ENABLE_LEGACY_ENGLISH_REDIRECTS, isFrenchRouteReady } from '@/i18n/readiness'
+import { ENABLE_LEGACY_ENGLISH_REDIRECTS, isFrenchPageLive } from '@/i18n/readiness'
 import { slugForLegacyArtworkId } from '@/data/artworkSlugs'
 
 export function middleware(request: NextRequest) {
@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
 
   const parsed = parsePublicPathname(pathname)
   if (!parsed) {
-    return NextResponse.next()
+    return /^\/fr(\/|$)/.test(pathname) ? frenchNotFound() : NextResponse.next()
   }
 
   const artworkSlug =
@@ -37,17 +37,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
-  if (parsed.locale === 'fr' && !isFrenchRouteReady(parsed.route)) {
-    return new NextResponse('Not Found', {
-      status: 404,
-      headers: {
-        'x-robots-tag': 'noindex, nofollow',
-        'content-type': 'text/plain; charset=utf-8',
-      },
-    })
+  const frenchLive = parsed.locale === 'fr' && isFrenchPageLive(parsed.route, parsed.id)
+
+  if (parsed.locale === 'fr' && !frenchLive) {
+    return frenchNotFound()
   }
 
-  if (parsed.locale === 'fr' && isFrenchRouteReady(parsed.route)) {
+  if (frenchLive) {
     const publicPath = localizedPath(parsed.locale, parsed.route, { id: parsed.id })
     const normalizedPublic = publicPath.split('?')[0]
     const normalizedPath = pathname.replace(/\/$/, '') || '/'
@@ -69,6 +65,16 @@ export function middleware(request: NextRequest) {
   }
 
   return NextResponse.next()
+}
+
+function frenchNotFound() {
+  return new NextResponse('Not Found', {
+    status: 404,
+    headers: {
+      'x-robots-tag': 'noindex, nofollow',
+      'content-type': 'text/plain; charset=utf-8',
+    },
+  })
 }
 
 export const config = {

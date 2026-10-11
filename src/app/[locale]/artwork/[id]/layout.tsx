@@ -51,10 +51,11 @@ export default function ArtworkLayout({ children, params }: ArtworkLayoutProps) 
   if (!artwork) {
     notFound()
   }
+  const locale = isLocale(params.locale) ? params.locale : 'en'
 
   return (
     <>
-      <JsonLd data={artworkStructuredData(artwork)} />
+      <JsonLd data={artworkStructuredData(artwork, locale)} />
       {children}
     </>
   )

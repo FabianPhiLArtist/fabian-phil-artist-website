@@ -2,11 +2,13 @@ import { artworks, type Artwork } from '@/data/artworks'
 import { collections } from '@/data/collections'
 import { SITE_URL, absoluteUrl } from '@/lib/site'
 import { localizedPath, type AppRoute } from '@/i18n/pathnames'
-import { isFrenchRouteReady } from '@/i18n/readiness'
+import { frenchArtwork, isFrenchPageLive } from '@/i18n/readiness'
+import { languageAlternates } from '@/i18n/seo'
 import type { Locale } from '@/i18n/locales'
 
 export type SitemapImage = { loc: string; title: string; caption: string }
-export type SitemapEntry = { url: string; image?: SitemapImage }
+export type SitemapAlternate = { hreflang: string; href: string }
+export type SitemapEntry = { url: string; image?: SitemapImage; alternates?: SitemapAlternate[] }
 
 const englishStaticRoutes: AppRoute[] = [
   'home',
@@ -26,12 +28,21 @@ function sitemapEntry(locale: Locale, route: AppRoute, id?: string | number): Si
   }
 }
 
-function entriesFor(route: AppRoute, id?: string | number) {
-  const entries = [sitemapEntry('en', route, id)]
-  if (isFrenchRouteReady(route)) {
-    entries.push(sitemapEntry('fr', route, id))
+// English always; French only when that exact page is live. A live pair lists the same hreflang
+// alternates on both entries, matching the <link rel="alternate"> tags in the page head.
+function entriesFor(route: AppRoute, id?: string | number): SitemapEntry[] {
+  const en = sitemapEntry('en', route, id)
+  if (!isFrenchPageLive(route, id)) {
+    return [en]
   }
-  return entries
+  const alternates = Object.entries(languageAlternates(route, { id })).map(([hreflang, href]) => ({
+    hreflang,
+    href: String(href),
+  }))
+  return [
+    { ...en, alternates },
+    { ...sitemapEntry('fr', route, id), alternates },
+  ]
 }
 
 function artworkImage(artwork: Artwork): SitemapImage {
@@ -46,11 +57,22 @@ function artworkImage(artwork: Artwork): SitemapImage {
   }
 }
 
+// French image text comes only from the French artwork content, never from English.
+function frenchArtworkImage(artwork: Artwork): SitemapImage | undefined {
+  const french = frenchArtwork(artwork.id)
+  return french
+    ? { loc: absoluteUrl(artwork.image), title: french.seo.title, caption: french.imageAlt }
+    : undefined
+}
+
 export function sitemapEntries(): SitemapEntry[] {
   const staticEntries = englishStaticRoutes.flatMap((route) => entriesFor(route))
   const collectionEntries = collections.flatMap((collection) => entriesFor('collection', collection.slug))
   const artworkEntries = artworks.flatMap((artwork) =>
-    entriesFor('artwork', artwork.id).map((entry) => ({ ...entry, image: artworkImage(artwork) }))
+    entriesFor('artwork', artwork.id).map((entry, index) => ({
+      ...entry,
+      image: index === 0 ? artworkImage(artwork) : frenchArtworkImage(artwork),
+    }))
   )
 
   return [...staticEntries, ...collectionEntries, ...artworkEntries]

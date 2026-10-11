@@ -22,12 +22,15 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 
 export default function AboutLayout({
   children,
+  params,
 }: {
   children: ReactNode
+  params: { locale: string }
 }) {
+  const locale = isLocale(params.locale) ? params.locale : 'en'
   return (
     <>
-      <JsonLd data={profilePageStructuredData(title)} />
+      <JsonLd data={profilePageStructuredData(title, locale)} />
       {children}
     </>
   )

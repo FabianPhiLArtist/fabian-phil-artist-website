@@ -47,7 +47,7 @@ export default function CollectionPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white pt-28 pb-20">
-      <JsonLd data={collectionStructuredData(collection, members)} />
+      <JsonLd data={collectionStructuredData(collection, members, locale)} />
       <RememberBrowseContext
         label={collection.name}
         href={localizedHref(locale, 'collection', { id: collection.slug })}

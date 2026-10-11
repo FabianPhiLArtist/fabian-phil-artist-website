@@ -1,17 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import type { Locale } from '@/i18n/locales'
+import { navLabel, type NavKey } from '@/i18n/navigation'
 import { localizedHref } from '@/i18n/pathnames'
 
+const footerKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'price-inquiry', 'contact']
+
 const Footer = ({ locale }: { locale: Locale }) => {
-  const links = [
-    { name: 'Artworks', href: localizedHref(locale, 'gallery') },
-    { name: 'Artist', href: localizedHref(locale, 'about') },
-    { name: 'Exhibitions', href: localizedHref(locale, 'exhibitions') },
-    { name: 'Collaborations', href: localizedHref(locale, 'collaborations') },
-    { name: 'Price Inquiry', href: localizedHref(locale, 'price-inquiry') },
-    { name: 'Contact', href: localizedHref(locale, 'contact') },
-  ]
+  const links = footerKeys.map((key) => ({ name: navLabel(locale, key), href: localizedHref(locale, key) }))
 
   return (
     <footer className="bg-[#fafafa] border-t border-gray-200 text-gray-700">
