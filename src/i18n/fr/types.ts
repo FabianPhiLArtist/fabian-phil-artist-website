@@ -1,7 +1,7 @@
 import type { FaqItem } from '@/data/faq'
 
-// French content is never inherited from English: a French page exists only when its entry below is
-// complete and `published` is true (see src/i18n/readiness.ts).
+// French content is never inherited from English. A French page is live only when it is listed in
+// ./published.ts; ./content.ts checks at build time that every listed page has its content here.
 
 export type FrSeo = {
   title: string
@@ -10,11 +10,7 @@ export type FrSeo = {
   ogImageAlt: string
 }
 
-type Publishable = {
-  published: boolean
-}
-
-export type FrStaticPageContent = Publishable & {
+export type FrStaticPageContent = {
   seo: FrSeo
   // ProfilePage / WebPage name in JSON-LD; defaults to seo.title.
   structuredDataName?: string
@@ -25,22 +21,27 @@ export type FrFaqPageContent = FrStaticPageContent & {
   items: FaqItem[]
 }
 
-export type FrCollectionContent = Publishable & {
+export type FrCollectionContent = {
   name: string
   intro: string
   seo: FrSeo
 }
 
-export type FrArtworkContent = Publishable & {
+export type FrArtworkContent = {
   seo: FrSeo
   imageAlt: string
   description: string
   inMotion: string
   medium: string
+  size: string
+  // Visible series label (artwork.series is the English collection name). For artworks in several
+  // collections it names all of them; seriesBlock then names artwork.series alone.
+  series: string
+  seriesBlock?: string
 }
 
-// French fields of the single Person entity (same @id as English). Required before any French page
-// can go live, so French pages never emit the English artist description.
+// French fields of the single Person entity (same @id as English), so French pages never emit the
+// English artist description.
 export type FrArtistEntity = {
   description: string
   jobTitle: string

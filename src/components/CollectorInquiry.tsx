@@ -5,15 +5,94 @@ import { motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { submitEnquiry } from '@/lib/submitEnquiry'
 import { WHATSAPP_URL, whatsappHref } from '@/lib/whatsapp'
+import { fill } from '@/lib/template'
 import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
+
+type TimelineValue = '' | 'immediate' | '1-3-months' | '3-6-months' | '6-12-months' | 'flexible'
+
+export type CollectorInquiryCopy = {
+  eyebrow: string
+  thankYou: string
+  sent: string
+  directContact: string
+  close: string
+  // "{title}" is replaced with the artwork title.
+  headingWithTitle: string
+  heading: string
+  intro: string
+  honeypot: string
+  name: string
+  namePlaceholder: string
+  email: string
+  emailPlaceholder: string
+  phone: string
+  phonePlaceholder: string
+  location: string
+  locationPlaceholder: string
+  artwork: string
+  artworkPlaceholder: string
+  timeline: string
+  timelineOptions: Record<TimelineValue, string>
+  message: string
+  messagePlaceholder: string
+  whatsappError: string
+  sending: string
+  submit: string
+  preferWhatsapp: string
+  whatsappMessage: string
+  // The enquiry API answers in English; localized forms show these instead of its messages.
+  error?: string
+  fieldError?: string
+}
+
+const englishCopy: CollectorInquiryCopy = {
+  eyebrow: 'Artwork inquiry',
+  thankYou: 'Thank You!',
+  sent: 'Your inquiry has been sent successfully. Fabian will contact you within 24 hours.',
+  directContact: 'You can also reach Fabian directly at fabianphilartist@gmail.com or +971 567594229',
+  close: 'Close',
+  headingWithTitle: 'Interested in "{title}"?',
+  heading: 'Interested in a specific artwork?',
+  intro: 'Fill out the form below and Fabian will get back to you personally.',
+  honeypot: 'Leave this field empty',
+  name: 'Full Name *',
+  namePlaceholder: 'Your full name',
+  email: 'Email Address *',
+  emailPlaceholder: 'your@email.com',
+  phone: 'Phone Number',
+  phonePlaceholder: '+1 (555) 123-4567',
+  location: 'Location',
+  locationPlaceholder: 'City, Country',
+  artwork: 'Artwork of Interest',
+  artworkPlaceholder: 'Artwork title or series',
+  timeline: 'Timeline',
+  timelineOptions: {
+    '': 'Select timeline',
+    immediate: 'Immediate',
+    '1-3-months': '1-3 months',
+    '3-6-months': '3-6 months',
+    '6-12-months': '6-12 months',
+    flexible: 'Flexible',
+  },
+  message: 'Message',
+  messagePlaceholder: 'Tell us more about your interest in this artwork...',
+  whatsappError: 'Message Fabian on WhatsApp',
+  sending: 'Sending...',
+  submit: 'Send Inquiry',
+  preferWhatsapp: 'Prefer WhatsApp? →',
+  whatsappMessage: 'Hello Fabian, I would like to enquire about the artwork "{title}".',
+}
+
+const timelineValues: TimelineValue[] = ['', 'immediate', '1-3-months', '3-6-months', '6-12-months', 'flexible']
 
 interface CollectorInquiryProps {
   artworkTitle?: string
   artworkId?: number
   onClose?: () => void
+  copy?: CollectorInquiryCopy
 }
 
-const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiryProps) => {
+const CollectorInquiry = ({ artworkTitle, artworkId, onClose, copy = englishCopy }: CollectorInquiryProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -35,7 +114,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
   }, [])
 
   const whatsappFallback = artworkTitle
-    ? whatsappHref(`Hello Fabian, I would like to enquire about the artwork "${artworkTitle}".`)
+    ? whatsappHref(fill(copy.whatsappMessage, { title: artworkTitle }))
     : WHATSAPP_URL
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +132,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
       setIsSubmitted(true)
       return
     }
-    setErrorMessage(result.message)
+    setErrorMessage((result.field ? copy.fieldError : copy.error) ?? result.message)
     if (result.field) document.getElementById(result.field)?.focus()
   }
 
@@ -71,17 +150,17 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         animate={{ opacity: 1, y: 0 }}
         className="bg-white px-6 py-10 sm:px-10 text-center max-w-md w-full mx-auto"
       >
-        <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-4">Artwork inquiry</p>
-        <h3 className="text-2xl font-light uppercase tracking-[0.04em] text-gray-900 mb-4">Thank You!</h3>
+        <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-4">{copy.eyebrow}</p>
+        <h3 className="text-2xl font-light uppercase tracking-[0.04em] text-gray-900 mb-4">{copy.thankYou}</h3>
         <p className="text-sm text-gray-600 font-light leading-relaxed mb-3">
-          Your inquiry has been sent successfully. Fabian will contact you within 24 hours.
+          {copy.sent}
         </p>
         <p className="text-xs text-gray-500 font-light leading-relaxed">
-          You can also reach Fabian directly at fabianphilartist@gmail.com or +971 567594229
+          {copy.directContact}
         </p>
         {onClose && (
           <button type="button" onClick={onClose} className={`${primaryButtonClass} mt-8`}>
-            Close
+            {copy.close}
           </button>
         )}
       </motion.div>
@@ -98,7 +177,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={copy.close}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors"
         >
           <X size={20} />
@@ -106,12 +185,12 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
       )}
 
       <div className="mb-8 pr-8">
-        <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-3">Artwork inquiry</p>
+        <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-3">{copy.eyebrow}</p>
         <h3 className="text-xl md:text-2xl font-light text-gray-900 leading-snug">
-          {artworkTitle ? `Interested in "${artworkTitle}"?` : 'Interested in a specific artwork?'}
+          {artworkTitle ? fill(copy.headingWithTitle, { title: artworkTitle }) : copy.heading}
         </h3>
         <p className="text-sm text-gray-600 font-light leading-relaxed mt-3">
-          Fill out the form below and Fabian will get back to you personally.
+          {copy.intro}
         </p>
         <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-500 font-light mt-4">
           <a href="mailto:fabianphilartist@gmail.com" className="hover:text-gray-900 transition-colors">
@@ -125,7 +204,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
 
       <form method="post" action="/api/enquiry" onSubmit={handleSubmit} className="space-y-5">
         <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
-          <label htmlFor="inquiry-website">Leave this field empty</label>
+          <label htmlFor="inquiry-website">{copy.honeypot}</label>
           <input
             type="text"
             id="inquiry-website"
@@ -140,7 +219,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label htmlFor="name" className={labelClass}>
-              Full Name *
+              {copy.name}
             </label>
             <input
               type="text"
@@ -152,13 +231,13 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               value={formData.name}
               onChange={handleChange}
               className={fieldClass}
-              placeholder="Your full name"
+              placeholder={copy.namePlaceholder}
             />
           </div>
 
           <div>
             <label htmlFor="email" className={labelClass}>
-              Email Address *
+              {copy.email}
             </label>
             <input
               type="email"
@@ -170,7 +249,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               value={formData.email}
               onChange={handleChange}
               className={fieldClass}
-              placeholder="your@email.com"
+              placeholder={copy.emailPlaceholder}
             />
           </div>
         </div>
@@ -178,7 +257,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label htmlFor="phone" className={labelClass}>
-              Phone Number
+              {copy.phone}
             </label>
             <input
               type="tel"
@@ -189,13 +268,13 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               value={formData.phone}
               onChange={handleChange}
               className={fieldClass}
-              placeholder="+1 (555) 123-4567"
+              placeholder={copy.phonePlaceholder}
             />
           </div>
 
           <div>
             <label htmlFor="location" className={labelClass}>
-              Location
+              {copy.location}
             </label>
             <input
               type="text"
@@ -205,7 +284,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               value={formData.location}
               onChange={handleChange}
               className={fieldClass}
-              placeholder="City, Country"
+              placeholder={copy.locationPlaceholder}
             />
           </div>
         </div>
@@ -213,7 +292,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label htmlFor="artwork" className={labelClass}>
-              Artwork of Interest
+              {copy.artwork}
             </label>
             <input
               type="text"
@@ -223,13 +302,13 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               value={formData.artwork}
               onChange={handleChange}
               className={fieldClass}
-              placeholder="Artwork title or series"
+              placeholder={copy.artworkPlaceholder}
             />
           </div>
 
           <div>
             <label htmlFor="timeline" className={labelClass}>
-              Timeline
+              {copy.timeline}
             </label>
             <select
               id="timeline"
@@ -238,19 +317,16 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               onChange={handleChange}
               className={fieldClass}
             >
-              <option value="">Select timeline</option>
-              <option value="immediate">Immediate</option>
-              <option value="1-3-months">1-3 months</option>
-              <option value="3-6-months">3-6 months</option>
-              <option value="6-12-months">6-12 months</option>
-              <option value="flexible">Flexible</option>
+              {timelineValues.map((value) => (
+                <option key={value} value={value}>{copy.timelineOptions[value]}</option>
+              ))}
             </select>
           </div>
         </div>
 
         <div>
           <label htmlFor="message" className={labelClass}>
-            Message
+            {copy.message}
           </label>
           <textarea
             id="message"
@@ -260,7 +336,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
             value={formData.message}
             onChange={handleChange}
             className={fieldClass}
-            placeholder="Tell us more about your interest in this artwork..."
+            placeholder={copy.messagePlaceholder}
           />
         </div>
 
@@ -273,7 +349,7 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
               rel="noopener noreferrer"
               className="inline-block mt-2 text-xs tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-0.5 hover:text-gray-600 hover:border-gray-600 transition-colors"
             >
-              Message Fabian on WhatsApp
+              {copy.whatsappError}
             </a>
           </div>
         )}
@@ -283,15 +359,15 @@ const CollectorInquiry = ({ artworkTitle, artworkId, onClose }: CollectorInquiry
             {isSubmitting ? (
               <>
                 <span className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-                <span>Sending...</span>
+                <span>{copy.sending}</span>
               </>
             ) : (
-              <span>Send Inquiry</span>
+              <span>{copy.submit}</span>
             )}
           </button>
 
           <a href={whatsappFallback} target="_blank" rel="noopener noreferrer" className={textLinkClass}>
-            Prefer WhatsApp? →
+            {copy.preferWhatsapp}
           </a>
         </div>
       </form>

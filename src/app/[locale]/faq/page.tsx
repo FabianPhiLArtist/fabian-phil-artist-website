@@ -6,7 +6,7 @@ import { isLocale } from '@/i18n/locales'
 import { localizedHref } from '@/i18n/pathnames'
 import { textLinkClass } from '@/lib/formStyles'
 import { faqStructuredData } from '@/lib/structuredData'
-import { frenchFaqPage } from '@/i18n/readiness'
+import { frenchFaqPage } from '@/i18n/fr/content'
 import { ARTIST_FAQ_IDS, WORK_FAQ_IDS, faqAnswerText, faqItemsById, type FaqItem } from '@/data/faq'
 
 const groupHeadingClass = 'text-[11px] tracking-[0.16em] uppercase text-gray-500 mb-3'

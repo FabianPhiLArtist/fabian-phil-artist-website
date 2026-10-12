@@ -10,6 +10,7 @@ import CommonQuestions from '@/components/home/CommonQuestions'
 import InstagramFeature from '@/components/home/InstagramFeature'
 import { isLocale } from '@/i18n/locales'
 import { pageMetadata } from '@/i18n/seo'
+import { frHomeCopy } from '@/i18n/fr/home'
 
 // Must equal INSTAGRAM_FEATURE_REVALIDATE_SECONDS; Next requires a literal here.
 export const revalidate = 21600
@@ -25,17 +26,22 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   })
 }
 
-export default function Home() {
+// English sections use their built-in copy; French copy is passed only on French pages so it never
+// enters the English payload.
+export default function Home({ params }: { params: { locale: string } }) {
+  const fr = params.locale === 'fr' ? frHomeCopy : undefined
+  const copy = <K extends keyof typeof frHomeCopy>(key: K) => (fr ? { copy: fr[key] } : {})
+
   return (
     <>
-      <Hero />
-      <ExploreArtworks />
-      <ArtThatMoves />
-      <ArtistCredibility />
-      <GalleriesCurators />
-      <InteriorsCollaborations />
-      <CommonQuestions />
-      <InstagramFeature />
+      <Hero {...copy('hero')} />
+      <ExploreArtworks {...copy('explore')} />
+      <ArtThatMoves {...copy('artThatMoves')} />
+      <ArtistCredibility {...copy('credibility')} />
+      <GalleriesCurators {...copy('galleries')} />
+      <InteriorsCollaborations {...copy('interiors')} />
+      <CommonQuestions {...copy('commonQuestions')} />
+      <InstagramFeature {...copy('instagram')} />
     </>
   )
 }

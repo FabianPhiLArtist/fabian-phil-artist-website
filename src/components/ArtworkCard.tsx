@@ -2,11 +2,39 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
-import CollectorInquiry from './CollectorInquiry'
+import CollectorInquiry, { type CollectorInquiryCopy } from './CollectorInquiry'
+import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
-import { localizedHref } from '@/i18n/pathnames'
+import { fill } from '@/lib/template'
+
+export type ArtworkCardCopy = {
+  inMotion: string
+  priceOnRequest: string
+  sold: string
+  viewDetails: string
+  inquire: string
+  // "{title}" is replaced with the artwork title.
+  defaultAlt: string
+  inquiry?: CollectorInquiryCopy
+}
+
+// Localized artwork fields; titles are never translated.
+export type ArtworkCardText = {
+  imageAlt: string
+  description: string
+  series: string
+  size: string
+}
+
+const englishCopy: ArtworkCardCopy = {
+  inMotion: ' · In motion',
+  priceOnRequest: 'Price upon Inquiry',
+  sold: 'Sold',
+  viewDetails: 'View Details →',
+  inquire: 'Inquire',
+  defaultAlt: '{title}, layered plexiglass artwork by Fabian PhiL',
+}
 
 interface ArtworkCardProps {
   artwork: {
@@ -27,15 +55,18 @@ interface ArtworkCardProps {
     available: boolean
   }
   viewMode: 'grid' | 'list'
+  copy?: ArtworkCardCopy
+  text?: ArtworkCardText
 }
 
 const textActionClass = 'text-[11px] tracking-[0.16em] uppercase text-gray-900 hover:text-gray-500 transition-colors'
 
-const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
+const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCardProps) => {
   const locale = useLocale()
   const [showInquiry, setShowInquiry] = useState(false)
 
   const isList = viewMode === 'list'
+  const imageAlt = text?.imageAlt ?? artwork.imageAlt
 
   return (
     <motion.div
@@ -44,7 +75,7 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
       transition={{ duration: 0.5 }}
       className="group"
     >
-      <Link href={localizedHref(locale, 'artwork', { id: artwork.id })} className="block">
+      <LocaleLink locale={locale} route="artwork" options={{ id: artwork.id }} className="block">
         <div className={isList ? 'flex flex-col sm:flex-row gap-5 sm:gap-8 py-6' : ''}>
           <div className={`relative overflow-hidden bg-[#fafafa] ${
             isList ? 'w-full sm:w-56 md:w-64 aspect-square flex-shrink-0' : 'w-full aspect-square'
@@ -52,9 +83,9 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
             <Image
               src={artwork.cardImage ?? artwork.image}
               alt={
-                !artwork.cardImage && artwork.imageAlt
-                  ? artwork.imageAlt
-                  : `${artwork.title}, layered plexiglass artwork by Fabian PhiL`
+                !artwork.cardImage && imageAlt
+                  ? imageAlt
+                  : fill(copy.defaultAlt, { title: artwork.title })
               }
               fill
               sizes={isList ? '(max-width: 640px) 100vw, 256px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
@@ -67,21 +98,21 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
               {artwork.title}
             </h3>
             <p className="mt-2 text-[10px] tracking-[0.18em] uppercase text-gray-500">
-              {artwork.series} · {artwork.year}{artwork.video ? ' · In motion' : ''}
+              {text?.series ?? artwork.series} · {artwork.year}{artwork.video ? copy.inMotion : ''}
             </p>
-            <p className="mt-1.5 text-[13px] text-gray-600 font-light">{artwork.size}</p>
+            <p className="mt-1.5 text-[13px] text-gray-600 font-light">{text?.size ?? artwork.size}</p>
             <p className={`mt-1 text-[11px] tracking-[0.14em] uppercase ${artwork.available ? 'text-gray-500' : 'text-gray-900'}`}>
-              {artwork.available ? 'Price upon Inquiry' : 'Sold'}
+              {artwork.available ? copy.priceOnRequest : copy.sold}
             </p>
             {isList && (
               <p className="mt-1 text-[13px] text-gray-500 font-light">{artwork.medium}</p>
             )}
             <p className="mt-3 text-[13px] text-gray-500 font-light leading-relaxed line-clamp-2">
-              {artwork.description}
+              {text?.description ?? artwork.description}
             </p>
 
             <div className="mt-4 flex items-center gap-5">
-              <span className={textActionClass}>View Details →</span>
+              <span className={textActionClass}>{copy.viewDetails}</span>
               <button
                 onClick={(e) => {
                   e.preventDefault()
@@ -89,12 +120,12 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
                 }}
                 className={textActionClass}
               >
-                Inquire
+                {copy.inquire}
               </button>
             </div>
           </div>
         </div>
-      </Link>
+      </LocaleLink>
 
       {/* Inquiry Modal */}
       {showInquiry && (
@@ -103,6 +134,7 @@ const ArtworkCard = ({ artwork, viewMode }: ArtworkCardProps) => {
             artworkTitle={artwork.title}
             artworkId={artwork.id}
             onClose={() => setShowInquiry(false)}
+            {...(copy.inquiry ? { copy: copy.inquiry } : {})}
           />
         </div>
       )}

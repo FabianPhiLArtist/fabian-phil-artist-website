@@ -16,9 +16,10 @@ export type LightboxImage = {
 type Props = {
   image: LightboxImage | null
   onClose: () => void
+  closeLabel?: string
 }
 
-const ImageLightbox = ({ image, onClose }: Props) => {
+const ImageLightbox = ({ image, onClose, closeLabel = 'Close' }: Props) => {
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const ImageLightbox = ({ image, onClose }: Props) => {
         ref={closeRef}
         type="button"
         onClick={onClose}
-        aria-label="Close"
+        aria-label={closeLabel}
         className="absolute top-3 right-3 sm:top-5 sm:right-5 w-11 h-11 flex items-center justify-center text-white/80 hover:text-white text-3xl font-light leading-none"
       >
         ×

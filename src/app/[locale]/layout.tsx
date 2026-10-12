@@ -8,6 +8,7 @@ import { siteStructuredData } from '@/lib/structuredData'
 import { isLocale, locales } from '@/i18n/locales'
 import type { Locale } from '@/i18n/locales'
 import { hasLiveFrenchPages } from '@/i18n/readiness'
+import { frFooterCopy, frNavigationCopy } from '@/i18n/fr/ui'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,11 +36,11 @@ export default function LocaleLayout({
     <html lang={locale} className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
         <JsonLd data={siteStructuredData(locale)} />
-        <Navigation locale={locale} />
+        <Navigation locale={locale} {...(locale === 'fr' ? { copy: frNavigationCopy } : {})} />
         <main className="min-h-screen">
           {children}
         </main>
-        <Footer locale={locale} />
+        <Footer locale={locale} {...(locale === 'fr' ? { copy: frFooterCopy } : {})} />
       </body>
     </html>
   )

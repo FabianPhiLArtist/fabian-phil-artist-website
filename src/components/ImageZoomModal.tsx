@@ -3,6 +3,28 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { fill } from '@/lib/template'
+
+export type ImageZoomModalCopy = {
+  close: string
+  previousPhoto: string
+  nextPhoto: string
+  // "{n}" is the photo number, "{title}" the artwork title.
+  viewPhoto: string
+  additionalView: string
+  zoomIn: string
+  zoomOut: string
+}
+
+const englishCopy: ImageZoomModalCopy = {
+  close: 'Close',
+  previousPhoto: 'Previous photo',
+  nextPhoto: 'Next photo',
+  viewPhoto: 'View photo {n}',
+  additionalView: '{title} by Fabian PhiL, additional view {n}',
+  zoomIn: 'Tap or click the image to zoom',
+  zoomOut: 'Tap or click to zoom out',
+}
 
 interface ImageZoomModalProps {
   isOpen: boolean
@@ -16,11 +38,12 @@ interface ImageZoomModalProps {
   size: string
   description: string
   mainImageAlt?: string
+  copy?: ImageZoomModalCopy
 }
 
 const ZOOM = 2.5
 
-const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year, medium, size, mainImageAlt }: ImageZoomModalProps) => {
+const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year, medium, size, mainImageAlt, copy = englishCopy }: ImageZoomModalProps) => {
   const galleryImages = images && images.length > 0 ? images : [imageSrc]
   const [currentIndex, setCurrentIndex] = useState(0)
   const [zoomed, setZoomed] = useState(false)
@@ -76,7 +99,7 @@ const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year
       <button
         onClick={onClose}
         className="absolute top-4 right-4 z-10 p-2 text-white/80 hover:text-white transition-colors"
-        aria-label="Close"
+        aria-label={copy.close}
       >
         <X size={24} />
       </button>
@@ -86,14 +109,14 @@ const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year
           <button
             onClick={(event) => { event.stopPropagation(); show(currentIndex - 1) }}
             className={`${arrowClass} left-2 md:left-6`}
-            aria-label="Previous photo"
+            aria-label={copy.previousPhoto}
           >
             <ChevronLeft size={32} strokeWidth={1.25} />
           </button>
           <button
             onClick={(event) => { event.stopPropagation(); show(currentIndex + 1) }}
             className={`${arrowClass} right-2 md:right-6`}
-            aria-label="Next photo"
+            aria-label={copy.nextPhoto}
           >
             <ChevronRight size={32} strokeWidth={1.25} />
           </button>
@@ -120,7 +143,7 @@ const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year
           alt={
             galleryImages[currentIndex] === imageSrc
               ? mainImageAlt ?? `${title}, layered plexiglass artwork by Fabian PhiL`
-              : `${title} by Fabian PhiL, additional view ${currentIndex}`
+              : fill(copy.additionalView, { title, n: currentIndex })
           }
           width={2000}
           height={2000}
@@ -142,7 +165,7 @@ const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year
                 className={`relative h-12 w-12 overflow-hidden border transition-colors ${
                   index === currentIndex ? 'border-white' : 'border-white/20 hover:border-white/60'
                 }`}
-                aria-label={`View photo ${index + 1}`}
+                aria-label={fill(copy.viewPhoto, { n: index + 1 })}
               >
                 <Image src={src} alt="" fill sizes="48px" className="object-cover" />
               </button>
@@ -153,7 +176,7 @@ const ImageZoomModal = ({ isOpen, onClose, imageSrc, images, title, series, year
         <p className="text-[11px] tracking-[0.16em] uppercase text-gray-400">{series} · {year}</p>
         <p className="text-xs text-gray-500 mt-1 font-light">{[medium, size].filter(Boolean).join(' · ')}</p>
         <p className="text-[10px] tracking-[0.16em] uppercase text-gray-600 mt-3">
-          {zoomed ? 'Tap or click to zoom out' : 'Tap or click the image to zoom'}
+          {zoomed ? copy.zoomOut : copy.zoomIn}
         </p>
       </div>
     </div>

@@ -4,6 +4,24 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react'
 import Image from 'next/image'
+import { fillParts } from '@/lib/template'
+
+export type SimpleImageModalCopy = {
+  // The English close button has no label; localized copy adds one.
+  close?: string
+  zoomIn: string
+  zoomOut: string
+  reset: string
+  // "{percent}" is replaced with the zoom level.
+  help: string
+}
+
+const englishCopy: SimpleImageModalCopy = {
+  zoomIn: 'Zoom In (+)',
+  zoomOut: 'Zoom Out (-)',
+  reset: 'Reset (0)',
+  help: 'Zoom: {percent}% • Mouse wheel or +/- keys • Drag to pan when zoomed',
+}
 
 interface SimpleImageModalProps {
   isOpen: boolean
@@ -11,6 +29,7 @@ interface SimpleImageModalProps {
   imageSrc: string
   alt: string
   title?: string
+  copy?: SimpleImageModalCopy
 }
 
 const SimpleImageModal = ({ 
@@ -18,7 +37,8 @@ const SimpleImageModal = ({
   onClose, 
   imageSrc, 
   alt,
-  title 
+  title,
+  copy = englishCopy
 }: SimpleImageModalProps) => {
   const [zoomLevel, setZoomLevel] = useState(1)
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -133,6 +153,7 @@ const SimpleImageModal = ({
           {/* Close Button */}
           <button
             onClick={onClose}
+            aria-label={copy.close}
             className="absolute top-4 right-4 z-10 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200"
           >
             <X size={24} className="text-white" />
@@ -145,7 +166,7 @@ const SimpleImageModal = ({
                 onClick={handleZoomIn}
                 disabled={zoomLevel >= maxZoom}
                 className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Zoom In (+)"
+                title={copy.zoomIn}
               >
                 <ZoomIn size={20} className="text-white" />
               </button>
@@ -154,7 +175,7 @@ const SimpleImageModal = ({
                 onClick={handleZoomOut}
                 disabled={zoomLevel <= minZoom}
                 className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Zoom Out (-)"
+                title={copy.zoomOut}
               >
                 <ZoomOut size={20} className="text-white" />
               </button>
@@ -162,7 +183,7 @@ const SimpleImageModal = ({
               <button
                 onClick={handleReset}
                 className="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors duration-200"
-                title="Reset (0)"
+                title={copy.reset}
               >
                 <RotateCcw size={20} className="text-white" />
               </button>
@@ -220,7 +241,7 @@ const SimpleImageModal = ({
                 {title && <h3 className="text-xl font-bold mb-1">{title}</h3>}
                 <p className="text-sm opacity-90">{alt}</p>
                 <p className="text-xs opacity-70 mt-2">
-                  Zoom: {Math.round(zoomLevel * 100)}% • Mouse wheel or +/- keys • Drag to pan when zoomed
+                  {fillParts(copy.help, { percent: Math.round(zoomLevel * 100) })}
                 </p>
               </div>
             </motion.div>

@@ -1,14 +1,25 @@
 import React from 'react'
-import Link from 'next/link'
 import type { Locale } from '@/i18n/locales'
-import { navLabel, type NavKey } from '@/i18n/navigation'
-import { localizedHref } from '@/i18n/pathnames'
+import { englishNavLabels, type NavKey } from '@/i18n/navigation'
+import LocaleLink from '@/components/LocaleLink'
+
+export type FooterCopy = {
+  labels: Record<NavKey, string>
+  tagline: string
+  location: string
+  navLabel: string
+}
+
+const englishCopy: FooterCopy = {
+  labels: englishNavLabels,
+  tagline: 'Kinetic pop art on layered plexiglass.',
+  location: 'Dubai, UAE.',
+  navLabel: 'Footer',
+}
 
 const footerKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'price-inquiry', 'contact']
 
-const Footer = ({ locale }: { locale: Locale }) => {
-  const links = footerKeys.map((key) => ({ name: navLabel(locale, key), href: localizedHref(locale, key) }))
-
+const Footer = ({ locale, copy = englishCopy }: { locale: Locale; copy?: FooterCopy }) => {
   return (
     <footer className="bg-[#fafafa] border-t border-gray-200 text-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,9 +29,9 @@ const Footer = ({ locale }: { locale: Locale }) => {
               Fabian PhiL
             </p>
             <p className="text-sm font-light text-gray-600 leading-relaxed">
-              Kinetic pop art on layered plexiglass.
+              {copy.tagline}
               <br />
-              Dubai, UAE.
+              {copy.location}
             </p>
             <div className="mt-5 space-y-2">
               <a
@@ -31,25 +42,27 @@ const Footer = ({ locale }: { locale: Locale }) => {
               >
                 Instagram
               </a>
-              <Link
-                href={localizedHref(locale, 'contact')}
+              <LocaleLink
+                locale={locale}
+                route="contact"
                 className="block text-xs tracking-[0.16em] uppercase text-gray-900 hover:text-gray-500 transition-colors"
               >
-                Contact
-              </Link>
+                {copy.labels.contact}
+              </LocaleLink>
             </div>
           </div>
 
-          <nav aria-label="Footer">
+          <nav aria-label={copy.navLabel}>
             <ul className="space-y-2">
-              {links.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
+              {footerKeys.map((key) => (
+                <li key={copy.labels[key]}>
+                  <LocaleLink
+                    locale={locale}
+                    route={key}
                     className="text-xs tracking-[0.16em] uppercase text-gray-900 hover:text-gray-500 transition-colors"
                   >
-                    {item.name}
-                  </Link>
+                    {copy.labels[key]}
+                  </LocaleLink>
                 </li>
               ))}
             </ul>

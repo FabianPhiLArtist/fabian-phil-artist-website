@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { useLocale } from '@/i18n/useLocale'
 import { localizedHref } from '@/i18n/pathnames'
 import { textLinkClass } from '@/lib/formStyles'
-import { exhibitionEventsStructuredData, type ExhibitionEventInput } from '@/lib/structuredData'
+import { exhibitionEventsStructuredData, type ExhibitionEventInput } from '@/lib/structuredDataShared'
 
 interface ExhibitionImage {
   src: string

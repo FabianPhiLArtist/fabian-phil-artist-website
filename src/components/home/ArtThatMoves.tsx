@@ -1,45 +1,82 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
 import KineticClip from '@/components/home/KineticClip'
+import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
-import { localizedHref } from '@/i18n/pathnames'
+import { fill } from '@/lib/template'
+
+type ExampleText = {
+  title: string
+  series: string
+  effect: string
+  copy: string
+  label: string
+}
+
+export type ArtThatMovesCopy = {
+  heading: string
+  leadLine1: string
+  leadLine2: string
+  intro: string
+  // "{title}" is replaced with the example title.
+  viewLabel: string
+  viewArtwork: string
+  examples: [ExampleText, ExampleText, ExampleText]
+}
+
+const englishCopy: ArtThatMovesCopy = {
+  heading: 'Art that moves',
+  leadLine1: 'One technique.',
+  leadLine2: 'Different ways to move.',
+  intro:
+    'Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.',
+  viewLabel: 'View {title}',
+  viewArtwork: 'View artwork →',
+  examples: [
+    {
+      title: 'Why…?',
+      series: 'Pop glasses',
+      effect: 'Movement through perspective',
+      copy: 'Amanda Seyfried’s gaze never quite settles: as you move, the glasses and layered lines shift and the question stays open.',
+      label: 'Why…?, monochrome kinetic portrait of Amanda Seyfried from the Pop glasses works, filmed as the viewer moves',
+    },
+    {
+      title: 'Charles Leclerc in Monza',
+      series: 'F1 / Motorsport',
+      effect: 'Perspective + colour',
+      copy: 'The layered portrait shifts against the colourful graphic background, adding another dimension to the movement.',
+      label: 'Wanted for Speeding in Monza, Charles Leclerc layered portrait over a colourful background, filmed as the viewer moves',
+    },
+    {
+      title: 'Racing Life',
+      series: 'Special LED work',
+      effect: 'Perspective + colour + light',
+      copy: 'Steve McQueen, lit from within: in this special LED work, light and reflection add another dimension to the layered movement.',
+      label: 'Wanted for Racing Life, special LED kinetic portrait of Steve McQueen, filmed as the viewer moves',
+    },
+  ],
+}
 
 const examples = [
   {
     step: '01',
     artworkId: 10,
     src: encodeURI('/videos/artworks/amanda-seyfried-fluo-glasses-pop-art-2-fabian-phil.mp4'),
-    title: 'Why…?',
-    series: 'Pop glasses',
-    effect: 'Movement through perspective',
-    copy: 'Amanda Seyfried’s gaze never quite settles: as you move, the glasses and layered lines shift and the question stays open.',
-    label: 'Why…?, monochrome kinetic portrait of Amanda Seyfried from the Pop glasses works, filmed as the viewer moves',
   },
   {
     step: '02',
     artworkId: 31,
     src: encodeURI('/videos/artworks/charles-leclerc-monza-f1-cartoon-ferrari-wanted-pop-art-2-fabian-phil.mp4'),
-    title: 'Charles Leclerc in Monza',
-    series: 'F1 / Motorsport',
-    effect: 'Perspective + colour',
-    copy: 'The layered portrait shifts against the colourful graphic background, adding another dimension to the movement.',
-    label: 'Wanted for Speeding in Monza, Charles Leclerc layered portrait over a colourful background, filmed as the viewer moves',
   },
   {
     step: '03',
     artworkId: 1,
     src: encodeURI('/videos/artworks/steve-mcqueen-mugshot-pop-art-led-fabian-phil.mp4'),
-    title: 'Racing Life',
-    series: 'Special LED work',
-    effect: 'Perspective + colour + light',
-    copy: 'Steve McQueen, lit from within: in this special LED work, light and reflection add another dimension to the layered movement.',
-    label: 'Wanted for Racing Life, special LED kinetic portrait of Steve McQueen, filmed as the viewer moves',
   },
 ]
 
-const ArtThatMoves = () => {
+const ArtThatMoves = ({ copy = englishCopy }: { copy?: ArtThatMovesCopy }) => {
   const locale = useLocale()
 
   return (
@@ -47,58 +84,67 @@ const ArtThatMoves = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mb-8 md:mb-12">
           <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">
-            Art that moves
+            {copy.heading}
           </h2>
           <p className="text-2xl md:text-3xl font-light uppercase tracking-[0.04em] text-gray-900 leading-snug mb-4">
-            One technique.
+            {copy.leadLine1}
             <br />
-            Different ways to move.
+            {copy.leadLine2}
           </p>
           <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed">
-            Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.
+            {copy.intro}
           </p>
         </div>
 
         <ol className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 list-none p-0 m-0">
-          {examples.map((example) => (
-            <li key={example.step}>
-              <figure className="m-0 flex md:block gap-4 items-start">
-                <Link
-                  href={localizedHref(locale, 'artwork', { id: example.artworkId })}
-                  aria-label={`View ${example.title}`}
-                  className="relative block shrink-0 w-[42%] md:w-full md:max-w-[300px] md:mx-auto aspect-[9/16] bg-black overflow-hidden"
-                >
-                  <KineticClip src={example.src} label={example.label} />
-                </Link>
-                <figcaption className="md:mt-4 md:max-w-[300px] md:mx-auto">
-                  <p className="text-[10px] tracking-[0.2em] text-gray-400 mb-2">{example.step}</p>
-                  <h3 className="text-xs tracking-[0.16em] uppercase text-gray-900">
-                    <Link
-                      href={localizedHref(locale, 'artwork', { id: example.artworkId })}
-                      className="hover:text-gray-600 transition-colors"
-                    >
-                      {example.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-1 text-[10px] tracking-[0.18em] uppercase text-gray-500">
-                    {example.series}
-                  </p>
-                  <p className="mt-3 text-[11px] tracking-[0.14em] uppercase text-gray-900 border-l border-gray-900 pl-2">
-                    {example.effect}
-                  </p>
-                  <p className="mt-3 text-[13px] text-gray-600 font-light leading-relaxed">
-                    {example.copy}
-                  </p>
-                  <Link
-                    href={localizedHref(locale, 'artwork', { id: example.artworkId })}
-                    className="mt-4 inline-block text-xs tracking-[0.18em] uppercase text-gray-900 hover:text-gray-600 transition-colors"
+          {examples.map((example, index) => {
+            const text = copy.examples[index]
+            return (
+              <li key={example.step}>
+                <figure className="m-0 flex md:block gap-4 items-start">
+                  <LocaleLink
+                    locale={locale}
+                    route="artwork"
+                    options={{ id: example.artworkId }}
+                    aria-label={fill(copy.viewLabel, { title: text.title })}
+                    className="relative block shrink-0 w-[42%] md:w-full md:max-w-[300px] md:mx-auto aspect-[9/16] bg-black overflow-hidden"
                   >
-                    View artwork →
-                  </Link>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
+                    <KineticClip src={example.src} label={text.label} />
+                  </LocaleLink>
+                  <figcaption className="md:mt-4 md:max-w-[300px] md:mx-auto">
+                    <p className="text-[10px] tracking-[0.2em] text-gray-400 mb-2">{example.step}</p>
+                    <h3 className="text-xs tracking-[0.16em] uppercase text-gray-900">
+                      <LocaleLink
+                        locale={locale}
+                        route="artwork"
+                        options={{ id: example.artworkId }}
+                        className="hover:text-gray-600 transition-colors"
+                      >
+                        {text.title}
+                      </LocaleLink>
+                    </h3>
+                    <p className="mt-1 text-[10px] tracking-[0.18em] uppercase text-gray-500">
+                      {text.series}
+                    </p>
+                    <p className="mt-3 text-[11px] tracking-[0.14em] uppercase text-gray-900 border-l border-gray-900 pl-2">
+                      {text.effect}
+                    </p>
+                    <p className="mt-3 text-[13px] text-gray-600 font-light leading-relaxed">
+                      {text.copy}
+                    </p>
+                    <LocaleLink
+                      locale={locale}
+                      route="artwork"
+                      options={{ id: example.artworkId }}
+                      className="mt-4 inline-block text-xs tracking-[0.18em] uppercase text-gray-900 hover:text-gray-600 transition-colors"
+                    >
+                      {copy.viewArtwork}
+                    </LocaleLink>
+                  </figcaption>
+                </figure>
+              </li>
+            )
+          })}
         </ol>
       </div>
     </section>

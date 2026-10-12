@@ -90,6 +90,15 @@ export function localizedHref(
   return localizedPath(locale, route, options)
 }
 
+// hrefLang for a link built with localizedHref: "en" when a French page falls back to English.
+export function fallbackHrefLang(
+  locale: Locale,
+  route: AppRoute,
+  options?: LocalizedHrefOptions
+): 'en' | undefined {
+  return locale === 'fr' && !isFrenchPageLive(route, options?.id) ? 'en' : undefined
+}
+
 // The same page in the other locale, or null when that version does not exist (French not live).
 export function alternateLocalePath(pathname: string): string | null {
   const parsed = parsePublicPathname(pathname)

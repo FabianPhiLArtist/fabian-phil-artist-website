@@ -1,18 +1,22 @@
 'use client'
 
 import React, { useState } from 'react'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
-import { localizedHref } from '@/i18n/pathnames'
 import { WHATSAPP_URL, PRICE_WHATSAPP } from '@/lib/whatsapp'
-import { faqItems, faqItemsById, type FaqId, type FaqPart } from '@/data/faq'
+import { faqItems, faqItemsById, type FaqId, type FaqItem, type FaqPart } from '@/data/faq'
 import type { Locale } from '@/i18n/locales'
 
 export type { FaqId }
 
+// WhatsApp targets for answer links; localized pages pass prefilled messages in their language.
+export type FaqLinks = { general: string; price: string }
+
+const englishLinks: FaqLinks = { general: WHATSAPP_URL, price: PRICE_WHATSAPP }
+
 const linkClass = 'text-gray-900 underline underline-offset-2 decoration-gray-300 hover:decoration-gray-900 transition-colors'
 
-const renderPart = (part: FaqPart, key: number, locale: Locale) => {
+const renderPart = (part: FaqPart, key: number, locale: Locale, links: FaqLinks) => {
   if (typeof part === 'string') return part
   if ('size' in part) {
     return (
@@ -23,7 +27,7 @@ const renderPart = (part: FaqPart, key: number, locale: Locale) => {
     return (
       <a
         key={key}
-        href={part.whatsapp === 'price' ? PRICE_WHATSAPP : WHATSAPP_URL}
+        href={part.whatsapp === 'price' ? links.price : links.general}
         target="_blank"
         rel="noopener noreferrer"
         className={linkClass}
@@ -33,21 +37,24 @@ const renderPart = (part: FaqPart, key: number, locale: Locale) => {
     )
   }
   return (
-    <Link key={key} href={localizedHref(locale, part.route, part.options)} className={linkClass}>
+    <LocaleLink key={key} locale={locale} route={part.route} options={part.options} className={linkClass}>
       {part.text}
-    </Link>
+    </LocaleLink>
   )
 }
 
 type Props = {
   only?: FaqId[]
+  // Localized items replace the shared English data (same ids and order as `only`).
+  items?: FaqItem[]
+  links?: FaqLinks
 }
 
-const FaqAccordion = ({ only }: Props) => {
+const FaqAccordion = ({ only, items: localizedItems, links = englishLinks }: Props) => {
   const locale = useLocale()
   const [open, setOpen] = useState<FaqId | null>(null)
 
-  const items = only ? faqItemsById(only) : faqItems
+  const items = localizedItems ?? (only ? faqItemsById(only) : faqItems)
 
   return (
     <div className="divide-y divide-gray-200 border-t border-b border-gray-200">
@@ -84,7 +91,7 @@ const FaqAccordion = ({ only }: Props) => {
               <div className="overflow-hidden">
                 <div className="pb-4 pr-6 text-[13px] md:text-sm text-gray-600 font-light leading-relaxed space-y-2">
                   {item.a.map((paragraph, index) => (
-                    <p key={index}>{paragraph.map((part, partIndex) => renderPart(part, partIndex, locale))}</p>
+                    <p key={index}>{paragraph.map((part, partIndex) => renderPart(part, partIndex, locale, links))}</p>
                   ))}
                 </div>
               </div>

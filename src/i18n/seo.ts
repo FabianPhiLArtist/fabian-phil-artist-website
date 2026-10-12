@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import { SITE_URL, SITE_NAME, DEFAULT_SHARE_IMAGE } from '@/lib/site'
 import type { Locale } from './locales'
 import { localizedPath, type AppRoute } from './pathnames'
-import { frenchArtwork, frenchCollection, frenchStaticPage, isFrenchPageLive } from './readiness'
+import { isFrenchPageLive } from './readiness'
+import { frenchArtwork, frenchCollection, frenchStaticPage } from './fr/content'
 import type { FrSeo } from './fr/types'
 
 // hreflang set shared by both language versions: English always, French only when that exact page is

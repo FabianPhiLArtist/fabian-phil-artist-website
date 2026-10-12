@@ -1,16 +1,42 @@
 import React from 'react'
 import { Play } from 'lucide-react'
 import { getInstagramFeature } from '@/lib/instagram'
+import { fill } from '@/lib/template'
 import InstagramFeatureImage from '@/components/home/InstagramFeatureImage'
 import InstagramFeatureVideo from '@/components/home/InstagramFeatureVideo'
 
-export default async function InstagramFeature() {
+export type InstagramFeatureCopy = {
+  heading: string
+  text: string
+  viewOnInstagram: string
+  reelBadge: string
+  postAlt: string
+  reelAlt: string
+  postLinkLabel: string
+  reelLinkLabel: string
+  // "{alt}" and "{excerpt}" are replaced; used when the post has a caption excerpt.
+  altWithExcerpt: string
+}
+
+const englishCopy: InstagramFeatureCopy = {
+  heading: 'From the studio',
+  text: 'A rotating glimpse of recent works, movement and exhibitions.',
+  viewOnInstagram: 'View on Instagram →',
+  reelBadge: 'Reel',
+  postAlt: 'Instagram post by Fabian PhiL',
+  reelAlt: 'Instagram reel by Fabian PhiL',
+  postLinkLabel: 'Open this post on Instagram (opens in a new tab)',
+  reelLinkLabel: 'Open this reel on Instagram (opens in a new tab)',
+  altWithExcerpt: '{alt}: {excerpt}',
+}
+
+export default async function InstagramFeature({ copy = englishCopy }: { copy?: InstagramFeatureCopy }) {
   const feature = await getInstagramFeature()
   if (!feature) return null
 
-  const kind = feature.isReel ? 'reel' : 'post'
-  const alt = `Instagram ${kind} by Fabian PhiL${feature.excerpt ? `: ${feature.excerpt}` : ''}`
-  const linkLabel = `Open this ${kind} on Instagram (opens in a new tab)`
+  const baseAlt = feature.isReel ? copy.reelAlt : copy.postAlt
+  const alt = feature.excerpt ? fill(copy.altWithExcerpt, { alt: baseAlt, excerpt: feature.excerpt }) : baseAlt
+  const linkLabel = feature.isReel ? copy.reelLinkLabel : copy.postLinkLabel
 
   const imageLink = (
     <a
@@ -24,7 +50,7 @@ export default async function InstagramFeature() {
       {feature.isReel && (
         <span className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 px-2.5 py-1 text-[11px] tracking-[0.14em] uppercase text-gray-900">
           <Play className="w-3 h-3" aria-hidden="true" />
-          Reel
+          {copy.reelBadge}
         </span>
       )}
     </a>
@@ -36,10 +62,10 @@ export default async function InstagramFeature() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 lg:items-center">
           <div className="lg:order-2 max-w-xl">
             <h2 id="from-the-studio" className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">
-              From the studio
+              {copy.heading}
             </h2>
             <p className="text-lg md:text-xl font-light text-gray-800 leading-relaxed">
-              A rotating glimpse of recent works, movement and exhibitions.
+              {copy.text}
             </p>
             {feature.excerpt && (
               <p className="mt-4 text-sm text-gray-500 font-light leading-relaxed">“{feature.excerpt}”</p>
@@ -51,7 +77,7 @@ export default async function InstagramFeature() {
               aria-label={linkLabel}
               className="hidden lg:inline-block mt-6 text-xs tracking-[0.18em] uppercase text-gray-900 hover:text-gray-600 transition-colors"
             >
-              View on Instagram →
+              {copy.viewOnInstagram}
             </a>
           </div>
 
@@ -61,7 +87,7 @@ export default async function InstagramFeature() {
                 {/* Top corner so the badge never covers the native control bar. */}
                 <span className="pointer-events-none absolute top-3 right-3 flex items-center gap-1.5 bg-white/90 px-2.5 py-1 text-[11px] tracking-[0.14em] uppercase text-gray-900">
                   <Play className="w-3 h-3" aria-hidden="true" />
-                  Reel
+                  {copy.reelBadge}
                 </span>
               </InstagramFeatureVideo>
             ) : (
@@ -74,7 +100,7 @@ export default async function InstagramFeature() {
               aria-label={linkLabel}
               className="lg:hidden inline-block mt-5 text-xs tracking-[0.18em] uppercase text-gray-900 hover:text-gray-600 transition-colors"
             >
-              View on Instagram →
+              {copy.viewOnInstagram}
             </a>
           </div>
         </div>

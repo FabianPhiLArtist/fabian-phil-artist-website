@@ -2,23 +2,15 @@ import { notFound } from 'next/navigation'
 import type { Artwork } from '@/data/artworks'
 import type { Collection } from '@/data/collections'
 import type { Locale } from '@/i18n/locales'
-import { localizedHref, localizedPath, type AppRoute, type LocalizedHrefOptions } from '@/i18n/pathnames'
-import {
-  frenchArtwork,
-  frenchCollection,
-  frenchFaqPage,
-  frenchStaticPage,
-  hasLiveFrenchPages,
-} from '@/i18n/readiness'
+import { localizedHref } from '@/i18n/pathnames'
+import { frenchArtwork, frenchCollection, frenchFaqPage, frenchStaticPage } from '@/i18n/fr/content'
 import { frArtistEntity } from '@/i18n/fr/artist'
 import { SITE_URL, SITE_NAME, INSTAGRAM_URL, FACEBOOK_URL, ARTIST_PORTRAIT, absoluteUrl as absolute } from './site'
+import { ARTIST_ID, ARTIST_PORTRAIT_ID, DUBAI_PLACE, WEBSITE_ID, pageUrl } from './structuredDataShared'
 
-export const ARTIST_ID = `${SITE_URL}/#artist`
-export const WEBSITE_ID = `${SITE_URL}/#website`
-export const ARTIST_PORTRAIT_ID = `${SITE_URL}/#artist-portrait`
-
-const pageUrl = (locale: Locale, route: AppRoute, options?: LocalizedHrefOptions) =>
-  new URL(localizedPath(locale, route, options), SITE_URL).toString()
+// Server-only (reads French copy). Client components use ./structuredDataShared.
+export { ARTIST_ID, WEBSITE_ID, ARTIST_PORTRAIT_ID } from './structuredDataShared'
+export { exhibitionEventsStructuredData, type ExhibitionEventInput } from './structuredDataShared'
 
 // French nodes are only built for live French pages; missing content means the page must not render.
 function requireFrench<T>(content: T | null | undefined): T {
@@ -30,7 +22,7 @@ function requireFrench<T>(content: T | null | undefined): T {
 
 // One Person (same @id) in every language; French pages localize its text fields only.
 export function siteStructuredData(locale: Locale = 'en') {
-  const french = locale === 'fr' ? requireFrench(frArtistEntity) : undefined
+  const french = locale === 'fr' ? frArtistEntity : undefined
   const place = french ? { ...DUBAI_PLACE, name: french.locationName } : DUBAI_PLACE
   return {
     '@context': 'https://schema.org',
@@ -76,18 +68,13 @@ export function siteStructuredData(locale: Locale = 'en') {
         '@id': WEBSITE_ID,
         name: SITE_NAME,
         url: SITE_URL,
-        inLanguage: hasLiveFrenchPages() ? ['en', 'fr'] : 'en',
+        // English pages keep their published value; French pages declare both languages.
+        inLanguage: french ? ['en', 'fr'] : 'en',
         publisher: { '@id': ARTIST_ID },
         about: { '@id': ARTIST_ID },
       },
     ],
   }
-}
-
-const DUBAI_PLACE = {
-  '@type': 'Place',
-  name: 'Dubai, UAE',
-  address: { '@type': 'PostalAddress', addressLocality: 'Dubai', addressCountry: 'AE' },
 }
 
 export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
@@ -109,6 +96,7 @@ export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
   }
 }
 
+// List items point to the French artwork page when it is live and to the English page otherwise.
 export function collectionStructuredData(collection: Collection, members: Artwork[], locale: Locale = 'en') {
   const french = locale === 'fr' ? requireFrench(frenchCollection(collection.slug)) : undefined
   const url = pageUrl(locale, 'collection', { id: collection.slug })
@@ -170,38 +158,5 @@ export function faqStructuredData(items: { question: string; answer: string }[],
       acceptedAnswer: { '@type': 'Answer', text: answer },
     })),
     ...(locale === 'fr' ? { inLanguage: 'fr' } : {}),
-  }
-}
-
-export type ExhibitionEventInput = {
-  slug: string
-  name: string
-  startDate: string
-  endDate?: string
-  venue: string
-  image?: string
-}
-
-// Event names are official titles and stay as published (e.g. "Beyond the Gaze") in both languages.
-export function exhibitionEventsStructuredData(events: ExhibitionEventInput[], locale: Locale = 'en') {
-  if (locale === 'fr') {
-    requireFrench(frenchStaticPage('exhibitions'))
-  }
-  const url = pageUrl(locale, 'exhibitions')
-  return {
-    '@context': 'https://schema.org',
-    '@graph': events.map((event) => ({
-      '@type': 'ExhibitionEvent',
-      '@id': `${url}#${event.slug}`,
-      name: event.name,
-      url,
-      startDate: event.startDate,
-      ...(event.endDate ? { endDate: event.endDate } : {}),
-      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-      eventStatus: 'https://schema.org/EventScheduled',
-      location: { ...DUBAI_PLACE, name: event.venue },
-      performer: { '@id': ARTIST_ID },
-      ...(event.image ? { image: absolute(event.image) } : {}),
-    })),
   }
 }

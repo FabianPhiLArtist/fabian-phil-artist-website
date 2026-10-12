@@ -5,18 +5,34 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import type { Locale } from '@/i18n/locales'
-import { navLabel, type NavKey } from '@/i18n/navigation'
-import { alternateLocalePath, localizedHref } from '@/i18n/pathnames'
+import { englishNavLabels, type NavKey } from '@/i18n/navigation'
+import { alternateLocalePath, fallbackHrefLang, localizedHref } from '@/i18n/pathnames'
+
+export type NavigationCopy = {
+  labels: Record<NavKey, string>
+  openMenu: string
+  closeMenu: string
+  language: string
+  frenchComingSoon: string
+}
+
+const englishCopy: NavigationCopy = {
+  labels: englishNavLabels,
+  openMenu: 'Open menu',
+  closeMenu: 'Close menu',
+  language: 'Language',
+  frenchComingSoon: 'French version coming soon',
+}
 
 const switchLinkClass = 'text-gray-400 hover:text-gray-900 transition-colors'
 
 // Links to the same page in the other language only when that version exists.
-function LocaleSwitch({ locale }: { locale: Locale }) {
+function LocaleSwitch({ locale, copy }: { locale: Locale; copy: NavigationCopy }) {
   const pathname = usePathname()
   const alternate = pathname ? alternateLocalePath(pathname) : null
 
   return (
-    <p className="text-xs tracking-[0.18em] uppercase text-gray-900" aria-label="Language">
+    <p className="text-xs tracking-[0.18em] uppercase text-gray-900" aria-label={copy.language}>
       {locale === 'fr' && alternate ? (
         <Link href={alternate} hrefLang="en" className={switchLinkClass}>
           EN
@@ -34,7 +50,7 @@ function LocaleSwitch({ locale }: { locale: Locale }) {
       ) : (
         <span
           className="text-gray-400"
-          title="French version coming soon"
+          title={copy.frenchComingSoon}
           aria-disabled="true"
         >
           FR
@@ -46,12 +62,17 @@ function LocaleSwitch({ locale }: { locale: Locale }) {
 
 const navKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'contact']
 
-const Navigation = ({ locale }: { locale: Locale }) => {
+const Navigation = ({ locale, copy = englishCopy }: { locale: Locale; copy?: NavigationCopy }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const navItems = navKeys.map((key) => ({ name: navLabel(locale, key), href: localizedHref(locale, key) }))
+  const navItems = navKeys.map((key) => ({
+    name: copy.labels[key],
+    href: localizedHref(locale, key),
+    hrefLang: fallbackHrefLang(locale, key),
+  }))
 
   const priceInquiryHref = localizedHref(locale, 'price-inquiry')
+  const priceInquiryHrefLang = fallbackHrefLang(locale, 'price-inquiry')
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
@@ -59,6 +80,7 @@ const Navigation = ({ locale }: { locale: Locale }) => {
         <div className="flex items-center justify-between h-16">
           <Link
             href={localizedHref(locale, 'home')}
+            hrefLang={fallbackHrefLang(locale, 'home')}
             className="text-lg sm:text-xl font-medium tracking-[0.12em] uppercase text-gray-900"
           >
             Fabian PhiL
@@ -69,6 +91,7 @@ const Navigation = ({ locale }: { locale: Locale }) => {
               <Link
                 key={item.name}
                 href={item.href}
+                hrefLang={item.hrefLang}
                 className="text-xs tracking-[0.16em] uppercase text-gray-800 hover:text-gray-500 transition-colors"
               >
                 {item.name}
@@ -76,20 +99,21 @@ const Navigation = ({ locale }: { locale: Locale }) => {
             ))}
             <Link
               href={priceInquiryHref}
+              hrefLang={priceInquiryHrefLang}
               className="text-xs tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-0.5 hover:text-gray-600 hover:border-gray-600 transition-colors"
             >
-              {navLabel(locale, 'price-inquiry')}
+              {copy.labels['price-inquiry']}
             </Link>
-            <LocaleSwitch locale={locale} />
+            <LocaleSwitch locale={locale} copy={copy} />
           </div>
 
           <div className="flex lg:hidden items-center gap-4">
-            <LocaleSwitch locale={locale} />
+            <LocaleSwitch locale={locale} copy={copy} />
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-900 p-1"
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-label={isOpen ? copy.closeMenu : copy.openMenu}
             >
               {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -104,6 +128,7 @@ const Navigation = ({ locale }: { locale: Locale }) => {
               <Link
                 key={item.name}
                 href={item.href}
+                hrefLang={item.hrefLang}
                 onClick={() => setIsOpen(false)}
                 className="block text-sm tracking-[0.16em] uppercase text-gray-900"
               >
@@ -112,10 +137,11 @@ const Navigation = ({ locale }: { locale: Locale }) => {
             ))}
             <Link
               href={priceInquiryHref}
+              hrefLang={priceInquiryHrefLang}
               onClick={() => setIsOpen(false)}
               className="block text-sm tracking-[0.16em] uppercase text-gray-900 border-b border-gray-900 pb-1 w-fit"
             >
-              {navLabel(locale, 'price-inquiry')}
+              {copy.labels['price-inquiry']}
             </Link>
           </div>
         </div>
