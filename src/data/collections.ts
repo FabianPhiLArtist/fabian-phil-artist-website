@@ -14,7 +14,8 @@ export interface Collection {
 
 const signatureWorkIds = [8, 10, 11, 12, 7, 6, 5, 13, 9, 14]
 const toonClashIds = [33, 30, 32, 31, 26, 27]
-const wantedExcludedIds = [34]
+// "Wanted…" titles that are not Wanted works: 34 (Pop Glasses), 31 Monza (F1 + Toon Clash only).
+const wantedExcludedIds = [34, 31]
 
 export const collections: Collection[] = [
   {
