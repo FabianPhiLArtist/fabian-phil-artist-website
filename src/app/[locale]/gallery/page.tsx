@@ -1,8 +1,15 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import Gallery from '@/components/Gallery'
+import type { ArtworkCardText } from '@/components/ArtworkCard'
+import { artworks } from '@/data/artworks'
 import { isLocale } from '@/i18n/locales'
 import { pageMetadata } from '@/i18n/seo'
+import { frenchCardText, frenchStaticPage } from '@/i18n/fr/content'
+import { frCollectionNames } from '@/i18n/fr/collections'
+import { frGalleryCopy } from '@/i18n/fr/gallery'
+import { frArtworkCardCopy } from '@/i18n/fr/ui'
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
   const locale = isLocale(params.locale) ? params.locale : 'en'
@@ -26,6 +33,28 @@ type SearchParams = { series?: string | string[]; group?: string | string[] }
 
 const firstValue = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value) ?? null
 
-export default function GalleryPage({ searchParams }: { searchParams: SearchParams }) {
-  return <Gallery initialSeries={firstValue(searchParams.series)} initialGroup={firstValue(searchParams.group)} />
+// French card text for every artwork; only French gallery requests serialize it.
+function frenchTexts(): Record<number, ArtworkCardText> {
+  const texts: Record<number, ArtworkCardText> = {}
+  for (const artwork of artworks) {
+    const text = frenchCardText(artwork.id)
+    if (text) texts[artwork.id] = text
+  }
+  return texts
+}
+
+export default function GalleryPage({ params, searchParams }: { params: { locale: string }; searchParams: SearchParams }) {
+  const french = params.locale === 'fr' && frenchStaticPage('gallery')
+  if (params.locale === 'fr' && !french) {
+    notFound()
+  }
+  return (
+    <Gallery
+      initialSeries={firstValue(searchParams.series)}
+      initialGroup={firstValue(searchParams.group)}
+      {...(french
+        ? { copy: frGalleryCopy, cardCopy: frArtworkCardCopy, texts: frenchTexts(), collectionNames: frCollectionNames }
+        : {})}
+    />
+  )
 }

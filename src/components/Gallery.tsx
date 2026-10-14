@@ -5,13 +5,52 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Grid, List, Search, ArrowUpDown } from 'lucide-react'
-import ArtworkCard from './ArtworkCard'
+import ArtworkCard, { type ArtworkCardCopy, type ArtworkCardText } from './ArtworkCard'
 import CollectionLinks from './CollectionLinks'
 import { artworks, series, galleryGroups, isInSeries } from '@/data/artworks'
+import type { CollectionSlug } from '@/data/collections'
 import { useLocale } from '@/i18n/useLocale'
 import { localizedHref } from '@/i18n/pathnames'
 import { useRememberBrowseContext } from '@/lib/browseContext'
 import { textLinkClass } from '@/lib/formStyles'
+import { fill } from '@/lib/template'
+
+export type GalleryCopy = {
+  eyebrow: string
+  intro: string
+  allArtworks: string
+  searchPlaceholder: string
+  sort: string
+  sortOptions: Record<'default' | 'year' | 'title' | 'series', string>
+  sortDescending: string
+  sortAscending: string
+  // "{n}" is replaced with the number of works.
+  countOne: string
+  countOther: string
+  noResults: string
+  moreCollections: string
+  viewAll: string
+  // Display names keyed by the English series name / gallery group slug; English names otherwise.
+  seriesNames?: Record<string, string>
+  groupNames?: Record<string, string>
+}
+
+const englishCopy: GalleryCopy = {
+  eyebrow: 'Original artworks',
+  intro:
+    'Explore original artworks by Fabian PhiL, a French contemporary artist based in Dubai. The collection spans kinetic portraits, Pop Glasses, Wanted, motorsport and pop icons, created on layered plexiglass.',
+  allArtworks: '← All artworks',
+  searchPlaceholder: 'Search artworks...',
+  sort: 'Sort',
+  sortOptions: { default: 'Default Order', year: 'Year', title: 'Title', series: 'Series' },
+  sortDescending: 'Sort Descending',
+  sortAscending: 'Sort Ascending',
+  countOne: '{n} work',
+  countOther: '{n} works',
+  noResults: 'No artworks found matching your criteria.',
+  moreCollections: 'More collections',
+  viewAll: 'View all artworks →',
+}
 
 type UrlFilter = { series: string | null; group: string | null }
 
@@ -33,9 +72,24 @@ const isGroupSlug = (value: string | null | undefined): value is string =>
 const isSeriesName = (value: string | null | undefined): value is string =>
   Boolean(value && series.some(s => s.name === value))
 
-type GalleryProps = { initialSeries?: string | null; initialGroup?: string | null }
+type GalleryProps = {
+  initialSeries?: string | null
+  initialGroup?: string | null
+  copy?: GalleryCopy
+  cardCopy?: ArtworkCardCopy
+  // Localized card text keyed by artwork id.
+  texts?: Record<number, ArtworkCardText>
+  collectionNames?: Record<CollectionSlug, string>
+}
 
-const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) => {
+const Gallery = ({
+  initialSeries = null,
+  initialGroup = null,
+  copy = englishCopy,
+  cardCopy,
+  texts,
+  collectionNames,
+}: GalleryProps) => {
   const locale = useLocale()
   const startGroup = isGroupSlug(initialGroup) ? initialGroup : null
   const startSeries = !startGroup && isSeriesName(initialSeries) ? initialSeries : 'all'
@@ -65,6 +119,13 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
   }, [])
 
   const activeGroup = galleryGroups.find(g => g.slug === selectedGroup)
+  const activeGroupName = activeGroup && (copy.groupNames?.[activeGroup.slug] ?? activeGroup.name)
+  const seriesName = (name: string) => copy.seriesNames?.[name] ?? name
+  const countLabel = (n: number) => fill(n !== 1 ? copy.countOther : copy.countOne, { n })
+  const cardProps = (id: number) => ({
+    ...(cardCopy ? { copy: cardCopy } : {}),
+    ...(texts?.[id] ? { text: texts[id] } : {}),
+  })
 
   useRememberBrowseContext({
     label: 'Gallery',
@@ -76,8 +137,9 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
     const matchesSeries = activeGroup
       ? activeGroup.series.some(name => isInSeries(artwork, name))
       : selectedSeries === 'all' || isInSeries(artwork, selectedSeries)
+    const description = texts?.[artwork.id]?.description ?? artwork.description
     const matchesSearch = artwork.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         artwork.description.toLowerCase().includes(searchTerm.toLowerCase())
+                         description.toLowerCase().includes(searchTerm.toLowerCase())
     return matchesSeries && matchesSearch
   })
 
@@ -124,18 +186,18 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
           <>
             <div className="pb-8 md:pb-10">
               <Link href={localizedHref(locale, 'gallery')} className={textLinkClass}>
-                ← All artworks
+                {copy.allArtworks}
               </Link>
             </div>
             <header className="max-w-3xl mb-10 md:mb-12">
-              <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-5">Original artworks</p>
+              <p className="text-xs tracking-[0.24em] uppercase text-gray-500 mb-5">{copy.eyebrow}</p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-light uppercase tracking-[0.04em] text-gray-900 leading-[1.1]">
-                {activeGroup ? activeGroup.name : selectedSeries.replace(/ Collection$/, '')}
+                {activeGroupName ?? seriesName(selectedSeries).replace(/ Collection$/, '')}
               </h1>
             </header>
             <div className="border-t border-gray-200 pt-5 md:pt-6 mb-8 md:mb-10">
               <p className="text-[11px] tracking-[0.16em] uppercase text-gray-500">
-                {sortedArtworks.length} work{sortedArtworks.length !== 1 ? 's' : ''}
+                {countLabel(sortedArtworks.length)}
               </p>
             </div>
           </>
@@ -143,15 +205,15 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
         <>
         <header className="max-w-3xl mb-10 md:mb-12">
           <h1 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-6">
-            Original artworks
+            {copy.eyebrow}
           </h1>
           <p className="text-xl md:text-2xl font-light text-gray-900 leading-relaxed">
-            Explore original artworks by Fabian PhiL, a French contemporary artist based in Dubai. The collection spans kinetic portraits, Pop Glasses, Wanted, motorsport and pop icons, created across multiple layers of transparent plexiglass.
+            {copy.intro}
           </p>
         </header>
 
         <div className="mb-8 md:mb-10">
-          <CollectionLinks locale={locale} />
+          <CollectionLinks locale={locale} {...(collectionNames ? { names: collectionNames } : {})} />
         </div>
 
         {/* Filters and Controls */}
@@ -161,7 +223,7 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
               <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
               <input
                 type="text"
-                placeholder="Search artworks..."
+                placeholder={copy.searchPlaceholder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-6 pr-2 py-1.5 bg-transparent border-0 border-b border-gray-300 text-sm font-light text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-gray-900 transition-colors"
@@ -170,21 +232,21 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
 
             <div className="flex items-center gap-6 sm:ml-auto">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] tracking-[0.16em] uppercase text-gray-500">Sort</span>
+                <span className="text-[11px] tracking-[0.16em] uppercase text-gray-500">{copy.sort}</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
                   className="bg-transparent border-0 border-b border-gray-300 py-1 pr-6 text-sm font-light text-gray-900 focus:outline-none focus:border-gray-900"
                 >
-                  <option value="default">Default Order</option>
-                  <option value="year">Year</option>
-                  <option value="title">Title</option>
-                  <option value="series">Series</option>
+                  <option value="default">{copy.sortOptions.default}</option>
+                  <option value="year">{copy.sortOptions.year}</option>
+                  <option value="title">{copy.sortOptions.title}</option>
+                  <option value="series">{copy.sortOptions.series}</option>
                 </select>
                 <button
                   onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                   className="p-1.5 text-gray-500 hover:text-gray-900 transition-colors"
-                  title={`Sort ${sortOrder === 'asc' ? 'Descending' : 'Ascending'}`}
+                  title={sortOrder === 'asc' ? copy.sortDescending : copy.sortAscending}
                 >
                   <ArrowUpDown size={15} className={sortOrder === 'desc' ? 'rotate-180' : ''} />
                 </button>
@@ -203,9 +265,9 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
         </div>
 
         <p className="text-[11px] tracking-[0.16em] uppercase text-gray-500 mb-8 md:mb-10" aria-live="polite">
-          {sortedArtworks.length} work{sortedArtworks.length !== 1 ? 's' : ''}
+          {countLabel(sortedArtworks.length)}
           {(activeGroup || selectedSeries !== 'all') && (
-            <> · {activeGroup ? activeGroup.name : selectedSeries}</>
+            <> · {activeGroupName ?? seriesName(selectedSeries)}</>
           )}
         </p>
         </>
@@ -219,6 +281,7 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
                 key={artwork.id}
                 artwork={artwork}
                 viewMode={viewMode}
+                {...cardProps(artwork.id)}
               />
             ))}
           </div>
@@ -229,6 +292,7 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
                 key={artwork.id}
                 artwork={artwork}
                 viewMode={viewMode}
+                {...cardProps(artwork.id)}
               />
             ))}
           </div>
@@ -240,15 +304,19 @@ const Gallery = ({ initialSeries = null, initialGroup = null }: GalleryProps) =>
             animate={{ opacity: 1 }}
             className="py-16"
           >
-            <p className="text-base text-gray-500 font-light">No artworks found matching your criteria.</p>
+            <p className="text-base text-gray-500 font-light">{copy.noResults}</p>
           </motion.div>
         )}
 
         {focused && (
           <div className="mt-16 md:mt-20 border-t border-gray-200 pt-8 md:pt-10 space-y-8">
-            <CollectionLinks locale={locale} label="More collections" />
+            <CollectionLinks
+              locale={locale}
+              label={copy.moreCollections}
+              {...(collectionNames ? { names: collectionNames } : {})}
+            />
             <Link href={localizedHref(locale, 'gallery')} className={textLinkClass}>
-              View all artworks →
+              {copy.viewAll}
             </Link>
           </div>
         )}

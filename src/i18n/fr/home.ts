@@ -11,11 +11,11 @@ import { frHomeFaqItems } from './faq'
 import { frWhatsapp } from './ui'
 
 const hero: HeroCopy = {
-  title: 'Le pop art en mouvement.',
+  title: 'Le Pop Art en Mouvement.',
   intro:
     'Fabian PhiL est un artiste pop contemporain français basé à Dubaï. Il crée des œuvres originales, figuratives et cinétiques, peintes sur plusieurs plaques de plexiglas superposées. Portraits et icônes de la culture populaire y mêlent couleur, regard et changement de perspective\u00a0: l’image se transforme à mesure que vous vous déplacez.',
   primaryCta: 'Voir les œuvres disponibles ',
-  secondaryCta: 'Architecture d’intérieur et collaborations ',
+  secondaryCta: 'Designers d’intérieur & Collaborations ',
   imageLabel: 'Voir Wanted for Being Too Smart',
   imageAlt:
     'Wanted for Being Too Smart, œuvre pop art cinétique de Fabian PhiL, présentée dans un intérieur contemporain',
@@ -27,8 +27,8 @@ const explore: ExploreArtworksCopy = {
   categories: {
     'panda-zen': { name: 'Panda / Zen', alt: 'Wanted Panda Zen Artist, œuvre Panda / Zen de Fabian PhiL' },
     'signature-works': { name: 'Œuvres Signature', alt: 'I am the Last Samurai, portrait cinétique de Fabian PhiL' },
-    'pop-glasses': { name: 'Pop Glasses', alt: 'Wanted for Loving Art, portrait Pop Glasses' },
-    'toon-clash': { name: 'Toon Clash', alt: 'Wanted Million Dollar Toon Fight, œuvre Toon Clash' },
+    'pop-glasses': { name: 'Lunette Pop Art', alt: 'Wanted for Loving Art, portrait pop art aux lunettes fluo' },
+    'toon-clash': { name: 'Portraits & Cartoons', alt: 'Wanted Million Dollar Toon Fight, portrait entouré de personnages de cartoon' },
     'f1-motorsport': { name: 'F1 / Formule 1', alt: 'Wanted Ayrton vs Toons Racing, portrait F1' },
     'triptych-mugshots': { name: 'Triptyques et Mugshots', alt: '100 USD Andy Warhol, panneau central du triptyque' },
   },
@@ -39,13 +39,13 @@ const artThatMoves: ArtThatMovesCopy = {
   leadLine1: 'Une seule technique.',
   leadLine2: 'Plusieurs façons de bouger.',
   intro:
-    'Fabian PhiL peint sur plusieurs couches de plexiglas transparent. Quand le spectateur se déplace, les couches se décalent les unes par rapport aux autres et l’image se transforme avec la perspective.',
+    'Fabian PhiL peint sur plusieurs couches de plexiglas superposées. Quand le spectateur se déplace, les couches se décalent les unes par rapport aux autres et l’image se transforme avec la perspective.',
   viewLabel: 'Voir {title}',
   viewArtwork: 'Voir l’œuvre →',
   examples: [
     {
       title: 'Why…?',
-      series: 'Pop Glasses',
+      series: 'Lunette Pop Art',
       effect: 'Le mouvement par la perspective',
       copy: 'Le regard d’Amanda Seyfried ne se pose jamais tout à fait\u00a0: à mesure que vous bougez, les lunettes et les lignes superposées se décalent, et la question reste ouverte.',
       label:
@@ -73,7 +73,7 @@ const artThatMoves: ArtThatMovesCopy = {
 const credibility: ArtistCredibilityCopy = {
   heading: 'L’artiste derrière l’œuvre',
   intro:
-    'Fabian PhiL est un artiste contemporain français basé à Dubaï. Il crée des portraits pop originaux sur plusieurs plaques de plexiglas transparent\u00a0: visages, regards expressifs, couleur et mouvement se rencontrent dans des œuvres qui se transforment selon la position du spectateur.',
+    'Fabian PhiL est un artiste contemporain français basé à Dubaï. Il crée des portraits pop originaux sur plexiglas superposé\u00a0: visages, regards expressifs, couleur et mouvement se rencontrent dans des œuvres qui se transforment selon la position du spectateur.',
   aboutLink: 'Découvrir l’artiste →',
   exhibitionsLink: 'Expositions →',
   enlargeLabel: 'Agrandir la photo\u00a0: {caption}',
@@ -81,21 +81,21 @@ const credibility: ArtistCredibilityCopy = {
   studioAlt: frArtistEntity.portraitCaption,
   images: [
     { alt: 'Intérieur de la Noor Royal Gallery avec des œuvres de Fabian PhiL', caption: 'Noor Royal Gallery' },
-    { alt: 'Visiteurs devant les œuvres de Fabian PhiL à l’Alliance Française de Dubaï', caption: 'Alliance Française Dubai' },
+    { alt: 'Visiteurs devant les œuvres de Fabian PhiL à l’Alliance Française Dubai', caption: 'Alliance Française Dubai' },
     { alt: 'Fabian PhiL à World Art Dubai, devant une présentation de ses œuvres', caption: 'World Art Dubai' },
   ],
 }
 
 const galleries: GalleriesCuratorsCopy = {
-  heading: 'Galeries et commissaires d’exposition',
+  heading: 'Galeries et curateurs d’art',
   text: 'Book d’artiste et informations sur les expositions disponibles sur demande.',
   cta: 'Demander le book d’artiste →',
   whatsappHref: frWhatsapp.artistBook,
 }
 
 const interiors: InteriorsCollaborationsCopy = {
-  heading: 'Architecture d’intérieur et collaborations',
-  audience: 'Architectes d’intérieur · Architectes · Résidentiel et hôtellerie haut de gamme',
+  heading: 'Designers d’intérieur & Collaborations',
+  audience: 'Designers d’intérieur · Architectes · Résidentiel et hôtellerie haut de gamme',
   text: 'Des collaborations et des commandes peuvent être envisagées, au cas par cas, pour des intérieurs singuliers et d’importants projets résidentiels, hôteliers ou architecturaux.',
   cta: 'Discuter d’une collaboration →',
   whatsappHref: frWhatsapp.collaboration,

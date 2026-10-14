@@ -30,7 +30,7 @@ const englishCopy: ArtThatMovesCopy = {
   leadLine1: 'One technique.',
   leadLine2: 'Different ways to move.',
   intro:
-    'Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.',
+    'Fabian PhiL paints across multiple layers of plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.',
   viewLabel: 'View {title}',
   viewArtwork: 'View artwork →',
   examples: [

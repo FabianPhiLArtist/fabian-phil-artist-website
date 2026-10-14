@@ -14,15 +14,48 @@ export const frCollections: Partial<Record<CollectionSlug, FrCollectionContent>>
       ogImageAlt: 'Wanted Ayrton vs Toons Racing, portrait pop art F1 d’Ayrton Senna sur plexiglas, par Fabian PhiL',
     },
   },
+  'pop-glasses': {
+    name: 'Pop Glasses',
+    intro:
+      'Pop Glasses est l’un des langages visuels les plus reconnaissables de Fabian PhiL\u00a0: des portraits pop art en noir et blanc, rehaussés de lunettes fluo et colorées, peints sur plusieurs couches de plexiglas qui changent selon la position du spectateur. La série réunit des actrices hollywoodiennes, Angelina Jolie, Emma Stone et Lucy Liu, aux côtés des mannequins Gigi Hadid et Kate Upton.',
+    seo: {
+      title: 'Pop Glasses | Portraits pop art aux lunettes fluo, Fabian PhiL',
+      description:
+        'Pop Glasses\u00a0: portraits pop art de Fabian PhiL aux lunettes fluo, avec Angelina Jolie, Emma Stone, Lucy Liu, Gigi Hadid et Kate Upton, sur plexiglas superposé.',
+      ogImageAlt: 'Portrait de Kate Upton dans Wanted for Loving Art, œuvre Pop Glasses sur plexiglas superposé, par Fabian PhiL',
+    },
+  },
+  wanted: {
+    name: 'Wanted',
+    intro:
+      'Wanted réunit le langage du portrait et du Mugshot propre à Fabian PhiL\u00a0: des visages expressifs, du texte et des titres pleins d’humour ou de provocation, qui font de chaque sujet un personnage. Inspirés de l’avis de recherche, ces portraits pop art détournent les codes de la culture pop, du cinéma au sport automobile.',
+    seo: {
+      title: 'Wanted | Portraits Mugshot pop art par Fabian PhiL',
+      description:
+        'Wanted\u00a0: portraits Mugshot pop art de Fabian PhiL, entre visages expressifs, texte et titres provocateurs, sur plexiglas superposé. Culture pop et humour.',
+      ogImageAlt: 'Portrait de Steve McQueen dans Wanted for Racing Life, pop art superposé avec miroir et lumière LED, par Fabian PhiL',
+    },
+  },
+  'signature-works': {
+    name: 'Œuvres Signature',
+    intro:
+      'Une sélection d’œuvres qui définissent le langage visuel de Fabian PhiL, des premières expériences sur plexiglas superposé aux portraits expressifs, aux icônes pop et aux grands triptyques. Art figuratif et pop art cinétique s’y rejoignent\u00a0: chaque portrait change selon le déplacement du spectateur.',
+    seo: {
+      title: 'Œuvres Signature | Portraits pop art cinétiques de Fabian PhiL',
+      description:
+        'Les Œuvres Signature de Fabian PhiL\u00a0: portraits pop art cinétiques, art figuratif et grands triptyques sur plexiglas, de Blue Lady (2011) aux icônes pop.',
+      ogImageAlt: 'I am the Last Samurai, grand portrait cinétique aux cheveux en mouvement sur plexiglas superposé, par Fabian PhiL',
+    },
+  },
 }
 
-// Collection names on French pages (cards, links), for every collection; only published collections
-// also have a French page.
+// Collection labels in French navigation (collection links, filters), for every collection; only
+// published collections also have a French page. Page H1s and metadata keep the official names above.
 export const frCollectionNames: Record<CollectionSlug, string> = {
   'signature-works': 'Œuvres Signature',
-  'pop-glasses': 'Pop Glasses',
+  'pop-glasses': 'Lunette Pop Art',
   wanted: 'Wanted',
   'f1-motorsport': 'F1 / Formule 1',
   'panda-zen': 'Panda / Zen',
-  'toon-clash': 'Toon Clash',
+  'toon-clash': 'Portraits & Cartoons',
 }

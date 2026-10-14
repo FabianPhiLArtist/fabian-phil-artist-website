@@ -24,7 +24,7 @@ export type ArtistCredibilityCopy = {
 const englishCopy: ArtistCredibilityCopy = {
   heading: 'The artist behind the work',
   intro:
-    'Fabian PhiL is a French contemporary artist based in Dubai, creating original pop portraits across multiple layers of transparent plexiglass. Faces, expressive gazes, colour and movement come together in works that transform as the viewer changes position.',
+    'Fabian PhiL is a French contemporary artist based in Dubai, creating original pop portraits on layered plexiglass. Faces, expressive gazes, colour and movement come together in works that transform as the viewer changes position.',
   aboutLink: 'About the artist →',
   exhibitionsLink: 'Exhibitions →',
   enlargeLabel: 'Enlarge photo: {caption}',

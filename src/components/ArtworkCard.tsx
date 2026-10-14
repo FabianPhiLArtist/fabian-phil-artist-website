@@ -25,6 +25,7 @@ export type ArtworkCardText = {
   description: string
   series: string
   size: string
+  medium?: string
 }
 
 const englishCopy: ArtworkCardCopy = {
@@ -105,7 +106,7 @@ const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCar
               {artwork.available ? copy.priceOnRequest : copy.sold}
             </p>
             {isList && (
-              <p className="mt-1 text-[13px] text-gray-500 font-light">{artwork.medium}</p>
+              <p className="mt-1 text-[13px] text-gray-500 font-light">{text?.medium ?? artwork.medium}</p>
             )}
             <p className="mt-3 text-[13px] text-gray-500 font-light leading-relaxed line-clamp-2">
               {text?.description ?? artwork.description}

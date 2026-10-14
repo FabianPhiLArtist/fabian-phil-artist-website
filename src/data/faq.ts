@@ -67,7 +67,7 @@ export const faqItems: FaqItem[] = [
     q: 'What is kinetic pop art in Fabian PhiL’s work?',
     a: [
       [
-        'Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective. Pop imagery, colour and portraiture are combined with this physical movement, which is why his work is described as POP ART THAT MOVES.',
+        'Fabian PhiL paints across multiple layers of plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective. Pop imagery, colour and portraiture are combined with this physical movement, which is why his work is described as POP ART THAT MOVES.',
       ],
     ],
   },
@@ -76,7 +76,7 @@ export const faqItems: FaqItem[] = [
     q: 'How do the artworks change as the viewer moves?',
     a: [
       [
-        'Because each image is painted on separate transparent layers, lines, eyes, glasses and facial features shift against one another as you move from side to side. An expression can appear to realign or take on a different character from one viewpoint to the next. In some works, a colourful graphic background or light adds another dimension to the movement.',
+        'Because each image is painted on separate plexiglass layers, lines, eyes, glasses and facial features shift against one another as you move from side to side. An expression can appear to realign or take on a different character from one viewpoint to the next. In some works, a colourful graphic background or light adds another dimension to the movement.',
       ],
     ],
   },
@@ -85,7 +85,7 @@ export const faqItems: FaqItem[] = [
     q: 'What materials does Fabian PhiL use?',
     a: [
       [
-        'Most works are painted in acrylic paint on two transparent acrylic (plexiglass) sheets. Depending on the work, Fabian also uses ink, silver mirror vinyl, print, collage or digital design printed on the acrylic, and some special works include LED light. The medium of each work is listed on its artwork page.',
+        'Most works are painted in acrylic paint on two acrylic (plexiglass) sheets. Depending on the work, Fabian also uses ink, silver mirror vinyl, print, collage or digital design printed on the acrylic, and some special works include LED light. The medium of each work is listed on its artwork page.',
       ],
     ],
   },

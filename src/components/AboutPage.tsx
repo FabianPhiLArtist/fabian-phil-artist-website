@@ -43,7 +43,7 @@ const englishCopy: AboutPageCopy = {
     title: 'Studio, Dubai',
   },
   biography: [
-    'Originally from France, Fabian PhiL spent more than two decades living and working across Asia, Europe, Africa and the Middle East before establishing his artistic practice in Dubai.',
+    'Originally from Paris, Fabian PhiL spent more than twenty-five years living and working across Asia, Europe, Africa and the Middle East before establishing his artistic practice in Dubai.',
     'His early work with seismic waves left him with an enduring fascination for layers, movement and what lies beneath the surface—ideas that would later find an unexpected expression in his art.',
     'Working across multiple sheets of transparent plexiglass, Fabian builds his portraits layer by layer. As the viewer moves, those layers shift in relation to one another, transforming the image with perspective.',
     'Faces, expressive gazes, coloured glasses, provocative titles and familiar cultural icons have become recurring elements of a visual language designed not simply to be looked at, but experienced.',
@@ -63,8 +63,8 @@ const englishCopy: AboutPageCopy = {
   journeyHeading: 'The artistic journey',
   journey: [
     {
-      title: 'The first painting — Brunei',
-      text: 'Fabian painted his first artwork in Brunei in 2003. That single painting took him an entire year to complete, and taught him the patience and dedication art demands.',
+      title: 'The first painting — Borneo',
+      text: 'Fabian painted his first work in 2003 on the island of Borneo, in the heart of the jungle. That first painting took him an entire year to complete and taught him the patience and commitment that art demands.',
     },
     {
       title: 'The Blue Lady — Africa',

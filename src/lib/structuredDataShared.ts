@@ -49,6 +49,7 @@ export function exhibitionEventsStructuredData(events: ExhibitionEventInput[], l
       location: { ...DUBAI_PLACE, name: event.venue },
       performer: { '@id': ARTIST_ID },
       ...(event.image ? { image: absolute(event.image) } : {}),
+      ...(locale === 'fr' ? { inLanguage: 'fr' } : {}),
     })),
   }
 }

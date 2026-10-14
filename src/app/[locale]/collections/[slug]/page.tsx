@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import ArtworkCard, { type ArtworkCardText } from '@/components/ArtworkCard'
+import ArtworkCard from '@/components/ArtworkCard'
 import CollectionLinks from '@/components/CollectionLinks'
 import JsonLd from '@/components/JsonLd'
 import LocaleLink from '@/components/LocaleLink'
@@ -9,8 +9,7 @@ import { collections, collectionArtworks, findCollection } from '@/data/collecti
 import { isLocale } from '@/i18n/locales'
 import { localizedHref } from '@/i18n/pathnames'
 import { pageMetadata } from '@/i18n/seo'
-import { frenchArtwork, frenchCollection } from '@/i18n/fr/content'
-import { frArtworkCards } from '@/i18n/fr/artworks'
+import { frenchCardText, frenchCollection } from '@/i18n/fr/content'
 import { frCollectionNames } from '@/i18n/fr/collections'
 import { frArtworkCardCopy } from '@/i18n/fr/ui'
 import { fill } from '@/lib/template'
@@ -54,12 +53,6 @@ export function generateMetadata({ params }: Props): Metadata {
     description: collection.description,
     image: lead ? { url: lead.image, alt: `${lead.title}, layered plexiglass artwork by Fabian PhiL` } : undefined,
   })
-}
-
-// Card text for French pages: full French content for published artworks, card-only text otherwise.
-function frenchCardText(id: number): ArtworkCardText | undefined {
-  const french = frenchArtwork(id) ?? frArtworkCards[id]
-  return french && { imageAlt: french.imageAlt, description: french.description, series: french.series, size: french.size }
 }
 
 export default function CollectionPage({ params }: Props) {

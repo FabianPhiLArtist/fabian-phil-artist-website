@@ -40,6 +40,9 @@ export type FrArtworkContent = {
   seriesBlock?: string
 }
 
+// Card text (gallery, collections) for artworks without a published French page.
+export type FrArtworkCard = Pick<FrArtworkContent, 'imageAlt' | 'description' | 'series' | 'size' | 'medium'>
+
 // French fields of the single Person entity (same @id as English), so French pages never emit the
 // English artist description.
 export type FrArtistEntity = {

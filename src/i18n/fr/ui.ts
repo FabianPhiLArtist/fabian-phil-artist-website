@@ -14,7 +14,7 @@ export const frWhatsapp = {
     'Bonjour Fabian, je souhaiterais recevoir votre book d’artiste / portfolio. Je vous contacte de la part de [galerie / organisation].'
   ),
   collaboration: whatsappHref(
-    'Bonjour Fabian, je souhaiterais discuter d’une collaboration ou d’une commande pour un projet d’architecture intérieure ou d’architecture.'
+    'Bonjour Fabian, je souhaiterais discuter d’une collaboration ou d’une commande pour un projet d’intérieur ou d’architecture.'
   ),
   price: whatsappHref('Bonjour Fabian, je souhaiterais me renseigner sur une œuvre. L’œuvre qui m’intéresse est\u00a0: '),
   general: whatsappHref('Bonjour Fabian, '),

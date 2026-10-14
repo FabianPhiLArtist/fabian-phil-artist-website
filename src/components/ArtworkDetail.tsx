@@ -108,7 +108,7 @@ const englishCopy: ArtworkDetailCopy = {
 }
 
 const defaultInMotion =
-  'Fabian PhiL paints across multiple layers of transparent plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.'
+  'Fabian PhiL paints across multiple layers of plexiglass. As the viewer moves, the layers shift in relation to one another, transforming the image with perspective.'
 
 const ExtraClip = ({ src, label, title, onOpen, onError }: { src: string; label: string; title: string; onOpen: () => void; onError: () => void }) => {
   const [ratio, setRatio] = useState<number | null>(null)

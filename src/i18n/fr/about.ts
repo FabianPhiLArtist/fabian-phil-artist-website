@@ -11,13 +11,13 @@ export const frAboutCopy: AboutPageCopy = {
     title: 'Atelier, Dubaï',
   },
   biography: [
-    'Originaire de France, Fabian PhiL a vécu et travaillé pendant plus de vingt ans en Asie, en Europe, en Afrique et au Moyen-Orient, avant d’établir sa pratique artistique à Dubaï.',
+    'Originaire de Paris, Fabian PhiL a vécu et travaillé pendant plus de vingt-cinq ans en Asie, en Europe, en Afrique et au Moyen-Orient, avant d’établir sa pratique artistique à Dubaï, où il est aujourd’hui basé. Il séjourne régulièrement à Megève, dans les Alpes françaises, et développe progressivement sa présence artistique entre Megève et Chamonix.',
     'Son travail passé sur les ondes sismiques lui a laissé une fascination durable pour les couches, le mouvement et ce qui se cache sous la surface — des notions qui ont trouvé plus tard un écho inattendu dans son travail artistique.',
     'Sur plusieurs plaques de plexiglas transparent, Fabian construit ses portraits couche après couche. Quand le spectateur se déplace, ces couches se décalent les unes par rapport aux autres et l’image se transforme avec la perspective.',
     'Visages, regards expressifs, lunettes colorées, titres provocateurs et icônes familières de la culture populaire sont devenus les éléments récurrents d’un langage visuel conçu pour être vécu, et pas seulement regardé.',
   ],
   facts: [
-    { label: 'Nom complet', value: 'Fabian Philandrianos' },
+    { label: 'Nom', value: 'Fabian Philandrianos' },
     { label: 'Basé à', value: 'Dubaï, Émirats arabes unis' },
     { label: 'Pratique', value: 'Pop art cinétique sur plexiglas superposé' },
   ],
@@ -31,8 +31,8 @@ export const frAboutCopy: AboutPageCopy = {
   journeyHeading: 'Le parcours artistique',
   journey: [
     {
-      title: 'La première peinture — Brunei',
-      text: 'Fabian peint sa première œuvre à Brunei en 2003. Ce seul tableau lui demande une année entière de travail et lui apprend la patience et l’engagement qu’exige l’art.',
+      title: 'La première peinture — Bornéo',
+      text: 'Fabian peint sa première œuvre en 2003, sur l’île de Bornéo, au cœur de la jungle. Ce premier tableau lui demande une année entière de travail et lui apprend la patience et l’engagement qu’exige l’art.',
     },
     {
       title: 'La Blue Lady — Afrique',
