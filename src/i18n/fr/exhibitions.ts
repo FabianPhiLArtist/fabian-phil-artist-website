@@ -30,7 +30,7 @@ const frText: Record<string, ExhibitionText> = {
     sections: [
       {
         heading: 'À propos de l’exposition',
-        text: 'Fabian PhiL présente son travail dans Beyond the Gaze, à l’Alliance Française Dubai. L’exposition instaure un dialogue entre le figuratif et l’abstrait, l’intime et l’universel, le mouvement et l’immobilité. De l’intensité d’un regard humain à l’immensité d’un paysage imaginaire, les œuvres invitent à ralentir, à regarder de nouveau et à laisser la perception évoluer.',
+        text: 'Fabian PhiL a présenté son travail dans Beyond the Gaze, à l’Alliance Française Dubai. L’exposition a instauré un dialogue entre le figuratif et l’abstrait, l’intime et l’universel, le mouvement et l’immobilité. De l’intensité d’un regard humain à l’immensité d’un paysage imaginaire, les œuvres invitaient à ralentir, à regarder de nouveau et à laisser la perception évoluer.',
       },
     ],
     mediaHeading: 'Photos de l’exposition',

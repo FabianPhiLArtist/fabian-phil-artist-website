@@ -38,7 +38,7 @@ export const exhibitions: Exhibition[] = [
     sections: [
       {
         heading: 'About the exhibition',
-        text: 'Fabian PhiL presents his work in Beyond the Gaze at Alliance Française Dubai. The exhibition creates a dialogue between the figurative and the abstract, the intimate and the universal, movement and stillness. From the intensity of a human gaze to the vastness of an imagined landscape, the works encourage us to slow down, look again and allow perception to shift.',
+        text: 'Fabian PhiL presented his work in Beyond the Gaze at Alliance Française Dubai. The exhibition created a dialogue between the figurative and the abstract, the intimate and the universal, movement and stillness. From the intensity of a human gaze to the vastness of an imagined landscape, the works encouraged us to slow down, look again and allow perception to shift.',
       },
     ],
     mediaHeading: 'Exhibition Photos',
