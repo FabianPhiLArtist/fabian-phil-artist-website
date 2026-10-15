@@ -140,25 +140,6 @@ const frText: Record<string, ExhibitionText> = {
       },
     },
   },
-  'Artmosphere Magazine': {
-    date: '2024',
-    sections: [
-      {
-        heading: 'À propos d’Artmosphere',
-        text: 'Artmosphere est un magazine d’art consacré aux artistes contemporains, aux expositions et aux tendances artistiques.',
-      },
-      {
-        heading: 'Article',
-        text: 'Fabian a fait l’objet d’un article sur l’art cinétique, dans lequel il évoque sa technique du plexiglas superposé et les effets optiques de son travail.',
-      },
-    ],
-    mediaHeading: 'Article de magazine',
-    alts: {
-      '/images/about/Fabian PhiL_Artmosphere Cover.jpg': 'Couverture du magazine Artmosphere avec Fabian PhiL',
-      '/images/about/fabian-phil-artmosphere-magazine-2024-feature.png': 'Article de magazine d’art consacré à Fabian PhiL',
-      '/images/about/Fabian Phil Artist overview.png': 'Présentation de l’artiste Fabian PhiL',
-    },
-  },
 }
 
 const required = <T,>(value: T | undefined, what: string): T => {

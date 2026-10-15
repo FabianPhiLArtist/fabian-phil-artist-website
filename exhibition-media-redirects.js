@@ -7,7 +7,6 @@ const renames = [
     ["/images/exhibitions", "Alliance 7.jpg", "fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-07.jpg"],
     ["/images/exhibitions", "Alliance 8.jpg", "fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-08.jpg"],
     ["/images/exhibitions", "Alliance 9.jpg", "fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-09.jpg"],
-    ["/images/about", "Art Magazine picture.png", "fabian-phil-artmosphere-magazine-2024-feature.png"],
     ["/images/exhibitions", "DIFC Christies.jpg", "fabian-phil-difc-art-night-2025-christies.jpg"],
     ["/images/exhibitions", "DIFC Maybe I will see him.jpg", "fabian-phil-difc-art-night-2025-maybe-i-will-see-him-pop-art.jpg"],
     ["/images/exhibitions", "DIFC Wanted for Stealing the Blues 2.jpg", "fabian-phil-difc-art-night-2025-wanted-for-stealing-the-blues-pop-art.jpg"],

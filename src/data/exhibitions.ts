@@ -30,29 +30,6 @@ export interface Exhibition {
 
 export const exhibitions: Exhibition[] = [
   {
-    title: 'Beyond the Gaze',
-    date: '30 September – 14 October 2026',
-    location: 'Alliance Française Dubai',
-    link: { href: 'https://www.afdubai.org', label: 'afdubai.org' },
-    event: { slug: 'beyond-the-gaze', startDate: '2026-09-30', endDate: '2026-10-14', venue: 'Alliance Française Dubai' },
-    sections: [
-      {
-        heading: 'About the exhibition',
-        text: 'Fabian PhiL presented his work in Beyond the Gaze at Alliance Française Dubai. The exhibition created a dialogue between the figurative and the abstract, the intimate and the universal, movement and stillness. From the intensity of a human gaze to the vastness of an imagined landscape, the works encouraged us to slow down, look again and allow perception to shift.',
-      },
-    ],
-    mediaHeading: 'Exhibition Photos',
-    leadImage: { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-08.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
-    images: [
-      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-04.jpg', alt: 'Installation view of Fabian PhiL portraits in Beyond the Gaze', orientation: 'landscape' },
-      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-07.jpg', alt: 'Visitors looking closely at a Fabian PhiL artwork in Beyond the Gaze', orientation: 'landscape' },
-      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-05.jpg', alt: 'Beyond the Gaze exhibition wall text at Alliance Française Dubai', orientation: 'portrait' },
-      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-01.jpeg', alt: 'Wall of Fabian PhiL Pop glasses portraits around Oh Dear! in Beyond the Gaze', orientation: 'portrait' },
-      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-06.jpg', alt: 'Fabian PhiL artworks including Runaway Mood hung along the gallery wall in Beyond the Gaze', orientation: 'landscape' },
-    ],
-    videos: [],
-  },
-  {
     title: 'Noor Royal Gallery',
     date: 'March – December 2026',
     location: 'Dubai, UAE',
@@ -75,6 +52,29 @@ export const exhibitions: Exhibition[] = [
     videos: [
       { src: '/videos/exhibitions/fabian-phil-noor-royal-gallery-dubai-2026-02.mp4', title: 'Noor Royal Gallery - Gallery view', label: 'In the gallery' },
     ],
+  },
+  {
+    title: 'Beyond the Gaze',
+    date: '30 September – 14 October 2026',
+    location: 'Alliance Française Dubai',
+    link: { href: 'https://www.afdubai.org', label: 'afdubai.org' },
+    event: { slug: 'beyond-the-gaze', startDate: '2026-09-30', endDate: '2026-10-14', venue: 'Alliance Française Dubai' },
+    sections: [
+      {
+        heading: 'About the exhibition',
+        text: 'Fabian PhiL presented his work in Beyond the Gaze at Alliance Française Dubai. The exhibition created a dialogue between the figurative and the abstract, the intimate and the universal, movement and stillness. From the intensity of a human gaze to the vastness of an imagined landscape, the works encouraged us to slow down, look again and allow perception to shift.',
+      },
+    ],
+    mediaHeading: 'Exhibition Photos',
+    leadImage: { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-08.jpg', alt: 'Visitors viewing Fabian PhiL artworks in Beyond the Gaze at Alliance Française Dubai' },
+    images: [
+      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-04.jpg', alt: 'Installation view of Fabian PhiL portraits in Beyond the Gaze', orientation: 'landscape' },
+      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-07.jpg', alt: 'Visitors looking closely at a Fabian PhiL artwork in Beyond the Gaze', orientation: 'landscape' },
+      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-05.jpg', alt: 'Beyond the Gaze exhibition wall text at Alliance Française Dubai', orientation: 'portrait' },
+      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-01.jpeg', alt: 'Wall of Fabian PhiL Pop glasses portraits around Oh Dear! in Beyond the Gaze', orientation: 'portrait' },
+      { src: '/images/exhibitions/fabian-phil-alliance-francaise-dubai-beyond-the-gaze-2026-06.jpg', alt: 'Fabian PhiL artworks including Runaway Mood hung along the gallery wall in Beyond the Gaze', orientation: 'landscape' },
+    ],
+    videos: [],
   },
   {
     title: 'DIFC Art Night 2025',
@@ -128,27 +128,6 @@ export const exhibitions: Exhibition[] = [
       { src: '/videos/exhibitions/fabian-phil-world-art-dubai-2024-exhibition.mov', title: 'World Art Dubai 2024 - Exhibition Overview', label: 'Exhibition Overview' },
       { src: '/videos/exhibitions/fabian-phil-world-art-dubai-2024-exhibition-catwalk.mov', title: 'World Art Dubai 2024 - Catwalk Show', label: 'Catwalk Show' },
     ],
-  },
-  {
-    title: 'Artmosphere Magazine',
-    date: '2024',
-    sections: [
-      {
-        heading: 'About Artmosphere',
-        text: 'Artmosphere is an art magazine covering contemporary artists, exhibitions and art trends.',
-      },
-      {
-        heading: 'Feature',
-        text: 'Fabian was featured in an article on kinetic art, discussing his layered plexiglass technique and the optical effects in his work.',
-      },
-    ],
-    mediaHeading: 'Magazine Feature',
-    images: [
-      { src: '/images/about/Fabian PhiL_Artmosphere Cover.jpg', alt: 'Artmosphere Magazine Cover featuring Fabian PhiL' },
-      { src: '/images/about/fabian-phil-artmosphere-magazine-2024-feature.png', alt: 'Art Magazine feature' },
-      { src: '/images/about/Fabian Phil Artist overview.png', alt: 'Fabian PhiL Artist overview' },
-    ],
-    videos: [],
   },
 ]
 
