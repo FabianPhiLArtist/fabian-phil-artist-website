@@ -68,11 +68,11 @@ const englishCopy: AboutPageCopy = {
     },
     {
       title: 'The Blue Lady — Africa',
-      text: 'In 2011, painting the Blue Lady twice, on two plexiglass sheets, he discovered that vertical strokes created movement as the viewer moved around the work: the eyes seemed to follow, like the Mona Lisa. This became the foundation of his kinetic technique.',
+      text: 'In 2011, seeking to translate his experience of three-dimensional seismic waves into painting, he painted the Blue Lady twice, slightly differently, on two plexiglass sheets, and discovered that vertical strokes created movement as the viewer moved around the work: the eyes seemed to follow, like the Mona Lisa. This became the foundation of his kinetic technique and the beginning of his own visual language.',
     },
     {
       title: 'Evolution — Dubai',
-      text: 'In Dubai the work expanded into Pop Glasses painted in fluorescent colour, 100 USD bill triptychs, and digital design combined with painting, cartoons and boxing themes. In 2025 he introduced pandas set in zen landscapes of temples, lakes and cherry blossom trees.',
+      text: 'In Dubai, his work expanded: he introduced colour through fluorescent glasses to amplify the gaze, developed triptychs around the 100-dollar bill, and combined digital creation with painting, cartoons and the world of Formula 1. In 2025, he introduced the world of pandas into Zen landscapes of temples, lakes and cherry blossoms.',
     },
   ],
   influences:

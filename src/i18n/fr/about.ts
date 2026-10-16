@@ -36,11 +36,11 @@ export const frAboutCopy: AboutPageCopy = {
     },
     {
       title: 'La Blue Lady — Afrique',
-      text: 'En 2011, en peignant deux fois la Blue Lady, sur deux plaques de plexiglas, il découvre que les traits verticaux créent un mouvement à mesure que le spectateur se déplace autour de l’œuvre\u00a0: les yeux semblent le suivre, comme ceux de La Joconde. Cette découverte devient le fondement de sa technique cinétique.',
+      text: 'En 2011, cherchant à transposer dans la peinture son expérience des ondes sismiques en trois dimensions, il peint deux fois la Blue Lady, de manière légèrement différente, sur deux plaques de plexiglas, et découvre que les traits verticaux créent un mouvement à mesure que le spectateur se déplace autour de l’œuvre : les yeux semblent le suivre, comme ceux de La Joconde. Cette découverte devient le fondement de sa technique cinétique et le point de départ de son propre langage visuel.',
     },
     {
       title: 'Évolution — Dubaï',
-      text: 'À Dubaï, le travail s’élargit\u00a0: Pop Glasses peintes en couleurs fluorescentes, triptyques autour du billet de 100\u00a0dollars, création numérique associée à la peinture, aux dessins animés et à l’univers de la boxe. En 2025, il introduit des pandas dans des paysages zen de temples, de lacs et de cerisiers en fleurs.',
+      text: 'À Dubaï, son travail s’élargit : il introduit la couleur à travers des lunettes fluorescentes pour amplifier le regard, développe des triptyques autour du billet de 100 dollars et associe la création numérique à la peinture, aux dessins animés et à l’univers de la Formule 1. En 2025, il introduit l’univers des pandas dans des paysages zen de temples, de lacs et de cerisiers en fleurs.',
     },
   ],
   influences:
