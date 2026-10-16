@@ -7,7 +7,7 @@ import JsonLd from '@/components/JsonLd'
 import LocaleLink from '@/components/LocaleLink'
 import { collections, collectionArtworks, findCollection } from '@/data/collections'
 import { isLocale } from '@/i18n/locales'
-import { localizedHref } from '@/i18n/pathnames'
+import { internalCollectionSlug, localizedHref, publicCollectionSlug } from '@/i18n/pathnames'
 import { pageMetadata } from '@/i18n/seo'
 import { frenchCardText, frenchCollection } from '@/i18n/fr/content'
 import { frCollectionNames } from '@/i18n/fr/collections'
@@ -37,12 +37,23 @@ const frenchUi = {
 }
 
 export function generateStaticParams() {
-  return collections.map((collection) => ({ slug: collection.slug }))
+  const slugs = new Set(collections.flatMap((collection) => [
+    publicCollectionSlug('en', collection.slug),
+    publicCollectionSlug('fr', collection.slug),
+  ]))
+  return Array.from(slugs).map((slug) => ({ slug }))
+}
+
+const collectionFromPublicSlug = (locale: string, publicSlug: string) => {
+  if (!isLocale(locale)) return undefined
+  const collection = findCollection(internalCollectionSlug(locale, publicSlug))
+  if (!collection || publicCollectionSlug(locale, collection.slug) !== publicSlug) return undefined
+  return collection
 }
 
 export function generateMetadata({ params }: Props): Metadata {
   const locale = isLocale(params.locale) ? params.locale : 'en'
-  const collection = findCollection(params.slug)
+  const collection = collectionFromPublicSlug(locale, params.slug)
   if (!collection) return {}
   const [lead] = collectionArtworks(collection)
   return pageMetadata({
@@ -56,7 +67,7 @@ export function generateMetadata({ params }: Props): Metadata {
 }
 
 export default function CollectionPage({ params }: Props) {
-  const collection = findCollection(params.slug)
+  const collection = collectionFromPublicSlug(params.locale, params.slug)
   if (!collection || !isLocale(params.locale)) {
     notFound()
   }

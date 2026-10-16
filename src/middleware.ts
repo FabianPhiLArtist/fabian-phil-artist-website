@@ -4,6 +4,7 @@ import {
   localizedPath,
   matchLegacyEnglishPath,
   parsePublicPathname,
+  retiredCollectionRedirect,
 } from '@/i18n/pathnames'
 import { ENABLE_LEGACY_ENGLISH_REDIRECTS, isFrenchPageLive } from '@/i18n/readiness'
 import { slugForLegacyArtworkId } from '@/data/artworkSlugs'
@@ -19,6 +20,14 @@ export function middleware(request: NextRequest) {
       url.search = search
       return NextResponse.redirect(url, 308)
     }
+  }
+
+  const retiredCollection = retiredCollectionRedirect(pathname)
+  if (retiredCollection) {
+    const url = request.nextUrl.clone()
+    url.pathname = retiredCollection
+    url.search = search
+    return NextResponse.redirect(url, 301)
   }
 
   const parsed = parsePublicPathname(pathname)
@@ -43,7 +52,9 @@ export function middleware(request: NextRequest) {
     return frenchNotFound()
   }
 
-  if (frenchLive) {
+  // English pages are always live. Rewrite when the public URL differs from the internal route
+  // (collection slugs); French keeps the same treatment for translated segments and slugs.
+  if (parsed.locale === 'en' || frenchLive) {
     const publicPath = localizedPath(parsed.locale, parsed.route, { id: parsed.id })
     const normalizedPublic = publicPath.split('?')[0]
     const normalizedPath = pathname.replace(/\/$/, '') || '/'
@@ -56,7 +67,9 @@ export function middleware(request: NextRequest) {
     }
 
     const internal = internalPath(parsed.locale, parsed.route, { id: parsed.id })
-    if (normalizedPath !== internal) {
+    // Collection pages resolve a public slug themselves. Rewriting to the internal slug would
+    // make Next treat the old URL as this request's address.
+    if (parsed.route !== 'collection' && normalizedPath !== internal) {
       const url = request.nextUrl.clone()
       url.pathname = internal
       url.search = search

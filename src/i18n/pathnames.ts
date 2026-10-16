@@ -32,7 +32,8 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     artwork: 'artwork',
     collection: 'collections',
   },
-  // Collection and artwork slugs are shared across locales; only these route segments are translated.
+  // Artwork slugs are shared. Collection slugs below can differ by locale; only these route
+  // segments are translated.
   fr: {
     gallery: 'oeuvres',
     about: 'artiste',
@@ -48,6 +49,43 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
 }
 
 const internalSegments: Record<Exclude<AppRoute, 'home'>, string> = publicSegments.en
+
+// Public collection URLs that differ from the internal collection slug. The internal slug
+// (CollectionSlug) stays the series identity; these values are the URL segment only.
+const collectionPublicSlugs: Record<Locale, Record<string, string>> = {
+  en: {
+    'toon-clash': 'portrait-cartoon-pop-art',
+  },
+  fr: {
+    'pop-glasses': 'lunette-pop-art',
+    'signature-works': 'pop-art-signature',
+  },
+}
+
+export function publicCollectionSlug(locale: Locale, slug: string): string {
+  return collectionPublicSlugs[locale][slug] ?? slug
+}
+
+// Map a public collection URL segment back to the internal slug. Unknown segments are returned
+// unchanged so unpublished or mistyped URLs still 404.
+export function internalCollectionSlug(locale: Locale, publicSlug: string): string {
+  const match = Object.entries(collectionPublicSlugs[locale]).find(([, slug]) => slug === publicSlug)
+  return match ? match[0] : publicSlug
+}
+
+// Old public URLs that must 301 once, with no further hop. Locale-less /collections/* is not
+// included: those paths 404 today and do not resolve to a collection page.
+export function retiredCollectionRedirect(pathname: string): string | null {
+  const clean = pathname.replace(/\/$/, '') || '/'
+  for (const locale of ['en', 'fr'] as const) {
+    for (const [internal, publicSlug] of Object.entries(collectionPublicSlugs[locale])) {
+      if (publicSlug !== internal && clean === `/${locale}/collections/${internal}`) {
+        return `/${locale}/collections/${publicSlug}`
+      }
+    }
+  }
+  return null
+}
 
 export type LocalizedHrefOptions = {
   id?: string | number
@@ -68,7 +106,9 @@ export function localizedPath(
   const id =
     route === 'artwork' && options?.id !== undefined
       ? slugForLegacyArtworkId(options.id) ?? options.id
-      : options?.id
+      : route === 'collection' && options?.id !== undefined
+        ? publicCollectionSlug(locale, String(options.id))
+        : options?.id
   const path =
     routesWithId.includes(route)
       ? `${prefix}/${segment}/${id}`
@@ -161,7 +201,9 @@ export function parsePublicPathname(pathname: string): ParsedPath | null {
     if (parts.length !== 3) {
       return null
     }
-    return { locale, route, id: parts[2] }
+    const rawId = parts[2]
+    const id = route === 'collection' ? internalCollectionSlug(locale, rawId) : rawId
+    return { locale, route, id }
   }
 
   if (parts.length !== 2) {
