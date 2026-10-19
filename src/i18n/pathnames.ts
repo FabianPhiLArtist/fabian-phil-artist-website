@@ -59,6 +59,7 @@ const collectionPublicSlugs: Record<Locale, Record<string, string>> = {
   fr: {
     'pop-glasses': 'lunette-pop-art',
     'signature-works': 'pop-art-signature',
+    'f1-motorsport': 'f1-sport-auto',
   },
 }
 
