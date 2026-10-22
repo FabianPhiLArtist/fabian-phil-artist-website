@@ -13,6 +13,7 @@ export const publishedFrenchCollections: readonly CollectionSlug[] = [
   'pop-glasses',
   'wanted',
   'signature-works',
+  'toon-clash',
 ]
 
 // Artwork ids from src/data/artworks.ts: Leclerc Monaco, Senna, Bardot, Casta, Gigi Hadid,

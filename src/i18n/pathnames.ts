@@ -53,14 +53,22 @@ const internalSegments: Record<Exclude<AppRoute, 'home'>, string> = publicSegmen
 // Public collection URLs that differ from the internal collection slug. The internal slug
 // (CollectionSlug) stays the series identity; these values are the URL segment only.
 const collectionPublicSlugs: Record<Locale, Record<string, string>> = {
-  en: {
-    'toon-clash': 'portrait-cartoon-pop-art',
-  },
+  en: {},
   fr: {
     'pop-glasses': 'lunette-pop-art',
     'signature-works': 'pop-art-signature',
     'f1-motorsport': 'f1-sport-auto',
+    'toon-clash': 'portrait-cartoon-pop-art',
   },
+}
+
+// Former public slugs that are no longer canonical. Destination is the current public slug
+// (the internal slug when the locale has no override), so the redirect is a single hop.
+const retiredCollectionSlugs: Record<Locale, Record<string, string>> = {
+  en: {
+    'portrait-cartoon-pop-art': 'toon-clash',
+  },
+  fr: {},
 }
 
 export function publicCollectionSlug(locale: Locale, slug: string): string {
@@ -79,6 +87,11 @@ export function internalCollectionSlug(locale: Locale, publicSlug: string): stri
 export function retiredCollectionRedirect(pathname: string): string | null {
   const clean = pathname.replace(/\/$/, '') || '/'
   for (const locale of ['en', 'fr'] as const) {
+    for (const [retired, internal] of Object.entries(retiredCollectionSlugs[locale])) {
+      if (clean === `/${locale}/collections/${retired}`) {
+        return `/${locale}/collections/${publicCollectionSlug(locale, internal)}`
+      }
+    }
     for (const [internal, publicSlug] of Object.entries(collectionPublicSlugs[locale])) {
       if (publicSlug !== internal && clean === `/${locale}/collections/${internal}`) {
         return `/${locale}/collections/${publicSlug}`

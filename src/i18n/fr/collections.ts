@@ -47,6 +47,18 @@ export const frCollections: Partial<Record<CollectionSlug, FrCollectionContent>>
       ogImageAlt: 'I am the Last Samurai, grand portrait cinétique aux cheveux en mouvement sur plexiglas superposé, par Fabian PhiL',
     },
   },
+  'toon-clash': {
+    name: 'Toon Clash',
+    intro:
+      'Toon Clash rapproche le portrait pop art et le cartoon pop art. Portraits, dessins animés et figures de la culture pop s’y rencontrent dans des compositions superposées, portées par l’humour, l’affrontement et le mouvement. Peints et imprimés sur plusieurs plaques de plexiglas, le visage et les personnages animés occupent des plans distincts\u00a0: lorsque le spectateur se déplace, l’image se sépare puis se reconstitue. Cet art cinétique fait de la collision un déplacement réel.',
+    seo: {
+      title: 'Toon Clash | Portrait pop art et cartoon pop art, Fabian PhiL',
+      description:
+        'Toon Clash de Fabian PhiL\u00a0: portraits et dessins animés en pop art, sur plexiglas superposé. Un art cinétique où le visage rencontre les personnages animés.',
+      ogImageAlt:
+        'Portrait de Claudia Schiffer entouré de dessins animés dans Runaway Mood, collection Toon Clash, pop art sur plexiglas par Fabian PhiL',
+    },
+  },
 }
 
 // Collection labels in French navigation (collection links, filters), for every collection; only
