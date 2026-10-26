@@ -165,7 +165,7 @@ export const frFaqItems: FaqItem[] = [
         { text: 'WhatsApp', whatsapp: 'price' },
         ' ou via la page ',
         { text: 'Demande de prix', route: 'price-inquiry' },
-        '. Le prix de chaque œuvre est communiqué sur demande, et des fourchettes de prix indicatives par format figurent sur la page Demande de prix. Vous pouvez aussi envoyer un message depuis la page ',
+        '. Le prix de chaque œuvre est communiqué discrètement sur demande, par e-mail, par formulaire ou sur WhatsApp. Vous pouvez aussi envoyer un message depuis la page ',
         { text: 'Contact', route: 'contact' },
         '.',
       ],

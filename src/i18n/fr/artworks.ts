@@ -136,12 +136,192 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     size: '90\u00a0×\u00a0120\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
+  16: {
+    seo: {
+      title: 'Angelina Jolie pop art | Wanted for Being Too Smart',
+      description:
+        'Wanted for Being Too Smart\u00a0: portrait pop art d’Angelina Jolie, actrice, aux lunettes bleues. Œuvre Pop Glasses de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt:
+        'Angelina Jolie, un doigt sur les lèvres et des lunettes bleues, dans Wanted for Being Too Smart, pop art par Fabian PhiL',
+    },
+    imageAlt:
+      'Angelina Jolie, un doigt sur les lèvres et des lunettes bleues, dans Wanted for Being Too Smart, pop art par Fabian PhiL',
+    description:
+      'Wanted for Being Too Smart est un portrait pop art d’Angelina Jolie, actrice, dans le langage Pop Glasses de Fabian PhiL. Le regard intense, le doigt posé sur les lèvres et les lunettes bleues installent le personnage, tandis que le titre fait de l’intelligence elle-même le motif de l’affiche. Réalisée en 2023 sur plexiglas superposé, l’œuvre fait glisser lunettes, regard et lignes du visage lorsque le spectateur se déplace\u00a0: l’expression d’Angelina Jolie ne se fige jamais tout à fait.',
+    inMotion:
+      'Lorsque le spectateur se déplace, les lunettes, les yeux et les lignes du visage glissent les uns par rapport aux autres. Le regard change subtilement, tandis que le titre reste le cadre constant de l’image.',
+    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collections Pop Glasses · Wanted',
+    seriesBlock: 'Collection Pop Glasses',
+  },
+  19: {
+    seo: {
+      title: 'Emma Stone pop art | Wow… I Look Good in Green',
+      description:
+        'Wow… I Look Good in Green\u00a0: portrait pop art d’Emma Stone, actrice, aux lunettes vert fluo. Série Pop Glasses de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt: 'Portrait d’Emma Stone aux lunettes vert fluo dans Wow… I Look Good in Green, pop art sur plexiglas, par Fabian PhiL',
+    },
+    imageAlt: 'Portrait d’Emma Stone aux lunettes vert fluo dans Wow… I Look Good in Green, pop art sur plexiglas, par Fabian PhiL',
+    description:
+      'Wow… I Look Good in Green est un portrait Pop Glasses d’Emma Stone, actrice, porté par un sourire conscient de lui-même et des lunettes vert fluo. Le titre transforme la coquetterie en humour, en assurance et en charme. Peinte en 2020 sur plexiglas superposé, l’œuvre fait glisser les montures et les traits du visage lorsque le spectateur se déplace, et l’expression d’Emma Stone change de nuance selon l’angle.',
+    inMotion:
+      'Les lunettes vertes restent le point d’ancrage, tandis que les yeux et les lignes du visage se déplacent autour d’elles. D’un point de vue à l’autre, l’assurance du sourire prend un caractère légèrement différent.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Pop Glasses',
+  },
+  34: {
+    seo: {
+      title: 'Lucy Liu pop art | Wanted Fashion Police Angel',
+      description:
+        'Wanted Fashion Police Angel\u00a0: portrait pop art de Lucy Liu, actrice, aux lunettes rose fluo. Œuvre Pop Glasses de Fabian PhiL, entre mode et regard.',
+      ogImageAlt: 'Portrait de Lucy Liu dans Wanted Fashion Police Angel, œuvre Pop Glasses sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt: 'Portrait de Lucy Liu dans Wanted Fashion Police Angel, œuvre Pop Glasses sur plexiglas superposé, par Fabian PhiL',
+    description:
+      'Wanted Fashion Police Angel est un portrait Pop Glasses de Lucy Liu, actrice, encadré de lunettes rose fluorescent. Le regard calme et direct mêle mode, identité et grâce\u00a0: le titre espiègle en fait une gardienne de l’élégance. Peinte en 2026 sur plexiglas superposé, l’œuvre décale lunettes, yeux et lignes du visage lorsque le spectateur se déplace, au point que le regard de Lucy Liu semble suivre dans la pièce.',
+    inMotion:
+      'Lorsque le spectateur se déplace, les lunettes roses et les lignes du visage glissent sur des couches de plexiglas distinctes. Les yeux de Lucy Liu semblent suivre d’un angle à l’autre, et l’expression calme prend une présence discrètement attentive.',
+    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Pop Glasses',
+  },
+  15: {
+    seo: {
+      title: 'Kate Upton pop art, mannequin | Wanted for Loving Art',
+      description:
+        'Wanted for Loving Art\u00a0: Kate Upton, mannequin, en portrait pop art aux lunettes. Œuvre Pop Glasses de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt: 'Portrait de Kate Upton, mannequin, dans Wanted for Loving Art, lunettes pop art sur plexiglas, par Fabian PhiL',
+    },
+    imageAlt: 'Portrait de Kate Upton, mannequin, dans Wanted for Loving Art, lunettes pop art sur plexiglas, par Fabian PhiL',
+    description:
+      'Wanted for Loving Art est un portrait pop art de Kate Upton, mannequin, qui fait de l’amour de l’art un délit espiègle. Le titre lui donne un personnage, tandis que le langage Pop Glasses apporte la couleur et un regard qui ne se fige pas. Peinte en 2023 sur plexiglas superposé, l’œuvre fait glisser yeux, lunettes et lignes du visage lorsque le spectateur change de position. Portrait, humour et mouvement invitent à regarder une seconde fois.',
+    inMotion:
+      'Les lunettes, les yeux et le graphisme du titre se décalent lorsque le spectateur se déplace. La couleur tient le portrait, et l’alignement changeant rend le personnage plus animé.',
+    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collections Pop Glasses · Wanted',
+    seriesBlock: 'Collection Pop Glasses',
+  },
+  10: {
+    seo: {
+      title: 'Amanda Seyfried pop art | Why…? par Fabian PhiL',
+      description:
+        'Why…?\u00a0: le regard d’Amanda Seyfried, portrait pop art cinétique de Fabian PhiL. Lunettes roses et lignes superposées sur plexiglas.',
+      ogImageAlt: 'Les yeux d’Amanda Seyfried derrière des lunettes roses dans Why…?, art cinétique sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt: 'Les yeux d’Amanda Seyfried derrière des lunettes roses dans Why…?, art cinétique sur plexiglas superposé, par Fabian PhiL',
+    description:
+      'Le regard d’Amanda Seyfried devient le point de départ de Why…?. Le titre fait d’un visage familier une question ouverte\u00a0: curiosité, doute, défi ou vulnérabilité, selon la façon dont on lit l’expression. Les lunettes roses et les lignes superposées se déplacent avec le spectateur, et le portrait prend une présence changeante. Peinte en 2021 sur plexiglas superposé, l’œuvre laisse cette question volontairement sans réponse.',
+    inMotion:
+      'Lorsque le spectateur se déplace, les lignes verticales glissent sur le visage et le regard change subtilement. Le portrait ne se fixe jamais dans une seule expression, et l’incertitude du titre demeure.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
+    size: '120\u00a0×\u00a0120\u00a0cm',
+    series: 'Collection Expressive Emotion',
+  },
+  6: {
+    seo: {
+      title: 'Andy Warhol pop art | 100 USD Andy Warhol, Fabian PhiL',
+      description:
+        '100 USD Andy Warhol\u00a0: triptyque de Fabian PhiL mettant en scène Andy Warhol et le billet de 100 dollars, sur plexiglas superposé.',
+      ogImageAlt: 'Portrait d’Andy Warhol intégré à un triptyque autour du billet de 100 dollars, œuvre de Fabian PhiL',
+    },
+    imageAlt: 'Portrait d’Andy Warhol intégré à un triptyque autour du billet de 100 dollars, œuvre de Fabian PhiL',
+    description:
+      '100 USD Andy Warhol met en scène Andy Warhol dans un triptyque construit autour du graphisme du billet de 100 dollars. Fabian PhiL y confronte portrait, monnaie et culture pop dans une composition sur plexiglas qui évolue avec le déplacement du spectateur. Réalisée en 2017, l’œuvre mesure 70\u00a0×\u00a0210\u00a0cm. Le visage et les détails du billet se séparent puis se rejoignent le long des trois panneaux\u00a0: un dialogue de Fabian PhiL avec une figure majeure du Pop Art.',
+    inMotion:
+      'Selon l’angle, le portrait d’Andy Warhol et le graphisme du billet se séparent sur les couches de plexiglas du triptyque. L’image se fragmente puis se reconstitue lorsque le spectateur longe toute la largeur de l’œuvre.',
+    medium: 'Triptyque. Acrylique sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a0210\u00a0cm',
+    series: 'Collection 100 USD',
+  },
+  14: {
+    seo: {
+      title: 'Keith Richards pop art, Rolling Stones | The Last One!',
+      description:
+        'The Last One!\u00a0: portrait pop art de Keith Richards, musicien des Rolling Stones, par Fabian PhiL, sur plexiglas superposé.',
+      ogImageAlt: 'Keith Richards des Rolling Stones avec une cigarette, dans The Last One!, œuvre sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt: 'Keith Richards des Rolling Stones avec une cigarette, dans The Last One!, œuvre sur plexiglas superposé, par Fabian PhiL',
+    description:
+      'The Last One! est un grand portrait de Keith Richards, guitariste des Rolling Stones. Le titre installe d’abord un sentiment de finalité et de tension, sans en fermer le sens. Peinte en 2017 sur plexiglas superposé, l’œuvre fait bouger les lignes du visage lorsque le spectateur change de position. Le visage reste reconnaissable, mais il ne se fige jamais tout à fait\u00a0: regard, cigarette et perspective relient l’image du musicien au langage de Fabian PhiL.',
+    inMotion:
+      'Les lignes du visage, peintes sur des plans de plexiglas distincts, trouvent de nouveaux alignements lorsque le spectateur se déplace. L’expression change avec la perspective et prolonge l’ambiguïté du titre.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
+    size: '120\u00a0×\u00a090\u00a0cm',
+    series: 'Collection Expressive Emotion',
+  },
+  31: {
+    seo: {
+      title: 'Charles Leclerc pop art F1 | Wanted for Speeding in Monza',
+      description:
+        'Wanted for Speeding in Monza\u00a0: Charles Leclerc en pop art F1, entre Monza, Formule 1 et Toon Clash. Œuvre de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt: 'Portrait de Charles Leclerc dans Wanted for Speeding in Monza, pop art F1 sur plexiglas, par Fabian PhiL',
+    },
+    imageAlt: 'Portrait de Charles Leclerc dans Wanted for Speeding in Monza, pop art F1 sur plexiglas, par Fabian PhiL',
+    description:
+      'Wanted for Speeding in Monza saisit Charles Leclerc, pilote Ferrari, après son triomphe à Monza, dans une composition où le portrait de Formule 1 rencontre des dessins animés et des références au sport automobile. Réalisée en 2026, l’œuvre appartient aux collections F1 / Formule 1 et Toon Clash. Sur plexiglas superposé, le portrait se décale sur le fond animé lorsque le spectateur se déplace, et le pop art F1 devient une scène en mouvement.',
+    inMotion:
+      'D’un côté à l’autre, le portrait de Charles Leclerc glisse sur le fond coloré de course et de dessins animés. L’écart entre les couches de plexiglas crée une profondeur changeante, et la composition se réaligne sans cesse.',
+    medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collections F1 / Formule 1 · Toon Clash',
+    seriesBlock: 'Collection F1',
+  },
+  28: {
+    seo: {
+      title: 'Panda Zen Artist | Panda pop art, Fabian PhiL',
+      description:
+        'Wanted Panda Zen Artist\u00a0: panda contemporain et art zen, figure calme sur plexiglas superposé, par Fabian PhiL.',
+      ogImageAlt: 'Wanted Panda Zen Artist, panda aux lunettes roses dans un univers coloré, pop art sur plexiglas, par Fabian PhiL',
+    },
+    imageAlt: 'Wanted Panda Zen Artist, panda aux lunettes roses dans un univers coloré, pop art sur plexiglas, par Fabian PhiL',
+    description:
+      'Wanted Panda Zen Artist met en scène le panda comme figure calme et décalée. Lunettes roses, aplats de couleur et pose assise composent un univers contemplatif que le mouvement des couches de plexiglas vient subtilement perturber. Réalisée en 2025, l’œuvre garde un ton léger\u00a0: le titre sourit, le panda semble déjà ailleurs.',
+    inMotion:
+      'Lorsque le spectateur se déplace, le panda et les touches de couleur se décalent l’un par rapport à l’autre. La construction en couches crée une profondeur discrète, sans rompre le calme de la pose.',
+    medium: 'Techniques mixtes sur plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Panda / Zen',
+  },
+  25: {
+    seo: {
+      title: 'Wanted Panda PopArt Dealer | Panda pop art',
+      description:
+        'Wanted Panda PopArt Dealer\u00a0: panda pop art contemporain et humour, œuvre de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt: 'Wanted Panda PopArt Dealer, panda pop art aux lunettes rondes et au cœur rose, par Fabian PhiL',
+    },
+    imageAlt: 'Wanted Panda PopArt Dealer, panda pop art aux lunettes rondes et au cœur rose, par Fabian PhiL',
+    description:
+      'Wanted Panda PopArt Dealer donne au panda un rôle trop grand pour lui\u00a0: lunettes rondes, cœur rose et couleurs franches, comme s’il négociait le pop art lui-même. Le lettrage fait partie de la blague. Imprimée et peinte en 2025 sur plexiglas superposé, l’œuvre sépare la figure et les traits de couleur lorsque le spectateur se déplace. L’humour passe devant.',
+    inMotion:
+      'Le panda et les aplats de couleur occupent des plans distincts. En se déplaçant, le spectateur ouvre un écart entre la figure, le cœur rose et les lunettes.',
+    medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Panda / Zen',
+  },
+  29: {
+    seo: {
+      title: 'Panda Yin & Yang | Montagne enneigée, Fabian PhiL',
+      description:
+        'Wanted Panda Yin & Yang Fan\u00a0: panda pop art, yin yang et montagne enneigée. Paysage zen de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt: 'Wanted Panda Yin & Yang Fan, panda devant une montagne enneigée, pop art sur plexiglas, par Fabian PhiL',
+    },
+    imageAlt: 'Wanted Panda Yin & Yang Fan, panda devant une montagne enneigée, pop art sur plexiglas, par Fabian PhiL',
+    description:
+      'Wanted Panda Yin & Yang Fan place le panda devant une montagne enneigée, avec des cerisiers en fleurs tenus dans la figure elle-même. Le yin et le yang y jouent l’équilibre, sur un mode plus graphique que solennel. Réalisée en 2025 sur plexiglas superposé, l’œuvre décale légèrement le portrait et le paysage lorsque le spectateur change de position. Neige, montagne et couleur restent en conversation.',
+    inMotion:
+      'Lorsque le spectateur change de position, le panda et le paysage enneigé bougent l’un par rapport à l’autre. Le décalage des couches donne à l’équilibre du yin et du yang une dimension physique, tout en gardant un ton léger.',
+    medium: 'Techniques mixtes sur plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Panda / Zen',
+  },
 }
 
 const size70 = '70\u00a0×\u00a070\u00a0cm'
 const acrylic = 'Acrylique sur deux plaques de plexiglas'
 const acrylicInk = 'Acrylique et encre sur deux plaques de plexiglas'
-const paintPrint = 'Peinture et création numérique imprimée sur deux plaques de plexiglas'
 const popGlassesWanted = 'Collections Pop Glasses · Wanted'
 
 // Card text on French pages for artworks that appear there but have no French page yet (the card
@@ -171,14 +351,6 @@ export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
     size: size70,
     medium: acrylic,
   },
-  6: {
-    imageAlt: 'Portrait d’Andy Warhol intégré à un triptyque autour du billet de 100 dollars, par Fabian PhiL',
-    description:
-      '100 USD Andy Warhol est un grand triptyque qui représente Andy Warhol dans le langage graphique du billet de dollar américain, reliant portrait, célébrité, argent et histoire du pop art. Réalisée en 2017, c’est l’une des Œuvres Signature de Fabian PhiL et un dialogue direct avec une figure majeure du Pop Art.',
-    series: 'Collection 100 USD',
-    size: '70\u00a0×\u00a0210\u00a0cm',
-    medium: 'Triptyque. Acrylique sur deux plaques de plexiglas',
-  },
   7: {
     imageAlt: 'Old Man in Peace, portrait apaisé d’un homme âgé aux cheveux en mouvement, sur plexiglas superposé, par Fabian PhiL',
     description:
@@ -194,14 +366,6 @@ export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
     series: 'Collection Moving Hair',
     size: '110\u00a0×\u00a0110\u00a0cm',
     medium: acrylicInk,
-  },
-  10: {
-    imageAlt: 'Les yeux d’Amanda Seyfried derrière des lunettes roses dans Why…?, art cinétique sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Why…? est un portrait superposé d’Amanda Seyfried construit autour de l’ambiguïté de son regard. Le titre fait d’un visage familier une question sans réponse, et les traits verticaux glissent sur le visage à mesure que le spectateur se déplace.',
-    series: 'Collection Expressive Emotion',
-    size: '120\u00a0×\u00a0120\u00a0cm',
-    medium: acrylic,
   },
   11: {
     imageAlt: 'Portrait de Twiggy dans Oh Dear, pop art sur plexiglas superposé, par Fabian PhiL',
@@ -227,30 +391,6 @@ export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
     size: '90\u00a0×\u00a0120\u00a0cm',
     medium: acrylic,
   },
-  14: {
-    imageAlt: 'Keith Richards des Rolling Stones avec une cigarette, dans The Last One!, œuvre sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'The Last One! est un grand portrait superposé de Keith Richards, guitariste des Rolling Stones. Le titre installe un sentiment de finalité et de tension, et les lignes du visage trouvent de nouveaux alignements lorsque le spectateur change de position.',
-    series: 'Collection Expressive Emotion',
-    size: '120\u00a0×\u00a090\u00a0cm',
-    medium: acrylic,
-  },
-  15: {
-    imageAlt: 'Portrait de Kate Upton dans Wanted for Loving Art, œuvre Pop Glasses sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Wanted for Loving Art est un portrait pop art superposé de Kate Upton qui fait de l’amour de l’art un délit espiègle. Le format Wanted donne un personnage à Kate Upton, tandis que le langage Pop Glasses apporte la couleur et un regard changeant.',
-    series: popGlassesWanted,
-    size: size70,
-    medium: acrylicInk,
-  },
-  16: {
-    imageAlt: 'Angelina Jolie, un doigt sur les lèvres et des lunettes bleues, dans Wanted for Being Too Smart, pop art par Fabian PhiL',
-    description:
-      'Wanted for Being Too Smart est un portrait pop art d’Angelina Jolie dans les langages Pop Glasses et Wanted de Fabian PhiL. Son regard intense et ses lunettes colorées installent le personnage, tandis que le titre fait de l’intelligence elle-même le délit supposé.',
-    series: popGlassesWanted,
-    size: size70,
-    medium: acrylicInk,
-  },
   18: {
     imageAlt: 'Wanted Smoking Rock Star, portrait aux yeux charbonneux et aux lunettes bleu profond sur plexiglas superposé, par Fabian PhiL',
     description:
@@ -258,14 +398,6 @@ export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
     series: popGlassesWanted,
     size: size70,
     medium: acrylicInk,
-  },
-  19: {
-    imageAlt: 'Portrait d’Emma Stone aux lunettes vert fluo, pop art sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Wow… I Look Good in Green est un portrait Pop Glasses d’Emma Stone, construit autour d’un sourire plein d’autodérision et de montures vert fluorescent. Le titre fait de la coquetterie une affaire d’humour, d’assurance et de charme.',
-    series: 'Collection Pop Glasses',
-    size: size70,
-    medium: acrylic,
   },
   20: {
     imageAlt: 'That\'s the Way I Like it, portrait Pop Glasses sur plexiglas superposé, par Fabian PhiL',
@@ -299,38 +431,6 @@ export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
     size: size70,
     medium: 'Peinture, impression et collage sur deux plaques de plexiglas',
   },
-  34: {
-    imageAlt: 'Portrait de Lucy Liu dans Wanted Fashion Police Angel, œuvre Pop Glasses sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Wanted Fashion Police Angel est un portrait Pop Glasses superposé de Lucy Liu, encadré de lunettes rose fluorescent et d’un titre Wanted espiègle. Son regard calme et direct mêle mode, identité et grâce, et fait d’elle une gardienne de l’élégance plutôt qu’une suspecte.',
-    series: 'Collection Pop Glasses',
-    size: size70,
-    medium: acrylicInk,
-  },
-  25: {
-    imageAlt: 'Wanted Panda PopArt Dealer, pop art de panda sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Wanted Panda PopArt Dealer place un panda espiègle dans un paysage coloré d’inspiration zen, avec silhouettes de temples, cerisiers en fleurs, eau et pont. Le titre introduit l’humour du pop art dans une scène par ailleurs paisible.',
-    series: 'Collection Panda Pop',
-    size: size70,
-    medium: paintPrint,
-  },
-  28: {
-    imageAlt: 'Wanted Panda Zen Artist, pop art de panda sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Wanted Panda Zen Artist associe un panda contemplatif à l’humour du format Wanted. Le calme, la couleur et un décor d’inspiration zen adoucissent le langage du Mugshot, dans une tension ludique entre sérénité et pop art.',
-    series: 'Collection Panda Pop',
-    size: size70,
-    medium: 'Techniques mixtes sur plaques de plexiglas',
-  },
-  29: {
-    imageAlt: 'Wanted Panda Yin & Yang Fan, pop art de panda sur plexiglas superposé, par Fabian PhiL',
-    description:
-      'Wanted Panda Yin & Yang Fan joue avec l’équilibre, la dualité et le calme à travers le panda et l’idée du Yin et du Yang. Le titre Wanted garde à l’œuvre une tonalité légère et pleine d’humour, loin d’un symbolisme solennel.',
-    series: 'Collection Panda Pop',
-    size: size70,
-    medium: 'Techniques mixtes sur plaques de plexiglas',
-  },
   30: {
     imageAlt: 'Portrait de Clint Eastwood entouré de dessins animés dans Wanted Million Dollar Toon Fight, par Fabian PhiL',
     description:
@@ -346,13 +446,5 @@ export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
     series: 'Collections Wanted · Toon Clash',
     size: size70,
     medium: 'Création numérique imprimée sur deux plaques de plexiglas',
-  },
-  31: {
-    imageAlt: 'Portrait de Charles Leclerc dans Wanted for Speeding in Monza, pop art F1 sur plexiglas, par Fabian PhiL',
-    description:
-      'Wanted for Speeding in Monza saisit Charles Leclerc, pilote Ferrari, après son triomphe à Monza, entouré d’images de dessins animés colorées et de références à la course. Fabian PhiL y associe la culture de la Formule 1 au langage Wanted\u00a0: portrait, humour et texte sur plexiglas superposé.',
-    series: 'Collections F1 / Formule 1 · Toon Clash',
-    size: size70,
-    medium: paintPrint,
   },
 }

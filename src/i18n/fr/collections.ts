@@ -50,13 +50,24 @@ export const frCollections: Partial<Record<CollectionSlug, FrCollectionContent>>
   'toon-clash': {
     name: 'Toon Clash',
     intro:
-      'Toon Clash rapproche le portrait pop art et le cartoon pop art. Portraits, dessins animés et figures de la culture pop s’y rencontrent dans des compositions superposées, portées par l’humour, l’affrontement et le mouvement. Peints et imprimés sur plusieurs plaques de plexiglas, le visage et les personnages animés occupent des plans distincts\u00a0: lorsque le spectateur se déplace, l’image se sépare puis se reconstitue. Cet art cinétique fait de la collision un déplacement réel.',
+      'Toon Clash confronte portraits, personnages de cartoons et références à la culture pop dans des compositions où humour, mouvement et collision visuelle se rencontrent. Dessins animés et portrait pop art occupent des plans distincts sur plexiglas superposé\u00a0: ils se décalent selon le point de vue du spectateur, et cet art cinétique transforme chaque portrait en scène animée.',
     seo: {
       title: 'Toon Clash | Portrait pop art et cartoon pop art, Fabian PhiL',
       description:
-        'Toon Clash de Fabian PhiL\u00a0: portraits et dessins animés en pop art, sur plexiglas superposé. Un art cinétique où le visage rencontre les personnages animés.',
+        'Toon Clash de Fabian PhiL\u00a0: portraits, cartoons et culture pop sur plexiglas superposé. Humour, mouvement et art cinétique, où chaque portrait devient une scène animée.',
       ogImageAlt:
         'Portrait de Claudia Schiffer entouré de dessins animés dans Runaway Mood, collection Toon Clash, pop art sur plexiglas par Fabian PhiL',
+    },
+  },
+  'panda-zen': {
+    name: 'Panda / Zen',
+    intro:
+      'La collection Panda / Zen fait entrer l’univers du panda dans des paysages inspirés par le calme, la nature et la contemplation. Temples, lacs, montagnes et cerisiers en fleurs y rencontrent l’énergie visuelle du pop art de Fabian PhiL, dans des œuvres où humour et sérénité coexistent.',
+    seo: {
+      title: 'Panda / Zen | Panda pop art contemporain, Fabian PhiL',
+      description:
+        'Collection Panda / Zen de Fabian PhiL\u00a0: panda pop art et paysages contemplatifs, entre humour, sérénité et plexiglas superposé.',
+      ogImageAlt: 'Wanted Panda PopArt Dealer, panda pop art aux lunettes rondes et au cœur rose, par Fabian PhiL',
     },
   },
 }

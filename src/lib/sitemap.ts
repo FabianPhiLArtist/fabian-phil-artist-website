@@ -66,8 +66,24 @@ function frenchArtworkImage(artwork: Artwork): SitemapImage | undefined {
     : undefined
 }
 
+// English professionals is noindex and stays out of the sitemap. Its French page is a live URL.
+// languageAlternates omits the English URL here so the sitemap does not hreflang to that noindex page.
+const frenchWithoutEnglishSitemap: AppRoute[] = ['professionals']
+
+function frenchOnlyEntry(route: AppRoute): SitemapEntry[] {
+  if (!isFrenchPageLive(route)) {
+    return []
+  }
+  const alternates = Object.entries(languageAlternates(route, { locale: 'fr' })).map(([hreflang, href]) => ({
+    hreflang,
+    href: String(href),
+  }))
+  return [{ ...sitemapEntry('fr', route), alternates }]
+}
+
 export function sitemapEntries(): SitemapEntry[] {
   const staticEntries = englishStaticRoutes.flatMap((route) => entriesFor(route))
+  const frenchOnlyEntries = frenchWithoutEnglishSitemap.flatMap((route) => frenchOnlyEntry(route))
   const collectionEntries = collections.flatMap((collection) => entriesFor('collection', collection.slug))
   const artworkEntries = artworks.flatMap((artwork) =>
     entriesFor('artwork', artwork.id).map((entry, index) => ({
@@ -76,5 +92,5 @@ export function sitemapEntries(): SitemapEntry[] {
     }))
   )
 
-  return [...staticEntries, ...collectionEntries, ...artworkEntries]
+  return [...staticEntries, ...frenchOnlyEntries, ...collectionEntries, ...artworkEntries]
 }

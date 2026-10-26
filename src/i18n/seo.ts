@@ -7,20 +7,35 @@ import { isFrenchPageLive } from './readiness'
 import { frenchArtwork, frenchCollection, frenchStaticPage } from './fr/content'
 import type { FrSeo } from './fr/types'
 
+// English professionals is noindex. A live French page must not hreflang to that URL, and the
+// English page must not hreflang back. Each side keeps its own alternate; canonicals stay separate.
+const noIndexEnglishRoutes: AppRoute[] = ['professionals']
+
 // hreflang set shared by both language versions: English always, French only when that exact page is
-// live, x-default always English.
+// live, x-default always English. Pass locale for a noindex English route so each side stays self-only.
 export function languageAlternates(
   route: AppRoute,
-  options?: { id?: string | number }
+  options?: { id?: string | number; locale?: Locale }
 ): NonNullable<NonNullable<Metadata['alternates']>['languages']> {
-  const en = new URL(localizedPath('en', route, options), SITE_URL).toString()
+  const pathOptions = options?.id !== undefined ? { id: options.id } : undefined
+  const en = new URL(localizedPath('en', route, pathOptions), SITE_URL).toString()
+  const frenchLive = isFrenchPageLive(route, options?.id)
+
+  if (noIndexEnglishRoutes.includes(route) && frenchLive) {
+    if (options?.locale === 'fr') {
+      const fr = new URL(localizedPath('fr', route, pathOptions), SITE_URL).toString()
+      return { fr }
+    }
+    return { en, 'x-default': en }
+  }
+
   const languages: Record<string, string> = {
     en,
     'x-default': en,
   }
 
-  if (isFrenchPageLive(route, options?.id)) {
-    languages.fr = new URL(localizedPath('fr', route, options), SITE_URL).toString()
+  if (frenchLive) {
+    languages.fr = new URL(localizedPath('fr', route, pathOptions), SITE_URL).toString()
   }
 
   return languages
@@ -69,14 +84,16 @@ export function pageMetadata({
   const shareImage = french ? { ...baseImage, alt: french.ogImageAlt } : baseImage
   const pageTitle = french ? french.title : title
   const pageDescription = french ? french.description : description
-  const hasAlternateLocale = locale === 'fr' || isFrenchPageLive(route, id)
+  // Do not advertise the other language when its URL is noindex (professionals).
+  const crossLanguage = !(noIndexEnglishRoutes.includes(route) && isFrenchPageLive(route, id))
+  const hasAlternateLocale = crossLanguage && (locale === 'fr' || isFrenchPageLive(route, id))
 
   return {
     ...(pageTitle ? { title: pageTitle } : {}),
     ...(pageDescription ? { description: pageDescription } : {}),
     alternates: {
       canonical,
-      languages: languageAlternates(route, { id }),
+      languages: languageAlternates(route, { id, locale }),
     },
     openGraph: {
       url: canonical,

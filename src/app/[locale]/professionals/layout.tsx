@@ -8,7 +8,8 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return pageMetadata({
     locale,
     route: 'professionals',
-    noIndex: true,
+    // English stays noindex. The French page is indexable once it is published.
+    noIndex: locale !== 'fr',
     title: 'Professionals - Fabian PhiL Artist',
     description:
       'Original kinetic pop artworks on layered plexiglass for interior designers, architects, galleries and curated spaces.',

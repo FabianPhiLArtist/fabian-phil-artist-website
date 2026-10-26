@@ -1,7 +1,10 @@
 import type { StaticRoute } from '../pathnames'
 import type { FrFaqPageContent, FrStaticPageContent } from './types'
 import { frArtistEntity } from './artist'
+import { frCollaborationsSeo } from './collaborations'
 import { frFaqItems } from './faq'
+import { frPriceInquirySeo } from './priceInquiry'
+import { frProfessionalsSeo } from './professionals'
 
 export type FrStaticPages = {
   [R in StaticRoute]?: R extends 'faq' ? FrFaqPageContent : FrStaticPageContent
@@ -58,4 +61,7 @@ export const frStaticPages: FrStaticPages = {
       ogImageAlt: frArtistEntity.portraitCaption,
     },
   },
+  collaborations: { seo: frCollaborationsSeo },
+  professionals: { seo: frProfessionalsSeo },
+  'price-inquiry': { seo: frPriceInquirySeo },
 }

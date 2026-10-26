@@ -31,7 +31,7 @@ export type ArtworkCardText = {
 const englishCopy: ArtworkCardCopy = {
   inMotion: ' · In motion',
   priceOnRequest: 'Price upon Inquiry',
-  sold: 'Sold',
+  sold: 'SOLD',
   viewDetails: 'View Details →',
   inquire: 'Inquire',
   defaultAlt: '{title}, layered plexiglass artwork by Fabian PhiL',

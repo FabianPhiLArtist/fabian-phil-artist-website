@@ -96,7 +96,7 @@ const englishCopy: ArtworkDetailCopy = {
   priceOnRequest: 'Price upon Inquiry',
   soldPrice: 'SOLD',
   available: 'Available',
-  sold: 'Sold',
+  sold: 'SOLD',
   about: 'About This Artwork',
   inquire: 'Inquire About This Artwork',
   viewFullDetails: 'View Full Details',
