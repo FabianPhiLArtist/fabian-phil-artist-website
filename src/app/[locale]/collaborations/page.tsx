@@ -4,8 +4,9 @@ import CollaborationsPage from '@/components/CollaborationsPage'
 import { frenchStaticPage } from '@/i18n/fr/content'
 import { frCollaborationsCopy } from '@/i18n/fr/collaborations'
 
-export default function Page({ params }: { params: { locale: string } }) {
-  if (params.locale !== 'fr') {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  if (locale !== 'fr') {
     return <CollaborationsPage />
   }
   if (!frenchStaticPage('collaborations')) {

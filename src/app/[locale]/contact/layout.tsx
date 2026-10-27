@@ -3,8 +3,13 @@ import type { Metadata } from 'next'
 import { isLocale } from '@/i18n/locales'
 import { pageMetadata } from '@/i18n/seo'
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
   return pageMetadata({
     locale,
     route: 'contact',

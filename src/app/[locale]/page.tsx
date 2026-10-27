@@ -15,8 +15,13 @@ import { frHomeCopy } from '@/i18n/fr/home'
 // Must equal INSTAGRAM_FEATURE_REVALIDATE_SECONDS; Next requires a literal here.
 export const revalidate = 21600
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
   return pageMetadata({
     locale,
     route: 'home',
@@ -28,8 +33,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 
 // English sections use their built-in copy; French copy is passed only on French pages so it never
 // enters the English payload.
-export default function Home({ params }: { params: { locale: string } }) {
-  const fr = params.locale === 'fr' ? frHomeCopy : undefined
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const fr = locale === 'fr' ? frHomeCopy : undefined
   const copy = <K extends keyof typeof frHomeCopy>(key: K) => (fr ? { copy: fr[key] } : {})
 
   return (

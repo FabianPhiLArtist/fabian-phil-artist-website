@@ -31,8 +31,9 @@ const frenchCopy = {
   viewAll: 'Voir toutes les œuvres →',
 }
 
-export default function FaqPage({ params }: { params: { locale: string } }) {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+export default async function FaqPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: localeParam } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
   const french = locale === 'fr' ? frenchFaqPage() : undefined
   if (locale === 'fr' && !french) {
     notFound()

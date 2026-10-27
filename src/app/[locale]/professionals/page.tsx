@@ -4,8 +4,9 @@ import ProfessionalsPage from '@/components/ProfessionalsPage'
 import { frenchStaticPage } from '@/i18n/fr/content'
 import { frProfessionalsCopy } from '@/i18n/fr/professionals'
 
-export default function Page({ params }: { params: { locale: string } }) {
-  if (params.locale !== 'fr') {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  if (locale !== 'fr') {
     return <ProfessionalsPage />
   }
   if (!frenchStaticPage('professionals')) {

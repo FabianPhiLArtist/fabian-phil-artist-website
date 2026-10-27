@@ -10,7 +10,7 @@ import { artworkStructuredData } from '@/lib/structuredData'
 
 type ArtworkLayoutProps = {
   children: ReactNode
-  params: { locale: string; id: string }
+  params: Promise<{ locale: string; id: string }>
 }
 
 // The route segment is the artwork slug; numeric IDs are redirected by middleware and must not render here.
@@ -22,9 +22,10 @@ export function generateStaticParams() {
   return artworks.map((artwork) => ({ id: artworkSlugs[artwork.id] }))
 }
 
-export function generateMetadata({ params }: ArtworkLayoutProps): Metadata {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
-  const artwork = findArtwork(params.id)
+export async function generateMetadata({ params }: ArtworkLayoutProps): Promise<Metadata> {
+  const { locale: localeParam, id } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
+  const artwork = findArtwork(id)
 
   if (!artwork) {
     return {
@@ -46,12 +47,13 @@ export function generateMetadata({ params }: ArtworkLayoutProps): Metadata {
   })
 }
 
-export default function ArtworkLayout({ children, params }: ArtworkLayoutProps) {
-  const artwork = findArtwork(params.id)
+export default async function ArtworkLayout({ children, params }: ArtworkLayoutProps) {
+  const { locale: localeParam, id } = await params
+  const artwork = findArtwork(id)
   if (!artwork) {
     notFound()
   }
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+  const locale = isLocale(localeParam) ? localeParam : 'en'
 
   return (
     <>

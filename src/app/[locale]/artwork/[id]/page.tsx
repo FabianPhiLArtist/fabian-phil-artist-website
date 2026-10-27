@@ -3,8 +3,13 @@ import ArtworkDetail from '@/components/ArtworkDetail'
 import { frenchArtwork } from '@/i18n/fr/content'
 import { frArtworkDetailCopy } from '@/i18n/fr/ui'
 
-export default function ArtworkDetailPage({ params }: { params: { locale: string; id: string } }) {
-  const french = params.locale === 'fr' ? frenchArtwork(params.id) : undefined
+export default async function ArtworkDetailPage({
+  params,
+}: {
+  params: Promise<{ locale: string; id: string }>
+}) {
+  const { locale, id } = await params
+  const french = locale === 'fr' ? frenchArtwork(id) : undefined
   if (!french) {
     return <ArtworkDetail />
   }

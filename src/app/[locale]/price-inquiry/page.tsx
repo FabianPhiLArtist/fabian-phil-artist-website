@@ -25,8 +25,9 @@ const englishPriceInquiryCopy: PriceInquiryCopy = {
     'All prices are indicative and subject to change. Final pricing depends on the specific artwork, its condition, provenance, and current market conditions. For accurate pricing and availability, please contact us directly.',
 }
 
-export default function Page({ params }: { params: { locale: string } }) {
-  if (params.locale !== 'fr') {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  if (locale !== 'fr') {
     return <PriceInquiryPage copy={englishPriceInquiryCopy} />
   }
   if (!frenchStaticPage('price-inquiry')) {

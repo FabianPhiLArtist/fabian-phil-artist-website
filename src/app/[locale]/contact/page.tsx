@@ -4,8 +4,9 @@ import ContactPage from '@/components/ContactPage'
 import { frenchStaticPage } from '@/i18n/fr/content'
 import { frContactCopy } from '@/i18n/fr/contact'
 
-export default function Page({ params }: { params: { locale: string } }) {
-  if (params.locale !== 'fr') {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  if (locale !== 'fr') {
     return <ContactPage />
   }
   if (!frenchStaticPage('contact')) {

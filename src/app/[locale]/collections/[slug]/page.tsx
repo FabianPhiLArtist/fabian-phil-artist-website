@@ -17,7 +17,7 @@ import { collectionStructuredData } from '@/lib/structuredData'
 import { textLinkClass } from '@/lib/formStyles'
 import { RememberBrowseContext } from '@/lib/browseContext'
 
-type Props = { params: { locale: string; slug: string } }
+type Props = { params: Promise<{ locale: string; slug: string }> }
 
 export const dynamicParams = false
 
@@ -51,9 +51,10 @@ const collectionFromPublicSlug = (locale: string, publicSlug: string) => {
   return collection
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
-  const collection = collectionFromPublicSlug(locale, params.slug)
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale: localeParam, slug } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
+  const collection = collectionFromPublicSlug(locale, slug)
   if (!collection) return {}
   const [lead] = collectionArtworks(collection)
   return pageMetadata({
@@ -66,13 +67,14 @@ export function generateMetadata({ params }: Props): Metadata {
   })
 }
 
-export default function CollectionPage({ params }: Props) {
-  const collection = collectionFromPublicSlug(params.locale, params.slug)
-  if (!collection || !isLocale(params.locale)) {
+export default async function CollectionPage({ params }: Props) {
+  const { locale: localeParam, slug } = await params
+  const collection = collectionFromPublicSlug(localeParam, slug)
+  if (!collection || !isLocale(localeParam)) {
     notFound()
   }
 
-  const locale = params.locale
+  const locale = localeParam
   const members = collectionArtworks(collection)
   const french = locale === 'fr' ? frenchCollection(collection.slug) : undefined
   if (locale === 'fr' && !french) {

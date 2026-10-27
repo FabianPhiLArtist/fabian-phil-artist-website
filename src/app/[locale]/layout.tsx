@@ -19,18 +19,19 @@ export function generateStaticParams() {
     .map((locale) => ({ locale }))
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
-  if (!isLocale(params.locale)) {
+  const { locale: localeParam } = await params
+  if (!isLocale(localeParam)) {
     notFound()
   }
 
-  const locale: Locale = params.locale
+  const locale: Locale = localeParam
 
   return (
     <html lang={locale} className="scroll-smooth">

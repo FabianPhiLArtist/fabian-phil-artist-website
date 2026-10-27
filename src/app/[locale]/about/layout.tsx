@@ -8,8 +8,13 @@ import { profilePageStructuredData } from '@/lib/structuredData'
 
 const title = 'Fabian PhiL | French Contemporary Artist in Dubai'
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
   return pageMetadata({
     locale,
     route: 'about',
@@ -20,14 +25,15 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   })
 }
 
-export default function AboutLayout({
+export default async function AboutLayout({
   children,
   params,
 }: {
   children: ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+  const { locale: localeParam } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
   return (
     <>
       <JsonLd data={profilePageStructuredData(title, locale)} />

@@ -11,8 +11,13 @@ import { frCollectionNames } from '@/i18n/fr/collections'
 import { frGalleryCopy } from '@/i18n/fr/gallery'
 import { frArtworkCardCopy } from '@/i18n/fr/ui'
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = isLocale(params.locale) ? params.locale : 'en'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: localeParam } = await params
+  const locale = isLocale(localeParam) ? localeParam : 'en'
   return pageMetadata({
     locale,
     route: 'gallery',
@@ -43,15 +48,22 @@ function frenchTexts(): Record<number, ArtworkCardText> {
   return texts
 }
 
-export default function GalleryPage({ params, searchParams }: { params: { locale: string }; searchParams: SearchParams }) {
-  const french = params.locale === 'fr' && frenchStaticPage('gallery')
-  if (params.locale === 'fr' && !french) {
+export default async function GalleryPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>
+  searchParams: Promise<SearchParams>
+}) {
+  const [{ locale }, query] = await Promise.all([params, searchParams])
+  const french = locale === 'fr' && frenchStaticPage('gallery')
+  if (locale === 'fr' && !french) {
     notFound()
   }
   return (
     <Gallery
-      initialSeries={firstValue(searchParams.series)}
-      initialGroup={firstValue(searchParams.group)}
+      initialSeries={firstValue(query.series)}
+      initialGroup={firstValue(query.group)}
       {...(french
         ? { copy: frGalleryCopy, cardCopy: frArtworkCardCopy, texts: frenchTexts(), collectionNames: frCollectionNames }
         : {})}
