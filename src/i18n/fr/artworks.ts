@@ -317,134 +317,271 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Panda / Zen',
   },
-}
-
-const size70 = '70\u00a0×\u00a070\u00a0cm'
-const acrylic = 'Acrylique sur deux plaques de plexiglas'
-const acrylicInk = 'Acrylique et encre sur deux plaques de plexiglas'
-const popGlassesWanted = 'Collections Pop Glasses · Wanted'
-
-// Card text on French pages for artworks that appear there but have no French page yet (the card
-// links to the English page). The gallery shows every artwork, so every unpublished id has an entry.
-export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {
   1: {
-    imageAlt: 'Portrait de Steve McQueen dans Wanted for Racing Life, pop art superposé avec miroir et lumière LED, par Fabian PhiL',
+    seo: {
+      title: 'Steve McQueen pop art | Wanted for Racing Life',
+      description:
+        'Wanted for Racing Life\u00a0: portrait de Steve McQueen par Fabian PhiL, entre esthétique Mugshot, miroir argenté, lumière LED et plexiglas superposé.',
+      ogImageAlt:
+        'Portrait de Steve McQueen dans Wanted for Racing Life, pop art avec miroir et lumière LED, par Fabian PhiL',
+    },
+    imageAlt:
+      'Portrait de Steve McQueen dans Wanted for Racing Life, pop art avec miroir et lumière LED, par Fabian PhiL',
     description:
-      'Wanted for Racing Life est un portrait pop art superposé de Steve McQueen, qui reprend le langage graphique du Mugshot pour amplifier sa présence à l’écran et son image rebelle. Matière miroir et lumière LED ajoutent une autre dimension\u00a0: reflets, éclairage et couches de plexiglas changent avec la pièce et le spectateur.',
-    series: 'Collection Mugshot',
-    size: size70,
+      'Wanted for Racing Life reprend Steve McQueen dans le langage graphique du Mugshot. Le lettrage, le visage et les lignes verticales forment une seule image, tandis que le vinyle miroir et la lumière LED y font entrer reflets et éclairage. Réalisée en 2024, l’œuvre relie ce que Steve McQueen évoque de vitesse et d’indépendance au langage de Fabian PhiL\u00a0: le mouvement, le personnage, la lumière. Selon l’endroit où l’on se place, le portrait n’a plus tout à fait la même tenue.',
+    inMotion:
+      'Le déplacement change à la fois l’alignement et les reflets. Portrait, texte, matière miroir et lumière LED ne répondent pas de la même façon d’un pas à l’autre, et l’œuvre devient plus théâtrale qu’en vue frontale.',
     medium: 'Acrylique et vinyle miroir argenté sur deux plaques de plexiglas, avec LED',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Mugshot',
   },
   2: {
+    seo: {
+      title: 'Brad Pitt pop art | Wanted for Fight Club',
+      description:
+        'Wanted for Fight Club\u00a0: portrait pop art de Brad Pitt par Fabian PhiL, entre référence cinématographique, esthétique Mugshot et plexiglas superposé.',
+      ogImageAlt: 'Portrait de Brad Pitt dans Wanted for Fight Club, pop art sur plexiglas superposé, par Fabian PhiL',
+    },
     imageAlt: 'Portrait de Brad Pitt dans Wanted for Fight Club, pop art sur plexiglas superposé, par Fabian PhiL',
     description:
-      'Wanted for Fight Club est un portrait pop art superposé de Brad Pitt, mis en scène dans le langage visuel du Mugshot. Le titre, à la référence cinématographique évidente, introduit confrontation et tension au-delà du visage, tandis que lignes et traits se déplacent légèrement avec le point de vue.',
+      'Wanted for Fight Club cadre Brad Pitt dans l’esthétique du Mugshot. Le titre apporte tout de suite une référence au cinéma, et une tension qui dépasse le visage. Peint en 2024 à l’acrylique et à l’encre, le portrait fait glisser lignes et traits d’une plaque à l’autre. On reconnaît Brad Pitt\u00a0; le texte et le décalage en font un personnage sous pression.',
+    inMotion:
+      'D’un angle à l’autre, les lignes du visage et le graphisme Wanted sortent de l’alignement, puis se rejoignent. Ce glissement renforce le ton de confrontation.',
+    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Mugshot',
-    size: size70,
-    medium: acrylicInk,
   },
   3: {
+    seo: {
+      title: 'Woody Allen pop art | Wanted $$Reward$$',
+      description:
+        'Wanted $$Reward$$\u00a0: portrait pop art de Woody Allen par Fabian PhiL. Avis de recherche, récompense et humour, sur plexiglas superposé.',
+      ogImageAlt: 'Portrait de Woody Allen dans Wanted $$Reward$$, pop art sur plexiglas superposé, par Fabian PhiL',
+    },
     imageAlt: 'Portrait de Woody Allen dans Wanted $$Reward$$, pop art sur plexiglas superposé, par Fabian PhiL',
     description:
-      'Wanted $$Reward$$ transforme Woody Allen à travers le langage visuel de l’avis de recherche avec récompense. Le texte fait partie de l’humour\u00a0: on lit le visage, on remarque la récompense, puis on revient à l’expression avec un autre regard.',
+      'Wanted $$Reward$$ fait de Woody Allen le sujet d’une affiche de recherche, récompense comprise. Lunettes orange, toise et lettrage entrent dans la plaisanterie\u00a0: on lit le visage, on remarque la récompense, puis on y revient autrement. Peinte en 2023 sur deux plaques de plexiglas, l’œuvre décale légèrement le portrait avec la perspective, entre image connue et profondeur réelle.',
+    inMotion:
+      'En traversant l’œuvre, le portrait, le texte de la récompense et la structure graphique se décalent les uns par rapport aux autres. Le visage change à peine\u00a0; le personnage Wanted reste lisible.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Mugshot',
-    size: size70,
-    medium: acrylic,
   },
   7: {
-    imageAlt: 'Old Man in Peace, portrait apaisé d’un homme âgé aux cheveux en mouvement, sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'Old Man in Peace | Portrait cinétique, Fabian PhiL',
+      description:
+        'Old Man in Peace, 2020\u00a0: portrait cinétique de Fabian PhiL. Expression apaisée et cheveux en mouvement, sur plexiglas superposé.',
+      ogImageAlt:
+        'Old Man in Peace, portrait apaisé d’un homme âgé aux cheveux en mouvement, sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt:
+      'Old Man in Peace, portrait apaisé d’un homme âgé aux cheveux en mouvement, sur plexiglas superposé, par Fabian PhiL',
     description:
-      'Old Man in Peace est un portrait contemplatif de 2020 où le calme de l’expression contraste avec le mouvement de l’image superposée. Cheveux et lignes du visage se décalent subtilement lorsque le spectateur change de position, au service d’une atmosphère de sérénité, d’âge et de réflexion.',
-    series: 'Collection Moving Hair',
+      'Old Man in Peace est un portrait de 2020 où le calme du visage s’oppose au mouvement de l’image. Yeux fermés, cheveux et barbe sont construits en marques verticales\u00a0: peints sur deux plaques, ils se déplacent légèrement quand on change de place. L’effet reste discret. La profondeur accompagne une atmosphère d’âge, de sérénité et de réflexion, sans jamais figer le portrait.',
+    inMotion:
+      'Le visage demeure calme pendant que cheveux et traits bougent avec la perspective. Quand les plans se réalignent, la profondeur apparaît puis s’efface, sans troubler le ton plus silencieux de l’œuvre.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a090\u00a0cm',
-    medium: acrylic,
+    series: 'Collection Moving Hair',
   },
   8: {
-    imageAlt: 'I am the Last Samurai, grand portrait cinétique aux cheveux en mouvement sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'I am the Last Samurai | Art cinétique, Fabian PhiL',
+      description:
+        'I am the Last Samurai, 2024\u00a0: grand portrait cinétique de Fabian PhiL. Cheveux, regard et caractère sur plexiglas superposé.',
+      ogImageAlt:
+        'I am the Last Samurai, grand portrait cinétique aux cheveux en mouvement sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt:
+      'I am the Last Samurai, grand portrait cinétique aux cheveux en mouvement sur plexiglas superposé, par Fabian PhiL',
     description:
-      'I am the Last Samurai est un grand portrait de 2024 construit autour de l’âge, du caractère et du mouvement des cheveux sur des couches de plexiglas distinctes. Lorsque le spectateur se déplace, cheveux et lignes du visage se réalignent et donnent au portrait une profondeur et une présence changeantes.',
-    series: 'Collection Moving Hair',
+      'I am the Last Samurai est un grand portrait de 2024, construit autour de l’âge, du caractère et du mouvement des cheveux. Le regard reste franc, mais les traits verticaux ne se posent jamais exactement au même endroit. D’un côté à l’autre, cheveux, barbe et lignes du visage se réalignent et donnent au portrait une autre présence. Fabian PhiL y mène son langage cinétique vers une étude plus retenue.',
+    inMotion:
+      'En se déplaçant de côté, on voit les cheveux devenir la partie la plus active du portrait. Les lignes, peintes sur des plans séparés, traversent le visage et en changent la profondeur.',
+    medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '110\u00a0×\u00a0110\u00a0cm',
-    medium: acrylicInk,
+    series: 'Collection Moving Hair',
   },
   11: {
-    imageAlt: 'Portrait de Twiggy dans Oh Dear, pop art sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'Twiggy pop art | Oh Dear, Fabian PhiL',
+      description:
+        'Oh Dear\u00a0: portrait pop art de Twiggy par Fabian PhiL, 2018. Regard, rose vif et plexiglas superposé.',
+      ogImageAlt: 'Portrait de Twiggy dans Oh Dear, pop art rose sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt: 'Portrait de Twiggy dans Oh Dear, pop art rose sur plexiglas superposé, par Fabian PhiL',
     description:
-      'Oh Dear est un portrait pop art superposé de Twiggy, mannequin et icône culturelle associée à la mode des années 1960. Son regard singulier devient un instant suspendu de surprise, de vulnérabilité et de tension théâtrale, tandis que les lignes du visage se réalignent avec le mouvement.',
-    series: 'Collection Expressive Emotion',
+      'Oh Dear est un portrait de Twiggy, mannequin associée à la mode des années 1960. Le visage, tracé en rose vif, suspend un instant entre surprise et vulnérabilité, et le titre très court laisse l’émotion ouverte. Peinte en 2018 sur des plaques distinctes, l’œuvre fait se réaligner les lignes du visage dès que l’on bouge.',
+    inMotion:
+      'Les lignes glissent sur le visage avec le spectateur, et le regard semble changer. L’expression se réajuste, tandis que le rose vif reste le point d’appui.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
-    medium: acrylic,
+    series: 'Collection Expressive Emotion',
   },
   12: {
-    imageAlt: 'Ooh!, portrait pop art cinétique d’un visage surpris, une cerise rose à la bouche ouverte, sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'Ooh! | Portrait pop art cinétique, Fabian PhiL',
+      description:
+        'Ooh!, 2020\u00a0: portrait pop art de Fabian PhiL. Visage surpris, bouche ouverte et cerise rose fluo, sur plexiglas superposé.',
+      ogImageAlt:
+        'Ooh!, portrait pop art cinétique d’un visage surpris, une cerise rose à la bouche ouverte, sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt:
+      'Ooh!, portrait pop art cinétique d’un visage surpris, une cerise rose à la bouche ouverte, sur plexiglas superposé, par Fabian PhiL',
     description:
-      'Ooh! naît d’une réaction immédiate\u00a0: des yeux écarquillés, une bouche ouverte et une cerise rose fluorescente sur un visage en noir et blanc. Le titre n’explique presque rien et laisse le spectateur projeter sur l’expression surprise, curiosité, plaisir ou incrédulité.',
-    series: 'Collection Expressive Emotion',
+      'Ooh! tient dans une réaction immédiate\u00a0: yeux grands ouverts, bouche ouverte, cerise rose fluo sur un visage autrement en noir et blanc. Le titre n’explique presque rien, et l’on peut y lire surprise, curiosité, plaisir ou incrédulité. Réalisée en 2020, l’œuvre laisse les marques du visage bouger avec le spectateur. L’image et le mot, tous deux très courts, gardent l’interprétation ouverte.',
+    inMotion:
+      'En passant devant le portrait, les traits se déplacent légèrement. L’expression semble changer avec celui qui regarde, et l’exclamation du titre n’a plus exactement le même sens d’un angle à l’autre.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
-    medium: acrylic,
+    series: 'Collection Expressive Emotion',
   },
   13: {
-    imageAlt: 'Blue Lady, premier portrait cinétique de Fabian PhiL sur plexiglas superposé',
+    seo: {
+      title: 'Blue Lady | Premier portrait cinétique, Fabian PhiL',
+      description:
+        'Blue Lady, 2011\u00a0: le premier portrait cinétique de Fabian PhiL. Traits bleus et perspective changeante, à l’origine du Pop Art en Mouvement.',
+      ogImageAlt: 'Blue Lady, premier portrait cinétique de Fabian PhiL, traits bleus sur plexiglas superposé',
+    },
+    imageAlt: 'Blue Lady, premier portrait cinétique de Fabian PhiL, traits bleus sur plexiglas superposé',
     description:
-      'Blue Lady marque le début de l’approche cinétique superposée de Fabian PhiL. Réalisée en 2011, c’est la première œuvre où des couches de plexiglas distinctes deviennent essentielles à l’image changeante\u00a0: une découverte à l’origine des Œuvres Signature, de Pop Glasses et du Pop Art en Mouvement.',
-    series: 'Collection Expressive Emotion',
+      'Blue Lady ouvre l’approche cinétique de Fabian PhiL. En 2011, c’est la première œuvre où des plaques séparées deviennent le cœur de l’image\u00a0: les traits bleus et le visage ne coïncident plus tout à fait d’un point de vue à l’autre. Cette trouvaille a ensuite porté les Œuvres Signature, Pop Glasses et l’idée du Pop Art en Mouvement.',
+    inMotion:
+      'D’un côté à l’autre, les marques peintes sur des plans distincts glissent contre le visage. Yeux et expression se réalignent\u00a0: c’est la découverte première de la technique cinétique de Fabian PhiL.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
-    medium: acrylic,
+    series: 'Collection Expressive Emotion',
   },
   18: {
-    imageAlt: 'Wanted Smoking Rock Star, portrait aux yeux charbonneux et aux lunettes bleu profond sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'Wanted Smoking Rock Star | Pop Glasses, Fabian PhiL',
+      description:
+        'Wanted Smoking Rock Star, 2024\u00a0: portrait Pop Glasses de Fabian PhiL. Lunettes bleu profond, regard charbonneux et cigarette, sur plexiglas superposé.',
+      ogImageAlt:
+        'Wanted Smoking Rock Star, portrait aux yeux charbonneux, à la cigarette et aux lunettes bleu profond, par Fabian PhiL',
+    },
+    imageAlt:
+      'Wanted Smoking Rock Star, portrait aux yeux charbonneux, à la cigarette et aux lunettes bleu profond, par Fabian PhiL',
     description:
-      'Wanted Smoking Rock Star est un portrait Pop Glasses de 2024, plus incisif et plus rebelle. Yeux charbonneux et lunettes bleu profond mêlent glamour, défi et mystère de rock star, tandis que le titre Wanted fait du sujet un personnage plutôt qu’un portrait conventionnel.',
-    series: popGlassesWanted,
-    size: size70,
-    medium: acrylicInk,
+      'Wanted Smoking Rock Star est un portrait Pop Glasses de 2024, plus sec et plus rebelle. Yeux charbonneux, cigarette et lunettes bleu profond mêlent glamour et mystère, et le titre fait du sujet un personnage plutôt qu’une effigie posée. Sur plexiglas superposé, montures et regard se décalent\u00a0: l’attitude elle-même semble instable.',
+    inMotion:
+      'Les lunettes bleu profond se déplacent devant les yeux charbonneux et les lignes du visage. Selon l’angle, le regard devient plus ou moins frontal.',
+    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collections Pop Glasses · Wanted',
+    seriesBlock: 'Collection Pop Glasses',
   },
   20: {
-    imageAlt: 'That\'s the Way I Like it, portrait Pop Glasses sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'That\'s the Way I Like it | Pop Glasses, Fabian PhiL',
+      description:
+        'That\'s the Way I Like it, 2019\u00a0: portrait Pop Glasses de Fabian PhiL. Lunettes jaune fluo et attitude directe, sur plexiglas superposé.',
+      ogImageAlt:
+        'That\'s the Way I Like it, portrait Pop Glasses aux lunettes jaune fluo, sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt:
+      'That\'s the Way I Like it, portrait Pop Glasses aux lunettes jaune fluo, sur plexiglas superposé, par Fabian PhiL',
     description:
-      'That\'s the Way I Like it est un portrait Pop Glasses plein d’assurance, réalisé en 2019. Le titre, sans détour, donne à l’expression une attitude affirmée, tandis que lunettes, yeux et traits du visage se décalent avec la perspective.',
+      'That\'s the Way I Like it est un portrait Pop Glasses de 2019, d’une assurance nette. Le titre pose l’attitude avant que l’on ait fini de lire le visage. Lunettes jaune fluo, yeux et traits noirs occupent des plans séparés et se décalent avec la perspective. La couleur et la place du spectateur rendent le caractère actif, jamais tout à fait arrêté.',
+    inMotion: '',
+    medium: 'Acrylique sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Pop Glasses',
-    size: size70,
-    medium: acrylic,
   },
   21: {
-    imageAlt: 'Maybe I will See Him, portrait aux lunettes roses et au regard d’attente sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'Maybe I will See Him | Pop Glasses, Fabian PhiL',
+      description:
+        'Maybe I will See Him, 2018\u00a0: portrait Pop Glasses de Fabian PhiL. Lunettes roses et regard en attente, sur plexiglas superposé.',
+      ogImageAlt:
+        'Maybe I will See Him, portrait aux lunettes roses et au regard d’attente, sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt:
+      'Maybe I will See Him, portrait aux lunettes roses et au regard d’attente, sur plexiglas superposé, par Fabian PhiL',
     description:
-      'Maybe I will See Him est un portrait Pop Glasses plus intime, réalisé en 2018 autour de l’anticipation. Lunettes roses et regard suspendu évoquent l’attente, le désir et l’incertitude, et le titre laisse l’histoire volontairement ouverte.',
-    series: 'Collection Pop Glasses',
+      'Maybe I will See Him est un portrait Pop Glasses plus intérieur, peint en 2018 autour de l’attente. Lunettes roses et regard suspendu laissent place au désir et à l’incertitude\u00a0; le titre ne ferme pas l’histoire. Yeux et montures bougent un peu par rapport au visage. Cette hésitation physique rejoint celle de l’expression.',
+    inMotion: '',
+    medium: 'Acrylique sur deux plaques de plexiglas',
     size: '60\u00a0×\u00a060\u00a0cm',
-    medium: acrylic,
+    series: 'Collection Pop Glasses',
   },
   23: {
+    seo: {
+      title: 'Beyoncé pop art | Wanted for Stealing the Blues',
+      description:
+        'Wanted for Stealing the Blues\u00a0: portrait pop art de Beyoncé par Fabian PhiL. Lunettes bleu électrique, regard pensif et plexiglas superposé.',
+      ogImageAlt:
+        'La chanteuse Beyoncé aux lunettes bleu électrique dans Wanted for Stealing the Blues, par Fabian PhiL',
+    },
     imageAlt: 'La chanteuse Beyoncé aux lunettes bleu électrique dans Wanted for Stealing the Blues, par Fabian PhiL',
     description:
-      'Wanted for Stealing the Blues est un portrait pop art superposé de Beyoncé, dont les lunettes bleu électrique intensifient un regard pensif, entre glamour, mystère, musique et retenue. Le titre Wanted ajoute de l’humour sans prendre le pas sur l’expression.',
-    series: popGlassesWanted,
-    size: size70,
-    medium: acrylic,
+      'Wanted for Stealing the Blues est un portrait de Beyoncé. Les lunettes bleu électrique tiennent un regard pensif, quelque part entre glamour, mystère, musique et retenue. Le titre Wanted apporte l’humour sans recouvrir l’expression. Réalisée en 2024, l’œuvre fait glisser montures, yeux et lignes\u00a0: le visage change à peine, et le bleu reste l’ancre.',
+    inMotion:
+      'En passant devant le portrait, les lunettes bleu électrique se décalent sur les yeux et le visage. L’alignement accuse le regard et laisse voir la profondeur entre les plaques.',
+    medium: 'Acrylique sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collections Pop Glasses · Wanted',
+    seriesBlock: 'Collection Pop Glasses',
   },
   24: {
-    imageAlt: 'You Call This Art…?, portrait aux lunettes fluorescentes et au regard direct sur plexiglas superposé, par Fabian PhiL',
+    seo: {
+      title: 'You Call This Art…? | Pop art, Fabian PhiL',
+      description:
+        'You Call This Art…?, 2024\u00a0: portrait pop art de Fabian PhiL. Regard direct, collage et reflets, sur plexiglas superposé.',
+      ogImageAlt:
+        'You Call This Art…?, portrait au regard direct et aux montures réfléchissantes, sur plexiglas superposé, par Fabian PhiL',
+    },
+    imageAlt:
+      'You Call This Art…?, portrait au regard direct et aux montures réfléchissantes, sur plexiglas superposé, par Fabian PhiL',
     description:
-      'You Call This Art…? interpelle le spectateur avant toute explication. Le titre questionne le jugement et les limites du pop art contemporain, et le portrait répond par des lunettes fluorescentes, des détails réfléchissants et un regard direct.',
-    series: 'Collection Pop Glasses',
-    size: size70,
+      'You Call This Art…? prend le spectateur à partie avant d’expliquer quoi que ce soit. Le titre interroge le jugement et les bords du pop art\u00a0; le portrait répond par un regard direct, des montures réfléchissantes et un collage. Réalisée en 2024 en peinture, impression et collage sur deux plaques, l’expression change avec le point de vue. Regarder devient une courte discussion entre le sujet, l’artiste et celui qui se tient devant.',
+    inMotion:
+      'Les montures réfléchissantes et les lignes du visage se déplacent sur des plans séparés. Le regard semble changer, et le titre continue de questionner le jugement.',
     medium: 'Peinture, impression et collage sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collection Pop Glasses',
   },
   30: {
-    imageAlt: 'Portrait de Clint Eastwood entouré de dessins animés dans Wanted Million Dollar Toon Fight, par Fabian PhiL',
+    seo: {
+      title: 'Clint Eastwood pop art | Million Dollar Toon Fight',
+      description:
+        'Wanted Million Dollar Toon Fight\u00a0: Clint Eastwood, dessins animés et pop art Toon Clash de Fabian PhiL, sur plexiglas superposé.',
+      ogImageAlt:
+        'Portrait de Clint Eastwood entouré de dessins animés dans Wanted Million Dollar Toon Fight, par Fabian PhiL',
+    },
+    imageAlt:
+      'Portrait de Clint Eastwood entouré de dessins animés dans Wanted Million Dollar Toon Fight, par Fabian PhiL',
     description:
-      'Wanted Million Dollar Toon Fight place Clint Eastwood au centre d’une collision colorée entre portrait, dessins animés et culture pop. Le format Wanted donne un cadre narratif à l’œuvre, tandis que le titre évoque l’affrontement et le spectacle.',
-    series: 'Collections Wanted · Toon Clash',
-    size: size70,
+      'Wanted Million Dollar Toon Fight place Clint Eastwood au milieu d’une collision colorée entre portrait et dessins animés. Le format Wanted donne un cadre\u00a0; le titre, une idée d’affrontement et de spectacle. En 2026, le visage est peint sur la face avant et le fond imprimé au dos des plaques\u00a0: portrait et personnages n’occupent pas le même plan. Quand on se déplace, la composition se sépare, puis se reforme.',
+    inMotion:
+      'Le portrait et les éléments de dessin animé glissent sur des couches distinctes. Visages, texte et graphismes se séparent et se rejoignent, et la collision devient plus sensible.',
     medium: 'Impression numérique au dos des plaques de plexiglas, acrylique sur la face avant',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    series: 'Collections Wanted · Toon Clash',
+    seriesBlock: 'Collection Toon Clash',
   },
   26: {
-    imageAlt: 'Portrait de Clint Eastwood entouré de dessins animés sur le thème de la boxe dans Wanted for Toon KnockOut, par Fabian PhiL',
+    seo: {
+      title: 'Clint Eastwood pop art | Wanted for Toon KnockOut',
+      description:
+        'Wanted for Toon KnockOut\u00a0: Clint Eastwood, boxe et dessins animés. Pop art Toon Clash de Fabian PhiL sur plexiglas superposé.',
+      ogImageAlt:
+        'Portrait de Clint Eastwood et dessins animés sur le thème de la boxe dans Wanted for Toon KnockOut, par Fabian PhiL',
+    },
+    imageAlt:
+      'Portrait de Clint Eastwood et dessins animés sur le thème de la boxe dans Wanted for Toon KnockOut, par Fabian PhiL',
     description:
-      'Wanted for Toon KnockOut plonge Clint Eastwood dans une confrontation pop art rapide et ludique. Le vocabulaire de la boxe fournit la chute visuelle, tandis que portrait, dessins animés et références graphiques se répartissent sur des couches de plexiglas distinctes.',
+      'Wanted for Toon KnockOut place Clint Eastwood dans une confrontation pop art rapide et joueuse. La boxe fournit la chute visuelle. Peinture et impression numérique se partagent les deux plaques\u00a0: selon le point de vue, on lit tantôt le visage, tantôt la scène animée. Réalisée en 2024, l’œuvre relève de Toon Clash autant que de Wanted.',
+    inMotion:
+      'Portrait, dessins animés et signes graphiques sortent de l’alignement avant de se retrouver. Le mouvement donne à la scène l’allure d’un choc en train de se produire, plutôt que d’une image arrêtée.',
+    medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Wanted · Toon Clash',
-    size: size70,
-    medium: 'Création numérique imprimée sur deux plaques de plexiglas',
+    seriesBlock: 'Collection Toon Clash',
   },
 }
+
+// Card text for artworks shown on French pages before they have a French page of their own.
+// Wave 4 publishes the last unpublished artworks, so this stays empty.
+export const frArtworkCards: Partial<Record<number, FrArtworkCard>> = {}
