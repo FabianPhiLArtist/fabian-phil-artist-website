@@ -1,7 +1,8 @@
 import { artworks } from '@/data/artworks'
-import { artworkCanonicalUrl, buildEnquiryMessage, enquiryMailto, STUDIO_EMAIL, type EnquiryMessageLines } from '@/lib/artworkEnquiry'
+import { artworkCanonicalUrl, buildEnquiryMessage, enquiryMailto, STUDIO_EMAIL } from '@/lib/artworkEnquiry'
 import { collectorLocationLabel, collectorLocationOptions } from '@/lib/collectorLocations'
 import { composeEnquiry, renderEnquiryText } from '@/lib/enquiryEmail'
+import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { whatsappHref } from '@/lib/whatsapp'
 
 const collector = {
@@ -15,24 +16,7 @@ const title = 'Wanted for Racing Life'
 const artwork = artworks.find((item) => item.title === title)
 if (!artwork) throw new Error('Sample artwork missing')
 
-const lines: Record<'en' | 'fr', EnquiryMessageLines> = {
-  en: {
-    artwork: 'Hello Fabian, I would like to enquire about "{title}" ({url}).',
-    general: 'Hello Fabian, I would like to enquire about an artwork.',
-    name: 'My name is {name}.',
-    phone: 'WhatsApp: {phone}',
-    email: 'Email: {email}',
-    location: 'Location: {location}',
-  },
-  fr: {
-    artwork: 'Bonjour Fabian, je souhaiterais me renseigner auprès de vous sur l’œuvre «\u00a0{title}\u00a0» ({url}).',
-    general: 'Bonjour Fabian, je souhaiterais me renseigner auprès de vous sur une œuvre.',
-    name: 'Je m’appelle {name}.',
-    phone: 'WhatsApp : {phone}',
-    email: 'E-mail : {email}',
-    location: 'Localisation : {location}',
-  },
-}
+const lines = enquiryMessageLines
 
 const cases = [
   { locale: 'en' as const, location: 'France' },

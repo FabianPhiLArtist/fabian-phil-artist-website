@@ -51,6 +51,6 @@ export const frContactCopy: ContactPageCopy = {
   whatsappNow: 'M’écrire sur WhatsApp →',
   sendEmail: 'Envoyer un e-mail →',
   whatsappHref: frWhatsapp.general,
-  error: frCollectorInquiryCopy.error,
-  fieldError: frCollectorInquiryCopy.fieldError,
+  error: 'Votre message n’a pas pu être envoyé. Veuillez réessayer ou nous contacter sur WhatsApp.',
+  fieldError: 'Veuillez vérifier ce champ. Votre message n’a pas pu être envoyé. Veuillez réessayer ou nous contacter sur WhatsApp.',
 }

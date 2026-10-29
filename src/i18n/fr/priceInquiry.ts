@@ -1,5 +1,6 @@
 import type { CollectorInquiryCopy } from '@/components/CollectorInquiry'
 import type { PriceInquiryCopy } from '@/components/PriceInquiryPage'
+import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { frArtistEntity } from './artist'
 import { frCollectorInquiryCopy } from './ui'
 
@@ -8,11 +9,11 @@ export const frPricingInquiryCopy: CollectorInquiryCopy = {
   eyebrow: 'Demande de prix',
   heading: 'Vous souhaitez connaître un prix\u202f?',
   headingWithTitle: 'Vous souhaitez connaître un prix\u202f?',
-  intro: 'Nommez une œuvre ou posez une question générale. Fabian vous répond personnellement sur WhatsApp.',
+  intro: 'Nommez une œuvre ou posez une question générale. Votre demande est envoyée à l’atelier depuis ce site, puis WhatsApp s’ouvre.',
   subject: 'Œuvre ou question',
   subjectPlaceholder: 'Titre d’une œuvre, ou votre question',
-  linePricing: 'Bonjour Fabian, je souhaiterais me renseigner auprès de vous sur un prix.',
-  lineSubject: 'Œuvre ou question : {subject}',
+  linePricing: enquiryMessageLines.fr.pricing,
+  lineSubject: enquiryMessageLines.fr.subject,
   emailSubjectPricing: 'Demande de prix',
 }
 

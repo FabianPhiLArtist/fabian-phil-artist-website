@@ -1,4 +1,4 @@
-export type EnquiryResult = { ok: true } | { ok: false; message: string; field?: string }
+export type EnquiryResult = { ok: true } | { ok: false; message: string; field?: string; error?: string }
 
 const FALLBACK_ERROR = 'Your message could not be sent. Please try again or contact us on WhatsApp.'
 
@@ -18,6 +18,7 @@ export async function submitEnquiry(
       ok: false,
       message: typeof data?.message === 'string' ? data.message : FALLBACK_ERROR,
       field: typeof data?.field === 'string' ? data.field : undefined,
+      error: typeof data?.error === 'string' ? data.error : undefined,
     }
   } catch {
     return { ok: false, message: FALLBACK_ERROR }

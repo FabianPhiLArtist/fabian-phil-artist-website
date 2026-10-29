@@ -180,3 +180,5 @@ export function renderEnquiryText(enquiry: Enquiry): string {
   const rows = enquiry.rows.filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`)
   return [enquiry.kind, '', ...rows, ...(enquiry.message ? ['', 'Message:', enquiry.message] : [])].join('\n')
 }
+
+export { text as readEnquiryText, email as readEnquiryEmail, escapeHtml }
