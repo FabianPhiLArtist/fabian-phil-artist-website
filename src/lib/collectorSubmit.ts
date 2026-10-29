@@ -20,16 +20,17 @@ export function collectorSubmitPlan(input: {
 }
 
 export type CollectorSubmitResult = {
-  status: 'idle' | 'error' | 'sent'
+  status: 'idle' | 'error' | 'sent' | 'partial'
   error?: string
   field?: string
 }
 
-// Opens WhatsApp only after the website accepts the enquiry, or when reopening an enquiry already accepted.
-// Does not clear the form.
+// Opens WhatsApp only after the website accepts the enquiry, including when the acknowledgement could not be sent.
+// A failed studio email does not open WhatsApp. Does not clear the form.
+// The automatic open is best-effort. The page also shows a real WhatsApp link the visitor can press.
 export async function executeCollectorSubmit(args: {
   plan: CollectorSubmitPlan
-  post: () => Promise<{ ok: boolean; error?: string; field?: string }>
+  post: () => Promise<{ ok: boolean; error?: string; field?: string; delivery?: 'complete' | 'partial' }>
   openWhatsApp: () => void
 }): Promise<CollectorSubmitResult> {
   if (args.plan === 'ignore') return { status: 'idle' }
@@ -41,5 +42,6 @@ export async function executeCollectorSubmit(args: {
   const result = await args.post()
   if (!result.ok) return { status: 'error', error: result.error, field: result.field }
   args.openWhatsApp()
+  if (result.delivery === 'partial') return { status: 'partial' }
   return { status: 'sent' }
 }

@@ -95,9 +95,11 @@ export const frCollectorInquiryCopy: CollectorInquiryCopy = {
   openWhatsApp: 'Ouvrir WhatsApp',
   emailOption: 'Écrire par e-mail',
   sendNote:
-    'Ce bouton envoie la demande par e-mail à l’atelier, puis ouvre WhatsApp. Le message WhatsApp n’est envoyé qu’après avoir appuyé sur Envoyer.',
+    'Ce bouton envoie la demande par e-mail à l’atelier, puis essaie d’ouvrir WhatsApp. Si WhatsApp ne s’ouvre pas, utilisez le bouton Ouvrir WhatsApp. Le message WhatsApp n’est envoyé qu’après avoir appuyé sur Envoyer.',
   openedNote:
-    'Ce site a envoyé votre demande à l’atelier. WhatsApp devrait maintenant être ouvert. Le message n’y est envoyé qu’après avoir appuyé sur Envoyer.',
+    'Ce site a envoyé votre demande à l’atelier. Si WhatsApp ne s’est pas ouvert, utilisez le bouton Ouvrir WhatsApp ci-dessous. Le message n’y est envoyé qu’après avoir appuyé sur Envoyer.',
+  partialNote:
+    'L’atelier a reçu votre demande par e-mail. L’accusé de réception n’a pas pu être envoyé à votre adresse. Vous pouvez réessayer. Si WhatsApp ne s’est pas ouvert, utilisez le bouton ci-dessous.',
   desktopNote:
     'Sur ordinateur, WhatsApp Web peut demander une connexion. Vous pouvez aussi copier le numéro ou écrire par e-mail.',
   privacy:

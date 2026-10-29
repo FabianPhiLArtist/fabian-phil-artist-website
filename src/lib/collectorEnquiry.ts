@@ -3,6 +3,7 @@ import type { Locale } from '@/i18n/locales'
 import { artworkCanonicalUrl, buildEnquiryMessage, isInternationalPhone, STUDIO_EMAIL } from '@/lib/artworkEnquiry'
 import { collectorLocationOptions } from '@/lib/collectorLocations'
 import { EnquiryValidationError, escapeHtml, readEnquiryEmail, readEnquiryText } from '@/lib/enquiryEmail'
+import { enquiryIdempotencyKey } from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { STUDIO_WHATSAPP_DISPLAY } from '@/lib/whatsapp'
 
@@ -31,6 +32,7 @@ export type CollectorLetter = {
 export type CollectorDelivery = {
   studio: CollectorLetter
   acknowledgement: CollectorLetter & { to: string }
+  idempotencyKey: string
 }
 
 function oneLine(value: string): string {
@@ -147,6 +149,14 @@ export function composeCollectorEnquiry(data: Record<string, unknown>, now: Date
       html: htmlFor(studioText),
     },
     acknowledgement,
+    idempotencyKey: enquiryIdempotencyKey({
+      email,
+      artworkUrlOrSubject: artworkUrl || subjectLine,
+      name,
+      phone,
+      country: location,
+      message: note,
+    }),
   }
 }
 

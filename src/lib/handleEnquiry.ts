@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server'
-import { composeCollectorEnquiry } from '@/lib/collectorEnquiry'
+import { composeCollectorEnquiry, type CollectorDelivery } from '@/lib/collectorEnquiry'
 import { composeEnquiry, EnquiryValidationError, renderEnquiryHtml, renderEnquiryText } from '@/lib/enquiryEmail'
-import { allowCollectorAcknowledgement, allowEnquiry, claimCollectorSend, collectorDedupeKey } from '@/lib/enquiryGuard'
+import {
+  allowCollectorAcknowledgement,
+  allowEnquiry,
+  EnquiryStoreError,
+  readEnquiryDelivery,
+  withEnquiryLock,
+  writeEnquiryDelivery,
+} from '@/lib/enquiryGuard'
 
 const MAX_BODY_BYTES = 20_000
 const MIN_COMPLETION_MS = 3_000
@@ -100,9 +107,8 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
   }
 
   const now = options.now?.() ?? new Date()
-  if (!allowEnquiry(clientIp(request), now.getTime())) {
-    return fail(429, 'rate_limited', 'Too many enquiries were sent from this network. Please wait and try again.')
-  }
+  const limited = await rateLimit(allowEnquiry(clientIp(request), now.getTime()))
+  if (limited) return limited
 
   if (data.type !== 'contact' && data.type !== 'artwork' && data.type !== 'collector') {
     return fail(400, 'invalid', 'Unknown enquiry type.')
@@ -129,36 +135,13 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
 
   try {
     if (delivery) {
-      if (!allowCollectorAcknowledgement(clientIp(request), now.getTime())) {
-        return fail(429, 'rate_limited', 'Too many enquiries were sent from this network. Please wait and try again.')
-      }
+      const collectorLimited = await rateLimit(allowCollectorAcknowledgement(clientIp(request), now.getTime()))
+      if (collectorLimited) return collectorLimited
       const prepared = delivery
-      const key = collectorDedupeKey(clientIp(request), data)
-      const outcome = await claimCollectorSend(key, now.getTime(), async () => {
-        await send({
-          from,
-          to: [to],
-          replyTo: prepared.studio.replyTo,
-          subject: prepared.studio.subject,
-          html: prepared.studio.html,
-          text: prepared.studio.text,
-        })
-        const acknowledgement: EnquiryMail = {
-          from,
-          to: [prepared.acknowledgement.to],
-          replyTo: prepared.acknowledgement.replyTo,
-          subject: prepared.acknowledgement.subject,
-          html: prepared.acknowledgement.html,
-          text: prepared.acknowledgement.text,
-        }
-        try {
-          await send(acknowledgement)
-        } catch {
-          await send(acknowledgement)
-        }
-      })
-      if (outcome === 'duplicate') return NextResponse.json({ ok: true })
-      return NextResponse.json({ ok: true })
+      const outcome = await withEnquiryLock(prepared.idempotencyKey, () =>
+        sendCollectorDelivery(prepared, send, from, to, now.getTime())
+      )
+      return NextResponse.json({ ok: true, delivery: outcome })
     }
 
     if (!enquiry) throw new Error('send failed')
@@ -172,9 +155,82 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
     })
   } catch (error) {
     if (error instanceof EnquiryValidationError) return fail(422, 'invalid', error.message, error.field)
+    if (error instanceof EnquiryStoreError) {
+      console.error('[enquiry] shared store unavailable')
+      return fail(503, 'unavailable', 'Our message service is temporarily unavailable. Please contact us on WhatsApp.')
+    }
     console.error('[enquiry] email provider request failed')
     return fail(502, 'send_failed', 'Your message could not be sent. Please try again or contact us on WhatsApp.')
   }
 
   return NextResponse.json({ ok: true })
+}
+
+async function rateLimit(check: Promise<boolean>): Promise<Response | null> {
+  try {
+    if (await check) return null
+  } catch (error) {
+    if (error instanceof EnquiryStoreError) {
+      console.error('[enquiry] shared store unavailable')
+      return fail(503, 'unavailable', 'Our message service is temporarily unavailable. Please contact us on WhatsApp.')
+    }
+    throw error
+  }
+  return fail(429, 'rate_limited', 'Too many enquiries were sent from this network. Please wait and try again.')
+}
+
+// Studio mail is sent at most once for an enquiry. A later retry sends only the acknowledgement.
+async function sendCollectorDelivery(
+  prepared: CollectorDelivery,
+  send: (mail: EnquiryMail) => Promise<void>,
+  from: string,
+  to: string,
+  now: number
+): Promise<'complete' | 'partial'> {
+  const key = prepared.idempotencyKey
+  const record = await readEnquiryDelivery(key, now)
+  if (record?.studio && record.ack) return 'complete'
+
+  if (!record?.studio) {
+    await send({
+      from,
+      to: [to],
+      replyTo: prepared.studio.replyTo,
+      subject: prepared.studio.subject,
+      html: prepared.studio.html,
+      text: prepared.studio.text,
+    })
+    try {
+      await writeEnquiryDelivery(key, { studio: true, ack: false }, now)
+    } catch (error) {
+      if (!(error instanceof EnquiryStoreError)) throw error
+      console.error('[enquiry] could not store delivery state')
+    }
+  }
+
+  const acknowledgement: EnquiryMail = {
+    from,
+    to: [prepared.acknowledgement.to],
+    replyTo: prepared.acknowledgement.replyTo,
+    subject: prepared.acknowledgement.subject,
+    html: prepared.acknowledgement.html,
+    text: prepared.acknowledgement.text,
+  }
+  try {
+    await send(acknowledgement)
+  } catch {
+    try {
+      await send(acknowledgement)
+    } catch {
+      return 'partial'
+    }
+  }
+
+  try {
+    await writeEnquiryDelivery(key, { studio: true, ack: true }, now)
+  } catch (error) {
+    if (!(error instanceof EnquiryStoreError)) throw error
+    console.error('[enquiry] could not store delivery state')
+  }
+  return 'complete'
 }

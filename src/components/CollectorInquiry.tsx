@@ -57,6 +57,7 @@ export type CollectorInquiryCopy = {
   emailOption: string
   sendNote: string
   openedNote: string
+  partialNote: string
   desktopNote: string
   privacy: string
   lineArtwork: string
@@ -105,9 +106,11 @@ const englishCopy: CollectorInquiryCopy = {
   openWhatsApp: 'Open WhatsApp',
   emailOption: 'Email instead',
   sendNote:
-    'Pressing the button emails this enquiry to the studio, then opens WhatsApp. The WhatsApp message is sent only after you press Send there.',
+    'Pressing the button emails this enquiry to the studio, then tries to open WhatsApp. If WhatsApp does not open, use the Open WhatsApp button. The WhatsApp message is sent only after you press Send there.',
   openedNote:
-    'This website has sent your enquiry to the studio. WhatsApp should now be open. The message there is sent only after you press Send.',
+    'This website has sent your enquiry to the studio. If WhatsApp did not open, use the Open WhatsApp button below. The message there is sent only after you press Send.',
+  partialNote:
+    'The studio received your enquiry by email. The acknowledgement to your email address could not be sent. You can try again. If WhatsApp did not open, use the button below.',
   desktopNote: 'On desktop, WhatsApp Web may ask you to log in. You can also copy the number or use email.',
   privacy:
     'When you press the button, this website emails your enquiry to the studio and sends an acknowledgement to the email address you entered. The enquiry is not stored in a database. WhatsApp receives the message only if you press Send in WhatsApp. The country you select is your location and stays separate from the studio address in Dubai.',
@@ -149,6 +152,8 @@ interface CollectorInquiryProps {
   purpose?: 'artwork' | 'pricing'
 }
 
+// Best-effort only. Browsers can block this click because it runs after the email request.
+// The visible Open WhatsApp link stays on the page and is a real user gesture.
 function openWhatsApp(href: string) {
   const link = document.createElement('a')
   link.href = href
@@ -181,7 +186,7 @@ const CollectorInquiry = ({
     website: '',
   })
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
-  const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sent' | 'partial' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [numberCopied, setNumberCopied] = useState(false)
@@ -334,12 +339,18 @@ const CollectorInquiry = ({
     })
     sendingRef.current = false
     setSending(false)
-    if (outcome.status !== 'sent') {
+    if (outcome.status === 'idle') return
+    if (outcome.status === 'error') {
       setStatus('error')
       setErrorMessage(outcome.error === 'too_fast' ? copy.tooFast ?? copy.error ?? '' : outcome.field ? copy.fieldError ?? copy.error ?? '' : copy.error ?? '')
       if (outcome.field === 'name' || outcome.field === 'email' || outcome.field === 'phone' || outcome.field === 'location') {
         document.getElementById(fieldId(outcome.field))?.focus()
       }
+      return
+    }
+    if (outcome.status === 'partial') {
+      setErrorMessage('')
+      setStatus('partial')
       return
     }
     setSucceededFingerprint(fingerprint)
@@ -570,27 +581,27 @@ const CollectorInquiry = ({
 
         <div className="flex flex-col gap-4 pt-2">
           <p id={fieldId('send-note')} role="status" className="text-sm text-gray-600 font-light leading-relaxed">
-            {status === 'sent' ? copy.openedNote : copy.sendNote}
+            {status === 'sent' ? copy.openedNote : status === 'partial' ? copy.partialNote : copy.sendNote}
           </p>
           {status === 'error' && errorMessage && (
             <p role="alert" className={errorBoxClass}>
               {errorMessage}
             </p>
           )}
+          {(status === 'sent' || status === 'partial') && (
+            <a
+              href={whatsappHref(composeMessage())}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${primaryButtonClass} normal-case tracking-[0.08em] w-full sm:w-auto`}
+            >
+              {copy.openWhatsApp}
+            </a>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <button type="submit" disabled={sending} aria-busy={sending || undefined} className={`${primaryButtonClass} normal-case tracking-[0.08em] w-full sm:w-auto`}>
               {sending ? copy.sending : copy.submit}
             </button>
-            {status === 'sent' && (
-              <a
-                href={whatsappHref(composeMessage())}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${primaryButtonClass} normal-case tracking-[0.08em] w-full sm:w-auto`}
-              >
-                {copy.openWhatsApp}
-              </a>
-            )}
             <a href={emailHref} className={textLinkClass}>
               {copy.emailOption}
             </a>

@@ -5,7 +5,7 @@ import { handleEnquiry, type EnquiryMail } from '@/lib/handleEnquiry'
 import { artworkCanonicalUrl, buildEnquiryMessage } from '@/lib/artworkEnquiry'
 import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
 import { collectorSubmitPlan, executeCollectorSubmit } from '@/lib/collectorSubmit'
-import { resetEnquiryGuards, allowEnquiry } from '@/lib/enquiryGuard'
+import { resetEnquiryGuards, allowEnquiry, sharedEnquiryStoreConfigured } from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { STUDIO_EMAIL } from '@/lib/artworkEnquiry'
 
@@ -131,6 +131,10 @@ const base = {
 }
 
 async function main() {
+  if (sharedEnquiryStoreConfigured()) {
+    console.error('Refusing to run stub checks against the shared store. Unset Upstash env to exercise the in-memory fallback.')
+    process.exit(1)
+  }
   resetEnquiryGuards()
   const sent: EnquiryMail[] = []
   const ok = await post(
@@ -140,7 +144,8 @@ async function main() {
       sent.push(mail)
     }
   )
-  check(ok.status === 200, 'Successful enquiry was rejected')
+  const okBody = (await ok.json()) as { ok?: boolean; delivery?: string }
+  check(ok.status === 200 && okBody.ok === true && okBody.delivery === 'complete', 'Successful enquiry was rejected')
   check(sent.length === 2, `Expected studio and acknowledgement emails, got ${sent.length}`)
   const studio = sent[0]
   const ack = sent[1]
@@ -178,7 +183,8 @@ async function main() {
       failures.push('Duplicate submission sent another email')
     }
   )
-  check(again.status === 200, 'Duplicate submission was not accepted without resending')
+  const againBody = (await again.json()) as { ok?: boolean; delivery?: string }
+  check(again.status === 200 && againBody.ok === true && againBody.delivery === 'complete', 'Duplicate submission was not accepted without resending')
   check(sent.length === 2, 'Duplicate submission changed the sent count')
 
   resetEnquiryGuards()
@@ -228,6 +234,129 @@ async function main() {
     },
   })
   check(reopen.status === 'sent' && reopened && !reposted, 'Repeating the same enquiry sent another email')
+
+  resetEnquiryGuards()
+  let studioFailSends = 0
+  const studioFail = await post(
+    { ...base, locale: 'en', purpose: 'artwork', location: 'France', artworkId: lastSamurai.id, message: 'Studio down once' },
+    '203.0.113.91',
+    async (mail) => {
+      studioFailSends += 1
+      if (mail.to[0] === studioInbox) throw new Error('studio')
+    }
+  )
+  const studioFailBody = (await studioFail.json()) as { ok?: boolean; delivery?: string }
+  check(studioFail.status === 502 && studioFailBody.ok !== true && studioFailBody.delivery !== 'partial', 'Studio failure claimed success')
+  check(studioFailSends === 1, 'Studio failure sent more than the studio attempt')
+  let studioOpened = false
+  const studioClient = await executeCollectorSubmit({
+    plan: 'send',
+    post: async () => ({ ok: false, error: 'send_failed' }),
+    openWhatsApp: () => {
+      studioOpened = true
+    },
+  })
+  check(studioClient.status === 'error' && studioOpened === false, 'A failed studio email opened WhatsApp')
+  let studioRetry = 0
+  const studioRetryResponse = await post(
+    { ...base, locale: 'en', purpose: 'artwork', location: 'France', artworkId: lastSamurai.id, message: 'Studio down once' },
+    '203.0.113.91',
+    async () => {
+      studioRetry += 1
+    }
+  )
+  const studioRetryBody = (await studioRetryResponse.json()) as { ok?: boolean; delivery?: string }
+  check(
+    studioRetryResponse.status === 200 && studioRetryBody.delivery === 'complete' && studioRetry === 2,
+    'A failed studio email was treated as already sent'
+  )
+
+  resetEnquiryGuards()
+  let partialStudio = 0
+  let partialAck = 0
+  let partialStudioText = ''
+  const partialFields = {
+    ...base,
+    locale: 'en' as const,
+    purpose: 'artwork' as const,
+    location: 'France',
+    artworkId: lastSamurai.id,
+    message: 'Ack down once',
+  }
+  const partial = await post(partialFields, '203.0.113.92', async (mail) => {
+    if (mail.to[0] === studioInbox) {
+      partialStudio += 1
+      partialStudioText = mail.text
+      return
+    }
+    partialAck += 1
+    throw new Error('ack')
+  })
+  const partialJson = (await partial.json()) as { ok?: boolean; delivery?: string }
+  check(
+    partial.status === 200 && partialJson.ok === true && partialJson.delivery === 'partial',
+    'Acknowledgement failure was reported as a total failure'
+  )
+  check(partialStudio === 1 && partialAck === 2, `Expected one studio mail and two acknowledgement attempts, got ${partialStudio} and ${partialAck}`)
+  check(partialStudioText.includes('Website-submitted enquiry'), 'Partial studio mail is not labelled as a website enquiry')
+  check(partialStudioText.includes('This website did not send a WhatsApp message.'), 'Partial studio mail claims WhatsApp was sent')
+  const partialRetry = await post(partialFields, '203.0.113.92', async (mail) => {
+    if (mail.to[0] === studioInbox) {
+      partialStudio += 1
+      return
+    }
+    partialAck += 1
+  })
+  const partialRetryJson = (await partialRetry.json()) as { ok?: boolean; delivery?: string }
+  check(partialRetry.status === 200 && partialRetryJson.delivery === 'complete', 'Acknowledgement retry was not accepted')
+  check(partialStudio === 1, 'Acknowledgement retry sent a second studio email')
+  check(partialAck === 3, 'Acknowledgement retry did not send the acknowledgement')
+  let partialOpened = false
+  const partialClient = await executeCollectorSubmit({
+    plan: 'send',
+    post: async () => ({ ok: true, delivery: 'partial' }),
+    openWhatsApp: () => {
+      partialOpened = true
+    },
+  })
+  check(partialClient.status === 'partial' && partialOpened, 'A partial enquiry hid WhatsApp')
+  check(
+    collectorSubmitPlan({
+      inFlight: false,
+      honeypot: '',
+      valid: true,
+      succeededFingerprint: null,
+      fingerprint: 'partial',
+    }) === 'send',
+    'A partial enquiry would not be posted again'
+  )
+
+  resetEnquiryGuards()
+  let concurrentStudio = 0
+  let concurrentAck = 0
+  const concurrentFields = {
+    ...base,
+    locale: 'en' as const,
+    purpose: 'artwork' as const,
+    location: 'France',
+    artworkId: lastSamurai.id,
+    message: 'Concurrent',
+  }
+  const concurrentSend = async (mail: EnquiryMail) => {
+    if (mail.to[0] === studioInbox) {
+      concurrentStudio += 1
+      await new Promise((resolve) => setTimeout(resolve, 40))
+      return
+    }
+    concurrentAck += 1
+  }
+  const [firstConcurrent, secondConcurrent] = await Promise.all([
+    post(concurrentFields, '203.0.113.93', concurrentSend),
+    post(concurrentFields, '203.0.113.93', concurrentSend),
+  ])
+  check(firstConcurrent.status === 200 && secondConcurrent.status === 200, 'Concurrent enquiry was rejected')
+  check(concurrentStudio === 1, `Concurrent enquiry sent ${concurrentStudio} studio emails`)
+  check(concurrentAck === 1, `Concurrent enquiry sent ${concurrentAck} acknowledgements`)
 
   resetEnquiryGuards()
   const frSent: EnquiryMail[] = []
@@ -351,6 +480,7 @@ async function main() {
   check(contactSent[0]?.text.includes('Location: France'), 'Contact location changed')
 
   resetEnquiryGuards()
+  check(!sharedEnquiryStoreConfigured(), 'In-memory fallback was not the store under test')
   let floodSends = 0
   for (let i = 0; i < 3; i += 1) {
     const response = await post(
@@ -435,8 +565,8 @@ async function main() {
   check(studioSends === 4, 'The collector cap blocked studio-only contact mail')
 
   resetEnquiryGuards()
-  for (let i = 0; i < 8; i += 1) check(allowEnquiry('203.0.113.50', 1_000), `Rate limit blocked request ${i + 1}`)
-  check(!allowEnquiry('203.0.113.50', 1_000), 'Per-IP limit did not trip')
+  for (let i = 0; i < 8; i += 1) check(await allowEnquiry('203.0.113.50', 1_000), `Rate limit blocked request ${i + 1}`)
+  check(!(await allowEnquiry('203.0.113.50', 1_000)), 'Per-IP limit did not trip')
 
   for (const source of [lastSamurai.image, steveMcqueen.image, bradPitt.image]) {
     const image = artworkOpenGraphImage(source)
