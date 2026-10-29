@@ -3,7 +3,8 @@
 import React from 'react'
 import { useLocale } from '@/i18n/useLocale'
 import LocaleLink from '@/components/LocaleLink'
-import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
+import CollectorInquiry, { type CollectorInquiryCopy } from '@/components/CollectorInquiry'
+import { textLinkClass } from '@/lib/formStyles'
 
 export type PriceFormat = {
   name: string
@@ -18,8 +19,7 @@ export type PriceInquiryCopy = {
   follow: string
   contactCta: string
   galleryCta: string
-  whatsappCta?: string
-  whatsappHref?: string
+  inquiry: CollectorInquiryCopy
   columns?: {
     format: string
     size: string
@@ -77,18 +77,14 @@ const PriceInquiryPage = ({ copy }: { copy: PriceInquiryCopy }) => {
           {copy.notice ? (
             <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed mb-10">{copy.notice}</p>
           ) : null}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
-            <LocaleLink locale={locale} route="contact" className={`${primaryButtonClass} self-start`}>
+          <CollectorInquiry purpose="pricing" copy={copy.inquiry} />
+          <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+            <LocaleLink locale={locale} route="contact" className={textLinkClass}>
               {copy.contactCta}
             </LocaleLink>
             <LocaleLink locale={locale} route="gallery" className={textLinkClass}>
               {copy.galleryCta}
             </LocaleLink>
-            {copy.whatsappCta && copy.whatsappHref ? (
-              <a href={copy.whatsappHref} target="_blank" rel="noopener noreferrer" className={textLinkClass}>
-                {copy.whatsappCta}
-              </a>
-            ) : null}
           </div>
         </section>
       </div>

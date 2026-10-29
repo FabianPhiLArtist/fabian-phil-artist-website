@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import { useLocale } from '@/i18n/useLocale'
+import { collectorLocationLabel, collectorLocationOptions } from '@/lib/collectorLocations'
 import { submitEnquiry } from '@/lib/submitEnquiry'
 import { WHATSAPP_URL } from '@/lib/whatsapp'
 import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
@@ -30,6 +32,8 @@ export type ContactPageCopy = {
   emailAddress: string
   emailPlaceholder: string
   phone: string
+  location: string
+  locationPlaceholder: string
   subject: string
   subjectOptions: Record<'' | 'inquiry' | 'commission' | 'exhibition' | 'press' | 'other', string>
   message: string
@@ -75,6 +79,8 @@ const englishCopy: ContactPageCopy = {
   emailAddress: 'Email Address',
   emailPlaceholder: 'your.email@example.com',
   phone: 'Phone Number (Optional)',
+  location: 'Location',
+  locationPlaceholder: 'Select your location',
   subject: 'Subject',
   subjectOptions: {
     '': 'Select a subject',
@@ -106,6 +112,7 @@ const emptyForm = {
   lastName: '',
   email: '',
   phone: '',
+  location: '',
   subject: '',
   message: '',
   website: '',
@@ -115,6 +122,7 @@ const infoLabelClass = 'text-[11px] tracking-[0.16em] uppercase text-gray-500 mb
 const infoLinkClass = 'text-base text-gray-900 font-light hover:text-gray-500 transition-colors'
 
 const ContactPage = ({ copy = englishCopy }: { copy?: ContactPageCopy }) => {
+  const locale = useLocale()
   const [formData, setFormData] = useState(emptyForm)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -136,7 +144,8 @@ const ContactPage = ({ copy = englishCopy }: { copy?: ContactPageCopy }) => {
     setStatus('sending')
     setErrorMessage('')
 
-    const result = await submitEnquiry({ type: 'contact', ...formData }, startedAt.current)
+    const location = collectorLocationLabel(locale, formData.location)
+    const result = await submitEnquiry({ type: 'contact', ...formData, location }, startedAt.current)
     sending.current = false
 
     if (result.ok) {
@@ -323,6 +332,27 @@ const ContactPage = ({ copy = englishCopy }: { copy?: ContactPageCopy }) => {
                       placeholder="+971 50 123 4567"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label htmlFor="location" className={labelClass}>
+                    {copy.location}
+                  </label>
+                  <select
+                    id="location"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    autoComplete="off"
+                    className={fieldClass}
+                  >
+                    <option value="">{copy.locationPlaceholder}</option>
+                    {collectorLocationOptions[locale].map((label) => (
+                      <option key={label} value={label}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>

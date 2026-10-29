@@ -27,6 +27,8 @@ export const frContactCopy: ContactPageCopy = {
   emailAddress: 'Adresse e-mail',
   emailPlaceholder: 'votre.email@exemple.com',
   phone: 'Téléphone (facultatif)',
+  location: 'Localisation',
+  locationPlaceholder: 'Choisissez votre localisation',
   subject: 'Objet',
   subjectOptions: {
     '': 'Choisir un objet',

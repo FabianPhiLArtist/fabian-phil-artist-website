@@ -1,6 +1,20 @@
+import type { CollectorInquiryCopy } from '@/components/CollectorInquiry'
 import type { PriceInquiryCopy } from '@/components/PriceInquiryPage'
 import { frArtistEntity } from './artist'
-import { frWhatsapp } from './ui'
+import { frCollectorInquiryCopy } from './ui'
+
+export const frPricingInquiryCopy: CollectorInquiryCopy = {
+  ...frCollectorInquiryCopy,
+  eyebrow: 'Demande de prix',
+  heading: 'Vous souhaitez connaître un prix\u202f?',
+  headingWithTitle: 'Vous souhaitez connaître un prix\u202f?',
+  intro: 'Nommez une œuvre ou posez une question générale. Fabian vous répond personnellement sur WhatsApp.',
+  subject: 'Œuvre ou question',
+  subjectPlaceholder: 'Titre d’une œuvre, ou votre question',
+  linePricing: 'Bonjour Fabian, je souhaiterais me renseigner auprès de vous sur un prix.',
+  lineSubject: 'Œuvre ou question : {subject}',
+  emailSubjectPricing: 'Demande de prix',
+}
 
 export const frPriceInquirySeo = {
   title: 'Demande de prix | Œuvres de Fabian PhiL',
@@ -16,6 +30,5 @@ export const frPriceInquiryCopy: PriceInquiryCopy = {
   follow: 'Indiquez le titre de l’œuvre qui vous intéresse. Fabian vous répond personnellement.',
   contactCta: 'Contacter Fabian',
   galleryCta: 'Voir les œuvres →',
-  whatsappCta: 'Écrire sur WhatsApp →',
-  whatsappHref: frWhatsapp.price,
+  inquiry: frPricingInquiryCopy,
 }

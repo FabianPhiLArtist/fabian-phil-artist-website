@@ -1,6 +1,7 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import PriceInquiryPage, { type PriceInquiryCopy } from '@/components/PriceInquiryPage'
+import { englishPricingInquiryCopy } from '@/components/CollectorInquiry'
 import { frenchStaticPage } from '@/i18n/fr/content'
 import { frPriceInquiryCopy } from '@/i18n/fr/priceInquiry'
 
@@ -13,6 +14,7 @@ const englishPriceInquiryCopy: PriceInquiryCopy = {
   follow: '',
   contactCta: 'Contact for Pricing',
   galleryCta: 'Browse Gallery →',
+  inquiry: englishPricingInquiryCopy,
   columns: { format: 'Format', size: 'Size', aed: 'AED', eur: 'EUR' },
   formats: [
     { name: 'Small Format', size: '70x70cm', aed: 'AED 10,000 - 16,000', eur: '€2,500 - 4,000' },

@@ -16,6 +16,7 @@ import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
 import { fallbackHrefLang, localizedHref } from '@/i18n/pathnames'
 import { fill, fillParts } from '@/lib/template'
+import { STUDIO_MAILTO } from '@/lib/artworkEnquiry'
 import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 import { readBrowseContext, type BrowseContext } from '@/lib/browseContext'
 
@@ -48,6 +49,7 @@ export type ArtworkDetailCopy = {
   sold: string
   about: string
   inquire: string
+  emailInstead: string
   viewFullDetails: string
   partOf: string
   partOfText: string
@@ -99,6 +101,7 @@ const englishCopy: ArtworkDetailCopy = {
   sold: 'SOLD',
   about: 'About This Artwork',
   inquire: 'Inquire About This Artwork',
+  emailInstead: 'Email Fabian',
   viewFullDetails: 'View Full Details',
   partOf: 'Part of {series}',
   partOfText: 'This artwork is part of a curated collection showcasing {seriesLower}.',
@@ -373,6 +376,9 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                 <button onClick={() => setShowZoom(true)} className={`${secondaryButtonClass} w-full`}>
                   {copy.viewFullDetails}
                 </button>
+                <a href={STUDIO_MAILTO} className={`${textLinkClass} self-start`}>
+                  {copy.emailInstead}
+                </a>
               </div>
 
               <div className="border-t border-gray-200 pt-6">

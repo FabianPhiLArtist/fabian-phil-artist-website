@@ -1,5 +1,21 @@
 export const WHATSAPP_URL = 'https://wa.me/971567594229'
 
+// Shown on the enquiry form. The spaced form is for reading; the clipboard uses E.164.
+export const STUDIO_WHATSAPP_DISPLAY = '+971 56 759 4229'
+export const STUDIO_WHATSAPP_INTERNATIONAL = '+971567594229'
+
+function digits(value: string): string {
+  return value.replace(/\D/g, '')
+}
+
+const studioDigits = digits(WHATSAPP_URL)
+if (
+  digits(STUDIO_WHATSAPP_DISPLAY) !== studioDigits ||
+  digits(STUDIO_WHATSAPP_INTERNATIONAL) !== studioDigits
+) {
+  throw new Error('Studio WhatsApp number does not match wa.me')
+}
+
 export function whatsappHref(message: string): string {
   return `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`
 }
