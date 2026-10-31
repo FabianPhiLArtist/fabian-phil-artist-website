@@ -36,6 +36,7 @@ export const artworkSlugs: Record<number, string> = {
   32: 'ayrton-senna-f1-toon-pop-art', // Wanted Ayrton vs Toons Racing
   33: 'claudia-schiffer-fashion-pop-art', // Runaway Mood
   34: 'lucy-liu-angel-pop-art', // Wanted Fashion Police Angel
+  35: 'wanted-panda-hong-kong-pop', // Wanted Panda Hong Kong Pop
 }
 
 // Slug for a legacy numeric artwork ID ("12" or 12); undefined for anything else, including slugs.

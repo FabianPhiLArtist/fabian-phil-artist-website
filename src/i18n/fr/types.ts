@@ -34,6 +34,8 @@ export type FrArtworkContent = {
   inMotion: string
   medium: string
   size: string
+  edition?: string
+  availability?: string
   // Visible series label (artwork.series is the English collection name). For artworks in several
   // collections it names all of them; seriesBlock then names artwork.series alone.
   series: string

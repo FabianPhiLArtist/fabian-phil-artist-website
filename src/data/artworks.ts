@@ -14,6 +14,9 @@ export interface Artwork {
   price: string
   description: string
   inMotion?: string
+  edition?: string
+  availabilityDetail?: string
+  shareImage?: string
   seoTitle?: string
   metaDescription?: string
   imageAlt?: string
@@ -517,7 +520,7 @@ export const artworks: Artwork[] = [
     category: 'luminous-vision',
   },
 
-  // Panda Pop Collection (3 artworks)
+  // Panda Pop Collection (4 artworks)
   {
     id: 25,
     title: "Wanted Panda PopArt Dealer",
@@ -577,6 +580,32 @@ export const artworks: Artwork[] = [
     seoTitle: "Wanted Panda Yin & Yang Fan | Panda Art by Fabian PhiL",
     metaDescription: "Explore Wanted Panda Yin & Yang Fan, a 2025 panda art work by Fabian PhiL on layered plexiglass, combining distinctive imagery with movement and changing perspective.",
     imageAlt: "Wanted Panda Yin & Yang Fan, layered panda pop art on plexiglass by Fabian PhiL",
+    available: true,
+    category: 'panda-pop',
+  },
+  {
+    id: 35,
+    title: "Wanted Panda Hong Kong Pop",
+    series: "Panda Pop Collection",
+    image: "/images/artworks/panda-wanted-hong-kong-pop-art-city-fabian-phil.jpg",
+    images: [
+      "/images/artworks/panda-wanted-hong-kong-pop-art-city-fabian-phil.jpg",
+      "/images/artworks/panda-wanted-hong-kong-pop-art-city-fabian-phil-angle.jpg",
+      "/images/artworks/panda-wanted-hong-kong-pop-art-city-fabian-phil-gallery.png"
+    ],
+    video: "/videos/artworks/panda-wanted-hong-kong-pop-art-city-fabian-phil.mp4",
+    shareImage: "/images/share/panda-wanted-hong-kong-pop-art-city-fabian-phil.jpg",
+    year: "2026",
+    medium: "Paint and digital design printed on two acrylic sheets",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    edition: "Unique original, 1/1",
+    availabilityDetail: "Available from the Artist’s Studio, Dubai",
+    description: "Wanted Panda Hong Kong Pop captures Hong Kong’s vibrant energy through a colourful panda inspired by the city’s bustling streets, towering buildings, striking signs and street art. Bright pinks, blues, yellows and greens contrast with the panda’s bold black-and-white silhouette, turning the cityscape into a playful Pop Art composition. Created with paint and digital design printed on two acrylic sheets, the artwork reveals new depth and shifting details as the viewer moves. A lively tribute to Hong Kong through Fabian PhiL’s kinetic Pop Art.",
+    inMotion: "As the viewer moves, the panda’s black-and-white silhouette shifts against the colourful Hong Kong cityscape. Street signs and architectural details separate and reconnect across the two acrylic layers, revealing depth and movement.",
+    seoTitle: "Wanted Panda Hong Kong Pop | Panda Art by Fabian PhiL",
+    metaDescription: "Discover Wanted Panda Hong Kong Pop, Fabian PhiL’s 2026 kinetic panda artwork: Hong Kong’s colourful streets on two acrylic sheets, shifting as the viewer moves.",
+    imageAlt: "Wanted Panda Hong Kong Pop, black-and-white panda filled with a colourful Hong Kong cityscape, layered pop art by Fabian PhiL",
     available: true,
     category: 'panda-pop',
   },
@@ -735,6 +764,6 @@ export const series = [
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },
   { name: 'Expressive Emotion Collection', count: 6, category: 'expressive-emotion' },
   { name: 'Pop glasses Collection', count: 10, category: 'luminous-vision' },
-  { name: 'Panda Pop Collection', count: 3, category: 'panda-pop' },
+  { name: 'Panda Pop Collection', count: 4, category: 'panda-pop' },
   { name: 'Toon Clash Collection', count: 4, category: 'digital-fusion' }
 ]

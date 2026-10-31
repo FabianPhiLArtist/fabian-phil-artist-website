@@ -41,6 +41,7 @@ export type ArtworkDetailCopy = {
   details: string
   medium: string
   dimensions: string
+  edition: string
   price: string
   availability: string
   priceOnRequest: string
@@ -68,6 +69,8 @@ export type ArtworkDetailText = {
   inMotion: string
   medium: string
   size: string
+  edition?: string
+  availability?: string
   series: string
   // Heading of the series block (whose link filters the gallery by artwork.series); defaults to series.
   seriesBlock?: string
@@ -93,6 +96,7 @@ const englishCopy: ArtworkDetailCopy = {
   details: 'Artwork Details',
   medium: 'Medium',
   dimensions: 'Dimensions',
+  edition: 'Edition',
   price: 'Price',
   availability: 'Availability',
   priceOnRequest: 'Price upon Inquiry',
@@ -164,6 +168,12 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
   const series: string = text?.series ?? artwork?.series ?? ''
   const medium: string = text?.medium ?? artwork?.medium
   const size: string = text?.size ?? artwork?.size
+  const edition: string | undefined = text ? text.edition : artwork?.edition
+  const availabilityValue = artwork?.available
+    ? text
+      ? text.availability ?? copy.available
+      : artwork?.availabilityDetail ?? copy.available
+    : copy.sold
   const description: string = text?.description ?? artwork?.description
   const mainImageAlt = text?.imageAlt ?? artwork?.imageAlt ?? `${artwork?.title}, layered plexiglass artwork by Fabian PhiL`
   const photoAlt = (src: string, index: number) =>
@@ -350,6 +360,12 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                   <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.dimensions}</dt>
                   <dd className="text-sm text-gray-900 font-light text-right">{size}</dd>
                 </div>
+                {edition ? (
+                  <div className="flex justify-between gap-6 py-3.5">
+                    <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.edition}</dt>
+                    <dd className="text-sm text-gray-900 font-light text-right">{edition}</dd>
+                  </div>
+                ) : null}
                 <div className="flex justify-between gap-6 py-3.5">
                   <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.price}</dt>
                   <dd className="text-sm text-gray-900 text-right">
@@ -359,7 +375,7 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                 <div className="flex justify-between gap-6 py-3.5 border-b border-gray-200">
                   <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.availability}</dt>
                   <dd className="text-sm text-gray-900 font-light text-right">
-                    {artwork.available ? copy.available : copy.sold}
+                    {availabilityValue}
                   </dd>
                 </div>
               </dl>
