@@ -100,6 +100,8 @@ export const frCollectorInquiryCopy: CollectorInquiryCopy = {
     'Ce site a envoyé votre demande à l’atelier. Si WhatsApp ne s’est pas ouvert, utilisez le bouton Ouvrir WhatsApp ci-dessous. Le message n’y est envoyé qu’après avoir appuyé sur Envoyer.',
   partialNote:
     'L’atelier a reçu votre demande par e-mail. L’accusé de réception n’a pas pu être envoyé à votre adresse. Vous pouvez réessayer. Si WhatsApp ne s’est pas ouvert, utilisez le bouton ci-dessous.',
+  unrecordedNote:
+    'L’atelier a été prévenu par e-mail. Un nouvel envoi peut écrire une seconde fois à l’atelier. Si WhatsApp ne s’est pas ouvert, utilisez le bouton ci-dessous.',
   desktopNote:
     'Sur ordinateur, WhatsApp Web peut demander une connexion. Vous pouvez aussi copier le numéro ou écrire par e-mail.',
   privacy:

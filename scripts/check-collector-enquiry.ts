@@ -5,7 +5,7 @@ import { handleEnquiry, type EnquiryMail } from '@/lib/handleEnquiry'
 import { artworkCanonicalUrl, buildEnquiryMessage } from '@/lib/artworkEnquiry'
 import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
 import { collectorSubmitPlan, executeCollectorSubmit } from '@/lib/collectorSubmit'
-import { resetEnquiryGuards, allowEnquiry, sharedEnquiryStoreConfigured } from '@/lib/enquiryGuard'
+import { EnquiryStoreError, resetEnquiryGuards, allowEnquiry, sharedEnquiryStoreConfigured, writeEnquiryDelivery } from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { STUDIO_EMAIL } from '@/lib/artworkEnquiry'
 
@@ -112,14 +112,19 @@ const noted = message('en', { title: steveMcqueen.title, url: artworkCanonicalUr
 check(noted.endsWith('Location: France\nPlease hold it.'), 'Optional note was not appended')
 check(!noted.includes('\u20ac'), 'Note message included a euro price')
 
-function post(body: Record<string, unknown>, ip: string, send: (mail: EnquiryMail) => Promise<void>) {
+function post(
+  body: Record<string, unknown>,
+  ip: string,
+  send: (mail: EnquiryMail) => Promise<void>,
+  writeDelivery?: (key: string, record: { studio: boolean; ack: boolean }, now: number) => Promise<void>
+) {
   return handleEnquiry(
     new Request('http://localhost/api/enquiry', {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-forwarded-for': ip },
       body: JSON.stringify({ elapsedMs: 4000, website: '', ...body }),
     }),
-    { now, from, to: studioInbox, send }
+    { now, from, to: studioInbox, send, ...(writeDelivery ? { writeDelivery } : {}) }
   )
 }
 
@@ -330,6 +335,127 @@ async function main() {
     }) === 'send',
     'A partial enquiry would not be posted again'
   )
+
+  resetEnquiryGuards()
+  let unsavedStudio = 0
+  let unsavedAck = 0
+  const unsavedFields = {
+    ...base,
+    locale: 'en' as const,
+    purpose: 'artwork' as const,
+    location: 'France',
+    artworkId: lastSamurai.id,
+    message: 'Record save failed',
+  }
+  const failWrite = async () => {
+    throw new EnquiryStoreError()
+  }
+  const unsaved = await post(
+    unsavedFields,
+    '203.0.113.94',
+    async (mail) => {
+      if (mail.to[0] === studioInbox) unsavedStudio += 1
+      else unsavedAck += 1
+    },
+    failWrite
+  )
+  const unsavedJson = (await unsaved.json()) as { ok?: boolean; delivery?: string }
+  check(
+    unsaved.status === 200 && unsavedJson.ok === true && unsavedJson.delivery === 'unrecorded',
+    'A failed delivery record was reported as a safe success'
+  )
+  check(unsavedStudio === 1 && unsavedAck === 1, `Expected one studio mail and one acknowledgement when the record was not saved, got ${unsavedStudio} and ${unsavedAck}`)
+  const unsavedRetry = await post(
+    unsavedFields,
+    '203.0.113.94',
+    async (mail) => {
+      if (mail.to[0] === studioInbox) unsavedStudio += 1
+      else unsavedAck += 1
+    },
+    failWrite
+  )
+  const unsavedRetryJson = (await unsavedRetry.json()) as { ok?: boolean; delivery?: string }
+  check(unsavedRetry.status === 200 && unsavedRetryJson.delivery === 'unrecorded', 'A missing delivery record was described as saved')
+  check(unsavedStudio === 2, 'A missing delivery record was treated as protection against a second studio email')
+
+  resetEnquiryGuards()
+  let lostStudio = 0
+  let lostAck = 0
+  const lost = await post(
+    { ...unsavedFields, message: 'Record and acknowledgement failed' },
+    '203.0.113.95',
+    async (mail) => {
+      if (mail.to[0] === studioInbox) {
+        lostStudio += 1
+        return
+      }
+      lostAck += 1
+      throw new Error('ack')
+    },
+    failWrite
+  )
+  const lostJson = (await lost.json()) as { ok?: boolean; delivery?: string }
+  check(
+    lost.status === 200 && lostJson.ok === true && lostJson.delivery === 'unrecorded',
+    'A failed delivery record was described as a safe acknowledgement retry'
+  )
+  check(lostStudio === 1 && lostAck === 2, `Expected one studio mail and two acknowledgement attempts, got ${lostStudio} and ${lostAck}`)
+
+  resetEnquiryGuards()
+  let recoveredStudio = 0
+  let recoveredWrites = 0
+  const recoveredFields = { ...unsavedFields, message: 'First record save failed' }
+  const recovered = await post(
+    recoveredFields,
+    '203.0.113.96',
+    async (mail) => {
+      if (mail.to[0] === studioInbox) recoveredStudio += 1
+    },
+    async (key, record, at) => {
+      recoveredWrites += 1
+      if (recoveredWrites === 1) throw new EnquiryStoreError()
+      await writeEnquiryDelivery(key, record, at)
+    }
+  )
+  const recoveredJson = (await recovered.json()) as { ok?: boolean; delivery?: string }
+  check(recovered.status === 200 && recoveredJson.delivery === 'complete', 'A record saved after the studio email was treated as unsaved')
+  const recoveredRetry = await post(recoveredFields, '203.0.113.96', async (mail) => {
+    if (mail.to[0] === studioInbox) recoveredStudio += 1
+  })
+  const recoveredRetryJson = (await recoveredRetry.json()) as { delivery?: string }
+  check(recoveredRetry.status === 200 && recoveredRetryJson.delivery === 'complete', 'A saved record did not accept the retry')
+  check(recoveredStudio === 1, 'A saved record still sent a second studio email')
+
+  let unrecordedOpened = false
+  const unrecordedClient = await executeCollectorSubmit({
+    plan: 'send',
+    post: async () => ({ ok: true, delivery: 'unrecorded' }),
+    openWhatsApp: () => {
+      unrecordedOpened = true
+    },
+  })
+  check(unrecordedClient.status === 'unrecorded' && unrecordedOpened, 'An unsaved delivery hid WhatsApp')
+  check(
+    collectorSubmitPlan({
+      inFlight: false,
+      honeypot: '',
+      valid: true,
+      succeededFingerprint: null,
+      fingerprint: 'unrecorded',
+    }) === 'send',
+    'An unsaved delivery was treated as already sent'
+  )
+  const inquirySource = readFileSync(path.join(process.cwd(), 'src/components/CollectorInquiry.tsx'), 'utf8')
+  const frenchSource = readFileSync(path.join(process.cwd(), 'src/i18n/fr/ui.ts'), 'utf8')
+  const enUnrecorded =
+    'The studio was notified by email. Sending this again may email the studio a second time. If WhatsApp did not open, use the button below.'
+  const frUnrecorded =
+    'L\u2019atelier a \u00e9t\u00e9 pr\u00e9venu par e-mail. Un nouvel envoi peut \u00e9crire une seconde fois \u00e0 l\u2019atelier. Si WhatsApp ne s\u2019est pas ouvert, utilisez le bouton ci-dessous.'
+  check(inquirySource.includes(enUnrecorded), 'English copy still claims a retry will not email the studio again')
+  check(frenchSource.includes(frUnrecorded), 'French copy still claims a retry will not email the studio again')
+  check(inquirySource.includes('You can try again.'), 'Partial English copy no longer says the visitor can try again')
+  check(frenchSource.includes('Vous pouvez r\u00e9essayer.'), 'Partial French copy no longer says the visitor can try again')
+  check(!enUnrecorded.includes('try again') && !frUnrecorded.includes('r\u00e9essayer'), 'Unrecorded copy invites another send')
 
   resetEnquiryGuards()
   let concurrentStudio = 0

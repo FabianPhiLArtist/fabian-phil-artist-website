@@ -58,6 +58,7 @@ export type CollectorInquiryCopy = {
   sendNote: string
   openedNote: string
   partialNote: string
+  unrecordedNote: string
   desktopNote: string
   privacy: string
   lineArtwork: string
@@ -111,6 +112,8 @@ const englishCopy: CollectorInquiryCopy = {
     'This website has sent your enquiry to the studio. If WhatsApp did not open, use the Open WhatsApp button below. The message there is sent only after you press Send.',
   partialNote:
     'The studio received your enquiry by email. The acknowledgement to your email address could not be sent. You can try again. If WhatsApp did not open, use the button below.',
+  unrecordedNote:
+    'The studio was notified by email. Sending this again may email the studio a second time. If WhatsApp did not open, use the button below.',
   desktopNote: 'On desktop, WhatsApp Web may ask you to log in. You can also copy the number or use email.',
   privacy:
     'When you press the button, this website emails your enquiry to the studio and sends an acknowledgement to the email address you entered. The enquiry is not stored in a database. WhatsApp receives the message only if you press Send in WhatsApp. The country you select is your location and stays separate from the studio address in Dubai.',
@@ -186,7 +189,7 @@ const CollectorInquiry = ({
     website: '',
   })
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
-  const [status, setStatus] = useState<'idle' | 'sent' | 'partial' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sent' | 'partial' | 'unrecorded' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [numberCopied, setNumberCopied] = useState(false)
@@ -348,9 +351,9 @@ const CollectorInquiry = ({
       }
       return
     }
-    if (outcome.status === 'partial') {
+    if (outcome.status === 'partial' || outcome.status === 'unrecorded') {
       setErrorMessage('')
-      setStatus('partial')
+      setStatus(outcome.status)
       return
     }
     setSucceededFingerprint(fingerprint)
@@ -581,14 +584,20 @@ const CollectorInquiry = ({
 
         <div className="flex flex-col gap-4 pt-2">
           <p id={fieldId('send-note')} role="status" className="text-sm text-gray-600 font-light leading-relaxed">
-            {status === 'sent' ? copy.openedNote : status === 'partial' ? copy.partialNote : copy.sendNote}
+            {status === 'sent'
+              ? copy.openedNote
+              : status === 'partial'
+                ? copy.partialNote
+                : status === 'unrecorded'
+                  ? copy.unrecordedNote
+                  : copy.sendNote}
           </p>
           {status === 'error' && errorMessage && (
             <p role="alert" className={errorBoxClass}>
               {errorMessage}
             </p>
           )}
-          {(status === 'sent' || status === 'partial') && (
+          {(status === 'sent' || status === 'partial' || status === 'unrecorded') && (
             <a
               href={whatsappHref(composeMessage())}
               target="_blank"

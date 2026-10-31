@@ -8,6 +8,7 @@ import {
   readEnquiryDelivery,
   withEnquiryLock,
   writeEnquiryDelivery,
+  type EnquiryDelivery,
 } from '@/lib/enquiryGuard'
 
 const MAX_BODY_BYTES = 20_000
@@ -30,6 +31,7 @@ type HandleOptions = {
   from?: string
   to?: string
   send?: (mail: EnquiryMail) => Promise<void>
+  writeDelivery?: (key: string, record: EnquiryDelivery, now: number) => Promise<void>
 }
 
 function fail(status: number, error: ErrorCode, message: string, field?: string) {
@@ -139,7 +141,7 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
       if (collectorLimited) return collectorLimited
       const prepared = delivery
       const outcome = await withEnquiryLock(prepared.idempotencyKey, () =>
-        sendCollectorDelivery(prepared, send, from, to, now.getTime())
+        sendCollectorDelivery(prepared, send, options.writeDelivery ?? writeEnquiryDelivery, from, to, now.getTime())
       )
       return NextResponse.json({ ok: true, delivery: outcome })
     }
@@ -179,18 +181,23 @@ async function rateLimit(check: Promise<boolean>): Promise<Response | null> {
   return fail(429, 'rate_limited', 'Too many enquiries were sent from this network. Please wait and try again.')
 }
 
-// Studio mail is sent at most once for an enquiry. A later retry sends only the acknowledgement.
+type CollectorOutcome = 'complete' | 'partial' | 'unrecorded'
+
+// A saved record lets a retry send only a missing acknowledgement.
+// If the studio email is sent and that record is not saved, a retry can email the studio again.
 async function sendCollectorDelivery(
   prepared: CollectorDelivery,
   send: (mail: EnquiryMail) => Promise<void>,
+  writeDelivery: (key: string, record: EnquiryDelivery, now: number) => Promise<void>,
   from: string,
   to: string,
   now: number
-): Promise<'complete' | 'partial'> {
+): Promise<CollectorOutcome> {
   const key = prepared.idempotencyKey
   const record = await readEnquiryDelivery(key, now)
   if (record?.studio && record.ack) return 'complete'
 
+  let studioRecorded = Boolean(record?.studio)
   if (!record?.studio) {
     await send({
       from,
@@ -200,12 +207,7 @@ async function sendCollectorDelivery(
       html: prepared.studio.html,
       text: prepared.studio.text,
     })
-    try {
-      await writeEnquiryDelivery(key, { studio: true, ack: false }, now)
-    } catch (error) {
-      if (!(error instanceof EnquiryStoreError)) throw error
-      console.error('[enquiry] could not store delivery state')
-    }
+    studioRecorded = await rememberDelivery(writeDelivery, key, { studio: true, ack: false }, now)
   }
 
   const acknowledgement: EnquiryMail = {
@@ -222,15 +224,26 @@ async function sendCollectorDelivery(
     try {
       await send(acknowledgement)
     } catch {
-      return 'partial'
+      return studioRecorded ? 'partial' : 'unrecorded'
     }
   }
 
+  if (await rememberDelivery(writeDelivery, key, { studio: true, ack: true }, now)) return 'complete'
+  return studioRecorded ? 'complete' : 'unrecorded'
+}
+
+async function rememberDelivery(
+  writeDelivery: (key: string, record: EnquiryDelivery, now: number) => Promise<void>,
+  key: string,
+  record: EnquiryDelivery,
+  now: number
+): Promise<boolean> {
   try {
-    await writeEnquiryDelivery(key, { studio: true, ack: true }, now)
+    await writeDelivery(key, record, now)
+    return true
   } catch (error) {
     if (!(error instanceof EnquiryStoreError)) throw error
     console.error('[enquiry] could not store delivery state')
+    return false
   }
-  return 'complete'
 }

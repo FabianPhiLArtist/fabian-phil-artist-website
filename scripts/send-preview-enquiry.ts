@@ -35,6 +35,12 @@ function loadGitignoredEnv(): void {
   }
 }
 
+function requestUrl(input: RequestInfo | URL): string {
+  if (typeof input === 'string') return input
+  if (input instanceof URL) return input.href
+  return input.url
+}
+
 async function main(): Promise<void> {
   loadGitignoredEnv()
   const missing = REQUIRED.filter((key) => !process.env[key])
@@ -50,7 +56,21 @@ async function main(): Promise<void> {
     process.exit(2)
   }
 
-  const response = await handleEnquiry(
+  const messageIds: string[] = []
+  const originalFetch = globalThis.fetch.bind(globalThis)
+  globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+    const response = await originalFetch(input, init)
+    const method = init?.method ?? (input instanceof Request ? input.method : 'GET')
+    if (requestUrl(input) === 'https://api.resend.com/emails' && method.toUpperCase() === 'POST') {
+      const body = (await response.clone().json().catch(() => null)) as { id?: unknown } | null
+      if (typeof body?.id === 'string') messageIds.push(body.id)
+    }
+    return response
+  }
+
+  let response: Response
+  try {
+    response = await handleEnquiry(
     new Request('http://localhost/api/enquiry', {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-forwarded-for': '127.0.0.1' },
@@ -69,11 +89,32 @@ async function main(): Promise<void> {
         subject: '',
       }),
     })
-  )
+    )
+  } finally {
+    globalThis.fetch = originalFetch
+  }
   const data = (await response.json().catch(() => null)) as { ok?: boolean; delivery?: string; error?: string } | null
   if (response.ok && data?.ok === true) {
-    const delivery = data.delivery === 'partial' ? 'partial' : 'complete'
+    const delivery = data.delivery === 'partial' || data.delivery === 'unrecorded' ? data.delivery : 'complete'
     console.log(`Live enquiry accepted (${delivery}). One enquiry was submitted.`)
+    if (messageIds.length === 0) {
+      console.log('Resend accepted the request, but no message id was returned.')
+      return
+    }
+    await new Promise((resolve) => setTimeout(resolve, 5000))
+    for (const id of messageIds) {
+      const status = await originalFetch(`https://api.resend.com/emails/${id}`, {
+        headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+        cache: 'no-store',
+      })
+      if (!status.ok) {
+        console.log(`Resend message ${id} lookup_status=${status.status} last_event=unavailable`)
+        continue
+      }
+      const body = (await status.json().catch(() => null)) as { last_event?: unknown } | null
+      const event = typeof body?.last_event === 'string' && body.last_event ? body.last_event : 'none'
+      console.log(`Resend message ${id} last_event=${event}`)
+    }
     return
   }
   const errorCode = data && typeof data.error === 'string' ? data.error : 'unknown'

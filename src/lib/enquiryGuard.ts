@@ -5,7 +5,7 @@ const MAX_PER_WINDOW = 8
 // Collector submissions also email the address the visitor typed. That path is tighter than the studio-only forms.
 const COLLECTOR_WINDOW_MS = 10 * 60 * 1000
 const MAX_COLLECTOR_PER_WINDOW = 3
-// A retry later the same day must not send the studio a second copy of one enquiry.
+// A saved delivery record lasts a day. A retry in that window sends only a missing acknowledgement.
 const IDEMPOTENCY_TTL_SEC = 24 * 60 * 60
 const LOCK_TTL_SEC = 30
 

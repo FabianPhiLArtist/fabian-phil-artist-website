@@ -1,4 +1,4 @@
-export type EnquiryDeliveryState = 'complete' | 'partial'
+export type EnquiryDeliveryState = 'complete' | 'partial' | 'unrecorded'
 
 export type EnquiryResult =
   | { ok: true; delivery: EnquiryDeliveryState }
@@ -18,7 +18,9 @@ export async function submitEnquiry(
     })
     const data = await response.json().catch(() => null)
     if (response.ok && data?.ok === true) {
-      return { ok: true, delivery: data.delivery === 'partial' ? 'partial' : 'complete' }
+      const delivery: EnquiryDeliveryState =
+        data.delivery === 'partial' || data.delivery === 'unrecorded' ? data.delivery : 'complete'
+      return { ok: true, delivery }
     }
     return {
       ok: false,

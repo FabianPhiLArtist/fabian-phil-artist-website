@@ -20,7 +20,7 @@ export function collectorSubmitPlan(input: {
 }
 
 export type CollectorSubmitResult = {
-  status: 'idle' | 'error' | 'sent' | 'partial'
+  status: 'idle' | 'error' | 'sent' | 'partial' | 'unrecorded'
   error?: string
   field?: string
 }
@@ -30,7 +30,7 @@ export type CollectorSubmitResult = {
 // The automatic open is best-effort. The page also shows a real WhatsApp link the visitor can press.
 export async function executeCollectorSubmit(args: {
   plan: CollectorSubmitPlan
-  post: () => Promise<{ ok: boolean; error?: string; field?: string; delivery?: 'complete' | 'partial' }>
+  post: () => Promise<{ ok: boolean; error?: string; field?: string; delivery?: 'complete' | 'partial' | 'unrecorded' }>
   openWhatsApp: () => void
 }): Promise<CollectorSubmitResult> {
   if (args.plan === 'ignore') return { status: 'idle' }
@@ -43,5 +43,6 @@ export async function executeCollectorSubmit(args: {
   if (!result.ok) return { status: 'error', error: result.error, field: result.field }
   args.openWhatsApp()
   if (result.delivery === 'partial') return { status: 'partial' }
+  if (result.delivery === 'unrecorded') return { status: 'unrecorded' }
   return { status: 'sent' }
 }
