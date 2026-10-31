@@ -317,6 +317,26 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Panda / Zen',
   },
+  35: {
+    seo: {
+      title: 'Wanted Panda Hong Kong Pop | Panda pop art, Fabian PhiL',
+      description:
+        'Wanted Panda Hong Kong Pop\u00a0: panda pop art de Hong Kong, rues colorées et enseignes sur deux plaques de plexiglas, œuvre cinétique de Fabian PhiL.',
+      ogImageAlt:
+        'Wanted Panda Hong Kong Pop, panda noir et blanc rempli du paysage coloré de Hong Kong, pop art sur plexiglas, par Fabian PhiL',
+    },
+    imageAlt:
+      'Wanted Panda Hong Kong Pop, panda noir et blanc rempli du paysage coloré de Hong Kong, pop art sur plexiglas, par Fabian PhiL',
+    description:
+      'Wanted Panda Hong Kong Pop capture l’énergie vibrante de Hong Kong à travers un panda haut en couleur, inspiré des rues animées, des gratte-ciel, des enseignes emblématiques et du street art de la ville. Le rose, le bleu, le jaune et le vert éclatants contrastent avec sa silhouette noire et blanche, transformant le paysage urbain en une composition Pop Art ludique. Réalisée à partir de peinture et de créations numériques imprimées sur deux plaques de plexiglas, l’œuvre révèle profondeur et mouvement lorsque le spectateur se déplace. Un hommage haut en couleur à Hong Kong, dans l’univers cinétique de Fabian PhiL.',
+    inMotion:
+      'Lorsque le spectateur se déplace, la silhouette noire et blanche du panda se décale par rapport au décor coloré de Hong Kong. Les enseignes et les détails architecturaux se séparent et se rejoignent sur les deux plaques de plexiglas, révélant profondeur et mouvement.',
+    medium: 'Peinture et créations numériques imprimées sur deux plaques de plexiglas',
+    size: '70\u00a0×\u00a070\u00a0cm',
+    edition: 'Original unique, 1/1',
+    availability: 'Disponible à l’atelier de l’artiste, Dubaï',
+    series: 'Collection Panda / Zen',
+  },
   1: {
     seo: {
       title: 'Steve McQueen pop art | Wanted for Racing Life',

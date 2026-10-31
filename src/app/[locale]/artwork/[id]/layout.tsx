@@ -6,6 +6,7 @@ import { artworkSlugs } from '@/data/artworkSlugs'
 import JsonLd from '@/components/JsonLd'
 import { isLocale } from '@/i18n/locales'
 import { pageMetadata } from '@/i18n/seo'
+import { absoluteUrl } from '@/lib/site'
 import { artworkStructuredData } from '@/lib/structuredData'
 
 type ArtworkLayoutProps = {
@@ -43,7 +44,10 @@ export async function generateMetadata({ params }: ArtworkLayoutProps): Promise<
     id: artwork.id,
     title: artwork.seoTitle ?? `${artwork.title} | Fabian PhiL`,
     description: artwork.metaDescription ?? `${artwork.title} (${artwork.year}) by Fabian PhiL. ${artwork.medium}, ${artwork.size}.`,
-    image: { url: artwork.image, alt: artwork.imageAlt ?? `${artwork.title}, layered plexiglass artwork by Fabian PhiL` },
+    image: {
+      url: artwork.shareImage ? absoluteUrl(artwork.shareImage) : artwork.image,
+      alt: artwork.imageAlt ?? `${artwork.title}, layered plexiglass artwork by Fabian PhiL`,
+    },
   })
 }
 
