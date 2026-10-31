@@ -26,20 +26,39 @@ export class EnquiryStoreError extends Error {
 }
 
 /**
- * Shared limits and enquiry idempotency use Upstash Redis REST when both
- * UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are set in the environment
- * (on Vercel, in the project env). No other database is used.
+ * Shared limits and enquiry idempotency use Upstash Redis REST. No other database is used.
  *
- * Until those two variables are set, shared limiting is inactive. The maps in
- * this file are only a local-dev fallback: they live in the current process,
- * reset on a cold start, and do not limit or dedupe across serverless instances.
- * That fallback is not cross-instance safety.
+ * Vercel provides the write-capable REST credentials as KV_REST_API_URL and
+ * KV_REST_API_TOKEN. UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are
+ * still accepted when that pair is absent. When both pairs are set, the KV pair is used.
+ *
+ * Preview and Production require one of those pairs. They do not count or dedupe
+ * in memory. Local development leaves VERCEL_ENV unset and keeps the in-memory
+ * maps. Those maps live in the current process, reset on a cold start, and do
+ * not limit or dedupe across serverless instances.
  *
  * The shared store keeps a hash of the IP and two delivery flags under a hash
  * of the enquiry. It does not store the enquiry text, and nothing here is logged.
  */
+export function enquiryRestCredentials(): { url: string; token: string } | null {
+  const kvUrl = process.env.KV_REST_API_URL
+  const kvToken = process.env.KV_REST_API_TOKEN
+  if (kvUrl && kvToken) return { url: kvUrl.replace(/\/$/, ''), token: kvToken }
+  const upstashUrl = process.env.UPSTASH_REDIS_REST_URL
+  const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN
+  if (upstashUrl && upstashToken) return { url: upstashUrl.replace(/\/$/, ''), token: upstashToken }
+  return null
+}
+
 export function sharedEnquiryStoreConfigured(): boolean {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+  return enquiryRestCredentials() !== null
+}
+
+function requireStoreChoice(): 'shared' | 'memory' {
+  if (enquiryRestCredentials()) return 'shared'
+  const env = process.env.VERCEL_ENV
+  if (env === 'production' || env === 'preview') throw new EnquiryStoreError()
+  return 'memory'
 }
 
 export function resetEnquiryGuards(): void {
@@ -68,21 +87,21 @@ export function enquiryIdempotencyKey(parts: {
   return createHash('sha256').update(material).digest('hex')
 }
 
-// Counts requests for this IP. Without Upstash, the address is kept only in memory and is not logged.
+// Counts requests for this IP. Locally, without Redis REST, the address is kept only in memory and is not logged.
 export async function allowEnquiry(ip: string, now: number): Promise<boolean> {
-  if (sharedEnquiryStoreConfigured()) return allowShared('all', ip, MAX_PER_WINDOW, WINDOW_MS)
+  if (requireStoreChoice() === 'shared') return allowShared('all', ip, MAX_PER_WINDOW, WINDOW_MS)
   return allowInMemory(hits, ip, now, WINDOW_MS, MAX_PER_WINDOW)
 }
 
 // Counts collector submissions, which email a visitor-supplied address as well as the studio.
 // A rejected call does not send either message.
 export async function allowCollectorAcknowledgement(ip: string, now: number): Promise<boolean> {
-  if (sharedEnquiryStoreConfigured()) return allowShared('collector', ip, MAX_COLLECTOR_PER_WINDOW, COLLECTOR_WINDOW_MS)
+  if (requireStoreChoice() === 'shared') return allowShared('collector', ip, MAX_COLLECTOR_PER_WINDOW, COLLECTOR_WINDOW_MS)
   return allowInMemory(collectorHits, ip, now, COLLECTOR_WINDOW_MS, MAX_COLLECTOR_PER_WINDOW)
 }
 
 export async function readEnquiryDelivery(key: string, now: number): Promise<EnquiryDelivery | null> {
-  if (!sharedEnquiryStoreConfigured()) {
+  if (requireStoreChoice() === 'memory') {
     const saved = deliveries.get(key)
     if (!saved) return null
     if (now - saved.at > IDEMPOTENCY_TTL_SEC * 1000) {
@@ -105,7 +124,7 @@ export async function readEnquiryDelivery(key: string, now: number): Promise<Enq
 }
 
 export async function writeEnquiryDelivery(key: string, record: EnquiryDelivery, now: number): Promise<void> {
-  if (!sharedEnquiryStoreConfigured()) {
+  if (requireStoreChoice() === 'memory') {
     deliveries.set(key, { at: now, record })
     return
   }
@@ -121,7 +140,7 @@ export async function writeEnquiryDelivery(key: string, record: EnquiryDelivery,
 
 // One enquiry at a time for this key. A waiter runs only after the holder finishes, then reads the stored flags.
 export async function withEnquiryLock<T>(key: string, task: () => Promise<T>): Promise<T> {
-  if (!sharedEnquiryStoreConfigured()) return withMemoryLock(key, task)
+  if (requireStoreChoice() === 'memory') return withMemoryLock(key, task)
   return withSharedLock(key, task, 0)
 }
 
@@ -191,10 +210,9 @@ async function withSharedLock<T>(key: string, task: () => Promise<T>, attempt: n
 type RedisCommand = (string | number)[]
 
 function restConfig(): { url: string; token: string } {
-  const url = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
-  if (!url || !token) throw new EnquiryStoreError()
-  return { url: url.replace(/\/$/, ''), token }
+  const config = enquiryRestCredentials()
+  if (!config) throw new EnquiryStoreError()
+  return config
 }
 
 async function upstash(command: RedisCommand): Promise<unknown> {

@@ -5,13 +5,39 @@ import { handleEnquiry, type EnquiryMail } from '@/lib/handleEnquiry'
 import { artworkCanonicalUrl, buildEnquiryMessage } from '@/lib/artworkEnquiry'
 import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
 import { collectorSubmitPlan, executeCollectorSubmit } from '@/lib/collectorSubmit'
-import { EnquiryStoreError, resetEnquiryGuards, allowEnquiry, sharedEnquiryStoreConfigured, writeEnquiryDelivery } from '@/lib/enquiryGuard'
+import {
+  EnquiryStoreError,
+  resetEnquiryGuards,
+  allowEnquiry,
+  enquiryRestCredentials,
+  sharedEnquiryStoreConfigured,
+  writeEnquiryDelivery,
+  readEnquiryDelivery,
+} from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { STUDIO_EMAIL } from '@/lib/artworkEnquiry'
 
 const failures: string[] = []
 function check(condition: boolean, message: string) {
   if (!condition) failures.push(message)
+}
+
+async function withEnv(updates: Record<string, string | undefined>, run: () => Promise<void>): Promise<void> {
+  const names = Object.keys(updates)
+  const previous = new Map(names.map((name) => [name, process.env[name]]))
+  for (const [name, value] of Object.entries(updates)) {
+    if (value === undefined) delete process.env[name]
+    else process.env[name] = value
+  }
+  try {
+    await run()
+  } finally {
+    for (const name of names) {
+      const prior = previous.get(name)
+      if (prior === undefined) delete process.env[name]
+      else process.env[name] = prior
+    }
+  }
 }
 
 const collector = {
@@ -137,7 +163,11 @@ const base = {
 
 async function main() {
   if (sharedEnquiryStoreConfigured()) {
-    console.error('Refusing to run stub checks against the shared store. Unset Upstash env to exercise the in-memory fallback.')
+    console.error('Refusing to run stub checks against the shared store. Unset Redis REST env to exercise the in-memory fallback.')
+    process.exit(1)
+  }
+  if (process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview') {
+    console.error('Refusing to run stub checks with VERCEL_ENV set to production or preview. Unset it to exercise the in-memory fallback.')
     process.exit(1)
   }
   resetEnquiryGuards()
@@ -607,6 +637,7 @@ async function main() {
 
   resetEnquiryGuards()
   check(!sharedEnquiryStoreConfigured(), 'In-memory fallback was not the store under test')
+  check(process.env.VERCEL_ENV !== 'production' && process.env.VERCEL_ENV !== 'preview', 'Collector cap ran with a hosted VERCEL_ENV')
   let floodSends = 0
   for (let i = 0; i < 3; i += 1) {
     const response = await post(
@@ -629,6 +660,97 @@ async function main() {
   const floodedBody = (await flooded.json()) as { error?: string }
   check(flooded.status === 429 && floodedBody.error === 'rate_limited', 'Collector flood was not rejected')
   check(floodSends === 6, 'Collector flood sent another studio or acknowledgement email')
+
+  const guardSource = readFileSync(path.join(process.cwd(), 'src/lib/enquiryGuard.ts'), 'utf8')
+  check(!guardSource.includes('KV_REST_API_READ_ONLY_TOKEN'), 'The write client names the read-only token')
+  check(!guardSource.includes('REDIS_URL'), 'The REST client references the redis protocol URL')
+  check(guardSource.includes("Authorization: `Bearer ${token}`"), 'REST calls no longer send a bearer token')
+  check(guardSource.includes("method: 'POST'"), 'REST calls no longer use POST')
+
+  const clearedRedis = {
+    KV_REST_API_URL: undefined,
+    KV_REST_API_TOKEN: undefined,
+    KV_REST_API_READ_ONLY_TOKEN: undefined,
+    UPSTASH_REDIS_REST_URL: undefined,
+    UPSTASH_REDIS_REST_TOKEN: undefined,
+  }
+  await withEnv(
+    {
+      ...clearedRedis,
+      KV_REST_API_URL: 'https://kv.example/',
+      KV_REST_API_TOKEN: 'write-token',
+      KV_REST_API_READ_ONLY_TOKEN: 'read-token',
+      UPSTASH_REDIS_REST_URL: 'https://upstash.example',
+      UPSTASH_REDIS_REST_TOKEN: 'upstash-token',
+    },
+    async () => {
+      const selected = enquiryRestCredentials()
+      check(selected?.url === 'https://kv.example', 'KV REST URL was not preferred')
+      check(selected?.token === 'write-token', 'KV write token was not preferred')
+      check(selected?.token !== 'read-token', 'Read-only token was selected for the write client')
+    }
+  )
+  await withEnv(
+    {
+      ...clearedRedis,
+      KV_REST_API_URL: 'https://kv.example',
+      KV_REST_API_READ_ONLY_TOKEN: 'read-token',
+      UPSTASH_REDIS_REST_URL: 'https://upstash.example',
+      UPSTASH_REDIS_REST_TOKEN: 'upstash-token',
+    },
+    async () => {
+      const selected = enquiryRestCredentials()
+      check(selected?.url === 'https://upstash.example', 'UPSTASH REST URL was not used when the KV write token is absent')
+      check(selected?.token === 'upstash-token', 'UPSTASH REST token was not used when the KV write token is absent')
+      check(selected?.token !== 'read-token', 'Read-only token replaced the UPSTASH write token')
+    }
+  )
+  await withEnv(
+    {
+      ...clearedRedis,
+      KV_REST_API_URL: 'https://kv.example',
+      KV_REST_API_READ_ONLY_TOKEN: 'read-token',
+    },
+    async () => {
+      check(enquiryRestCredentials() === null, 'Read-only token was treated as a write credential')
+      check(!sharedEnquiryStoreConfigured(), 'Read-only token marked the shared store as configured')
+    }
+  )
+  check(enquiryRestCredentials() === null && !sharedEnquiryStoreConfigured(), 'Credential selection left Redis env in place')
+
+  const hostedNow = now().getTime()
+  for (const hostedEnv of ['production', 'preview'] as const) {
+    const hostedIp = hostedEnv === 'production' ? '203.0.113.84' : '203.0.113.85'
+    const hostedKey = `hosted-${hostedEnv}`
+    await withEnv({ ...clearedRedis, VERCEL_ENV: hostedEnv }, async () => {
+      check(!sharedEnquiryStoreConfigured(), `${hostedEnv} without Redis looked configured`)
+      let hostedSends = 0
+      const hosted = await post(
+        { ...base, locale: 'en', purpose: 'artwork', location: 'France', artworkId: lastSamurai.id, message: `Hosted ${hostedEnv}` },
+        hostedIp,
+        async () => {
+          hostedSends += 1
+        }
+      )
+      const hostedBody = (await hosted.json()) as { error?: string }
+      check(
+        hosted.status === 503 && hostedBody.error === 'unavailable' && hostedSends === 0,
+        `${hostedEnv} without Redis sent or accepted an enquiry`
+      )
+      let writeThrew = false
+      try {
+        await writeEnquiryDelivery(hostedKey, { studio: true, ack: false }, hostedNow)
+      } catch (error) {
+        writeThrew = error instanceof EnquiryStoreError
+      }
+      check(writeThrew, `${hostedEnv} without Redis stored a delivery in memory`)
+    })
+    check((await readEnquiryDelivery(hostedKey, hostedNow)) === null, `${hostedEnv} without Redis left a memory delivery`)
+    for (let i = 0; i < 8; i += 1) {
+      check(await allowEnquiry(hostedIp, hostedNow), `${hostedEnv} refusal was counted in memory`)
+    }
+  }
+  check(process.env.VERCEL_ENV !== 'production' && process.env.VERCEL_ENV !== 'preview', 'Hosted env was not restored')
 
   resetEnquiryGuards()
   let honeySends = 0
