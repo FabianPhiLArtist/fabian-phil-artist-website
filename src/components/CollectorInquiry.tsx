@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useId, useState } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { useLocale } from '@/i18n/useLocale'
@@ -12,12 +12,14 @@ import {
   isPlausibleEmail,
   STUDIO_EMAIL,
   STUDIO_MAILTO,
-  type EnquiryMessageLines,
 } from '@/lib/artworkEnquiry'
 import { collectorLocationLabel, collectorLocationOptions } from '@/lib/collectorLocations'
-import { STUDIO_WHATSAPP_DISPLAY, STUDIO_WHATSAPP_INTERNATIONAL, whatsappHref } from '@/lib/whatsapp'
+import { collectorFingerprint, collectorSubmitPlan, executeCollectorSubmit } from '@/lib/collectorSubmit'
+import { enquiryMessageLines } from '@/lib/enquiryWording'
+import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
+import { submitEnquiry } from '@/lib/submitEnquiry'
 import { fill } from '@/lib/template'
-import { fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
+import { STUDIO_WHATSAPP_DISPLAY, STUDIO_WHATSAPP_INTERNATIONAL, whatsappHref } from '@/lib/whatsapp'
 
 export type CollectorInquiryCopy = {
   eyebrow: string
@@ -50,9 +52,14 @@ export type CollectorInquiryCopy = {
   linePricing?: string
   lineSubject?: string
   submit: string
+  sending: string
+  openWhatsApp: string
   emailOption: string
   sendNote: string
   openedNote: string
+  partialNote: string
+  unrecordedNote: string
+  desktopNote: string
   privacy: string
   lineArtwork: string
   lineGeneral: string
@@ -66,6 +73,7 @@ export type CollectorInquiryCopy = {
   // Shared with the contact form, which still sends through the enquiry route.
   whatsappError: string
   error?: string
+  tooFast?: string
   fieldError?: string
 }
 
@@ -74,7 +82,7 @@ const englishCopy: CollectorInquiryCopy = {
   close: 'Close',
   headingWithTitle: 'Interested in "{title}"?',
   heading: 'Interested in an artwork?',
-  intro: 'Continue this enquiry in a personal WhatsApp conversation with Fabian.',
+  intro: 'Send this enquiry to the studio by email, then continue on WhatsApp if you wish.',
   studioNumber: 'WhatsApp number',
   copyNumber: 'Copy number',
   numberCopied: 'Copied',
@@ -94,23 +102,33 @@ const englishCopy: CollectorInquiryCopy = {
   locationError: 'Please select your location.',
   message: 'Message',
   messagePlaceholder: 'Anything you would like Fabian to know',
-  submit: 'Open WhatsApp',
+  submit: 'Send Enquiry & Open WhatsApp',
+  sending: 'Sending…',
+  openWhatsApp: 'Open WhatsApp',
   emailOption: 'Email instead',
-  sendNote: 'WhatsApp will open with your message. It is sent only after you press Send.',
-  openedNote: 'WhatsApp should now be open. Your message is sent only after you press Send there.',
+  sendNote:
+    'Pressing the button emails this enquiry to the studio, then tries to open WhatsApp. If WhatsApp does not open, use the Open WhatsApp button. The WhatsApp message is sent only after you press Send there.',
+  openedNote:
+    'This website has sent your enquiry to the studio. If WhatsApp did not open, use the Open WhatsApp button below. The message there is sent only after you press Send.',
+  partialNote:
+    'The studio received your enquiry by email. The acknowledgement to your email address could not be sent. You can try again. If WhatsApp did not open, use the button below.',
+  unrecordedNote:
+    'The studio was notified by email. Sending this again may email the studio a second time. If WhatsApp did not open, use the button below.',
+  desktopNote: 'On desktop, WhatsApp Web may ask you to log in. You can also copy the number or use email.',
   privacy:
-    'Your name, location, WhatsApp number, email and anything you write here are included in the message you send. WhatsApp processes that information when you press Send. This website does not store it.',
-  lineArtwork: 'Hello Fabian, I would like to enquire about "{title}" ({url}).',
-  lineGeneral: 'Hello Fabian, I would like to enquire about an artwork.',
-  lineName: 'My name is {name}.',
-  linePhone: 'WhatsApp: {phone}',
-  lineEmail: 'Email: {email}',
-  lineLocation: 'Location: {location}',
+    'When you press the button, this website emails your enquiry to the studio and sends an acknowledgement to the email address you entered. The enquiry is not stored in a database. WhatsApp receives the message only if you press Send in WhatsApp. The country you select is your location and stays separate from the studio address in Dubai.',
+  lineArtwork: enquiryMessageLines.en.artwork,
+  lineGeneral: enquiryMessageLines.en.general,
+  lineName: enquiryMessageLines.en.name,
+  linePhone: enquiryMessageLines.en.phone,
+  lineEmail: enquiryMessageLines.en.email,
+  lineLocation: enquiryMessageLines.en.location,
   emailSubjectArtwork: 'Artwork enquiry: {title}',
   emailSubjectGeneral: 'Artwork enquiry',
   whatsappError: 'Message Fabian on WhatsApp',
-  error: 'Your message could not be sent. Please try again or contact us on WhatsApp.',
-  fieldError: 'Please check this field. Your message could not be sent. Please try again or contact us on WhatsApp.',
+  error: 'Your enquiry could not be sent from this website. Your details are still here. You can try again, copy the number, or use email.',
+  tooFast: 'Please take a moment to check your details, then press the button again. Nothing was sent.',
+  fieldError: 'Please check this field. Your enquiry could not be sent from this website. Your details are still here.',
 }
 
 export const englishPricingInquiryCopy: CollectorInquiryCopy = {
@@ -118,11 +136,11 @@ export const englishPricingInquiryCopy: CollectorInquiryCopy = {
   eyebrow: 'Pricing enquiry',
   heading: 'Enquire about pricing',
   headingWithTitle: 'Enquire about pricing',
-  intro: 'Name an artwork, or ask a general question. Fabian replies personally on WhatsApp.',
+  intro: 'Name an artwork, or ask a general question. Your enquiry is emailed to the studio from this website, then WhatsApp opens.',
   subject: 'Artwork or question',
   subjectPlaceholder: 'An artwork title, or your question',
-  linePricing: 'Hello Fabian, I would like to enquire about pricing.',
-  lineSubject: 'Artwork or question: {subject}',
+  linePricing: enquiryMessageLines.en.pricing,
+  lineSubject: enquiryMessageLines.en.subject,
   emailSubjectPricing: 'Pricing enquiry',
 }
 
@@ -137,6 +155,8 @@ interface CollectorInquiryProps {
   purpose?: 'artwork' | 'pricing'
 }
 
+// Best-effort only. Browsers can block this click because it runs after the email request.
+// The visible Open WhatsApp link stays on the page and is a real user gesture.
 function openWhatsApp(href: string) {
   const link = document.createElement('a')
   link.href = href
@@ -169,14 +189,23 @@ const CollectorInquiry = ({
     website: '',
   })
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
-  const [opened, setOpened] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sent' | 'partial' | 'unrecorded' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [sending, setSending] = useState(false)
   const [numberCopied, setNumberCopied] = useState(false)
+  const [succeededFingerprint, setSucceededFingerprint] = useState<string | null>(null)
+  const sendingRef = useRef(false)
+  const startedAt = useRef(0)
 
   const heading = !isPricing && artworkTitle ? fill(copy.headingWithTitle, { title: artworkTitle }) : copy.heading
   const headingId = fieldId('heading')
   const nameFieldId = fieldId('name')
   const artworkUrl =
     !isPricing && artworkTitle && typeof artworkId === 'number' ? artworkCanonicalUrl(locale, artworkId) : undefined
+
+  useEffect(() => {
+    startedAt.current = Date.now()
+  }, [])
 
   useEffect(() => {
     if (isPricing) return
@@ -232,28 +261,17 @@ const CollectorInquiry = ({
 
   const selectedLocation = collectorLocationLabel(locale, formData.location)
 
-  const composeMessage = () => {
-    const lines: EnquiryMessageLines = {
-      artwork: copy.lineArtwork,
-      general: copy.lineGeneral,
-      ...(isPricing && copy.linePricing ? { pricing: copy.linePricing } : {}),
-      ...(isPricing && copy.lineSubject ? { subject: copy.lineSubject } : {}),
-      name: copy.lineName,
-      phone: copy.linePhone,
-      email: copy.lineEmail,
-      location: copy.lineLocation,
-    }
-    return buildEnquiryMessage({
-      lines,
+  const composeMessage = () =>
+    buildEnquiryMessage({
+      lines: enquiryMessageLines[locale],
       ...(artworkTitle && artworkUrl ? { artworkTitle, artworkUrl } : {}),
       ...(isPricing ? { subject: formData.subject } : {}),
       name: formData.name,
       phone: formData.phone,
       email: formData.email,
       ...(selectedLocation ? { location: selectedLocation } : {}),
-      ...(isPricing ? {} : { message: formData.message }),
+      ...(!isPricing ? { message: formData.message } : {}),
     })
-  }
 
   const emailSubject =
     isPricing && copy.emailSubjectPricing
@@ -263,25 +281,83 @@ const CollectorInquiry = ({
         : copy.emailSubjectGeneral
   const emailHref = enquiryMailto(STUDIO_EMAIL, emailSubject, composeMessage())
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (formData.website.trim()) return
-
     const nextErrors: Partial<Record<FieldName, string>> = {}
     if (!formData.name.trim()) nextErrors.name = copy.nameError
     if (!isPlausibleEmail(formData.email)) nextErrors.email = copy.emailError
     if (!isInternationalPhone(formData.phone)) nextErrors.phone = copy.phoneError
     if (!selectedLocation) nextErrors.location = copy.locationError
-    setErrors(nextErrors)
-
-    const firstInvalid = (['name', 'email', 'phone', 'location'] as const).find((field) => nextErrors[field])
-    if (firstInvalid) {
-      document.getElementById(fieldId(firstInvalid))?.focus()
+    const fingerprint = collectorFingerprint({
+      locale,
+      purpose,
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      location: selectedLocation,
+      message: isPricing ? '' : formData.message.trim(),
+      subject: isPricing ? formData.subject.trim() : '',
+      artworkId: !isPricing && typeof artworkId === 'number' ? String(artworkId) : '',
+    })
+    const plan = collectorSubmitPlan({
+      inFlight: sendingRef.current,
+      honeypot: formData.website,
+      valid: Object.keys(nextErrors).length === 0,
+      succeededFingerprint,
+      fingerprint,
+    })
+    if (plan === 'ignore') return
+    if (plan === 'invalid') {
+      setErrors(nextErrors)
+      setErrorMessage('')
+      setStatus('error')
+      const firstInvalid = (['name', 'email', 'phone', 'location'] as const).find((field) => nextErrors[field])
+      if (firstInvalid) document.getElementById(fieldId(firstInvalid))?.focus()
       return
     }
 
-    openWhatsApp(whatsappHref(composeMessage()))
-    setOpened(true)
+    const message = composeMessage()
+    sendingRef.current = true
+    setSending(true)
+    setErrorMessage('')
+    const outcome = await executeCollectorSubmit({
+      plan,
+      post: () =>
+        submitEnquiry(
+          {
+            type: 'collector',
+            locale,
+            purpose: isPricing ? 'pricing' : 'artwork',
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            location: selectedLocation,
+            message: isPricing ? '' : formData.message,
+            subject: isPricing ? formData.subject : '',
+            ...(!isPricing && typeof artworkId === 'number' ? { artworkId } : {}),
+          },
+          startedAt.current
+        ),
+      openWhatsApp: () => openWhatsApp(whatsappHref(message)),
+    })
+    sendingRef.current = false
+    setSending(false)
+    if (outcome.status === 'idle') return
+    if (outcome.status === 'error') {
+      setStatus('error')
+      setErrorMessage(outcome.error === 'too_fast' ? copy.tooFast ?? copy.error ?? '' : outcome.field ? copy.fieldError ?? copy.error ?? '' : copy.error ?? '')
+      if (outcome.field === 'name' || outcome.field === 'email' || outcome.field === 'phone' || outcome.field === 'location') {
+        document.getElementById(fieldId(outcome.field))?.focus()
+      }
+      return
+    }
+    if (outcome.status === 'partial' || outcome.status === 'unrecorded') {
+      setErrorMessage('')
+      setStatus(outcome.status)
+      return
+    }
+    setSucceededFingerprint(fingerprint)
+    setStatus('sent')
   }
 
   const describedBy = (field: FieldName, hintId?: string) => {
@@ -508,16 +584,38 @@ const CollectorInquiry = ({
 
         <div className="flex flex-col gap-4 pt-2">
           <p id={fieldId('send-note')} role="status" className="text-sm text-gray-600 font-light leading-relaxed">
-            {opened ? copy.openedNote : copy.sendNote}
+            {status === 'sent'
+              ? copy.openedNote
+              : status === 'partial'
+                ? copy.partialNote
+                : status === 'unrecorded'
+                  ? copy.unrecordedNote
+                  : copy.sendNote}
           </p>
+          {status === 'error' && errorMessage && (
+            <p role="alert" className={errorBoxClass}>
+              {errorMessage}
+            </p>
+          )}
+          {(status === 'sent' || status === 'partial' || status === 'unrecorded') && (
+            <a
+              href={whatsappHref(composeMessage())}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${primaryButtonClass} normal-case tracking-[0.08em] w-full sm:w-auto`}
+            >
+              {copy.openWhatsApp}
+            </a>
+          )}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <button type="submit" className={`${primaryButtonClass} w-full sm:w-auto`}>
-              {copy.submit}
+            <button type="submit" disabled={sending} aria-busy={sending || undefined} className={`${primaryButtonClass} normal-case tracking-[0.08em] w-full sm:w-auto`}>
+              {sending ? copy.sending : copy.submit}
             </button>
             <a href={emailHref} className={textLinkClass}>
               {copy.emailOption}
             </a>
           </div>
+          <p className="text-xs text-gray-500 font-light leading-relaxed">{copy.desktopNote}</p>
           <p className="text-xs text-gray-500 font-light leading-relaxed">{copy.privacy}</p>
         </div>
       </form>

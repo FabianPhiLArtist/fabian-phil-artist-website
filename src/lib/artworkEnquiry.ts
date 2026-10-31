@@ -56,37 +56,34 @@ export function buildEnquiryMessage(input: {
   location?: string
   message?: string
 }): string {
-  const lines: string[] = []
+  const intro: string[] = []
   const subject = input.subject ? oneLine(input.subject) : ''
 
   if (input.artworkTitle && input.artworkUrl) {
-    lines.push(
+    intro.push(
       fill(input.lines.artwork, {
         title: oneLine(input.artworkTitle),
         url: input.artworkUrl,
       })
     )
   } else if (input.lines.pricing) {
-    lines.push(input.lines.pricing)
-    if (subject && input.lines.subject) {
-      lines.push(fill(input.lines.subject, { subject }))
-    }
+    intro.push(input.lines.pricing)
+    if (subject && input.lines.subject) intro.push(fill(input.lines.subject, { subject }))
   } else {
-    lines.push(input.lines.general)
+    intro.push(input.lines.general)
   }
 
-  lines.push(
+  const contact = [
     fill(input.lines.name, { name: oneLine(input.name) }),
     fill(input.lines.phone, { phone: oneLine(input.phone) }),
-    fill(input.lines.email, { email: oneLine(input.email) })
-  )
-
+    fill(input.lines.email, { email: oneLine(input.email) }),
+  ]
   const location = input.location ? oneLine(input.location) : ''
-  if (location) lines.push(fill(input.lines.location, { location }))
+  if (location) contact.push(fill(input.lines.location, { location }))
 
   const note = input.message?.replace(/\u0000/g, '').replace(/\r\n/g, '\n').trim()
-  if (note) lines.push(note)
-  return lines.join('\n')
+  const body = `${intro.join('\n')}\n\n${contact.join('\n')}`
+  return note ? `${body}\n${note}` : body
 }
 
 export function enquiryMailto(address: string, subject: string, body: string): string {

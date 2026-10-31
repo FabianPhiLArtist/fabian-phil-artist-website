@@ -69,7 +69,7 @@ export function pageMetadata({
   title?: string
   description?: string
   id?: string | number
-  image?: { url: string; alt: string; width?: number; height?: number }
+  image?: { url: string; alt: string; width?: number; height?: number; type?: string }
   noIndex?: boolean
 }): Metadata {
   const french = locale === 'fr' ? frenchSeo(route, id) : undefined
@@ -81,7 +81,12 @@ export function pageMetadata({
   const path = localizedPath(locale, route, { id })
   const canonical = new URL(path, SITE_URL).toString()
   const baseImage = image ?? DEFAULT_SHARE_IMAGE
-  const shareImage = french ? { ...baseImage, alt: french.ogImageAlt } : baseImage
+  const shareImage: { url: string; alt: string; width?: number; height?: number; type?: string } = {
+    url: baseImage.url,
+    alt: french ? french.ogImageAlt : baseImage.alt,
+    ...(baseImage.width && baseImage.height ? { width: baseImage.width, height: baseImage.height } : {}),
+    ...('type' in baseImage && baseImage.type ? { type: baseImage.type } : {}),
+  }
   const pageTitle = french ? french.title : title
   const pageDescription = french ? french.description : description
   // Do not advertise the other language when its URL is noindex (professionals).
@@ -107,6 +112,7 @@ export function pageMetadata({
         {
           url: encodeURI(shareImage.url),
           alt: shareImage.alt,
+          ...(shareImage.type ? { type: shareImage.type } : {}),
           ...(shareImage.width && shareImage.height ? { width: shareImage.width, height: shareImage.height } : {}),
         },
       ],
