@@ -47,7 +47,7 @@ const collector = {
 }
 const now = () => new Date('2026-10-29T07:20:00Z')
 const from = 'enquiries@example.com'
-const studioInbox = 'studio-inbox@example.com'
+const studioInbox = 'fabianphilartist@gmail.com'
 
 function message(locale: 'en' | 'fr', input: { title?: string; url?: string; location: string; subject?: string; note?: string }) {
   return buildEnquiryMessage({
@@ -185,11 +185,14 @@ async function main() {
   const studio = sent[0]
   const ack = sent[1]
   if (studio && ack) {
+    check(STUDIO_EMAIL === studioInbox, 'Studio display address is not the configured studio inbox')
     check(studio.to.join(',') === studioInbox, 'Studio mail went to the wrong inbox')
     check(studio.replyTo === collector.email, 'Studio reply-to is not the collector')
     check(studio.from === from, 'Studio mail was not sent from the site sender')
     check(ack.from === from && ack.from !== collector.email, 'Acknowledgement was sent from the collector')
     check(ack.to.join(',') === collector.email, 'Acknowledgement was not addressed to the collector')
+    check(studio.to.join(',') !== ack.to.join(','), 'Studio notification and acknowledgement use the same recipient')
+    check(!studio.to.includes('philandrianos@outlook.com') && !ack.to.includes('philandrianos@outlook.com'), 'Outlook received an enquiry email')
     check(ack.replyTo === STUDIO_EMAIL, 'Acknowledgement reply-to is not the studio')
     check(studio.text.includes('Website-submitted enquiry'), 'Studio mail is not labelled as a website enquiry')
     check(studio.text.includes('This website did not send a WhatsApp message.'), 'Studio mail implies WhatsApp was sent')
@@ -210,6 +213,40 @@ async function main() {
     console.log('\n--- STUDIO EN ---\n' + studio.text)
     console.log('\n--- ACK EN ---\n' + ack.text)
   }
+
+  const envSent: EnquiryMail[] = []
+  await withEnv({ ENQUIRY_TO_EMAIL: studioInbox, ENQUIRY_FROM_EMAIL: from }, async () => {
+    const response = await handleEnquiry(
+      new Request('http://localhost/api/enquiry', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-forwarded-for': '203.0.113.91' },
+        body: JSON.stringify({
+          elapsedMs: 4000,
+          website: '',
+          ...base,
+          locale: 'en',
+          purpose: 'pricing',
+          location: 'France',
+          subject: 'Env recipient check',
+          message: '',
+        }),
+      }),
+      {
+        now,
+        send: async (mail) => {
+          envSent.push(mail)
+        },
+      }
+    )
+    const body = (await response.json()) as { ok?: boolean; delivery?: string }
+    check(response.status === 200 && body.ok === true && body.delivery === 'complete', 'Env-configured enquiry was rejected')
+  })
+  check(envSent.length === 2, `Env-configured enquiry sent ${envSent.length} emails`)
+  check(envSent[0]?.to.join(',') === studioInbox, 'ENQUIRY_TO_EMAIL was not used for the studio notification')
+  check(envSent[1]?.to.join(',') === collector.email, 'Acknowledgement ignored the typed collector address')
+  check(envSent[0]?.to.join(',') !== envSent[1]?.to.join(','), 'Env-configured recipients were not kept apart')
+  check(envSent[0]?.from === from && envSent[1]?.from === from, 'ENQUIRY_FROM_EMAIL was not used as the sender')
+  check(envSent[0]?.replyTo === collector.email, 'Studio reply-to ignored the collector when using the env recipient')
 
   const again = await post(
     { ...base, locale: 'en', purpose: 'artwork', location: 'France', artworkId: lastSamurai.id, message: '' },
@@ -566,6 +603,9 @@ async function main() {
       priceSent.push(mail)
     }
   )
+  check(priceSent[0]?.to.join(',') === studioInbox, 'Pricing studio mail missed the studio inbox')
+  check(priceSent[1]?.to.join(',') === collector.email, 'Pricing acknowledgement missed the collector')
+  check(priceSent[0]?.to.join(',') !== priceSent[1]?.to.join(','), 'Pricing studio and acknowledgement recipients match')
   check(priceSent[0]?.text.includes('Enquiry: Pricing'), 'Pricing enquiry was labelled as an artwork')
   check(!priceSent[0]?.text.includes('Artwork:') && !priceSent[0]?.text.includes('http'), 'Blank pricing invented a title or URL')
   check(!priceSent[0]?.text.includes('ignore me'), 'Pricing form kept a hidden note')
@@ -632,8 +672,33 @@ async function main() {
     }
   )
   check(contact.status === 200 && contactSent.length === 1, 'Contact form did not stay a single studio email')
+  check(contactSent[0]?.to.join(',') === studioInbox, 'Contact form was not addressed to the studio')
+  check(contactSent[0]?.to.join(',') !== collector.email, 'Contact form was addressed to the collector')
+  check(contactSent[0]?.replyTo === collector.email, 'Contact reply-to is not the collector')
   check(contactSent[0]?.text.includes('General contact enquiry'), 'Contact email template changed')
   check(contactSent[0]?.text.includes('Location: France'), 'Contact location changed')
+
+  resetEnquiryGuards()
+  const artworkSent: EnquiryMail[] = []
+  const artworkForm = await post(
+    {
+      type: 'artwork',
+      name: collector.name,
+      email: collector.email,
+      phone: collector.phone,
+      location: 'France',
+      artworkId: lastSamurai.id,
+      message: 'Availability please.',
+    },
+    '203.0.113.92',
+    async (mail) => {
+      artworkSent.push(mail)
+    }
+  )
+  check(artworkForm.status === 200 && artworkSent.length === 1, 'Artwork form did not stay a single studio email')
+  check(artworkSent[0]?.to.join(',') === studioInbox, 'Artwork form was not addressed to the studio')
+  check(artworkSent[0]?.to.join(',') !== collector.email, 'Artwork form was addressed to the collector')
+  check(artworkSent[0]?.replyTo === collector.email, 'Artwork form reply-to is not the collector')
 
   resetEnquiryGuards()
   check(!sharedEnquiryStoreConfigured(), 'In-memory fallback was not the store under test')
