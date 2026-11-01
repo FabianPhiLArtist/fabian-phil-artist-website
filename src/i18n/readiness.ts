@@ -1,17 +1,15 @@
 import type { AppRoute } from './pathnames'
-import { artworkSlugs } from '@/data/artworkSlugs'
+import { artworkIdForSlug } from '@/data/artworkSlugs'
 import { publishedFrenchArtworks, publishedFrenchCollections, publishedFrenchPages } from './fr/published'
 
 // French activation is page by page: a French URL is live only when it is listed in ./fr/published.
 // Everything else returns 404 + noindex in middleware and is excluded from hreflang, the sitemap and
 // internal French links. This module is client-safe; French copy is read through ./fr/content.
 
-const artworkIdBySlug = new Map(Object.entries(artworkSlugs).map(([id, slug]) => [slug, Number(id)]))
-
-// Accepts an artwork id (12 or "12") or its slug.
+// Accepts an artwork id (12 or "12"), the English canonical slug, or a locale public slug.
 export function artworkIdFrom(id: string | number): number | undefined {
   const value = String(id)
-  return /^[1-9]\d*$/.test(value) ? Number(value) : artworkIdBySlug.get(value)
+  return /^[1-9]\d*$/.test(value) ? Number(value) : artworkIdForSlug(value)
 }
 
 export function isFrenchPageLive(route: AppRoute, id?: string | number): boolean {

@@ -1,6 +1,7 @@
-// Canonical artwork URL slugs from the Phase 2 SEO spreadsheet, matched to artworks by title.
+// Canonical English artwork URL slugs, matched to artworks by title.
 // Keys are artwork IDs from artworks.ts. The old numeric URLs (/en/artwork/{id}) 301-redirect to these
-// slugs in middleware, so a slug must never change once published without adding a redirect for it.
+// slugs in middleware. A published slug must not change without a same-locale entry in retiredArtworkSlugs.
+// French public slugs that differ live in localizedArtworkSlugs; every other French page uses the English slug.
 export const artworkSlugs: Record<number, string> = {
   1: 'steve-mcqueen-mugshot-pop-art', // Wanted for Racing Life
   2: 'brad-pitt-fight-club-mugshot-pop-art', // Wanted for Fight Club
@@ -36,7 +37,42 @@ export const artworkSlugs: Record<number, string> = {
   32: 'ayrton-senna-f1-toon-pop-art', // Wanted Ayrton vs Toons Racing
   33: 'claudia-schiffer-fashion-pop-art', // Runaway Mood
   34: 'lucy-liu-angel-pop-art', // Wanted Fashion Police Angel
-  35: 'wanted-panda-hong-kong-pop', // Wanted Panda Hong Kong Pop
+  35: 'wanted-panda-hong-kong-city-pop-art-fabian-phil', // Wanted Panda Hong Kong Pop
+}
+
+// French (or other) public slugs that differ from the English canonical slug. Keyed by artwork id.
+export const localizedArtworkSlugs: { fr: Partial<Record<number, string>> } = {
+  fr: {
+    35: 'wanted-panda-hong-kong-pop-art-fabian-phil',
+  },
+}
+
+// Former public slugs that must 301 once to the current public slug of the same locale.
+export const retiredArtworkSlugs: Record<'en' | 'fr', Record<string, number>> = {
+  en: {
+    'wanted-panda-hong-kong-pop': 35,
+  },
+  fr: {
+    'wanted-panda-hong-kong-pop': 35,
+  },
+}
+
+export function publicArtworkSlug(locale: 'en' | 'fr', artworkId: number): string | undefined {
+  if (locale === 'fr') return localizedArtworkSlugs.fr[artworkId] ?? artworkSlugs[artworkId]
+  return artworkSlugs[artworkId]
+}
+
+const artworkIdBySlug = new Map<string, number>()
+for (const [id, slug] of Object.entries(artworkSlugs)) {
+  artworkIdBySlug.set(slug, Number(id))
+}
+for (const [id, slug] of Object.entries(localizedArtworkSlugs.fr)) {
+  if (slug) artworkIdBySlug.set(slug, Number(id))
+}
+
+// English canonical slug or a locale public slug. Retired slugs are excluded so they only redirect.
+export function artworkIdForSlug(slug: string): number | undefined {
+  return artworkIdBySlug.get(slug)
 }
 
 // Slug for a legacy numeric artwork ID ("12" or 12); undefined for anything else, including slugs.

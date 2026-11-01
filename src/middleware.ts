@@ -4,6 +4,7 @@ import {
   localizedPath,
   matchLegacyEnglishPath,
   parsePublicPathname,
+  retiredArtworkRedirect,
   retiredCollectionRedirect,
 } from '@/i18n/pathnames'
 import { ENABLE_LEGACY_ENGLISH_REDIRECTS, isFrenchPageLive } from '@/i18n/readiness'
@@ -26,6 +27,14 @@ export function middleware(request: NextRequest) {
   if (retiredCollection) {
     const url = request.nextUrl.clone()
     url.pathname = retiredCollection
+    url.search = search
+    return NextResponse.redirect(url, 301)
+  }
+
+  const retiredArtwork = retiredArtworkRedirect(pathname)
+  if (retiredArtwork) {
+    const url = request.nextUrl.clone()
+    url.pathname = retiredArtwork
     url.search = search
     return NextResponse.redirect(url, 301)
   }
