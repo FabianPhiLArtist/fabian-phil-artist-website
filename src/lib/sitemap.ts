@@ -1,6 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import { artworks, type Artwork } from '@/data/artworks'
+import eligiblePhotographs from '@/data/sitemap-photographs.json'
 import { collections } from '@/data/collections'
 import { SITE_URL, absoluteUrl } from '@/lib/site'
 import { fill } from '@/lib/template'
@@ -17,7 +16,8 @@ export type SitemapEntry = { url: string; images?: SitemapImage[]; alternates?: 
 
 // Same wording as the additional-view alt on the English artwork page.
 const englishAdditionalViewAlt = '{title} by Fabian PhiL, additional view {n}'
-const publicPhoto = /\.(jpe?g|png|webp|gif|avif)$/i
+// Paths only. IndexNow imports this module, so it must not open files in public/images.
+const eligiblePhotograph = new Set<string>(eligiblePhotographs)
 
 const englishStaticRoutes: AppRoute[] = [
   'home',
@@ -74,23 +74,9 @@ function frenchArtworkImage(artwork: Artwork): SitemapImage | undefined {
     : undefined
 }
 
-// Photographs already shown on the artwork page. Video, share JPEGs and anything outside public/ are omitted.
+// Photographs already shown on the artwork page. Video, share JPEGs and anything outside the build-time list are omitted.
 function isPublicPagePhotograph(src: string): boolean {
-  if (!src.startsWith('/images/') || src.startsWith('/images/share/')) return false
-  if (src.includes('\\') || src.split('/').includes('..') || !publicPhoto.test(src)) return false
-  const publicRoot = path.resolve(process.cwd(), 'public')
-  const resolved = path.resolve(publicRoot, src.replace(/^\/+/, ''))
-  const relative = path.relative(publicRoot, resolved)
-  if (!relative || relative.startsWith('..') || path.isAbsolute(relative) || !fs.existsSync(resolved)) return false
-  const handle = fs.openSync(resolved, 'r')
-  try {
-    const head = Buffer.alloc(24)
-    const read = fs.readSync(handle, head, 0, head.length, 0)
-    if (head.subarray(0, read).toString('utf8').startsWith('version https://git-lfs')) return false
-  } finally {
-    fs.closeSync(handle)
-  }
-  return fs.statSync(resolved).size > 32
+  return eligiblePhotograph.has(src)
 }
 
 function pagePhotographs(artwork: Artwork): string[] {
