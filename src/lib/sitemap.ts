@@ -1,15 +1,23 @@
+import fs from 'fs'
+import path from 'path'
 import { artworks, type Artwork } from '@/data/artworks'
 import { collections } from '@/data/collections'
 import { SITE_URL, absoluteUrl } from '@/lib/site'
+import { fill } from '@/lib/template'
 import { localizedPath, type AppRoute } from '@/i18n/pathnames'
 import { isFrenchPageLive } from '@/i18n/readiness'
 import { frenchArtwork } from '@/i18n/fr/content'
+import { frArtworkDetailCopy } from '@/i18n/fr/ui'
 import { languageAlternates } from '@/i18n/seo'
 import type { Locale } from '@/i18n/locales'
 
 export type SitemapImage = { loc: string; title: string; caption: string }
 export type SitemapAlternate = { hreflang: string; href: string }
-export type SitemapEntry = { url: string; image?: SitemapImage; alternates?: SitemapAlternate[] }
+export type SitemapEntry = { url: string; images?: SitemapImage[]; alternates?: SitemapAlternate[] }
+
+// Same wording as the additional-view alt on the English artwork page.
+const englishAdditionalViewAlt = '{title} by Fabian PhiL, additional view {n}'
+const publicPhoto = /\.(jpe?g|png|webp|gif|avif)$/i
 
 const englishStaticRoutes: AppRoute[] = [
   'home',
@@ -23,9 +31,9 @@ const englishStaticRoutes: AppRoute[] = [
 ]
 
 function sitemapEntry(locale: Locale, route: AppRoute, id?: string | number): SitemapEntry {
-  const path = localizedPath(locale, route, id !== undefined ? { id } : undefined)
+  const pathname = localizedPath(locale, route, id !== undefined ? { id } : undefined)
   return {
-    url: new URL(path, SITE_URL).toString(),
+    url: new URL(pathname, SITE_URL).toString(),
   }
 }
 
@@ -66,6 +74,69 @@ function frenchArtworkImage(artwork: Artwork): SitemapImage | undefined {
     : undefined
 }
 
+// Photographs already shown on the artwork page. Video, share JPEGs and anything outside public/ are omitted.
+function isPublicPagePhotograph(src: string): boolean {
+  if (!src.startsWith('/images/') || src.startsWith('/images/share/')) return false
+  if (src.includes('\\') || src.split('/').includes('..') || !publicPhoto.test(src)) return false
+  const publicRoot = path.resolve(process.cwd(), 'public')
+  const resolved = path.resolve(publicRoot, src.replace(/^\/+/, ''))
+  const relative = path.relative(publicRoot, resolved)
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative) || !fs.existsSync(resolved)) return false
+  const handle = fs.openSync(resolved, 'r')
+  try {
+    const head = Buffer.alloc(24)
+    const read = fs.readSync(handle, head, 0, head.length, 0)
+    if (head.subarray(0, read).toString('utf8').startsWith('version https://git-lfs')) return false
+  } finally {
+    fs.closeSync(handle)
+  }
+  return fs.statSync(resolved).size > 32
+}
+
+function pagePhotographs(artwork: Artwork): string[] {
+  const shown = artwork.images && artwork.images.length > 0 ? artwork.images : [artwork.image]
+  const seen = new Set<string>()
+  const photos: string[] = []
+  const add = (src: string | undefined) => {
+    if (!src || seen.has(src) || !isPublicPagePhotograph(src)) return
+    seen.add(src)
+    photos.push(src)
+  }
+  // Primary stays first so the existing catalogue image remains the first image entry.
+  if (shown.includes(artwork.image)) add(artwork.image)
+  for (const src of shown) add(src)
+  return photos
+}
+
+function uniqueImages(images: SitemapImage[]): SitemapImage[] {
+  const seen = new Set<string>()
+  return images.filter((image) => {
+    if (seen.has(image.loc)) return false
+    seen.add(image.loc)
+    return true
+  })
+}
+
+function additionalView(artwork: Artwork, src: string, template: string): SitemapImage {
+  const index = artwork.images?.indexOf(src) ?? -1
+  const text = fill(template, { title: artwork.title, n: index >= 0 ? index : 1 })
+  return { loc: absoluteUrl(src), title: text, caption: text }
+}
+
+function artworkSitemapImages(artwork: Artwork, locale: Locale): SitemapImage[] {
+  return uniqueImages(
+    pagePhotographs(artwork).flatMap((src) => {
+      if (src === artwork.image) {
+        const primary = locale === 'fr' ? frenchArtworkImage(artwork) : artworkImage(artwork)
+        return primary ? [primary] : []
+      }
+      if (locale === 'fr' && !frenchArtwork(artwork.id)) return []
+      const template = locale === 'fr' ? frArtworkDetailCopy.additionalViewAlt : englishAdditionalViewAlt
+      return [additionalView(artwork, src, template)]
+    })
+  )
+}
+
 // English professionals is noindex and stays out of the sitemap. Its French page is a live URL.
 // languageAlternates omits the English URL here so the sitemap does not hreflang to that noindex page.
 const frenchWithoutEnglishSitemap: AppRoute[] = ['professionals']
@@ -86,10 +157,10 @@ export function sitemapEntries(): SitemapEntry[] {
   const frenchOnlyEntries = frenchWithoutEnglishSitemap.flatMap((route) => frenchOnlyEntry(route))
   const collectionEntries = collections.flatMap((collection) => entriesFor('collection', collection.slug))
   const artworkEntries = artworks.flatMap((artwork) =>
-    entriesFor('artwork', artwork.id).map((entry, index) => ({
-      ...entry,
-      image: index === 0 ? artworkImage(artwork) : frenchArtworkImage(artwork),
-    }))
+    entriesFor('artwork', artwork.id).map((entry, index) => {
+      const images = artworkSitemapImages(artwork, index === 0 ? 'en' : 'fr')
+      return images.length > 0 ? { ...entry, images } : entry
+    })
   )
 
   return [...staticEntries, ...frenchOnlyEntries, ...collectionEntries, ...artworkEntries]

@@ -10,15 +10,17 @@ const escapeXml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;')
 
-function urlElement({ url, image, alternates }: SitemapEntry) {
-  const imageElement = image
-    ? `
+function urlElement({ url, images, alternates }: SitemapEntry) {
+  const imageElement = (images ?? [])
+    .map(
+      (image) => `
 <image:image>
 <image:loc>${escapeXml(image.loc)}</image:loc>
 <image:title>${escapeXml(image.title)}</image:title>
 <image:caption>${escapeXml(image.caption)}</image:caption>
 </image:image>`
-    : ''
+    )
+    .join('')
   const alternateElements = (alternates ?? [])
     .map(
       ({ hreflang, href }) => `
