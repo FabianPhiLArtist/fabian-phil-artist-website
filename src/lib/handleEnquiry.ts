@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { studioNotificationRecipient } from '@/lib/artworkEnquiry'
 import { composeCollectorEnquiry, type CollectorDelivery } from '@/lib/collectorEnquiry'
 import { composeEnquiry, EnquiryValidationError, renderEnquiryHtml, renderEnquiryText } from '@/lib/enquiryEmail'
 import {
@@ -117,7 +118,7 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
   }
 
   const from = options.from ?? process.env.ENQUIRY_FROM_EMAIL
-  const to = options.to ?? process.env.ENQUIRY_TO_EMAIL
+  const to = studioNotificationRecipient(options.to ?? process.env.ENQUIRY_TO_EMAIL)
   const send = options.send ?? sendWithResend
 
   let delivery: ReturnType<typeof composeCollectorEnquiry> | undefined

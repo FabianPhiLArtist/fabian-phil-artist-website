@@ -36,6 +36,12 @@ for (const source of sources) {
 
   const filename = path.basename(source).replace(/\.(png|jpe?g|webp)$/i, '.jpg')
   const sharePath = `/images/share/${filename}`
+  const reused = await existingShareJpeg(sharePath)
+  if (reused) {
+    manifest[source] = reused
+    console.log(`reuse ${sharePath} ${reused.width}x${reused.height}`)
+    continue
+  }
   const compressed = await toWhatsAppJpeg(abs)
   await writeFile(path.join(shareDir, filename), compressed.buf)
   manifest[source] = {
@@ -49,6 +55,32 @@ for (const source of sources) {
 
 await writeFile(path.join(shareDir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
 console.log(`share images ready: ${Object.keys(manifest).length}`)
+
+/**
+ * Keep a share JPEG that is already small enough. Rebuilding it would change the committed Panda file.
+ * @param {string} sharePath
+ */
+async function existingShareJpeg(sharePath) {
+  const dest = path.join(root, 'public', sharePath)
+  try {
+    const info = await stat(dest)
+    const meta = await sharp(dest, { failOn: 'none' }).metadata()
+    const width = meta.width ?? 0
+    const height = meta.height ?? 0
+    const usable =
+      meta.format === 'jpeg' &&
+      info.size > 1000 &&
+      info.size <= MAX_BYTES &&
+      width >= 200 &&
+      height >= 200 &&
+      width <= MAX_EDGE &&
+      height <= MAX_EDGE
+    if (!usable) return null
+    return { url: sharePath, width, height, type: 'image/jpeg' }
+  } catch {
+    return null
+  }
+}
 
 /**
  * @param {string} input

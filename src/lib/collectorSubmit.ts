@@ -23,6 +23,7 @@ export type CollectorSubmitResult = {
   status: 'idle' | 'error' | 'sent' | 'partial' | 'unrecorded'
   error?: string
   field?: string
+  whatsappOpened?: boolean
 }
 
 // Opens WhatsApp only after the website accepts the enquiry, including when the acknowledgement could not be sent.
@@ -31,18 +32,17 @@ export type CollectorSubmitResult = {
 export async function executeCollectorSubmit(args: {
   plan: CollectorSubmitPlan
   post: () => Promise<{ ok: boolean; error?: string; field?: string; delivery?: 'complete' | 'partial' | 'unrecorded' }>
-  openWhatsApp: () => void
+  openWhatsApp: () => boolean | void
 }): Promise<CollectorSubmitResult> {
   if (args.plan === 'ignore') return { status: 'idle' }
   if (args.plan === 'invalid') return { status: 'error' }
   if (args.plan === 'reopen') {
-    args.openWhatsApp()
-    return { status: 'sent' }
+    return { status: 'sent', whatsappOpened: args.openWhatsApp() !== false }
   }
   const result = await args.post()
-  if (!result.ok) return { status: 'error', error: result.error, field: result.field }
-  args.openWhatsApp()
-  if (result.delivery === 'partial') return { status: 'partial' }
-  if (result.delivery === 'unrecorded') return { status: 'unrecorded' }
-  return { status: 'sent' }
+  if (!result.ok) return { status: 'error', error: result.error, field: result.field, whatsappOpened: false }
+  const whatsappOpened = args.openWhatsApp() !== false
+  if (result.delivery === 'partial') return { status: 'partial', whatsappOpened }
+  if (result.delivery === 'unrecorded') return { status: 'unrecorded', whatsappOpened }
+  return { status: 'sent', whatsappOpened }
 }

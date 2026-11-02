@@ -65,6 +65,7 @@ const textActionClass = 'text-[11px] tracking-[0.16em] uppercase text-gray-900 h
 const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCardProps) => {
   const locale = useLocale()
   const [showInquiry, setShowInquiry] = useState(false)
+  const [inquiryNotice, setInquiryNotice] = useState<string | null>(null)
 
   const isList = viewMode === 'list'
   const imageAlt = text?.imageAlt ?? artwork.imageAlt
@@ -117,6 +118,7 @@ const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCar
               <button
                 onClick={(e) => {
                   e.preventDefault()
+                  setInquiryNotice(null)
                   setShowInquiry(true)
                 }}
                 className={textActionClass}
@@ -128,6 +130,12 @@ const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCar
         </div>
       </LocaleLink>
 
+      {inquiryNotice && (
+        <p role="status" className="mt-3 text-sm text-gray-600 font-light leading-relaxed">
+          {inquiryNotice}
+        </p>
+      )}
+
       {/* Inquiry Modal */}
       {showInquiry && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
@@ -135,6 +143,7 @@ const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCar
             artworkTitle={artwork.title}
             artworkId={artwork.id}
             onClose={() => setShowInquiry(false)}
+            onDelivered={setInquiryNotice}
             {...(copy.inquiry ? { copy: copy.inquiry } : {})}
           />
         </div>

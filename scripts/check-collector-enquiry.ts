@@ -1,6 +1,8 @@
 import { readFileSync, statSync } from 'fs'
 import path from 'path'
 import { artworks } from '@/data/artworks'
+import { collections } from '@/data/collections'
+import { localizedPath, retiredArtworkRedirect } from '@/i18n/pathnames'
 import { handleEnquiry, type EnquiryMail } from '@/lib/handleEnquiry'
 import { artworkCanonicalUrl, buildEnquiryMessage } from '@/lib/artworkEnquiry'
 import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
@@ -210,12 +212,19 @@ async function main() {
     check(ack.text.includes(STUDIO_EMAIL), 'Acknowledgement is missing the studio email')
     check(!ack.text.includes('verified'), 'Acknowledgement claimed the address was verified')
     check(!ack.html.includes('<script>') && ack.html.includes('Camille Laurent'), 'Acknowledgement HTML was not escaped')
+    const samuraiShare = artworkOpenGraphImage(lastSamurai.image).url
+    const samuraiPage = artworkCanonicalUrl('en', lastSamurai.id)
+    check(studio.html.includes('<img') && studio.html.includes(samuraiShare), 'Studio HTML is missing the hosted artwork photograph')
+    check(ack.html.includes('<img') && ack.html.includes(samuraiShare), 'Acknowledgement HTML is missing the hosted artwork photograph')
+    check(studio.html.includes(samuraiPage) && ack.html.includes(samuraiPage), 'Email HTML is missing the artwork link')
+    check(!studio.html.includes('/_next/image') && !ack.html.includes('/_next/image'), 'Email HTML used the image optimizer')
+    check(!studio.html.includes('icon.png') && !ack.html.includes('icon.png'), 'Email HTML used the site icon')
     console.log('\n--- STUDIO EN ---\n' + studio.text)
     console.log('\n--- ACK EN ---\n' + ack.text)
   }
 
   const envSent: EnquiryMail[] = []
-  await withEnv({ ENQUIRY_TO_EMAIL: studioInbox, ENQUIRY_FROM_EMAIL: from }, async () => {
+  await withEnv({ ENQUIRY_TO_EMAIL: 'philandrianos@outlook.com', ENQUIRY_FROM_EMAIL: from }, async () => {
     const response = await handleEnquiry(
       new Request('http://localhost/api/enquiry', {
         method: 'POST',
@@ -242,7 +251,8 @@ async function main() {
     check(response.status === 200 && body.ok === true && body.delivery === 'complete', 'Env-configured enquiry was rejected')
   })
   check(envSent.length === 2, `Env-configured enquiry sent ${envSent.length} emails`)
-  check(envSent[0]?.to.join(',') === studioInbox, 'ENQUIRY_TO_EMAIL was not used for the studio notification')
+  check(envSent[0]?.to.join(',') === studioInbox, 'The retired Outlook inbox received the studio notification')
+  check(!envSent.some((mail) => mail.to.some((address) => address.toLowerCase().includes('outlook.com'))), 'Outlook received an enquiry email')
   check(envSent[1]?.to.join(',') === collector.email, 'Acknowledgement ignored the typed collector address')
   check(envSent[0]?.to.join(',') !== envSent[1]?.to.join(','), 'Env-configured recipients were not kept apart')
   check(envSent[0]?.from === from && envSent[1]?.from === from, 'ENQUIRY_FROM_EMAIL was not used as the sender')
@@ -610,6 +620,7 @@ async function main() {
   check(!priceSent[0]?.text.includes('Artwork:') && !priceSent[0]?.text.includes('http'), 'Blank pricing invented a title or URL')
   check(!priceSent[0]?.text.includes('ignore me'), 'Pricing form kept a hidden note')
   check(priceSent[1]?.text.includes(enGeneral), 'Pricing acknowledgement does not match the general message')
+  check(!priceSent[0]?.html.includes('<img') && !priceSent[1]?.html.includes('<img'), 'Pricing email included an artwork photograph')
 
   resetEnquiryGuards()
   const bradSent: EnquiryMail[] = []
@@ -881,20 +892,39 @@ async function main() {
   for (let i = 0; i < 8; i += 1) check(await allowEnquiry('203.0.113.50', 1_000), `Rate limit blocked request ${i + 1}`)
   check(!(await allowEnquiry('203.0.113.50', 1_000)), 'Per-IP limit did not trip')
 
-  for (const source of [lastSamurai.image, steveMcqueen.image, bradPitt.image]) {
-    const image = artworkOpenGraphImage(source)
-    check(image.url.startsWith('https://fabianphil.com/'), `${source} og:image is not absolute`)
-    check(!image.url.includes('/_next/image') && !image.url.includes('icon.png'), `${source} og:image is the logo or optimizer`)
-    check(image.type === 'image/jpeg' && !!image.width && !!image.height, `${source} is missing image dimensions`)
+  for (const artwork of artworks) {
+    const image = artworkOpenGraphImage(artwork.image)
+    check(image.url.startsWith('https://fabianphil.com/'), `${artwork.title} og:image is not absolute`)
+    check(!image.url.includes('/_next/image') && !image.url.includes('icon.png'), `${artwork.title} og:image is the logo or optimizer`)
+    check(image.type === 'image/jpeg' && !!image.width && !!image.height, `${artwork.title} is missing image dimensions`)
     const relative = image.url.replace('https://fabianphil.com', '')
     const file = path.join(process.cwd(), 'public', decodeURI(relative))
     const size = statSync(file).size
     check(size > 1000 && size <= 300 * 1024, `${relative} is ${size} bytes`)
     const header = readFileSync(file).subarray(0, 3).toString('hex')
     check(header === 'ffd8ff', `${relative} is not a JPEG`)
+    const longEdge = Math.max(image.width ?? 0, image.height ?? 0)
+    check(longEdge >= 200 && longEdge <= 1920, `${artwork.title} preview is ${image.width}x${image.height}`)
   }
   const samuraiOg = artworkOpenGraphImage(lastSamurai.image)
   check(samuraiOg.url.includes('/images/share/last-samurai-japanese-pop-art-fabian-phil.jpg'), 'Last Samurai still uses the oversized file')
+  const panda = artworks.find((artwork) => artwork.id === 35)
+  const pandaOg = panda ? artworkOpenGraphImage(panda.image).url : ''
+  check(pandaOg.includes('/images/share/panda-wanted-hong-kong-pop-art-city-fabian-phil.jpg'), 'Panda share image was dropped')
+  check(localizedPath('en', 'artwork', { id: 35 }) === '/en/artwork/wanted-panda-hong-kong-city-pop-art-fabian-phil', 'English Panda URL changed')
+  check(localizedPath('fr', 'artwork', { id: 35 }) === '/fr/oeuvre/wanted-panda-hong-kong-pop-art-fabian-phil', 'French Panda URL changed')
+  check(
+    retiredArtworkRedirect('/en/artwork/wanted-panda-hong-kong-pop') === '/en/artwork/wanted-panda-hong-kong-city-pop-art-fabian-phil',
+    'English retired Panda slug does not redirect in one hop'
+  )
+  check(
+    retiredArtworkRedirect('/fr/oeuvre/wanted-panda-hong-kong-pop') === '/fr/oeuvre/wanted-panda-hong-kong-pop-art-fabian-phil',
+    'French retired Panda slug does not redirect in one hop'
+  )
+  const wanted = collections.find((collection) => collection.slug === 'wanted')
+  const pandaZen = collections.find((collection) => collection.slug === 'panda-zen')
+  check(Boolean(panda && wanted && !wanted.includes(panda)), 'Panda is listed on the Wanted collection')
+  check(Boolean(panda && pandaZen && pandaZen.includes(panda)), 'Panda is missing from Panda / Zen')
 
   console.log('\n--- EN ARTWORK ---\n' + enSamurai)
   console.log('\n--- FR ARTWORK ---\n' + frSamurai)

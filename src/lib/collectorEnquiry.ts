@@ -5,6 +5,7 @@ import { collectorLocationOptions } from '@/lib/collectorLocations'
 import { EnquiryValidationError, escapeHtml, readEnquiryEmail, readEnquiryText } from '@/lib/enquiryEmail'
 import { enquiryIdempotencyKey } from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
+import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
 import { STUDIO_WHATSAPP_DISPLAY } from '@/lib/whatsapp'
 
 const MONTHS = [
@@ -45,8 +46,27 @@ export function formatEnquiryTimestamp(date: Date): string {
   return `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}, ${hh}:${mm} UTC`
 }
 
-function htmlFor(text: string): string {
-  return `<!doctype html><html><body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;background:#ffffff"><div style="max-width:640px;margin:0 auto;white-space:pre-wrap;color:#111827">${escapeHtml(text)}</div></body></html>`
+type EmailArtwork = { src: string; alt: string; href: string }
+
+function hostedArtworkPreview(source: string, title: string, href: string): EmailArtwork | null {
+  let image: ReturnType<typeof artworkOpenGraphImage>
+  try {
+    image = artworkOpenGraphImage(source)
+  } catch {
+    return null
+  }
+  const src = image.url
+  if (!src.startsWith('https://') || !href.startsWith('https://')) return null
+  if (src.includes('/_next/image') || src.includes('icon.png')) return null
+  if (!src.includes('/images/share/') && !src.includes('/images/artworks/')) return null
+  return { src, alt: title, href }
+}
+
+function htmlFor(text: string, artwork?: EmailArtwork | null): string {
+  const figure = artwork
+    ? `<p style="margin:0 0 16px"><a href="${escapeHtml(artwork.href)}"><img src="${escapeHtml(artwork.src)}" alt="${escapeHtml(artwork.alt)}" width="280" style="display:block;width:280px;max-width:100%;height:auto;border:0" /></a></p><p style="margin:0 0 16px"><a href="${escapeHtml(artwork.href)}">${escapeHtml(artwork.href)}</a></p>`
+    : ''
+  return `<!doctype html><html><body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;background:#ffffff"><div style="max-width:640px;margin:0 auto;color:#111827">${figure}<div style="white-space:pre-wrap">${escapeHtml(text)}</div></div></body></html>`
 }
 
 function artworkId(data: Record<string, unknown>): number {
@@ -84,12 +104,14 @@ export function composeCollectorEnquiry(data: Record<string, unknown>, now: Date
 
   let artworkTitle = ''
   let artworkUrl = ''
+  let preview: EmailArtwork | null = null
   if (purpose === 'artwork') {
     const id = artworkId(data)
     const artwork = artworks.find((item) => item.id === id)
     if (!artwork) throw new EnquiryValidationError('artworkId', 'The selected artwork could not be found.')
     artworkTitle = artwork.title
     artworkUrl = artworkCanonicalUrl(locale, artwork.id)
+    preview = hostedArtworkPreview(artwork.image, artworkTitle, artworkUrl)
   } else if (data.artworkId !== undefined && data.artworkId !== null && data.artworkId !== '') {
     throw new EnquiryValidationError('artworkId', 'A pricing enquiry cannot include an artwork page.')
   }
@@ -138,6 +160,7 @@ export function composeCollectorEnquiry(data: Record<string, unknown>, now: Date
     name,
     artworkTitle,
     enquiryText,
+    preview,
   })
   acknowledgement.to = email
 
@@ -146,7 +169,7 @@ export function composeCollectorEnquiry(data: Record<string, unknown>, now: Date
       replyTo: email,
       subject: studioSubject,
       text: studioText,
-      html: htmlFor(studioText),
+      html: htmlFor(studioText, preview),
     },
     acknowledgement,
     idempotencyKey: enquiryIdempotencyKey({
@@ -165,6 +188,7 @@ function acknowledgementLetter(input: {
   name: string
   artworkTitle: string
   enquiryText: string
+  preview: EmailArtwork | null
 }): CollectorLetter & { to: string } {
   const contact =
     input.locale === 'fr'
@@ -185,6 +209,6 @@ function acknowledgementLetter(input: {
     replyTo: STUDIO_EMAIL,
     subject: input.locale === 'fr' ? 'Votre demande \u00e0 Fabian PhiL' : 'Your enquiry to Fabian PhiL',
     text: intro,
-    html: htmlFor(intro),
+    html: htmlFor(intro, input.preview),
   }
 }

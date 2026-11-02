@@ -1,5 +1,5 @@
 import type { Locale } from './locales'
-import { slugForLegacyArtworkId } from '@/data/artworkSlugs'
+import { artworkIdForSlug, artworkSlugs, publicArtworkSlug, retiredArtworkSlugs } from '@/data/artworkSlugs'
 import { isFrenchPageLive } from './readiness'
 
 export type AppRoute =
@@ -32,8 +32,8 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     artwork: 'artwork',
     collection: 'collections',
   },
-  // Artwork slugs are shared. Collection slugs below can differ by locale; only these route
-  // segments are translated.
+  // Artwork slugs are the English canonical slugs unless localizedArtworkSlugs gives French
+  // its own. Collection slugs below can differ by locale; only these route segments are translated.
   fr: {
     gallery: 'oeuvres',
     about: 'artiste',
@@ -82,6 +82,41 @@ export function internalCollectionSlug(locale: Locale, publicSlug: string): stri
   return match ? match[0] : publicSlug
 }
 
+// The route segment stored for an artwork page is always the English canonical slug.
+// A locale public slug (and the canonical slug itself) both resolve; anything else is unchanged.
+export function internalArtworkSlug(locale: Locale, publicSlug: string): string {
+  const artworkId = artworkIdForSlug(publicSlug)
+  if (artworkId === undefined) return publicSlug
+  const canonical = artworkSlugs[artworkId]
+  const localized = publicArtworkSlug(locale, artworkId)
+  if (publicSlug === localized || publicSlug === canonical) return canonical ?? publicSlug
+  return publicSlug
+}
+
+function artworkUrlSlug(locale: Locale, id: string | number): string | number {
+  const value = String(id)
+  const artworkId = /^[1-9]\d*$/.test(value)
+    ? Number(value)
+    : artworkIdForSlug(value) ?? retiredArtworkSlugs[locale][value]
+  if (artworkId === undefined) return id
+  return publicArtworkSlug(locale, artworkId) ?? id
+}
+
+// Old public artwork URLs that must 301 once, to the current slug of the same locale.
+export function retiredArtworkRedirect(pathname: string): string | null {
+  const clean = pathname.replace(/\/$/, '') || '/'
+  for (const locale of ['en', 'fr'] as const) {
+    const segment = publicSegments[locale].artwork
+    for (const [retired, artworkId] of Object.entries(retiredArtworkSlugs[locale])) {
+      if (clean === `/${locale}/${segment}/${retired}`) {
+        const destination = localizedPath(locale, 'artwork', { id: artworkId })
+        return destination === clean ? null : destination
+      }
+    }
+  }
+  return null
+}
+
 // Old public URLs that must 301 once, with no further hop. Locale-less /collections/* is not
 // included: those paths 404 today and do not resolve to a collection page.
 export function retiredCollectionRedirect(pathname: string): string | null {
@@ -119,7 +154,7 @@ export function localizedPath(
   const segment = publicSegments[locale][route]
   const id =
     route === 'artwork' && options?.id !== undefined
-      ? slugForLegacyArtworkId(options.id) ?? options.id
+      ? artworkUrlSlug(locale, options.id)
       : route === 'collection' && options?.id !== undefined
         ? publicCollectionSlug(locale, String(options.id))
         : options?.id
@@ -216,7 +251,12 @@ export function parsePublicPathname(pathname: string): ParsedPath | null {
       return null
     }
     const rawId = parts[2]
-    const id = route === 'collection' ? internalCollectionSlug(locale, rawId) : rawId
+    const id =
+      route === 'collection'
+        ? internalCollectionSlug(locale, rawId)
+        : route === 'artwork'
+          ? internalArtworkSlug(locale, rawId)
+          : rawId
     return { locale, route, id }
   }
 

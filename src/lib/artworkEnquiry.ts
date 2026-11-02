@@ -5,7 +5,17 @@ import { fill } from '@/lib/template'
 
 export const STUDIO_EMAIL = 'fabianphilartist@gmail.com'
 
+// A retired inbox. Production may still name it in ENQUIRY_TO_EMAIL. It must never receive studio mail.
+const RETIRED_STUDIO_INBOX = 'philandrianos@outlook.com'
+
 export const STUDIO_MAILTO = `mailto:${STUDIO_EMAIL}`
+
+// Every studio notification goes to the Gmail inbox, including when the configured env value is the retired address.
+export function studioNotificationRecipient(configured?: string | null): string {
+  const requested = (configured ?? '').trim().toLowerCase()
+  if (requested === RETIRED_STUDIO_INBOX) return STUDIO_EMAIL
+  return STUDIO_EMAIL
+}
 
 // E.164 shape: a leading + and 8–15 digits. Spaces and light punctuation are allowed in the field.
 const INTERNATIONAL_PHONE = /^\+[1-9]\d{7,14}$/

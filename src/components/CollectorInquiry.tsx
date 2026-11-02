@@ -105,7 +105,7 @@ const englishCopy: CollectorInquiryCopy = {
   submit: 'Send Enquiry & Open WhatsApp',
   sending: 'Sending…',
   openWhatsApp: 'Open WhatsApp',
-  emailOption: 'Email instead',
+  emailOption: 'Email Instead',
   sendNote:
     'Pressing the button emails this enquiry to the studio, then tries to open WhatsApp. If WhatsApp does not open, use the Open WhatsApp button. The WhatsApp message is sent only after you press Send there.',
   openedNote:
@@ -150,6 +150,7 @@ interface CollectorInquiryProps {
   artworkTitle?: string
   artworkId?: number
   onClose?: () => void
+  onDelivered?: (message: string) => void
   copy?: CollectorInquiryCopy
   // Artwork pages name the work automatically. The price pages ask the visitor instead.
   purpose?: 'artwork' | 'pricing'
@@ -157,21 +158,22 @@ interface CollectorInquiryProps {
 
 // Best-effort only. Browsers can block this click because it runs after the email request.
 // The visible Open WhatsApp link stays on the page and is a real user gesture.
-function openWhatsApp(href: string) {
-  const link = document.createElement('a')
-  link.href = href
-  link.target = '_blank'
-  link.rel = 'noopener noreferrer'
-  link.referrerPolicy = 'no-referrer'
-  document.body.appendChild(link)
-  link.click()
-  window.setTimeout(() => link.remove(), 0)
+function openWhatsApp(href: string): boolean {
+  const popup = window.open(href, '_blank')
+  if (!popup) return false
+  try {
+    popup.opener = null
+  } catch {
+    // The chat can still open when the opener cannot be cleared.
+  }
+  return true
 }
 
 const CollectorInquiry = ({
   artworkTitle,
   artworkId,
   onClose,
+  onDelivered,
   copy = englishCopy,
   purpose = 'artwork',
 }: CollectorInquiryProps) => {
@@ -193,6 +195,7 @@ const CollectorInquiry = ({
   const [errorMessage, setErrorMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [numberCopied, setNumberCopied] = useState(false)
+  const [whatsappBlocked, setWhatsappBlocked] = useState(false)
   const [succeededFingerprint, setSucceededFingerprint] = useState<string | null>(null)
   const sendingRef = useRef(false)
   const startedAt = useRef(0)
@@ -351,13 +354,15 @@ const CollectorInquiry = ({
       }
       return
     }
-    if (outcome.status === 'partial' || outcome.status === 'unrecorded') {
-      setErrorMessage('')
-      setStatus(outcome.status)
-      return
+    const blocked = outcome.whatsappOpened === false
+    setWhatsappBlocked(blocked)
+    setErrorMessage('')
+    if (outcome.status === 'sent') setSucceededFingerprint(fingerprint)
+    setStatus(outcome.status)
+    if (outcome.status === 'sent' && !blocked && onClose && !isPricing) {
+      onDelivered?.(copy.openedNote)
+      onClose()
     }
-    setSucceededFingerprint(fingerprint)
-    setStatus('sent')
   }
 
   const describedBy = (field: FieldName, hintId?: string) => {
@@ -597,7 +602,8 @@ const CollectorInquiry = ({
               {errorMessage}
             </p>
           )}
-          {(status === 'sent' || status === 'partial' || status === 'unrecorded') && (
+          {(status === 'sent' || status === 'partial' || status === 'unrecorded') &&
+            (whatsappBlocked || status !== 'sent' || isPricing || !onClose) && (
             <a
               href={whatsappHref(composeMessage())}
               target="_blank"
@@ -611,7 +617,13 @@ const CollectorInquiry = ({
             <button type="submit" disabled={sending} aria-busy={sending || undefined} className={`${primaryButtonClass} normal-case tracking-[0.08em] w-full sm:w-auto`}>
               {sending ? copy.sending : copy.submit}
             </button>
-            <a href={emailHref} className={textLinkClass}>
+            <a
+              href={emailHref}
+              className={textLinkClass}
+              onClick={() => {
+                if (!isPricing && onClose) window.setTimeout(onClose, 0)
+              }}
+            >
               {copy.emailOption}
             </a>
           </div>
