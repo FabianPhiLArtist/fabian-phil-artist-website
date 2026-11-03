@@ -17,6 +17,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, le portrait et le graphisme Wanted glissent vers de nouveaux alignements. Le visage reste reconnaissable, tandis que la construction en couches modifie la profondeur et l’attitude d’un point de vue à l’autre.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Megève',
     series: 'Collections F1 / Formule 1 · Mugshot',
     seriesBlock: 'Collection Mugshot',
   },
@@ -36,6 +37,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, le portrait d’Ayrton Senna et l’arrière-plan mêlant course et dessins animés se séparent sur les couches de plexiglas. L’œuvre oscille entre portrait de pilote et scène pop animée.',
     medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Megève',
     series: 'Collections F1 / Formule 1 · Wanted · Toon Clash',
     seriesBlock: 'Collection F1',
   },
@@ -53,6 +55,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Le premier plan et l’arrière-plan bougent l’un par rapport à l’autre à mesure que le spectateur change de position. L’image se sépare et se reconstitue sans cesse, rendant visuellement instable la tension entre célébrité et paix.',
     medium: 'Création numérique imprimée sur deux plaques de plexiglas',
     size: '100\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Toon Clash',
   },
   22: {
@@ -69,6 +72,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, les lunettes jaunes, le regard et le sourire se réalignent subtilement. Le portrait semble s’adresser au spectateur différemment selon l’angle, prolongeant la question espiègle du titre.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Pop Glasses',
   },
   17: {
@@ -85,6 +89,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'La couleur fluorescente retient le regard, tandis que les lunettes, les yeux et les lignes du visage glissent sur des couches de plexiglas distinctes. Avec le mouvement, l’attitude de mannequin paraît moins figée et plus théâtrale.',
     medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
   },
@@ -102,6 +107,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, le portrait de mode se détache de l’arrière-plan coloré peuplé de dessins animés. Premier plan et arrière-plan se superposent puis se rejoignent, et l’image oscille entre portrait, défilé et composition pop animée.',
     medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '100\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Toon Clash',
   },
   5: {
@@ -118,6 +124,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur longe le triptyque, le portrait de Mick Jagger se décale par rapport au graphisme du billet. Les trois panneaux amplifient l’effet\u00a0: l’échelle, la profondeur et l’alignement changeant font partie intégrante de l’œuvre.',
     medium: 'Triptyque. Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a0210\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection 100 USD',
   },
   9: {
@@ -134,6 +141,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur change de position, le portrait peint de Sheikh Zayed et les détails en miroir argenté se séparent puis se rejoignent. Les reflets changent avec la pièce\u00a0: la lumière devient partie intégrante du mouvement plutôt qu’un effet figé.',
     medium: 'Acrylique et vinyle miroir argenté sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Expressive Emotion',
   },
   16: {
@@ -152,6 +160,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, les lunettes, les yeux et les lignes du visage glissent les uns par rapport aux autres. Le regard change subtilement, tandis que le titre reste le cadre constant de l’image.',
     medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Galerie Noor Royal, Dubaï',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
   },
@@ -169,6 +178,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Les lunettes vertes restent le point d’ancrage, tandis que les yeux et les lignes du visage se déplacent autour d’elles. D’un point de vue à l’autre, l’assurance du sourire prend un caractère légèrement différent.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Pop Glasses',
   },
   34: {
@@ -185,6 +195,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, les lunettes roses et les lignes du visage glissent sur des couches de plexiglas distinctes. Les yeux de Lucy Liu semblent suivre d’un angle à l’autre, et l’expression calme prend une présence discrètement attentive.',
     medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Pop Glasses',
   },
   15: {
@@ -201,6 +212,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Les lunettes, les yeux et le graphisme du titre se décalent lorsque le spectateur se déplace. La couleur tient le portrait, et l’alignement changeant rend le personnage plus animé.',
     medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Galerie Noor Royal, Dubaï',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
   },
@@ -218,6 +230,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur se déplace, les lignes verticales glissent sur le visage et le regard change subtilement. Le portrait ne se fixe jamais dans une seule expression, et l’incertitude du titre demeure.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a0120\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Expressive Emotion',
   },
   6: {
@@ -234,6 +247,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Selon l’angle, le portrait d’Andy Warhol et le graphisme du billet se séparent sur les couches de plexiglas du triptyque. L’image se fragmente puis se reconstitue lorsque le spectateur longe toute la largeur de l’œuvre.',
     medium: 'Triptyque. Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a0210\u00a0cm',
+    location: 'Galerie Noor Royal, Dubaï',
     series: 'Collection 100 USD',
   },
   14: {
@@ -250,6 +264,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Les lignes du visage, peintes sur des plans de plexiglas distincts, trouvent de nouveaux alignements lorsque le spectateur se déplace. L’expression change avec la perspective et prolonge l’ambiguïté du titre.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a090\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Expressive Emotion',
   },
   31: {
@@ -266,6 +281,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'D’un côté à l’autre, le portrait de Charles Leclerc glisse sur le fond coloré de course et de dessins animés. L’écart entre les couches de plexiglas crée une profondeur changeante, et la composition se réaligne sans cesse.',
     medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collections F1 / Formule 1 · Toon Clash',
     seriesBlock: 'Collection F1',
   },
@@ -299,6 +315,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Le panda et les aplats de couleur occupent des plans distincts. En se déplaçant, le spectateur ouvre un écart entre la figure, le cœur rose et les lunettes.',
     medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Panda / Zen',
   },
   29: {
@@ -315,6 +332,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Lorsque le spectateur change de position, le panda et le paysage enneigé bougent l’un par rapport à l’autre. Le décalage des couches donne à l’équilibre du yin et du yang une dimension physique, tout en gardant un ton léger.',
     medium: 'Techniques mixtes sur plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Panda / Zen',
   },
   35: {
@@ -334,7 +352,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     medium: 'Peinture et créations numériques imprimées sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     edition: 'Original unique, 1/1',
-    availability: 'Disponible à l’atelier de l’artiste, Dubaï',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Panda / Zen',
   },
   1: {
@@ -353,6 +371,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Le déplacement change à la fois l’alignement et les reflets. Portrait, texte, matière miroir et lumière LED ne répondent pas de la même façon d’un pas à l’autre, et l’œuvre devient plus théâtrale qu’en vue frontale.',
     medium: 'Acrylique et vinyle miroir argenté sur deux plaques de plexiglas, avec LED',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Mugshot',
   },
   2: {
@@ -385,6 +404,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'En traversant l’œuvre, le portrait, le texte de la récompense et la structure graphique se décalent les uns par rapport aux autres. Le visage change à peine\u00a0; le personnage Wanted reste lisible.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Galerie Noor Royal, Dubaï',
     series: 'Collection Mugshot',
   },
   7: {
@@ -403,6 +423,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Le visage demeure calme pendant que cheveux et traits bougent avec la perspective. Quand les plans se réalignent, la profondeur apparaît puis s’efface, sans troubler le ton plus silencieux de l’œuvre.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a090\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Moving Hair',
   },
   8: {
@@ -421,6 +442,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'En se déplaçant de côté, on voit les cheveux devenir la partie la plus active du portrait. Les lignes, peintes sur des plans séparés, traversent le visage et en changent la profondeur.',
     medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '110\u00a0×\u00a0110\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Moving Hair',
   },
   11: {
@@ -437,6 +459,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Les lignes glissent sur le visage avec le spectateur, et le regard semble changer. L’expression se réajuste, tandis que le rose vif reste le point d’appui.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Expressive Emotion',
   },
   12: {
@@ -455,6 +478,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'En passant devant le portrait, les traits se déplacent légèrement. L’expression semble changer avec celui qui regarde, et l’exclamation du titre n’a plus exactement le même sens d’un angle à l’autre.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
+    location: 'Galerie Noor Royal, Dubaï',
     series: 'Collection Expressive Emotion',
   },
   13: {
@@ -471,6 +495,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'D’un côté à l’autre, les marques peintes sur des plans distincts glissent contre le visage. Yeux et expression se réalignent\u00a0: c’est la découverte première de la technique cinétique de Fabian PhiL.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Expressive Emotion',
   },
   18: {
@@ -489,6 +514,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Les lunettes bleu profond se déplacent devant les yeux charbonneux et les lignes du visage. Selon l’angle, le regard devient plus ou moins frontal.',
     medium: 'Acrylique et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
   },
@@ -507,6 +533,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     inMotion: '',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Pop Glasses',
   },
   21: {
@@ -524,6 +551,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     inMotion: '',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '60\u00a0×\u00a060\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Pop Glasses',
   },
   23: {
@@ -541,6 +569,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'En passant devant le portrait, les lunettes bleu électrique se décalent sur les yeux et le visage. L’alignement accuse le regard et laisse voir la profondeur entre les plaques.',
     medium: 'Acrylique sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
   },
@@ -560,6 +589,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Les montures réfléchissantes et les lignes du visage se déplacent sur des plans séparés. Le regard semble changer, et le titre continue de questionner le jugement.',
     medium: 'Peinture, impression et collage sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collection Pop Glasses',
   },
   30: {
@@ -578,6 +608,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Le portrait et les éléments de dessin animé glissent sur des couches distinctes. Visages, texte et graphismes se séparent et se rejoignent, et la collision devient plus sensible.',
     medium: 'Impression numérique au dos des plaques de plexiglas, acrylique sur la face avant',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Galerie Noor Royal, Dubaï',
     series: 'Collections Wanted · Toon Clash',
     seriesBlock: 'Collection Toon Clash',
   },
@@ -597,6 +628,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Portrait, dessins animés et signes graphiques sortent de l’alignement avant de se retrouver. Le mouvement donne à la scène l’allure d’un choc en train de se produire, plutôt que d’une image arrêtée.',
     medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
+    location: 'Atelier de l’artiste, Dubaï',
     series: 'Collections Wanted · Toon Clash',
     seriesBlock: 'Collection Toon Clash',
   },
