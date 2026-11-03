@@ -153,6 +153,7 @@ export const frArtworkDetailCopy: ArtworkDetailCopy = {
   edition: 'Édition',
   price: 'Prix',
   availability: 'Disponibilité',
+  location: 'Lieu',
   priceOnRequest: 'Prix sur demande',
   soldPrice: 'VENDU',
   available: 'Disponible',

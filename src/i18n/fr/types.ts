@@ -36,6 +36,8 @@ export type FrArtworkContent = {
   size: string
   edition?: string
   availability?: string
+  // Where an available artwork is held. Never the collector's country. Absent when sold or unconfirmed.
+  location?: string
   // Visible series label (artwork.series is the English collection name). For artworks in several
   // collections it names all of them; seriesBlock then names artwork.series alone.
   series: string
