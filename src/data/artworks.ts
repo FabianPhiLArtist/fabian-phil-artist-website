@@ -724,7 +724,7 @@ export const artworks: Artwork[] = [
     series: "Toon Clash Collection",
     image: "/images/artworks/brigitte-bardot-cartoon-pop-art-fabian-phil.png",
     year: "2024",
-    medium: "Digital design printed on two acrylic sheets",
+    medium: "Industrial paint and digital design printed on two acrylic sheets",
     size: "100x70cm",
     price: "€3,000",
     priceAed: 16000,

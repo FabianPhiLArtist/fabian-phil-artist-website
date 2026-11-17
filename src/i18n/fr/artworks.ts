@@ -51,7 +51,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Fame or Peace s’articule autour de l’actrice française Brigitte Bardot et de la tension que porte son titre\u00a0: la visibilité publique face à la quête de sérénité. Plutôt que de traiter le portrait comme une simple image de célébrité, l’œuvre invite le spectateur à lire le visage de Brigitte Bardot à travers cette opposition. Réalisée en 2024 sur plexiglas superposé, elle fait bouger le premier plan et l’arrière-plan l’un par rapport à l’autre lorsque la perspective change. L’image se transforme physiquement, tandis que la question de la célébrité ou de la paix reste en suspens.',
     inMotion:
       'Le premier plan et l’arrière-plan bougent l’un par rapport à l’autre à mesure que le spectateur change de position. L’image se sépare et se reconstitue sans cesse, rendant visuellement instable la tension entre célébrité et paix.',
-    medium: 'Création numérique imprimée sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et création numérique imprimée sur deux plaques de plexiglas',
     size: '100\u00a0×\u00a070\u00a0cm',
     series: 'Collection Toon Clash',
   },
