@@ -25,7 +25,7 @@ const englishPriceInquiryCopy: PriceInquiryCopy = {
   ],
   noticeHeading: 'Good to know',
   notice:
-    'Each original is unique (1/1) and comes with a wood frame and a signed certificate of authenticity. Prices are for the artwork only. For international shipping, packaging, transport, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request. Delivery within Dubai can be arranged directly with the artist. Final price depends on the specific work.',
+    'Each original is unique (1/1) and comes with a wood frame and a signed certificate of authenticity. Prices are for the artwork only. For international shipping, packaging, transport, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request. Delivery within Dubai can be arranged directly with the artist. Payment is by bank transfer after an invoice, or in USDT or USDC on request. Final price depends on the specific work.',
 }
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {

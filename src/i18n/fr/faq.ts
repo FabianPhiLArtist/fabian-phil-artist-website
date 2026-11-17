@@ -175,6 +175,31 @@ export const frFaqItems: FaqItem[] = [
       ],
     ],
   },
+  {
+    id: 'how-buying-works',
+    q: 'Comment se déroule l’achat d’une œuvre\u202f?',
+    a: [
+      [
+        'Envoyez une demande via la page ',
+        { text: 'Demande de prix', route: 'price-inquiry' },
+        ' ou sur ',
+        { text: 'WhatsApp', whatsapp: 'price' },
+        '. Fabian répond sous 24 heures. Une fois votre choix fait, il confirme le prix, le mode de livraison et les délais, puis vous envoie une facture. Un acompte peut réserver l’œuvre pour une durée convenue, et le solde est réglé avant l’expédition.',
+      ],
+      [
+        'Fabian emballe ensuite l’œuvre et l’expédie par DHL, ou la livre lui-même à Dubaï. Chaque original est une pièce unique (1/1), livrée avec un cadre en bois et un certificat d’authenticité signé. Pour les envois internationaux, la facture et le certificat sont fournis pour la douane\u00a0; l’emballage, le transport, l’assurance et les éventuels droits de douane ou d’importation sont à la charge de l’acheteur, et ces droits varient selon le pays.',
+      ],
+    ],
+  },
+  {
+    id: 'payment',
+    q: 'Comment payer\u202f?',
+    a: [
+      [
+        'Le paiement se fait par virement bancaire, après réception d’une facture. Un paiement en stablecoins (USDT ou USDC) est aussi possible sur demande. Fabian confirme les modalités directement avec vous\u00a0; les coordonnées de paiement ne sont jamais affichées sur le site.',
+      ],
+    ],
+  },
   homeItem('sizes'),
   homeItem('galleries'),
   {

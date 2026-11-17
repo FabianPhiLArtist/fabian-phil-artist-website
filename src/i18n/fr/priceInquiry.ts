@@ -42,5 +42,5 @@ export const frPriceInquiryCopy: PriceInquiryCopy = {
   ],
   noticeHeading: 'Bon à savoir',
   notice:
-    'Chaque original est une pièce unique (1/1), livrée avec un cadre en bois et un certificat d’authenticité signé. Les prix concernent l’œuvre seule. Pour une expédition internationale, l’emballage, le transport, l’assurance et les droits de douane ou d’importation sont à la charge de l’acheteur ; l’emballage et l’envoi DHL peuvent être organisés et chiffrés sur demande. La livraison à Dubaï peut être organisée directement avec l’artiste. Le prix final dépend de l’œuvre.',
+    'Chaque original est une pièce unique (1/1), livrée avec un cadre en bois et un certificat d’authenticité signé. Les prix concernent l’œuvre seule. Pour une expédition internationale, l’emballage, le transport, l’assurance et les droits de douane ou d’importation sont à la charge de l’acheteur ; l’emballage et l’envoi DHL peuvent être organisés et chiffrés sur demande. La livraison à Dubaï peut être organisée directement avec l’artiste. Le paiement se fait par virement bancaire après facture, ou en USDT ou USDC sur demande. Le prix final dépend de l’œuvre.',
 }

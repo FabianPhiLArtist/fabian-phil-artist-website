@@ -12,6 +12,8 @@ export type FaqId =
   | 'availability'
   | 'price'
   | 'buy'
+  | 'how-buying-works'
+  | 'payment'
   | 'sizes'
   | 'galleries'
   | 'viewing'
@@ -148,6 +150,31 @@ export const faqItems: FaqItem[] = [
         ' page. Prices are shown on each artwork page, and price ranges by format are listed on the Price Inquiry page. Fabian replies within 24 hours. You can also send a message through the ',
         { text: 'contact', route: 'contact' },
         ' page.',
+      ],
+    ],
+  },
+  {
+    id: 'how-buying-works',
+    q: 'How does buying an artwork work?',
+    a: [
+      [
+        'Send an enquiry through the ',
+        { text: 'Price Inquiry', route: 'price-inquiry' },
+        ' page or on ',
+        { text: 'WhatsApp', whatsapp: 'price' },
+        '. Fabian replies within 24 hours. Once you have chosen a work, he confirms the price, the delivery method and the timing, and sends you an invoice. A deposit can reserve the work for an agreed period, and the balance is paid before shipping.',
+      ],
+      [
+        'Fabian then packs the artwork and ships it by DHL, or delivers it himself within Dubai. Each original is unique (1/1) and comes with a wood frame and a signed certificate of authenticity. For international shipments, the invoice and certificate are provided for customs; packaging, transport, insurance and any customs or import duties are paid by the buyer, and duties vary by country.',
+      ],
+    ],
+  },
+  {
+    id: 'payment',
+    q: 'How can I pay?',
+    a: [
+      [
+        'Payment is by bank transfer after you receive an invoice. Payment in stablecoins (USDT or USDC) is also possible on request. Fabian confirms the details with you directly, and payment details are never shown on the website.',
       ],
     ],
   },
