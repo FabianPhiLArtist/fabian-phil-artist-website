@@ -83,7 +83,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Fashion Crimes est un portrait pop art superposé du top model Gigi Hadid, qui fait de la mode une rébellion espiègle. Le format Wanted la cadre à la manière d’un Mugshot, tandis que la couleur fluorescente et un regard direct tirent l’œuvre vers le glamour et l’attitude plutôt que vers la criminalité. Peinte en 2023 sur plexiglas superposé, l’œuvre fait glisser lunettes, regard et lignes du visage lorsque le spectateur se déplace, donnant au portrait de Gigi Hadid une présence changeante, presque théâtrale.',
     inMotion:
       'La couleur fluorescente retient le regard, tandis que les lunettes, les yeux et les lignes du visage glissent sur des couches de plexiglas distinctes. Avec le mouvement, l’attitude de mannequin paraît moins figée et plus théâtrale.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
@@ -150,7 +150,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Being Too Smart est un portrait pop art d’Angelina Jolie, actrice, dans le langage Pop Glasses de Fabian PhiL. Le regard intense, le doigt posé sur les lèvres et les lunettes bleues installent le personnage, tandis que le titre fait de l’intelligence elle-même le motif de l’affiche. Réalisée en 2023 sur plexiglas superposé, l’œuvre fait glisser lunettes, regard et lignes du visage lorsque le spectateur se déplace\u00a0: l’expression d’Angelina Jolie ne se fige jamais tout à fait.',
     inMotion:
       'Lorsque le spectateur se déplace, les lunettes, les yeux et les lignes du visage glissent les uns par rapport aux autres. Le regard change subtilement, tandis que le titre reste le cadre constant de l’image.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
@@ -469,7 +469,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Blue Lady ouvre l’approche cinétique de Fabian PhiL. En 2011, c’est la première œuvre où des plaques séparées deviennent le cœur de l’image\u00a0: les traits bleus et le visage ne coïncident plus tout à fait d’un point de vue à l’autre. Cette trouvaille a ensuite porté les Œuvres Signature, Pop Glasses et l’idée du Pop Art en Mouvement.',
     inMotion:
       'D’un côté à l’autre, les marques peintes sur des plans distincts glissent contre le visage. Yeux et expression se réalignent\u00a0: c’est la découverte première de la technique cinétique de Fabian PhiL.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
@@ -522,7 +522,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     description:
       'Maybe I will See Him est un portrait Pop Glasses plus intérieur, peint en 2018 autour de l’attente. Lunettes roses et regard suspendu laissent place au désir et à l’incertitude\u00a0; le titre ne ferme pas l’histoire. Yeux et montures bougent un peu par rapport au visage. Cette hésitation physique rejoint celle de l’expression.',
     inMotion: '',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '60\u00a0×\u00a060\u00a0cm',
     series: 'Collection Pop Glasses',
   },
@@ -576,7 +576,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted Million Dollar Toon Fight place Clint Eastwood au milieu d’une collision colorée entre portrait et dessins animés. Le format Wanted donne un cadre\u00a0; le titre, une idée d’affrontement et de spectacle. En 2026, le visage est peint sur la face avant et le fond imprimé au dos des plaques\u00a0: portrait et personnages n’occupent pas le même plan. Quand on se déplace, la composition se sépare, puis se reforme.',
     inMotion:
       'Le portrait et les éléments de dessin animé glissent sur des couches distinctes. Visages, texte et graphismes se séparent et se rejoignent, et la collision devient plus sensible.',
-    medium: 'Impression numérique au dos des plaques de plexiglas, acrylique sur la face avant',
+    medium: 'Impression numérique au dos des plaques de plexiglas, peinture industrielle sur la face avant',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Wanted · Toon Clash',
     seriesBlock: 'Collection Toon Clash',
