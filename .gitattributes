@@ -1,3 +1,6 @@
 *.MOV filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mov filter=lfs diff=lfs merge=lfs -text
+
+# Stored as a normal file so it can be uploaded from the GitHub web page (4.9 MB)
+public/videos/artworks/you-call-this-art-model-pop-glasses-pop-art-fabian-phil.mp4 -filter -diff -merge binary
