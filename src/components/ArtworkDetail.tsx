@@ -51,6 +51,9 @@ export type ArtworkDetailCopy = {
   priceNote: string
   includedNote: string
   editionDefault: string
+  locationStudioDubai: string
+  locationStudioMegeve: string
+  locationNoor: string
   soldPrice: string
   available: string
   sold: string
@@ -108,9 +111,12 @@ const englishCopy: ArtworkDetailCopy = {
   priceOnRequest: 'Price upon Inquiry',
   priceFormat: 'AED {amount}',
   noorEnquire: 'Enquire at Noor Royal Gallery',
-  priceNote: 'Price is for the artwork only. Packaging, shipping, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request.',
+  priceNote: 'Price is for the artwork only. For international shipping, packaging, transport, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request. Delivery within Dubai can be arranged directly with the artist.',
   includedNote: 'Wood frame and signed certificate of authenticity included.',
   editionDefault: 'Unique original, 1/1',
+  locationStudioDubai: 'Available from the Artist’s Studio, Dubai',
+  locationStudioMegeve: 'Available from the Artist’s Studio, Megève',
+  locationNoor: 'Presented at Noor Royal Gallery, Dubai',
   soldPrice: 'SOLD',
   available: 'Available',
   sold: 'SOLD',
@@ -181,7 +187,14 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
   const medium: string = text?.medium ?? artwork?.medium
   const size: string = text?.size ?? artwork?.size
   const edition: string | undefined = (text ? text.edition : artwork?.edition) ?? copy.editionDefault
-  const availabilityValue = artwork?.available
+  const locationCopy: Record<string, string> = {
+    'studio-dubai': copy.locationStudioDubai,
+    'studio-megeve': copy.locationStudioMegeve,
+    'noor-royal': copy.locationNoor,
+  }
+  const availabilityValue = artwork?.available && artwork?.location
+    ? locationCopy[artwork.location]
+    : artwork?.available
     ? text
       ? text.availability ?? copy.available
       : artwork?.availabilityDetail ?? copy.available
