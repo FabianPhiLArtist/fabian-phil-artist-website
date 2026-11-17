@@ -281,7 +281,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted Panda Zen Artist met en scène le panda comme figure calme et décalée. Lunettes roses, aplats de couleur et pose assise composent un univers contemplatif que le mouvement des couches de plexiglas vient subtilement perturber. Réalisée en 2025, l’œuvre garde un ton léger\u00a0: le titre sourit, le panda semble déjà ailleurs.',
     inMotion:
       'Lorsque le spectateur se déplace, le panda et les touches de couleur se décalent l’un par rapport à l’autre. La construction en couches crée une profondeur discrète, sans rompre le calme de la pose.',
-    medium: 'Techniques mixtes sur plaques de plexiglas',
+    medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Panda / Zen',
   },
@@ -313,7 +313,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted Panda Yin & Yang Fan place le panda devant une montagne enneigée, avec des cerisiers en fleurs tenus dans la figure elle-même. Le yin et le yang y jouent l’équilibre, sur un mode plus graphique que solennel. Réalisée en 2025 sur plexiglas superposé, l’œuvre décale légèrement le portrait et le paysage lorsque le spectateur change de position. Neige, montagne et couleur restent en conversation.',
     inMotion:
       'Lorsque le spectateur change de position, le panda et le paysage enneigé bougent l’un par rapport à l’autre. Le décalage des couches donne à l’équilibre du yin et du yang une dimension physique, tout en gardant un ton léger.',
-    medium: 'Techniques mixtes sur plaques de plexiglas',
+    medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Panda / Zen',
   },
@@ -331,7 +331,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted Panda Hong Kong Pop capture l’énergie vibrante de Hong Kong à travers un panda haut en couleur, inspiré des rues animées, des gratte-ciel, des enseignes emblématiques et du street art de la ville. Le rose, le bleu, le jaune et le vert éclatants contrastent avec sa silhouette noire et blanche, transformant le paysage urbain en une composition Pop Art ludique. Réalisée à partir de peinture et de créations numériques imprimées sur deux plaques de plexiglas, l’œuvre révèle profondeur et mouvement lorsque le spectateur se déplace. Un hommage haut en couleur à Hong Kong, dans l’univers cinétique de Fabian PhiL.',
     inMotion:
       'Lorsque le spectateur se déplace, la silhouette noire et blanche du panda se décale par rapport au décor coloré de Hong Kong. Les enseignes et les détails architecturaux se séparent et se rejoignent sur les deux plaques de plexiglas, révélant profondeur et mouvement.',
-    medium: 'Peinture et créations numériques imprimées sur deux plaques de plexiglas',
+    medium: 'Peinture et création numérique imprimée sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     edition: 'Original unique, 1/1',
     availability: 'Disponible à l’atelier de l’artiste, Dubaï',
