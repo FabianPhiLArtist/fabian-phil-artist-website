@@ -4,6 +4,10 @@ export const SITE_NAME = 'Fabian PhiL'
 
 export const INSTAGRAM_URL = 'https://instagram.com/fabianphilartist'
 
+// Each placement gets its own utm_medium so links can be told apart (Instagram itself does not report UTM tags).
+export const instagramUrl = (placement: string) =>
+  `${INSTAGRAM_URL}?utm_source=website&utm_medium=${placement}&utm_campaign=follow`
+
 export const FACEBOOK_URL = 'https://facebook.com/fabianphilartist'
 
 export const absoluteUrl = (path: string) => new URL(encodeURI(path), SITE_URL).toString()

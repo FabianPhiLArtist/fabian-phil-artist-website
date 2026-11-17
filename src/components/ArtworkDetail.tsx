@@ -17,6 +17,7 @@ import { useLocale } from '@/i18n/useLocale'
 import { fallbackHrefLang, localizedHref } from '@/i18n/pathnames'
 import { fill, fillParts } from '@/lib/template'
 import { artworkPriceLabel } from '@/lib/price'
+import { instagramUrl } from '@/lib/site'
 import { STUDIO_MAILTO } from '@/lib/artworkEnquiry'
 import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 import { readBrowseContext, type BrowseContext } from '@/lib/browseContext'
@@ -51,6 +52,7 @@ export type ArtworkDetailCopy = {
   noorEnquire: string
   priceNote: string
   includedNote: string
+  instagramLink: string
   editionDefault: string
   locationStudioDubai: string
   locationStudioMegeve: string
@@ -115,6 +117,7 @@ const englishCopy: ArtworkDetailCopy = {
   noorEnquire: 'Enquire at Noor Royal Gallery',
   priceNote: 'Price is for the artwork only. For international shipping, packaging, transport, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request. Delivery within Dubai can be arranged directly with the artist.',
   includedNote: 'Wood frame and signed certificate of authenticity included.',
+  instagramLink: 'See more of the studio in motion on Instagram →',
   editionDefault: 'Unique original, 1/1',
   locationStudioDubai: 'Available from the Artist’s Studio, Dubai',
   locationStudioMegeve: 'Available from the Artist’s Studio, Megève',
@@ -416,6 +419,16 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                   <p>{copy.priceNote}</p>
                 </div>
               )}
+              <p className="-mt-4 mb-10">
+                <a
+                  href={instagramUrl('painting-page')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={textLinkClass}
+                >
+                  {copy.instagramLink}
+                </a>
+              </p>
 
               <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">{copy.about}</h2>
               <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed mb-10">

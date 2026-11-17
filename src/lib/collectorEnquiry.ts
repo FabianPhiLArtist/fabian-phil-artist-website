@@ -7,6 +7,7 @@ import { enquiryIdempotencyKey } from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
 import { STUDIO_WHATSAPP_DISPLAY } from '@/lib/whatsapp'
+import { instagramUrl } from '@/lib/site'
 
 const MONTHS = [
   'January',
@@ -194,15 +195,19 @@ function acknowledgementLetter(input: {
     input.locale === 'fr'
       ? `WhatsApp de l\u2019atelier : ${STUDIO_WHATSAPP_DISPLAY}\nE-mail de l\u2019atelier : ${STUDIO_EMAIL}`
       : `Studio WhatsApp: ${STUDIO_WHATSAPP_DISPLAY}\nStudio email: ${STUDIO_EMAIL}`
+  const follow =
+    input.locale === 'fr'
+      ? `En attendant, découvrez les œuvres récentes et les films d\u2019atelier sur Instagram : ${instagramUrl('post-enquiry-email')}`
+      : `While you wait, see recent works and studio films on Instagram: ${instagramUrl('post-enquiry-email')}`
 
   const intro =
     input.locale === 'fr'
       ? input.artworkTitle
-        ? `Bonjour ${input.name},\n\nMerci pour votre demande concernant \u00ab ${input.artworkTitle} \u00bb. L\u2019atelier l\u2019a re\u00e7ue par e-mail depuis fabianphil.com. WhatsApp ne re\u00e7oit votre message que si vous appuyez sur Envoyer dans WhatsApp.\n\n${contact}\n\nCopie de votre demande :\n\n${input.enquiryText}`
-        : `Bonjour ${input.name},\n\nMerci pour votre demande de tarif. L\u2019atelier l\u2019a re\u00e7ue par e-mail depuis fabianphil.com. WhatsApp ne re\u00e7oit votre message que si vous appuyez sur Envoyer dans WhatsApp.\n\n${contact}\n\nCopie de votre demande :\n\n${input.enquiryText}`
+        ? `Bonjour ${input.name},\n\nMerci pour votre demande concernant \u00ab ${input.artworkTitle} \u00bb. L\u2019atelier l\u2019a re\u00e7ue par e-mail depuis fabianphil.com. WhatsApp ne re\u00e7oit votre message que si vous appuyez sur Envoyer dans WhatsApp.\n\n${contact}\n\n${follow}\n\nCopie de votre demande :\n\n${input.enquiryText}`
+        : `Bonjour ${input.name},\n\nMerci pour votre demande de tarif. L\u2019atelier l\u2019a re\u00e7ue par e-mail depuis fabianphil.com. WhatsApp ne re\u00e7oit votre message que si vous appuyez sur Envoyer dans WhatsApp.\n\n${contact}\n\n${follow}\n\nCopie de votre demande :\n\n${input.enquiryText}`
       : input.artworkTitle
-        ? `Hello ${input.name},\n\nThank you for your enquiry about "${input.artworkTitle}". The studio has received it by email from fabianphil.com. WhatsApp receives your message only if you press Send in WhatsApp.\n\n${contact}\n\nA copy of your enquiry:\n\n${input.enquiryText}`
-        : `Hello ${input.name},\n\nThank you for your pricing enquiry. The studio has received it by email from fabianphil.com. WhatsApp receives your message only if you press Send in WhatsApp.\n\n${contact}\n\nA copy of your enquiry:\n\n${input.enquiryText}`
+        ? `Hello ${input.name},\n\nThank you for your enquiry about "${input.artworkTitle}". The studio has received it by email from fabianphil.com. WhatsApp receives your message only if you press Send in WhatsApp.\n\n${contact}\n\n${follow}\n\nA copy of your enquiry:\n\n${input.enquiryText}`
+        : `Hello ${input.name},\n\nThank you for your pricing enquiry. The studio has received it by email from fabianphil.com. WhatsApp receives your message only if you press Send in WhatsApp.\n\n${contact}\n\n${follow}\n\nA copy of your enquiry:\n\n${input.enquiryText}`
 
   return {
     to: '',

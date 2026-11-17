@@ -8,6 +8,7 @@ import GalleriesCurators from '@/components/home/GalleriesCurators'
 import InteriorsCollaborations from '@/components/home/InteriorsCollaborations'
 import CommonQuestions from '@/components/home/CommonQuestions'
 import InstagramFeature from '@/components/home/InstagramFeature'
+import FollowStudio from '@/components/FollowStudio'
 import { isLocale } from '@/i18n/locales'
 import { pageMetadata } from '@/i18n/seo'
 import { frHomeCopy } from '@/i18n/fr/home'
@@ -48,6 +49,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <InteriorsCollaborations {...copy('interiors')} />
       <CommonQuestions {...copy('commonQuestions')} />
       <InstagramFeature {...copy('instagram')} />
+      <FollowStudio locale={locale} placement="home-strip" />
     </>
   )
 }

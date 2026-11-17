@@ -100,6 +100,7 @@ export const frCollectorInquiryCopy: CollectorInquiryCopy = {
     'Ce site a envoyé votre demande à l’atelier. Si WhatsApp ne s’est pas ouvert, utilisez le bouton Ouvrir WhatsApp ci-dessous. Le message n’y est envoyé qu’après avoir appuyé sur Envoyer.',
   partialNote:
     'L’atelier a reçu votre demande par e-mail. L’accusé de réception n’a pas pu être envoyé à votre adresse. Vous pouvez réessayer. Si WhatsApp ne s’est pas ouvert, utilisez le bouton ci-dessous.',
+  followNote: 'En attendant, découvrez les œuvres récentes et les films d’atelier sur Instagram →',
   unrecordedNote:
     'L’atelier a été prévenu par e-mail. Un nouvel envoi peut écrire une seconde fois à l’atelier. Si WhatsApp ne s’est pas ouvert, utilisez le bouton ci-dessous.',
   desktopNote:
@@ -161,6 +162,7 @@ export const frArtworkDetailCopy: ArtworkDetailCopy = {
   noorEnquire: 'À demander à Noor Royal Gallery',
   priceNote: 'Le prix s’entend pour l’œuvre seule. Pour une expédition internationale, l’emballage, le transport, l’assurance et les droits de douane ou taxes d’importation sont à la charge de l’acheteur\u00a0; l’emballage professionnel et l’envoi par DHL peuvent être organisés sur devis. La livraison à Dubaï peut être convenue directement avec l’artiste.',
   includedNote: 'Cadre en bois et certificat d’authenticité signé inclus.',
+  instagramLink: 'Voir l’atelier en mouvement sur Instagram →',
   editionDefault: 'Œuvre originale unique, 1/1',
   locationStudioDubai: 'Disponible à l’atelier de l’artiste, Dubaï',
   locationStudioMegeve: 'Disponible à l’atelier de l’artiste, Megève',

@@ -17,6 +17,7 @@ import { collectorLocationLabel, collectorLocationOptions } from '@/lib/collecto
 import { collectorFingerprint, collectorSubmitPlan, executeCollectorSubmit } from '@/lib/collectorSubmit'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
+import { instagramUrl } from '@/lib/site'
 import { submitEnquiry } from '@/lib/submitEnquiry'
 import { fill } from '@/lib/template'
 import { STUDIO_WHATSAPP_DISPLAY, STUDIO_WHATSAPP_INTERNATIONAL, whatsappHref } from '@/lib/whatsapp'
@@ -59,6 +60,7 @@ export type CollectorInquiryCopy = {
   openedNote: string
   partialNote: string
   unrecordedNote: string
+  followNote: string
   desktopNote: string
   privacy: string
   lineArtwork: string
@@ -112,6 +114,7 @@ const englishCopy: CollectorInquiryCopy = {
     'This website has sent your enquiry to the studio. If WhatsApp did not open, use the Open WhatsApp button below. The message there is sent only after you press Send.',
   partialNote:
     'The studio received your enquiry by email. The acknowledgement to your email address could not be sent. You can try again. If WhatsApp did not open, use the button below.',
+  followNote: 'While you wait, see recent works and studio films on Instagram →',
   unrecordedNote:
     'The studio was notified by email. Sending this again may email the studio a second time. If WhatsApp did not open, use the button below.',
   desktopNote: 'On desktop, WhatsApp Web may ask you to log in. You can also copy the number or use email.',
@@ -597,6 +600,16 @@ const CollectorInquiry = ({
                   ? copy.unrecordedNote
                   : copy.sendNote}
           </p>
+          {(status === 'sent' || status === 'partial') && (
+            <a
+              href={instagramUrl('post-enquiry')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={textLinkClass}
+            >
+              {copy.followNote}
+            </a>
+          )}
           {status === 'error' && errorMessage && (
             <p role="alert" className={errorBoxClass}>
               {errorMessage}
