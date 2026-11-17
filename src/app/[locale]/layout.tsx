@@ -1,5 +1,6 @@
 import React from 'react'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -37,6 +38,11 @@ export default async function LocaleLayout({
     <html lang={locale} className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
         <JsonLd data={siteStructuredData(locale)} />
+        {/* Vercel Web Analytics: cookieless visit counts (pages, countries, referrers). */}
+        <Script id="vercel-analytics-init" strategy="afterInteractive">
+          {`window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };`}
+        </Script>
+        <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
         <Navigation locale={locale} {...(locale === 'fr' ? { copy: frNavigationCopy } : {})} />
         <main className="min-h-screen">
           {children}
