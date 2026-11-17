@@ -17,7 +17,7 @@ const englishCopy: FooterCopy = {
   navLabel: 'Footer',
 }
 
-const footerKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'price-inquiry', 'contact']
+const footerKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'price-inquiry', 'contact', 'faq']
 
 const Footer = ({ locale, copy = englishCopy }: { locale: Locale; copy?: FooterCopy }) => {
   return (

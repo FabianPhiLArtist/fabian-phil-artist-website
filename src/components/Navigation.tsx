@@ -60,7 +60,7 @@ function LocaleSwitch({ locale, copy }: { locale: Locale; copy: NavigationCopy }
   )
 }
 
-const navKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'contact']
+const navKeys: NavKey[] = ['gallery', 'about', 'exhibitions', 'collaborations', 'contact', 'faq']
 
 const Navigation = ({ locale, copy = englishCopy }: { locale: Locale; copy?: NavigationCopy }) => {
   const [isOpen, setIsOpen] = useState(false)
