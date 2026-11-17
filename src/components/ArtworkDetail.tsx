@@ -42,6 +42,7 @@ export type ArtworkDetailCopy = {
   details: string
   medium: string
   dimensions: string
+  year: string
   edition: string
   price: string
   availability: string
@@ -105,6 +106,7 @@ const englishCopy: ArtworkDetailCopy = {
   details: 'Artwork Details',
   medium: 'Medium',
   dimensions: 'Dimensions',
+  year: 'Year',
   edition: 'Edition',
   price: 'Price',
   availability: 'Availability',
@@ -369,7 +371,7 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
               className="lg:col-span-5"
             >
               <p className="text-[11px] tracking-[0.18em] uppercase text-gray-500 mb-3">
-                {series} · {artwork.year}
+                {series}
               </p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-light uppercase tracking-[0.03em] text-gray-900 leading-[1.1] break-words mb-8 md:mb-10">
                 {artwork.title}
@@ -384,6 +386,10 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                 <div className="flex justify-between gap-6 py-3.5">
                   <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.dimensions}</dt>
                   <dd className="text-sm text-gray-900 font-light text-right">{size}</dd>
+                </div>
+                <div className="flex justify-between gap-6 py-3.5">
+                  <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.year}</dt>
+                  <dd className="text-sm text-gray-900 font-light text-right">{artwork.year}</dd>
                 </div>
                 {edition ? (
                   <div className="flex justify-between gap-6 py-3.5">
@@ -535,7 +541,7 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
             />
             <div className="mt-4 text-center text-white">
               <h3 className="text-sm tracking-[0.16em] uppercase mb-1">{artwork.title}</h3>
-              <p className="text-[11px] tracking-[0.16em] uppercase text-gray-400">{series} · {artwork.year}</p>
+              <p className="text-[11px] tracking-[0.16em] uppercase text-gray-400">{series}</p>
               <p className="text-xs text-gray-500 mt-1 font-light">{medium}</p>
             </div>
           </div>

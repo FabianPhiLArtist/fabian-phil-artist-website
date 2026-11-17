@@ -152,6 +152,7 @@ export const frArtworkDetailCopy: ArtworkDetailCopy = {
   details: 'Détails de l’œuvre',
   medium: 'Technique',
   dimensions: 'Dimensions',
+  year: 'Année',
   edition: 'Édition',
   price: 'Prix',
   availability: 'Disponibilité',

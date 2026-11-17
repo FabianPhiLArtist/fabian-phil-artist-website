@@ -107,7 +107,7 @@ const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCar
               {artwork.title}
             </h3>
             <p className="mt-2 text-[10px] tracking-[0.18em] uppercase text-gray-500">
-              {text?.series ?? artwork.series} · {artwork.year}{artwork.video ? copy.inMotion : ''}
+              {text?.series ?? artwork.series}{artwork.video ? copy.inMotion : ''}
             </p>
             <p className="mt-1.5 text-[13px] text-gray-600 font-light">{text?.size ?? artwork.size}</p>
             <p className={`mt-1 text-[11px] tracking-[0.14em] uppercase ${artwork.available ? 'text-gray-500' : 'text-gray-900'}`}>
