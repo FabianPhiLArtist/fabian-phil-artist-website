@@ -10,21 +10,22 @@ import { frPriceInquiryCopy } from '@/i18n/fr/priceInquiry'
 const englishPriceInquiryCopy: PriceInquiryCopy = {
   heading: 'Price Inquiry',
   intro:
-    'All artworks are priced upon inquiry. Below are indicative price ranges by format size to help guide your interest and collection planning.',
-  follow: '',
+    'Prices are shown on each artwork page. Below are the price ranges by format, to guide your choice. Works shown at Noor Royal Gallery are priced by the gallery.',
+  follow: 'Fabian replies personally, within 24 hours.',
   contactCta: 'Contact for Pricing',
   galleryCta: 'Browse Gallery →',
   inquiry: englishPricingInquiryCopy,
-  columns: { format: 'Format', size: 'Size', aed: 'AED', eur: 'EUR' },
+  columns: { format: 'Format', size: 'Size', aed: 'AED', usd: 'USD (approx.)' },
   formats: [
-    { name: 'Small Format', size: '70x70cm', aed: 'AED 10,000 - 16,000', eur: '€2,500 - 4,000' },
-    { name: 'Triptych', size: '70x210cm', aed: 'AED 30,000 - 40,000', eur: '€8,000 - 10,000' },
-    { name: 'Medium Format', size: '90x120cm', aed: 'AED 28,000 - 50,000', eur: '€7,000 - 13,000' },
-    { name: 'Large Format', size: '110x110cm / 120x120cm', aed: 'AED 35,000 - 45,000', eur: '€9,000 - 11,000' },
+    { name: 'Small Format', size: '60x60cm / 70x70cm', aed: 'AED 10,000 - 16,000', usd: '≈ USD 2,700 - 4,400' },
+    { name: 'Landscape Format', size: '100x70cm', aed: 'AED 16,000 - 23,000', usd: '≈ USD 4,400 - 6,300' },
+    { name: 'Medium Format', size: '90x120cm / 120x90cm', aed: 'AED 30,000 - 60,000', usd: '≈ USD 8,200 - 16,300' },
+    { name: 'Large Format', size: '110x110cm / 120x120cm', aed: 'AED 46,000', usd: '≈ USD 12,500' },
+    { name: 'Triptych', size: '70x210cm', aed: 'AED 40,000 - 46,000', usd: '≈ USD 10,900 - 12,500' },
   ],
-  noticeHeading: 'Important Notice',
+  noticeHeading: 'Good to know',
   notice:
-    'All prices are indicative and subject to change. Final pricing depends on the specific artwork, its condition, provenance, and current market conditions. For accurate pricing and availability, please contact us directly.',
+    'Each original is unique (1/1) and comes with a wood frame and a signed certificate of authenticity. Prices are for the artwork only. For international shipping, packaging, transport, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request. Delivery within Dubai can be arranged directly with the artist. Final price depends on the specific work.',
 }
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {

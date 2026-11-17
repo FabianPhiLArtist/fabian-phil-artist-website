@@ -15,7 +15,7 @@ export async function generateMetadata({
     route: 'price-inquiry',
     title: 'Price Inquiry | Fabian PhiL Artwork Prices in Dubai',
     description:
-      'Enquire about available original artworks by Dubai-based French contemporary artist Fabian PhiL, with indicative price ranges by format. All artworks are priced upon inquiry.',
+      'Enquire about available original artworks by Dubai-based French contemporary artist Fabian PhiL, with price ranges by format. Fabian replies within 24 hours.',
   })
 }
 

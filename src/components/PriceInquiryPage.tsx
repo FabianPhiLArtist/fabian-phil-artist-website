@@ -10,7 +10,7 @@ export type PriceFormat = {
   name: string
   size: string
   aed: string
-  eur: string
+  usd: string
 }
 
 export type PriceInquiryCopy = {
@@ -24,7 +24,7 @@ export type PriceInquiryCopy = {
     format: string
     size: string
     aed: string
-    eur: string
+    usd: string
   }
   formats?: PriceFormat[]
   noticeHeading?: string
@@ -52,7 +52,7 @@ const PriceInquiryPage = ({ copy }: { copy: PriceInquiryCopy }) => {
               <span className="col-span-4">{copy.columns.format}</span>
               <span className="col-span-2">{copy.columns.size}</span>
               <span className="col-span-3">{copy.columns.aed}</span>
-              <span className="col-span-3">{copy.columns.eur}</span>
+              <span className="col-span-3">{copy.columns.usd}</span>
             </div>
             {formats.map((format) => (
               <div
@@ -64,7 +64,7 @@ const PriceInquiryPage = ({ copy }: { copy: PriceInquiryCopy }) => {
                 </h3>
                 <p className="col-span-2 md:col-span-2 text-sm text-gray-600 font-light">{format.size}</p>
                 <p className="md:col-span-3 text-base md:text-lg font-light text-gray-900">{format.aed}</p>
-                <p className="md:col-span-3 text-base md:text-lg font-light text-gray-500">{format.eur}</p>
+                <p className="md:col-span-3 text-base md:text-lg font-light text-gray-500">{format.usd}</p>
               </div>
             ))}
           </div>
