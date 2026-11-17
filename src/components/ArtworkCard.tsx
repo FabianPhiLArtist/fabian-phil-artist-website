@@ -7,10 +7,13 @@ import CollectorInquiry, { type CollectorInquiryCopy } from './CollectorInquiry'
 import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
 import { fill } from '@/lib/template'
+import { artworkPriceLabel } from '@/lib/price'
 
 export type ArtworkCardCopy = {
   inMotion: string
   priceOnRequest: string
+  priceFormat: string
+  noorEnquire: string
   sold: string
   viewDetails: string
   inquire: string
@@ -31,6 +34,8 @@ export type ArtworkCardText = {
 const englishCopy: ArtworkCardCopy = {
   inMotion: ' · In motion',
   priceOnRequest: 'Price upon Inquiry',
+  priceFormat: 'AED {amount}',
+  noorEnquire: 'Enquire at Noor Royal Gallery',
   sold: 'SOLD',
   viewDetails: 'View Details →',
   inquire: 'Inquire',
@@ -52,6 +57,8 @@ interface ArtworkCardProps {
     medium: string
     size: string
     price: string
+    priceAed?: number
+    atGallery?: 'noor-royal'
     description: string
     available: boolean
   }
@@ -104,7 +111,7 @@ const ArtworkCard = ({ artwork, viewMode, copy = englishCopy, text }: ArtworkCar
             </p>
             <p className="mt-1.5 text-[13px] text-gray-600 font-light">{text?.size ?? artwork.size}</p>
             <p className={`mt-1 text-[11px] tracking-[0.14em] uppercase ${artwork.available ? 'text-gray-500' : 'text-gray-900'}`}>
-              {artwork.available ? copy.priceOnRequest : copy.sold}
+              {artworkPriceLabel(artwork, locale, copy)}
             </p>
             {isList && (
               <p className="mt-1 text-[13px] text-gray-500 font-light">{text?.medium ?? artwork.medium}</p>

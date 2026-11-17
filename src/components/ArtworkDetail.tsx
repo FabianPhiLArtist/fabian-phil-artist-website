@@ -16,6 +16,7 @@ import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
 import { fallbackHrefLang, localizedHref } from '@/i18n/pathnames'
 import { fill, fillParts } from '@/lib/template'
+import { artworkPriceLabel } from '@/lib/price'
 import { STUDIO_MAILTO } from '@/lib/artworkEnquiry'
 import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 import { readBrowseContext, type BrowseContext } from '@/lib/browseContext'
@@ -45,6 +46,11 @@ export type ArtworkDetailCopy = {
   price: string
   availability: string
   priceOnRequest: string
+  priceFormat: string
+  noorEnquire: string
+  priceNote: string
+  includedNote: string
+  editionDefault: string
   soldPrice: string
   available: string
   sold: string
@@ -100,6 +106,11 @@ const englishCopy: ArtworkDetailCopy = {
   price: 'Price',
   availability: 'Availability',
   priceOnRequest: 'Price upon Inquiry',
+  priceFormat: 'AED {amount}',
+  noorEnquire: 'Enquire at Noor Royal Gallery',
+  priceNote: 'Price is for the artwork only. Packaging, shipping, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request.',
+  includedNote: 'Wood frame and signed certificate of authenticity included.',
+  editionDefault: 'Unique original, 1/1',
   soldPrice: 'SOLD',
   available: 'Available',
   sold: 'SOLD',
@@ -169,7 +180,7 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
   const series: string = text?.series ?? artwork?.series ?? ''
   const medium: string = text?.medium ?? artwork?.medium
   const size: string = text?.size ?? artwork?.size
-  const edition: string | undefined = text ? text.edition : artwork?.edition
+  const edition: string | undefined = (text ? text.edition : artwork?.edition) ?? copy.editionDefault
   const availabilityValue = artwork?.available
     ? text
       ? text.availability ?? copy.available
@@ -370,7 +381,7 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                 <div className="flex justify-between gap-6 py-3.5">
                   <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.price}</dt>
                   <dd className="text-sm text-gray-900 text-right">
-                    {artwork.available ? copy.priceOnRequest : copy.soldPrice}
+                    {artworkPriceLabel(artwork, locale, { ...copy, sold: copy.soldPrice })}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-6 py-3.5 border-b border-gray-200">
@@ -380,6 +391,12 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                   </dd>
                 </div>
               </dl>
+              {artwork.available && (
+                <div className="-mt-6 mb-10 space-y-1.5 text-xs text-gray-500 font-light leading-relaxed">
+                  <p>{copy.includedNote}</p>
+                  <p>{copy.priceNote}</p>
+                </div>
+              )}
 
               <h2 className="text-xs tracking-[0.24em] uppercase text-gray-900 mb-4">{copy.about}</h2>
               <p className="text-sm md:text-base text-gray-600 font-light leading-relaxed mb-10">
