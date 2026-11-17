@@ -34,7 +34,7 @@ export type ArtworkCardText = {
 const englishCopy: ArtworkCardCopy = {
   inMotion: ' · In motion',
   priceOnRequest: 'Price upon Inquiry',
-  priceFormat: 'AED {amount}',
+  priceFormat: 'AED {amount} · ≈ USD {usd}',
   noorEnquire: 'Enquire at Noor Royal Gallery',
   sold: 'SOLD',
   viewDetails: 'View Details →',

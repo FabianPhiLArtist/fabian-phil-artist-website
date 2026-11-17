@@ -123,7 +123,7 @@ export const frCollectorInquiryCopy: CollectorInquiryCopy = {
 export const frArtworkCardCopy: ArtworkCardCopy = {
   inMotion: ' · En mouvement',
   priceOnRequest: 'Prix sur demande',
-  priceFormat: '{amount} AED',
+  priceFormat: '{amount} AED · ≈ {usd} USD',
   noorEnquire: 'À demander à Noor Royal Gallery',
   sold: 'VENDU',
   viewDetails: 'Voir l’œuvre →',
@@ -157,7 +157,7 @@ export const frArtworkDetailCopy: ArtworkDetailCopy = {
   price: 'Prix',
   availability: 'Disponibilité',
   priceOnRequest: 'Prix sur demande',
-  priceFormat: '{amount} AED',
+  priceFormat: '{amount} AED · ≈ {usd} USD',
   noorEnquire: 'À demander à Noor Royal Gallery',
   priceNote: 'Le prix s’entend pour l’œuvre seule. Pour une expédition internationale, l’emballage, le transport, l’assurance et les droits de douane ou taxes d’importation sont à la charge de l’acheteur\u00a0; l’emballage professionnel et l’envoi par DHL peuvent être organisés sur devis. La livraison à Dubaï peut être convenue directement avec l’artiste.',
   includedNote: 'Cadre en bois et certificat d’authenticité signé inclus.',

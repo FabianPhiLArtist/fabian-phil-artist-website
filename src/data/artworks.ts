@@ -744,7 +744,7 @@ export const artworks: Artwork[] = [
     image: "/images/artworks/clint-eastwood-toon-knockout-cartoon-boxing-wanted-pop-art-fabian-phil.jpg",
     video: "/videos/artworks/clint-eastwood-toon-knockout-cartoon-boxing-wanted-pop-art-fabian-phil.mov",
     year: "2024",
-    medium: "Digital design printed on two acrylic sheets",
+    medium: "Paints, digital design printed on two acrylic sheets",
     size: "70x70cm",
     price: "€3,000",
     priceAed: 12000,
