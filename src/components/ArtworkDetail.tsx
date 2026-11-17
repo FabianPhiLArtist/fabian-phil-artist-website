@@ -114,7 +114,7 @@ const englishCopy: ArtworkDetailCopy = {
   availability: 'Availability',
   priceOnRequest: 'Price upon Inquiry',
   priceFormat: 'AED {amount} · ≈ USD {usd}',
-  noorEnquire: 'Enquire at Noor Royal Gallery',
+  noorEnquire: 'Price on request',
   priceNote: 'Price is for the artwork only. For international shipping, packaging, transport, insurance and customs or import duties are paid by the buyer; packing and DHL shipping can be arranged and quoted on request. Delivery within Dubai can be arranged directly with the artist.',
   includedNote: 'Wood frame and signed certificate of authenticity included.',
   instagramLink: 'See more of the studio in motion on Instagram →',

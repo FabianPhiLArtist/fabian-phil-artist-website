@@ -35,7 +35,7 @@ const englishCopy: ArtworkCardCopy = {
   inMotion: ' · In motion',
   priceOnRequest: 'Price upon Inquiry',
   priceFormat: 'AED {amount} · ≈ USD {usd}',
-  noorEnquire: 'Enquire at Noor Royal Gallery',
+  noorEnquire: 'Price on request',
   sold: 'SOLD',
   viewDetails: 'View Details →',
   inquire: 'Inquire',
