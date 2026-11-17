@@ -529,7 +529,7 @@ export const artworks: Artwork[] = [
     title: "You Call This Art…?",
     series: "Pop glasses Collection",
     image: "/images/artworks/you-call-this-art-model-pop-glasses-pop-art-fabian-phil.png",
-    video: "/videos/artworks/you-call-this-art-model-pop-glasses-pop-art-fabian-phil.mov",
+    video: "/videos/artworks/you-call-this-art-model-pop-glasses-pop-art-fabian-phil.mp4",
     year: "2024",
     medium: "Paints, print and collage on two acrylic sheets",
     size: "70x70cm",
