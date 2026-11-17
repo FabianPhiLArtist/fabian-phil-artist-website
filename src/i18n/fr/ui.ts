@@ -105,7 +105,7 @@ export const frCollectorInquiryCopy: CollectorInquiryCopy = {
   desktopNote:
     'Sur ordinateur, WhatsApp Web peut demander une connexion. Vous pouvez aussi copier le numéro ou écrire par e-mail.',
   privacy:
-    'Lorsque vous appuyez sur le bouton, ce site envoie votre demande par e-mail à l’atelier et vous adresse un accusé de réception à l’adresse indiquée. La demande n’est pas enregistrée dans une base de données. WhatsApp ne reçoit le message que si vous appuyez sur Envoyer dans WhatsApp. Le pays que vous choisissez est votre localisation et reste distinct de l’adresse de l’atelier à Dubaï.',
+    'Lorsque vous appuyez sur le bouton, ce site envoie votre demande par e-mail à l’atelier et vous adresse un accusé de réception à l’adresse indiquée. La demande est aussi consignée dans un registre privé tenu par l’atelier, afin que Fabian puisse vous répondre. WhatsApp ne reçoit le message que si vous appuyez sur Envoyer dans WhatsApp. Le pays que vous choisissez est votre localisation et reste distinct de l’adresse de l’atelier à Dubaï.',
   lineArtwork: enquiryMessageLines.fr.artwork,
   lineGeneral: enquiryMessageLines.fr.general,
   lineName: enquiryMessageLines.fr.name,

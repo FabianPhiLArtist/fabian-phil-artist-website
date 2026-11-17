@@ -116,7 +116,7 @@ const englishCopy: CollectorInquiryCopy = {
     'The studio was notified by email. Sending this again may email the studio a second time. If WhatsApp did not open, use the button below.',
   desktopNote: 'On desktop, WhatsApp Web may ask you to log in. You can also copy the number or use email.',
   privacy:
-    'When you press the button, this website emails your enquiry to the studio and sends an acknowledgement to the email address you entered. The enquiry is not stored in a database. WhatsApp receives the message only if you press Send in WhatsApp. The country you select is your location and stays separate from the studio address in Dubai.',
+    'When you press the button, this website emails your enquiry to the studio and sends an acknowledgement to the email address you entered. The enquiry is also saved in a private log kept by the studio, so that Fabian can follow up. WhatsApp receives the message only if you press Send in WhatsApp. The country you select is your location and stays separate from the studio address in Dubai.',
   lineArtwork: enquiryMessageLines.en.artwork,
   lineGeneral: enquiryMessageLines.en.general,
   lineName: enquiryMessageLines.en.name,

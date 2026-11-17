@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { studioNotificationRecipient } from '@/lib/artworkEnquiry'
 import { composeCollectorEnquiry, type CollectorDelivery } from '@/lib/collectorEnquiry'
+import { logEnquiry } from '@/lib/enquiryLog'
 import { composeEnquiry, EnquiryValidationError, renderEnquiryHtml, renderEnquiryText } from '@/lib/enquiryEmail'
 import {
   allowCollectorAcknowledgement,
@@ -144,6 +145,7 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
       const outcome = await withEnquiryLock(prepared.idempotencyKey, () =>
         sendCollectorDelivery(prepared, send, options.writeDelivery ?? writeEnquiryDelivery, from, to, now.getTime())
       )
+      await logEnquiry(request, data, now)
       return NextResponse.json({ ok: true, delivery: outcome })
     }
 
@@ -156,6 +158,7 @@ export async function handleEnquiry(request: Request, options: HandleOptions = {
       html: renderEnquiryHtml(enquiry),
       text: renderEnquiryText(enquiry),
     })
+    await logEnquiry(request, data, now)
   } catch (error) {
     if (error instanceof EnquiryValidationError) return fail(422, 'invalid', error.message, error.field)
     if (error instanceof EnquiryStoreError) {
