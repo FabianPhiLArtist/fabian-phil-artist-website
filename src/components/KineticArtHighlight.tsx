@@ -72,7 +72,7 @@ const KineticArtHighlight = () => {
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Unique Technique</h4>
                   <p className="text-gray-300">
-                    Acrylic paint and ink on two acrylic sheets create depth and dimension 
+                    Industrial paint and ink on two acrylic sheets create depth and dimension 
                     while allowing for kinetic movement.
                   </p>
                 </div>

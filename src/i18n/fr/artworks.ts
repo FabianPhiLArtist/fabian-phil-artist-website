@@ -15,7 +15,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Racing in Monaco est un portrait superposé de Charles Leclerc, pilote de Formule 1, mis en scène dans le langage Wanted de Fabian PhiL. L’identité du pilote, le portrait et un graphisme inspiré de l’esthétique Mugshot forment un tout plutôt que des éléments séparés, tandis que la construction en plexiglas superposé crée le mouvement à mesure que le spectateur change de position. Réalisée en 2024, l’œuvre associe le portrait de Charles Leclerc à la culture de la Formule 1 et au portrait pop, sur un ton volontairement ludique et rebelle.',
     inMotion:
       'Lorsque le spectateur se déplace, le portrait et le graphisme Wanted glissent vers de nouveaux alignements. Le visage reste reconnaissable, tandis que la construction en couches modifie la profondeur et l’attitude d’un point de vue à l’autre.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections F1 / Formule 1 · Mugshot',
     seriesBlock: 'Collection Mugshot',
@@ -67,7 +67,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Hi… What\'s your Number? est un portrait Pop Glasses superposé de Laetitia Casta, mannequin et actrice française, qui transforme l’image en conversation directe avec le spectateur. Les lunettes jaune fluo et un sourire assuré créent une énergie taquine, tandis que le titre donne le sentiment que Laetitia Casta a parlé la première. Réalisée en 2019, l’œuvre fait glisser lunettes, regard et lignes du visage d’une couche de plexiglas à l’autre lorsque le spectateur se déplace, prolongeant le jeu au-delà d’un point de vue unique.',
     inMotion:
       'Lorsque le spectateur se déplace, les lunettes jaunes, le regard et le sourire se réalignent subtilement. Le portrait semble s’adresser au spectateur différemment selon l’angle, prolongeant la question espiègle du titre.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Pop Glasses',
   },
@@ -116,7 +116,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       '100 USD Mick Jagger est un grand triptyque qui inscrit Mick Jagger, figure des Rolling Stones, dans la structure graphique du billet de 100 dollars américain. Le portrait de Mick Jagger et les motifs du billet occupent des plans de plexiglas distincts, reliant célébrité rock, notoriété, valeur et iconographie pop. Réalisée en 2022, l’œuvre sur plexiglas superposé se transforme à mesure que le spectateur passe d’un panneau à l’autre, loin d’un portrait de célébrité figé et conventionnel.',
     inMotion:
       'Lorsque le spectateur longe le triptyque, le portrait de Mick Jagger se décale par rapport au graphisme du billet. Les trois panneaux amplifient l’effet\u00a0: l’échelle, la profondeur et l’alignement changeant font partie intégrante de l’œuvre.',
-    medium: 'Triptyque. Acrylique sur deux plaques de plexiglas',
+    medium: 'Triptyque. Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a0210\u00a0cm',
     series: 'Collection 100 USD',
   },
@@ -132,7 +132,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'I have a Dream est un portrait pop art superposé de Sheikh Zayed bin Sultan Al Nahyan, père fondateur des Émirats arabes unis. Le titre évoque la vision et l’aspiration, tandis que des détails en miroir argenté font de la lumière et de l’espace environnant une partie de l’image. Réalisée en 2018, l’œuvre fait bouger le portrait peint et les reflets l’un par rapport à l’autre lorsque le spectateur se déplace, reliant mémoire, lieu et changement de perspective.',
     inMotion:
       'Lorsque le spectateur change de position, le portrait peint de Sheikh Zayed et les détails en miroir argenté se séparent puis se rejoignent. Les reflets changent avec la pièce\u00a0: la lumière devient partie intégrante du mouvement plutôt qu’un effet figé.',
-    medium: 'Acrylique et vinyle miroir argenté sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et vinyle miroir argenté sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
@@ -167,7 +167,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wow… I Look Good in Green est un portrait Pop Glasses d’Emma Stone, actrice, porté par un sourire conscient de lui-même et des lunettes vert fluo. Le titre transforme la coquetterie en humour, en assurance et en charme. Peinte en 2020 sur plexiglas superposé, l’œuvre fait glisser les montures et les traits du visage lorsque le spectateur se déplace, et l’expression d’Emma Stone change de nuance selon l’angle.',
     inMotion:
       'Les lunettes vertes restent le point d’ancrage, tandis que les yeux et les lignes du visage se déplacent autour d’elles. D’un point de vue à l’autre, l’assurance du sourire prend un caractère légèrement différent.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Pop Glasses',
   },
@@ -183,7 +183,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted Fashion Police Angel est un portrait Pop Glasses de Lucy Liu, actrice, encadré de lunettes rose fluorescent. Le regard calme et direct mêle mode, identité et grâce\u00a0: le titre espiègle en fait une gardienne de l’élégance. Peinte en 2026 sur plexiglas superposé, l’œuvre décale lunettes, yeux et lignes du visage lorsque le spectateur se déplace, au point que le regard de Lucy Liu semble suivre dans la pièce.',
     inMotion:
       'Lorsque le spectateur se déplace, les lunettes roses et les lignes du visage glissent sur des couches de plexiglas distinctes. Les yeux de Lucy Liu semblent suivre d’un angle à l’autre, et l’expression calme prend une présence discrètement attentive.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Pop Glasses',
   },
@@ -199,7 +199,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Loving Art est un portrait pop art de Kate Upton, mannequin, qui fait de l’amour de l’art un délit espiègle. Le titre lui donne un personnage, tandis que le langage Pop Glasses apporte la couleur et un regard qui ne se fige pas. Peinte en 2023 sur plexiglas superposé, l’œuvre fait glisser yeux, lunettes et lignes du visage lorsque le spectateur change de position. Portrait, humour et mouvement invitent à regarder une seconde fois.',
     inMotion:
       'Les lunettes, les yeux et le graphisme du titre se décalent lorsque le spectateur se déplace. La couleur tient le portrait, et l’alignement changeant rend le personnage plus animé.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
@@ -216,7 +216,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Le regard d’Amanda Seyfried devient le point de départ de Why…?. Le titre fait d’un visage familier une question ouverte\u00a0: curiosité, doute, défi ou vulnérabilité, selon la façon dont on lit l’expression. Les lunettes roses et les lignes superposées se déplacent avec le spectateur, et le portrait prend une présence changeante. Peinte en 2021 sur plexiglas superposé, l’œuvre laisse cette question volontairement sans réponse.',
     inMotion:
       'Lorsque le spectateur se déplace, les lignes verticales glissent sur le visage et le regard change subtilement. Le portrait ne se fixe jamais dans une seule expression, et l’incertitude du titre demeure.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a0120\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
@@ -232,7 +232,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       '100 USD Andy Warhol met en scène Andy Warhol dans un triptyque construit autour du graphisme du billet de 100 dollars. Fabian PhiL y confronte portrait, monnaie et culture pop dans une composition sur plexiglas qui évolue avec le déplacement du spectateur. Réalisée en 2017, l’œuvre mesure 70\u00a0×\u00a0210\u00a0cm. Le visage et les détails du billet se séparent puis se rejoignent le long des trois panneaux\u00a0: un dialogue de Fabian PhiL avec une figure majeure du Pop Art.',
     inMotion:
       'Selon l’angle, le portrait d’Andy Warhol et le graphisme du billet se séparent sur les couches de plexiglas du triptyque. L’image se fragmente puis se reconstitue lorsque le spectateur longe toute la largeur de l’œuvre.',
-    medium: 'Triptyque. Acrylique sur deux plaques de plexiglas',
+    medium: 'Triptyque. Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a0210\u00a0cm',
     series: 'Collection 100 USD',
   },
@@ -248,7 +248,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'The Last One! est un grand portrait de Keith Richards, guitariste des Rolling Stones. Le titre installe d’abord un sentiment de finalité et de tension, sans en fermer le sens. Peinte en 2017 sur plexiglas superposé, l’œuvre fait bouger les lignes du visage lorsque le spectateur change de position. Le visage reste reconnaissable, mais il ne se fige jamais tout à fait\u00a0: regard, cigarette et perspective relient l’image du musicien au langage de Fabian PhiL.',
     inMotion:
       'Les lignes du visage, peintes sur des plans de plexiglas distincts, trouvent de nouveaux alignements lorsque le spectateur se déplace. L’expression change avec la perspective et prolonge l’ambiguïté du titre.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a090\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
@@ -351,7 +351,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Racing Life reprend Steve McQueen dans le langage graphique du Mugshot. Le lettrage, le visage et les lignes verticales forment une seule image, tandis que le vinyle miroir et la lumière LED y font entrer reflets et éclairage. Réalisée en 2024, l’œuvre relie ce que Steve McQueen évoque de vitesse et d’indépendance au langage de Fabian PhiL\u00a0: le mouvement, le personnage, la lumière. Selon l’endroit où l’on se place, le portrait n’a plus tout à fait la même tenue.',
     inMotion:
       'Le déplacement change à la fois l’alignement et les reflets. Portrait, texte, matière miroir et lumière LED ne répondent pas de la même façon d’un pas à l’autre, et l’œuvre devient plus théâtrale qu’en vue frontale.',
-    medium: 'Acrylique et vinyle miroir argenté sur deux plaques de plexiglas, avec LED',
+    medium: 'Peinture industrielle et vinyle miroir argenté sur deux plaques de plexiglas, avec LED',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Mugshot',
   },
@@ -367,7 +367,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Fight Club cadre Brad Pitt dans l’esthétique du Mugshot. Le titre apporte tout de suite une référence au cinéma, et une tension qui dépasse le visage. Peint en 2024 à l’acrylique et à l’encre, le portrait fait glisser lignes et traits d’une plaque à l’autre. On reconnaît Brad Pitt\u00a0; le texte et le décalage en font un personnage sous pression.',
     inMotion:
       'D’un angle à l’autre, les lignes du visage et le graphisme Wanted sortent de l’alignement, puis se rejoignent. Ce glissement renforce le ton de confrontation.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Mugshot',
   },
@@ -383,7 +383,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted $$Reward$$ fait de Woody Allen le sujet d’une affiche de recherche, récompense comprise. Lunettes orange, toise et lettrage entrent dans la plaisanterie\u00a0: on lit le visage, on remarque la récompense, puis on y revient autrement. Peinte en 2023 sur deux plaques de plexiglas, l’œuvre décale légèrement le portrait avec la perspective, entre image connue et profondeur réelle.',
     inMotion:
       'En traversant l’œuvre, le portrait, le texte de la récompense et la structure graphique se décalent les uns par rapport aux autres. Le visage change à peine\u00a0; le personnage Wanted reste lisible.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Mugshot',
   },
@@ -401,7 +401,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Old Man in Peace est un portrait de 2020 où le calme du visage s’oppose au mouvement de l’image. Yeux fermés, cheveux et barbe sont construits en marques verticales\u00a0: peints sur deux plaques, ils se déplacent légèrement quand on change de place. L’effet reste discret. La profondeur accompagne une atmosphère d’âge, de sérénité et de réflexion, sans jamais figer le portrait.',
     inMotion:
       'Le visage demeure calme pendant que cheveux et traits bougent avec la perspective. Quand les plans se réalignent, la profondeur apparaît puis s’efface, sans troubler le ton plus silencieux de l’œuvre.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '120\u00a0×\u00a090\u00a0cm',
     series: 'Collection Moving Hair',
   },
@@ -419,7 +419,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'I am the Last Samurai est un grand portrait de 2024, construit autour de l’âge, du caractère et du mouvement des cheveux. Le regard reste franc, mais les traits verticaux ne se posent jamais exactement au même endroit. D’un côté à l’autre, cheveux, barbe et lignes du visage se réalignent et donnent au portrait une autre présence. Fabian PhiL y mène son langage cinétique vers une étude plus retenue.',
     inMotion:
       'En se déplaçant de côté, on voit les cheveux devenir la partie la plus active du portrait. Les lignes, peintes sur des plans séparés, traversent le visage et en changent la profondeur.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '110\u00a0×\u00a0110\u00a0cm',
     series: 'Collection Moving Hair',
   },
@@ -435,7 +435,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Oh Dear est un portrait de Twiggy, mannequin associée à la mode des années 1960. Le visage, tracé en rose vif, suspend un instant entre surprise et vulnérabilité, et le titre très court laisse l’émotion ouverte. Peinte en 2018 sur des plaques distinctes, l’œuvre fait se réaligner les lignes du visage dès que l’on bouge.',
     inMotion:
       'Les lignes glissent sur le visage avec le spectateur, et le regard semble changer. L’expression se réajuste, tandis que le rose vif reste le point d’appui.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
@@ -453,7 +453,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Ooh! tient dans une réaction immédiate\u00a0: yeux grands ouverts, bouche ouverte, cerise rose fluo sur un visage autrement en noir et blanc. Le titre n’explique presque rien, et l’on peut y lire surprise, curiosité, plaisir ou incrédulité. Réalisée en 2020, l’œuvre laisse les marques du visage bouger avec le spectateur. L’image et le mot, tous deux très courts, gardent l’interprétation ouverte.',
     inMotion:
       'En passant devant le portrait, les traits se déplacent légèrement. L’expression semble changer avec celui qui regarde, et l’exclamation du titre n’a plus exactement le même sens d’un angle à l’autre.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '90\u00a0×\u00a0120\u00a0cm',
     series: 'Collection Expressive Emotion',
   },
@@ -487,7 +487,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted Smoking Rock Star est un portrait Pop Glasses de 2024, plus sec et plus rebelle. Yeux charbonneux, cigarette et lunettes bleu profond mêlent glamour et mystère, et le titre fait du sujet un personnage plutôt qu’une effigie posée. Sur plexiglas superposé, montures et regard se décalent\u00a0: l’attitude elle-même semble instable.',
     inMotion:
       'Les lunettes bleu profond se déplacent devant les yeux charbonneux et les lignes du visage. Selon l’angle, le regard devient plus ou moins frontal.',
-    medium: 'Acrylique et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',
@@ -505,7 +505,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
     description:
       'That\'s the Way I Like it est un portrait Pop Glasses de 2019, d’une assurance nette. Le titre pose l’attitude avant que l’on ait fini de lire le visage. Lunettes jaune fluo, yeux et traits noirs occupent des plans séparés et se décalent avec la perspective. La couleur et la place du spectateur rendent le caractère actif, jamais tout à fait arrêté.',
     inMotion: '',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collection Pop Glasses',
   },
@@ -539,7 +539,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Stealing the Blues est un portrait de Beyoncé. Les lunettes bleu électrique tiennent un regard pensif, quelque part entre glamour, mystère, musique et retenue. Le titre Wanted apporte l’humour sans recouvrir l’expression. Réalisée en 2024, l’œuvre fait glisser montures, yeux et lignes\u00a0: le visage change à peine, et le bleu reste l’ancre.',
     inMotion:
       'En passant devant le portrait, les lunettes bleu électrique se décalent sur les yeux et le visage. L’alignement accuse le regard et laisse voir la profondeur entre les plaques.',
-    medium: 'Acrylique sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     series: 'Collections Pop Glasses · Wanted',
     seriesBlock: 'Collection Pop Glasses',

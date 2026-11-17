@@ -85,7 +85,7 @@ export const faqItems: FaqItem[] = [
     q: 'What materials does Fabian PhiL use?',
     a: [
       [
-        'Most works are painted in acrylic paint on two acrylic (plexiglass) sheets. Depending on the work, Fabian also uses ink, silver mirror vinyl, print, collage or digital design printed on the acrylic, and some special works include LED light. The medium of each work is listed on its artwork page.',
+        'Most works are painted in industrial paint on two acrylic (plexiglass) sheets. Depending on the work, Fabian also uses ink, silver mirror vinyl, print, collage or digital design printed on the acrylic, and some special works include LED light. The medium of each work is listed on its artwork page.',
       ],
     ],
   },

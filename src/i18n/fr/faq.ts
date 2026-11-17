@@ -129,7 +129,7 @@ export const frFaqItems: FaqItem[] = [
     q: 'Quels matériaux Fabian PhiL utilise-t-il\u202f?',
     a: [
       [
-        'La plupart des œuvres sont peintes à l’acrylique sur deux plaques d’acrylique (plexiglas). Selon l’œuvre, Fabian utilise aussi l’encre, le vinyle miroir argenté, l’impression, le collage ou une création numérique imprimée sur le plexiglas, et certaines œuvres spéciales intègrent un éclairage LED. La technique de chaque œuvre est indiquée sur sa page.',
+        'La plupart des œuvres sont réalisées à la peinture industrielle sur deux plaques d’acrylique (plexiglas). Selon l’œuvre, Fabian utilise aussi l’encre, le vinyle miroir argenté, l’impression, le collage ou une création numérique imprimée sur le plexiglas, et certaines œuvres spéciales intègrent un éclairage LED. La technique de chaque œuvre est indiquée sur sa page.',
       ],
     ],
   },
