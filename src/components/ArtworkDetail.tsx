@@ -17,7 +17,7 @@ import { useLocale } from '@/i18n/useLocale'
 import { fallbackHrefLang, localizedHref } from '@/i18n/pathnames'
 import { fill, fillParts } from '@/lib/template'
 import { artworkPriceLabel } from '@/lib/price'
-import { instagramUrl } from '@/lib/site'
+import { instagramClickPath } from '@/lib/site'
 import { STUDIO_MAILTO } from '@/lib/artworkEnquiry'
 import { primaryButtonClass, textLinkClass } from '@/lib/formStyles'
 import { readBrowseContext, type BrowseContext } from '@/lib/browseContext'
@@ -421,7 +421,7 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
               )}
               <p className="-mt-4 mb-10">
                 <a
-                  href={instagramUrl('painting-page')}
+                  href={instagramClickPath('painting-page')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={textLinkClass}

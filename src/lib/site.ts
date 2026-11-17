@@ -8,6 +8,9 @@ export const INSTAGRAM_URL = 'https://instagram.com/fabianphilartist'
 export const instagramUrl = (placement: string) =>
   `${INSTAGRAM_URL}?utm_source=website&utm_medium=${placement}&utm_campaign=follow`
 
+// On-site link that counts the click, then redirects to instagramUrl(placement).
+export const instagramClickPath = (placement: string) => `/go/instagram/${placement}`
+
 export const FACEBOOK_URL = 'https://facebook.com/fabianphilartist'
 
 export const absoluteUrl = (path: string) => new URL(encodeURI(path), SITE_URL).toString()

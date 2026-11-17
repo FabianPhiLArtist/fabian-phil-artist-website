@@ -17,7 +17,7 @@ import { collectorLocationLabel, collectorLocationOptions } from '@/lib/collecto
 import { collectorFingerprint, collectorSubmitPlan, executeCollectorSubmit } from '@/lib/collectorSubmit'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { errorBoxClass, fieldClass, labelClass, primaryButtonClass, textLinkClass } from '@/lib/formStyles'
-import { instagramUrl } from '@/lib/site'
+import { instagramClickPath } from '@/lib/site'
 import { submitEnquiry } from '@/lib/submitEnquiry'
 import { fill } from '@/lib/template'
 import { STUDIO_WHATSAPP_DISPLAY, STUDIO_WHATSAPP_INTERNATIONAL, whatsappHref } from '@/lib/whatsapp'
@@ -602,7 +602,7 @@ const CollectorInquiry = ({
           </p>
           {(status === 'sent' || status === 'partial') && (
             <a
-              href={instagramUrl('post-enquiry')}
+              href={instagramClickPath('post-enquiry')}
               target="_blank"
               rel="noopener noreferrer"
               className={textLinkClass}

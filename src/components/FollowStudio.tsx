@@ -1,5 +1,5 @@
 import React from 'react'
-import { instagramUrl } from '@/lib/site'
+import { instagramClickPath } from '@/lib/site'
 
 const copy = {
   en: {
@@ -28,7 +28,7 @@ export default function FollowStudio({ locale, placement }: { locale: string; pl
           <p className="text-base md:text-lg font-light text-gray-800 leading-relaxed">{t.text}</p>
         </div>
         <a
-          href={instagramUrl(placement)}
+          href={instagramClickPath(placement)}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={t.label}

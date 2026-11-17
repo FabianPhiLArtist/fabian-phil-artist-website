@@ -7,7 +7,7 @@ import { enquiryIdempotencyKey } from '@/lib/enquiryGuard'
 import { enquiryMessageLines } from '@/lib/enquiryWording'
 import { artworkOpenGraphImage } from '@/lib/artworkShareImage'
 import { STUDIO_WHATSAPP_DISPLAY } from '@/lib/whatsapp'
-import { instagramUrl } from '@/lib/site'
+import { instagramClickPath, SITE_URL } from '@/lib/site'
 
 const MONTHS = [
   'January',
@@ -197,8 +197,8 @@ function acknowledgementLetter(input: {
       : `Studio WhatsApp: ${STUDIO_WHATSAPP_DISPLAY}\nStudio email: ${STUDIO_EMAIL}`
   const follow =
     input.locale === 'fr'
-      ? `En attendant, découvrez les œuvres récentes et les films d\u2019atelier sur Instagram : ${instagramUrl('post-enquiry-email')}`
-      : `While you wait, see recent works and studio films on Instagram: ${instagramUrl('post-enquiry-email')}`
+      ? `En attendant, découvrez les œuvres récentes et les films d\u2019atelier sur Instagram : ${SITE_URL}${instagramClickPath('post-enquiry-email')}`
+      : `While you wait, see recent works and studio films on Instagram: ${SITE_URL}${instagramClickPath('post-enquiry-email')}`
 
   const intro =
     input.locale === 'fr'
