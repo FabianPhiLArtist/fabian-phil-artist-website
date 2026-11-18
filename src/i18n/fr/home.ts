@@ -13,12 +13,12 @@ import { frWhatsapp } from './ui'
 const hero: HeroCopy = {
   title: 'Le Pop Art en Mouvement.',
   intro:
-    'Fabian PhiL est un artiste pop contemporain français basé à Dubaï. Il crée des œuvres originales, figuratives et cinétiques, peintes sur plusieurs plaques de plexiglas superposées. Portraits et icônes de la culture populaire y mêlent couleur, regard et changement de perspective\u00a0: l’image se transforme à mesure que vous vous déplacez.',
+    'Artiste pop français basé à Dubaï. Portraits cinétiques originaux sur plexiglas superposé\u00a0: déplacez-vous, l’image change.',
   primaryCta: 'Voir les œuvres disponibles ',
   secondaryCta: 'Designers d’intérieur & Collaborations ',
-  imageLabel: 'Voir Wanted for Being Too Smart',
+  imageLabel: 'Voir I am the Last Samurai',
   imageAlt:
-    'Wanted for Being Too Smart, œuvre pop art cinétique de Fabian PhiL, présentée dans un intérieur contemporain',
+    'I am the Last Samurai, portrait cinétique de Fabian PhiL sur plexiglas superposé, accroché dans un intérieur contemporain',
 }
 
 const explore: ExploreArtworksCopy = {

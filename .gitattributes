@@ -4,3 +4,6 @@
 
 # Stored as a normal file so it can be uploaded from the GitHub web page (4.9 MB)
 public/videos/artworks/you-call-this-art-model-pop-glasses-pop-art-fabian-phil.mp4 -filter -diff -merge binary
+
+# Hero video: small (2.5 MB), stored as a normal file so it deploys without LFS
+public/videos/hero/last-samurai-interior-zoom.mp4 -filter -diff -merge binary

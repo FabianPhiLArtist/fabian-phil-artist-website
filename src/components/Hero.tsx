@@ -5,8 +5,8 @@ import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import { useLocale } from '@/i18n/useLocale'
 
-// Wanted for Being Too Smart; the hero photo is one of its gallery images.
-const HERO_ARTWORK_ID = 16
+// I am the Last Samurai (sold directly from the studio); the hero video zooms into it.
+const HERO_ARTWORK_ID = 8
 
 export type HeroCopy = {
   title: string
@@ -20,11 +20,11 @@ export type HeroCopy = {
 const englishCopy: HeroCopy = {
   title: 'Pop art that moves.',
   intro:
-    'Fabian PhiL is a French contemporary pop artist based in Dubai, creating original figurative and kinetic artworks on layered plexiglass. His portraits and cultural icons combine colour, gaze and changing perspective in POP ART THAT MOVES.',
+    'French pop artist based in Dubai. Original kinetic portraits on layered plexiglass: move, and the image changes.',
   primaryCta: 'View available art →',
   secondaryCta: 'Interiors & collaborations →',
-  imageLabel: 'View Wanted for Being Too Smart',
-  imageAlt: 'Wanted for Being Too Smart, kinetic pop artwork by Fabian PhiL, staged in a contemporary interior',
+  imageLabel: 'View I am the Last Samurai',
+  imageAlt: 'I am the Last Samurai, kinetic portrait by Fabian PhiL on layered plexiglass, hung in a contemporary interior',
 }
 
 const Hero = ({ copy = englishCopy }: { copy?: HeroCopy }) => {
@@ -66,15 +66,26 @@ const Hero = ({ copy = englishCopy }: { copy?: HeroCopy }) => {
             route="artwork"
             options={{ id: HERO_ARTWORK_ID }}
             aria-label={copy.imageLabel}
-            className="order-1 lg:order-1 relative block w-full aspect-[3/2] bg-gray-50 overflow-hidden"
+            className="order-1 lg:order-1 relative block w-full aspect-[4/3] bg-gray-50 overflow-hidden"
           >
             <Image
-              src="/images/artworks/angelina-jolie-pop-art-fabian-phil-interior.jpg"
+              src="/images/hero/last-samurai-interior-poster.jpg"
               alt={copy.imageAlt}
               fill
               className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
+            />
+            <video
+              className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+              src="/videos/hero/last-samurai-interior-zoom.mp4"
+              poster="/images/hero/last-samurai-interior-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
             />
           </LocaleLink>
         </div>
