@@ -107,7 +107,8 @@ export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
   const description = french ? french.description : artwork.description
   return {
     '@context': 'https://schema.org',
-    '@type': ['VisualArtwork', 'Product'],
+    // Only publicly priced artworks qualify for Product offer markup.
+    '@type': publicPrice !== undefined ? ['VisualArtwork', 'Product'] : 'VisualArtwork',
     '@id': `${url}#artwork`,
     name: artwork.title,
     url,
