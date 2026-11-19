@@ -1,3 +1,4 @@
+import { motionPilots } from '@/data/motionPilots'
 import { artworks, type Artwork } from '@/data/artworks'
 import eligiblePhotographs from '@/data/sitemap-photographs.json'
 import { collections } from '@/data/collections'
@@ -179,5 +180,15 @@ export function sitemapEntries(): SitemapEntry[] {
     })
   )
 
-  return [...staticEntries, ...frenchOnlyEntries, ...collectionEntries, ...artworkEntries]
+  const motionEntries = motionPilots.flatMap(p => {
+    const artwork = artworks.find(a => a.id === p.id)
+    if (!artwork?.video) return []
+    return entriesFor('motion', p.slug).map((entry, index) => ({ ...entry, videos: [{
+      thumbnail: absoluteUrl('poster' in p ? p.poster : artwork.image),
+      content: absoluteUrl('video' in p ? p.video : artwork.video!),
+      title: artwork.title + (index === 0 ? ' — artwork in motion' : ' — œuvre en mouvement'),
+      description: index === 0 ? p.en : p.fr,
+    }] }))
+  })
+  return [...staticEntries, ...frenchOnlyEntries, ...collectionEntries, ...artworkEntries, ...motionEntries]
 }
