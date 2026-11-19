@@ -80,19 +80,57 @@ export function siteStructuredData(locale: Locale = 'en') {
 export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
   const french = locale === 'fr' ? requireFrench(frenchArtwork(artwork.id)) : undefined
   const url = pageUrl(locale, 'artwork', { id: artwork.id })
+  const edition = (french ? french.edition : artwork.edition) ??
+    (french ? 'Original unique, 1/1' : 'Unique original, 1/1')
+  const size = french?.size ?? artwork.size
+  const publicPrice = artwork.available && !artwork.atGallery &&
+    artwork.location !== 'noor-royal' &&
+    typeof artwork.priceAed === 'number' && Number.isFinite(artwork.priceAed) && artwork.priceAed > 0
+    ? artwork.priceAed : undefined
+  const location = artwork.available ? artwork.location : undefined
+  const place = location === 'studio-dubai'
+    ? (french ? 'Atelier de l’artiste, Dubaï' : 'Artist’s Studio, Dubai')
+    : location === 'studio-megeve'
+      ? (french ? 'Atelier de l’artiste, Megève' : 'Artist’s Studio, Megève')
+      : location === 'noor-royal'
+        ? (french ? 'Galerie Noor Royal, Dubaï' : 'Noor Royal Gallery, Dubai')
+        : undefined
+  const description = french ? french.description : artwork.description
   return {
     '@context': 'https://schema.org',
-    '@type': 'VisualArtwork',
+    '@type': ['VisualArtwork', 'Product'],
     '@id': `${url}#artwork`,
     name: artwork.title,
     url,
-    image: absolute(artwork.image),
+    image: [...new Set([artwork.image, ...(artwork.images ?? [])])].map(absolute),
     creator: { '@id': ARTIST_ID },
     dateCreated: artwork.year,
     artMedium: french ? french.medium : artwork.medium,
-    description: french ? french.description : artwork.description,
+    artEdition: edition,
+    size,
+    description,
     isPartOf: { '@id': WEBSITE_ID },
-    ...(french ? { inLanguage: 'fr' } : {}),
+    inLanguage: locale,
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: french ? 'Disponibilité' : 'Availability',
+        value: artwork.available ? (french ? 'Disponible' : 'Available') : (french ? 'Vendu' : 'Sold'),
+      },
+      ...(place ? [{ '@type': 'PropertyValue', name: french ? 'Lieu' : 'Location', value: place }] : []),
+    ],
+    // Only explicitly displayed AED prices are offers. Never expose legacy EUR or gallery prices.
+    ...(publicPrice !== undefined ? {
+      offers: {
+        '@type': 'Offer',
+        url,
+        price: publicPrice,
+        priceCurrency: 'AED',
+        availability: 'https://schema.org/InStock',
+        seller: { '@id': ARTIST_ID },
+        ...(place ? { availableAtOrFrom: { '@type': 'Place', name: place } } : {}),
+      },
+    } : {}),
   }
 }
 
