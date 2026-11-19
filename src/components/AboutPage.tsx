@@ -208,6 +208,15 @@ const AboutPage = ({ copy = englishCopy }: { copy?: AboutPageCopy }) => {
         </div>
       </section>
 
+      <section className="py-16 md:py-24 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <h2 className={sectionLabel}>{locale === 'fr' ? 'La technique : le pop art cinétique sur plexiglas' : 'The technique: kinetic pop art on plexiglass'}</h2>
+          <p className={bodyText}>{locale === 'fr' ? 'Dans les portraits de Fabian PhiL, les images peintes sur des plaques transparentes superposées se combinent pour former un visage. En se déplaçant devant l’œuvre, le spectateur voit les traits verticaux se décaler les uns par rapport aux autres. Ce changement de perspective crée une impression de mouvement sans que le tableau lui-même ait besoin de bouger.' : 'In Fabian PhiL’s portraits, painted images on overlapping transparent sheets combine to form a face. As the viewer moves in front of the artwork, the vertical marks appear to shift relative to one another. This change in perspective creates a sense of motion without the painting itself needing to move.'}</p>
+          <p className={bodyText}>{locale === 'fr' ? 'Cette approche, née avec la Blue Lady en 2011, se prolonge dans les portraits monochromes, les lunettes fluorescentes et les compositions colorées. Les vidéos permettent de découvrir cet effet avant de voir les œuvres en personne.' : 'This approach, first developed with the Blue Lady in 2011, continues through monochrome portraits, fluorescent glasses and colourful compositions. Videos help reveal this effect before experiencing the artwork in person.'}</p>
+          <LocaleLink locale={locale} route="motion" options={{ id: 'last-samurai' }} className={textLinkClass}>{locale === 'fr' ? 'Voir une œuvre en mouvement →' : 'Watch an artwork in motion →'}</LocaleLink>
+        </div>
+      </section>
+
       {/* Explore */}
       <section className="bg-[#fafafa] py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
