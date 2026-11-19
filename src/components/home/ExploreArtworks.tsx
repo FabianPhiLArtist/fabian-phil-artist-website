@@ -26,7 +26,7 @@ const englishCopy: ExploreArtworksCopy = {
   viewAll: 'View all artworks →',
   categories: {
     'panda-zen': { name: 'Panda / Zen', alt: 'Wanted Panda Zen Artist' },
-    'signature-works': { name: 'Signature works', alt: 'I am the Last Samurai, kinetic portrait by Fabian PhiL' },
+    'signature-works': { name: 'Signature works', alt: 'Ooh!, kinetic pop art portrait with a pink cherry by Fabian PhiL' },
     'pop-glasses': { name: 'Pop glasses', alt: 'Wanted for Loving Art, Pop glasses portrait' },
     'toon-clash': { name: 'Toon Clash', alt: 'Wanted Million Dollar Toon Fight, Toon Clash artwork' },
     'f1-motorsport': { name: 'F1 / Motorsport', alt: 'Wanted Ayrton vs Toons Racing, F1 portrait' },
@@ -42,7 +42,7 @@ const categories: Category[] = [
   },
   {
     key: 'signature-works',
-    image: '/images/artworks/last-samurai-japanese-pop-art-fabian-phil.jpg',
+    image: '/images/artworks/ooh-top-model-cherry-mouth-pop-art-fabian-phil.jpg',
     collection: 'signature-works',
   },
   {
