@@ -77,6 +77,15 @@ export function siteStructuredData(locale: Locale = 'en') {
   }
 }
 
+// Publication years supplied by the artist, separate from artwork creation dates.
+const videoPublicationYears: Partial<Record<number, number>> = {
+  1: 2024, 2: 2024, 3: 2024, 4: 2025, 5: 2025, 6: 2024,
+  7: 2025, 8: 2024, 9: 2024, 10: 2025, 11: 2026, 12: 2024,
+  13: 2025, 14: 2025, 15: 2024, 18: 2024, 23: 2026, 24: 2025,
+  25: 2026, 26: 2026, 28: 2026, 29: 2026, 30: 2026, 31: 2026,
+  32: 2026, 33: 2026, 34: 2026, 35: 2026,
+}
+
 export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
   const french = locale === 'fr' ? requireFrench(frenchArtwork(artwork.id)) : undefined
   const url = pageUrl(locale, 'artwork', { id: artwork.id })
@@ -119,7 +128,23 @@ export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
       },
       ...(place ? [{ '@type': 'PropertyValue', name: french ? 'Lieu' : 'Location', value: place }] : []),
     ],
-    // Video markup is withheld until first publication dates and thumbnails are verified.
+    // June 1 is an artist-supplied approximate publication date, not an independently verified day.
+    ...((artwork.video && videoPublicationYears[artwork.id]) ? {
+      subjectOf: [artwork.video, ...(artwork.extraVideos ?? [])].map((src, index) => ({
+        '@type': 'VideoObject',
+        '@id': `${url}#video-${index + 1}`,
+        name: french
+          ? `${artwork.title} — œuvre en mouvement${index ? ' — vue complémentaire ' + index : ''}`
+          : `${artwork.title} — artwork in motion${index ? ' — additional view ' + index : ''}`,
+        description: french
+          ? `Vidéo de l’œuvre « ${artwork.title} » de Fabian PhiL.${index ? ' Vue complémentaire ' + index + '.' : ''}`
+          : `Video of the artwork ${artwork.title} by Fabian PhiL.${index ? ' Additional view ' + index + '.' : ''}`,
+        thumbnailUrl: absolute(artwork.image),
+        contentUrl: absolute(src),
+        uploadDate: `${videoPublicationYears[artwork.id]}-06-01`,
+        inLanguage: locale,
+      })),
+    } : {}),
     // Only explicitly displayed AED prices are offers. Never expose legacy EUR or gallery prices.
     ...(publicPrice !== undefined ? {
       offers: {
