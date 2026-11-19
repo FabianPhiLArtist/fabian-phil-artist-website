@@ -146,8 +146,22 @@ export function sitemapEntries(): SitemapEntry[] {
   const artworkEntries = artworks.flatMap((artwork) =>
     entriesFor('artwork', artwork.id).map((entry, index) => {
       const images = artworkSitemapImages(artwork, index === 0 ? 'en' : 'fr')
-      // Video entries are withheld until representative thumbnails and publication evidence are verified.
-      return { ...entry, ...(images.length ? { images } : {}) }
+      // Artist-approved corresponding painting photographs; publication dates are optional in video sitemaps.
+      const locale = index === 0 ? 'en' : 'fr'
+      const clips = [artwork.video, ...(artwork.extraVideos ?? [])].filter((src): src is string => Boolean(src))
+      const videos: SitemapVideo[] = isPublicPagePhotograph(artwork.image)
+        ? clips.map((src, clipIndex) => ({
+            thumbnail: absoluteUrl(artwork.image),
+            title: locale === 'fr'
+              ? `${artwork.title} — œuvre en mouvement${clipIndex ? ' — vue complémentaire ' + clipIndex : ''}`
+              : `${artwork.title} — artwork in motion${clipIndex ? ' — additional view ' + clipIndex : ''}`,
+            description: locale === 'fr'
+              ? `Vidéo de l’œuvre « ${artwork.title} » de Fabian PhiL.${clipIndex ? ' Vue complémentaire ' + clipIndex + '.' : ''}`
+              : `Video of the artwork ${artwork.title} by Fabian PhiL.${clipIndex ? ' Additional view ' + clipIndex + '.' : ''}`,
+            content: absoluteUrl(src),
+          }))
+        : []
+      return { ...entry, ...(images.length ? { images } : {}), ...(videos.length ? { videos } : {}) }
     })
   )
 
