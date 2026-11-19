@@ -146,16 +146,8 @@ export function sitemapEntries(): SitemapEntry[] {
   const artworkEntries = artworks.flatMap((artwork) =>
     entriesFor('artwork', artwork.id).map((entry, index) => {
       const images = artworkSitemapImages(artwork, index === 0 ? 'en' : 'fr')
-      const french = index === 1
-      // Primary clips show the corresponding artwork; use its public catalogue photograph as the representative thumbnail.
-      // Extra clips are excluded until distinct thumbnails are verified.
-      const videos: SitemapVideo[] = artwork.video && isPublicPagePhotograph(artwork.image) ? [{
-        thumbnail: absoluteUrl(artwork.image),
-        title: (french ? artwork.title + ' — œuvre en mouvement' : artwork.title + ' — artwork in motion'),
-        description: french ? 'Vidéo de l’œuvre « ' + artwork.title + ' » de Fabian PhiL.' : 'Video of the artwork ' + artwork.title + ' by Fabian PhiL.',
-        content: absoluteUrl(artwork.video),
-      }] : []
-      return { ...entry, ...(images.length ? { images } : {}), ...(videos.length ? { videos } : {}) }
+      // Video entries are withheld until representative thumbnails and publication evidence are verified.
+      return { ...entry, ...(images.length ? { images } : {}) }
     })
   )
 
