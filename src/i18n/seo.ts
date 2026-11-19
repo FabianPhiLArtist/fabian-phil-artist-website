@@ -51,6 +51,8 @@ export function frenchSeo(route: AppRoute, id?: string | number): FrSeo | undefi
   if (route === 'collection') {
     return id === undefined ? undefined : frenchCollection(id)?.seo
   }
+  // Motion pages supply localized metadata in their own route.
+  if (route === 'motion') return undefined
   return frenchStaticPage(route)?.seo
 }
 

@@ -1,3 +1,4 @@
+import { isMotionPilot } from '@/data/motionPilots'
 import type { AppRoute } from './pathnames'
 import { artworkIdForSlug } from '@/data/artworkSlugs'
 import { publishedFrenchArtworks, publishedFrenchCollections, publishedFrenchPages } from './fr/published'
@@ -13,6 +14,7 @@ export function artworkIdFrom(id: string | number): number | undefined {
 }
 
 export function isFrenchPageLive(route: AppRoute, id?: string | number): boolean {
+  if (route === 'motion') return id !== undefined && isMotionPilot(String(id))
   if (route === 'artwork') {
     const artworkId = id === undefined ? undefined : artworkIdFrom(id)
     return artworkId !== undefined && publishedFrenchArtworks.includes(artworkId)

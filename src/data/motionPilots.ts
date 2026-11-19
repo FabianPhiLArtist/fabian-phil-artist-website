@@ -1,0 +1,9 @@
+// Pilot watch pages: one primary video per artwork, with artist-approved estimated dates.
+export const motionPilots = [
+  { id: 8, slug: 'last-samurai', date: '2026-06-01', en: 'Watch the layered Samurai portrait change as the viewpoint moves through a contemporary interior.', fr: 'Observez le portrait du samouraï sur plexiglas superposé se transformer lorsque le point de vue change dans un intérieur contemporain.', video: '/videos/hero/last-samurai-interior-zoom.mp4', poster: '/images/hero/last-samurai-interior-poster.jpg' },
+  { id: 10, slug: 'why-amanda-seyfried', date: '2025-06-01', en: 'Watch the lines of the layered Amanda Seyfried portrait shift with perspective, changing the expression of her gaze.', fr: 'Observez les lignes du portrait d’Amanda Seyfried se décaler avec la perspective et modifier l’expression de son regard.' },
+  { id: 28, slug: 'panda-zen-artist', date: '2026-06-01', en: 'See the changing perspective of this layered panda portrait, combining a zen theme with pop art.', fr: 'Découvrez les changements de perspective de ce portrait de panda sur plusieurs couches, entre univers zen et pop art.' },
+  { id: 31, slug: 'charles-leclerc-monza', date: '2026-06-01', en: 'Watch the layered Formula 1 portrait of Charles Leclerc shift against its colourful cartoon background.', fr: 'Observez le portrait de Charles Leclerc en Formule 1 se décaler sur son fond coloré de personnages de cartoon.' },
+  { id: 32, slug: 'ayrton-vs-toons-racing', date: '2026-06-01', en: 'See how the layered Ayrton Senna racing portrait changes as the viewing angle moves.', fr: 'Découvrez comment le portrait de course d’Ayrton Senna sur plexiglas superposé change selon l’angle de vue.' },
+] as const
+export function isMotionPilot(slug: string) { return motionPilots.some(p => p.slug === slug) }

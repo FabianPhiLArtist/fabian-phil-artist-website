@@ -14,10 +14,11 @@ export type AppRoute =
   | 'contact'
   | 'artwork'
   | 'collection'
+  | 'motion'
 
-export type StaticRoute = Exclude<AppRoute, 'artwork' | 'collection'>
+export type StaticRoute = Exclude<AppRoute, 'artwork' | 'collection' | 'motion'>
 
-const routesWithId: AppRoute[] = ['artwork', 'collection']
+const routesWithId: AppRoute[] = ['artwork', 'collection', 'motion']
 
 const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> = {
   en: {
@@ -31,6 +32,7 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     contact: 'contact',
     artwork: 'artwork',
     collection: 'collections',
+    motion: 'motion',
   },
   // Artwork slugs are the English canonical slugs unless localizedArtworkSlugs gives French
   // its own. Collection slugs below can differ by locale; only these route segments are translated.
@@ -45,6 +47,7 @@ const publicSegments: Record<Locale, Record<Exclude<AppRoute, 'home'>, string>> 
     contact: 'contact',
     artwork: 'oeuvre',
     collection: 'collections',
+    motion: 'motion',
   },
 }
 
