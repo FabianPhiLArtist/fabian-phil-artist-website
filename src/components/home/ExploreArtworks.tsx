@@ -26,8 +26,8 @@ const englishCopy: ExploreArtworksCopy = {
   viewAll: 'View all artworks →',
   categories: {
     'panda-zen': { name: 'Panda / Zen', alt: 'Wanted Panda Zen Artist' },
-    'signature-works': { name: 'Signature works', alt: 'Ooh!, kinetic pop art portrait with a pink cherry by Fabian PhiL' },
-    'pop-glasses': { name: 'Pop glasses', alt: 'Wanted for Loving Art, Pop glasses portrait' },
+    'signature-works': { name: 'Signature works', alt: 'Why…?, kinetic pop art portrait of Amanda Seyfried with pink glasses by Fabian PhiL' },
+    'pop-glasses': { name: 'Pop glasses', alt: 'Wanted Smoking Rock Star, kinetic pop art portrait with deep blue glasses by Fabian PhiL' },
     'toon-clash': { name: 'Toon Clash', alt: 'Wanted Million Dollar Toon Fight, Toon Clash artwork' },
     'f1-motorsport': { name: 'F1 / Motorsport', alt: 'Wanted Ayrton vs Toons Racing, F1 portrait' },
     'triptych-mugshots': { name: 'Triptych & Mugshots', alt: '100 USD Andy Warhol, centre panel of the triptych' },
@@ -42,12 +42,12 @@ const categories: Category[] = [
   },
   {
     key: 'signature-works',
-    image: '/images/artworks/ooh-top-model-cherry-mouth-pop-art-fabian-phil.jpg',
+    image: '/images/artworks/amanda-seyfried-hollywood-actress-fluo-glasses-pop-art-fabian-phil.jpg',
     collection: 'signature-works',
   },
   {
     key: 'pop-glasses',
-    image: '/images/artworks/kate-upton-hollywood-pop-glasses-wanted-pop-art-fabian-phil.jpg',
+    image: '/images/artworks/smoking-rock-star-cigarette-pop-glasses-wanted-pop-art-fabian-phil.jpg',
     collection: 'pop-glasses',
   },
   {
