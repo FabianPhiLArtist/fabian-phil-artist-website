@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import { motionPilots } from '@/data/motionPilots'
+import { artworks } from '@/data/artworks'
 import React from 'react'
 import type { Metadata } from 'next'
 import JsonLd from '@/components/JsonLd'
@@ -59,6 +62,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Hero {...copy('hero')} />
       <ExploreArtworks {...copy('explore')} />
       <ArtThatMoves {...copy('artThatMoves')} />
+      <section className="max-w-7xl mx-auto px-5 py-8">
+        <h2 className="text-xs uppercase tracking-[0.24em] mb-4">{fr ? 'Vidéos des œuvres' : 'Watch the artworks in motion'}</h2>
+        <ul className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+          {motionPilots.map(p => <li key={p.slug}><Link className="underline underline-offset-4" href={`/${locale}/motion/${p.slug}`}>{artworks.find(a => a.id === p.id)?.title}</Link></li>)}
+        </ul>
+      </section>
       <ArtistCredibility {...copy('credibility')} />
       <GalleriesCurators {...copy('galleries')} />
       <InteriorsCollaborations {...copy('interiors')} />
