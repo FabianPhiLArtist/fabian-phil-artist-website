@@ -102,7 +102,7 @@ export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
     '@id': `${url}#artwork`,
     name: artwork.title,
     url,
-    image: [...new Set([artwork.image, ...(artwork.images ?? [])])].map(absolute),
+    image: Array.from(new Set([artwork.image, ...(artwork.images ?? [])])).map(absolute),
     creator: { '@id': ARTIST_ID },
     dateCreated: artwork.year,
     artMedium: french ? french.medium : artwork.medium,
