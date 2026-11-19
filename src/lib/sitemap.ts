@@ -140,7 +140,21 @@ function frenchOnlyEntry(route: AppRoute): SitemapEntry[] {
 }
 
 export function sitemapEntries(): SitemapEntry[] {
-  const staticEntries = englishStaticRoutes.flatMap((route) => entriesFor(route))
+  const staticEntries = englishStaticRoutes.flatMap((route) => {
+    const entries = entriesFor(route)
+    if (route !== 'home') return entries
+    return entries.map((entry, index) => ({
+      ...entry,
+      videos: [{
+        thumbnail: absoluteUrl('/images/hero/last-samurai-interior-poster.jpg'),
+        content: absoluteUrl('/videos/hero/last-samurai-interior-zoom.mp4'),
+        title: index === 0 ? 'I am the Last Samurai — artwork in motion' : 'I am the Last Samurai — œuvre en mouvement',
+        description: index === 0
+          ? 'Video of Fabian PhiL’s artwork in a contemporary interior, highlighting its kinetic effect.'
+          : 'Vidéo de l’œuvre de Fabian PhiL dans un intérieur contemporain, illustrant son effet cinétique.',
+      }],
+    }))
+  })
   const frenchOnlyEntries = frenchWithoutEnglishSitemap.flatMap((route) => frenchOnlyEntry(route))
   const collectionEntries = collections.flatMap((collection) => entriesFor('collection', collection.slug))
   const artworkEntries = artworks.flatMap((artwork) =>
