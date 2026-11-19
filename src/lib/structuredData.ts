@@ -77,22 +77,86 @@ export function siteStructuredData(locale: Locale = 'en') {
   }
 }
 
+// Publication years supplied by the artist, separate from artwork creation dates.
+const videoPublicationYears: Partial<Record<number, number>> = {
+  1: 2024, 2: 2024, 3: 2024, 4: 2025, 5: 2025, 6: 2024,
+  7: 2025, 8: 2024, 9: 2024, 10: 2025, 11: 2026, 12: 2024,
+  13: 2025, 14: 2025, 15: 2024, 18: 2024, 23: 2026, 24: 2025,
+  25: 2026, 26: 2026, 28: 2026, 29: 2026, 30: 2026, 31: 2026,
+  32: 2026, 33: 2026, 34: 2026, 35: 2026,
+}
+
 export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
   const french = locale === 'fr' ? requireFrench(frenchArtwork(artwork.id)) : undefined
   const url = pageUrl(locale, 'artwork', { id: artwork.id })
+  const edition = (french ? french.edition : artwork.edition) ??
+    (french ? 'Original unique, 1/1' : 'Unique original, 1/1')
+  const size = french?.size ?? artwork.size
+  const publicPrice = artwork.available && !artwork.atGallery &&
+    artwork.location !== 'noor-royal' &&
+    typeof artwork.priceAed === 'number' && Number.isFinite(artwork.priceAed) && artwork.priceAed > 0
+    ? artwork.priceAed : undefined
+  const location = artwork.available ? artwork.location : undefined
+  const place = location === 'studio-dubai'
+    ? (french ? 'Atelier de l’artiste, Dubaï' : 'Artist’s Studio, Dubai')
+    : location === 'studio-megeve'
+      ? (french ? 'Atelier de l’artiste, Megève' : 'Artist’s Studio, Megève')
+      : location === 'noor-royal'
+        ? (french ? 'Galerie Noor Royal, Dubaï' : 'Noor Royal Gallery, Dubai')
+        : undefined
+  const description = french ? french.description : artwork.description
   return {
     '@context': 'https://schema.org',
-    '@type': 'VisualArtwork',
+    '@type': ['VisualArtwork', 'Product'],
     '@id': `${url}#artwork`,
     name: artwork.title,
     url,
-    image: absolute(artwork.image),
+    image: Array.from(new Set([artwork.image, ...(artwork.images ?? [])])).map(absolute),
     creator: { '@id': ARTIST_ID },
     dateCreated: artwork.year,
     artMedium: french ? french.medium : artwork.medium,
-    description: french ? french.description : artwork.description,
+    artEdition: edition,
+    size,
+    description,
     isPartOf: { '@id': WEBSITE_ID },
-    ...(french ? { inLanguage: 'fr' } : {}),
+    inLanguage: locale,
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: french ? 'Disponibilité' : 'Availability',
+        value: artwork.available ? (french ? 'Disponible' : 'Available') : (french ? 'Vendu' : 'Sold'),
+      },
+      ...(place ? [{ '@type': 'PropertyValue', name: french ? 'Lieu' : 'Location', value: place }] : []),
+    ],
+    // June 1 is an artist-supplied approximate publication date, not an independently verified day.
+    ...((artwork.video && videoPublicationYears[artwork.id]) ? {
+      subjectOf: [artwork.video, ...(artwork.extraVideos ?? [])].map((src, index) => ({
+        '@type': 'VideoObject',
+        '@id': `${url}#video-${index + 1}`,
+        name: french
+          ? `${artwork.title} — œuvre en mouvement${index ? ' — vue complémentaire ' + index : ''}`
+          : `${artwork.title} — artwork in motion${index ? ' — additional view ' + index : ''}`,
+        description: french
+          ? `Vidéo de l’œuvre « ${artwork.title} » de Fabian PhiL.${index ? ' Vue complémentaire ' + index + '.' : ''}`
+          : `Video of the artwork ${artwork.title} by Fabian PhiL.${index ? ' Additional view ' + index + '.' : ''}`,
+        thumbnailUrl: absolute(artwork.image),
+        contentUrl: absolute(src),
+        uploadDate: `${videoPublicationYears[artwork.id]}-06-01`,
+        inLanguage: locale,
+      })),
+    } : {}),
+    // Only explicitly displayed AED prices are offers. Never expose legacy EUR or gallery prices.
+    ...(publicPrice !== undefined ? {
+      offers: {
+        '@type': 'Offer',
+        url,
+        price: publicPrice,
+        priceCurrency: 'AED',
+        availability: 'https://schema.org/InStock',
+        seller: { '@id': ARTIST_ID },
+        ...(place ? { availableAtOrFrom: { '@type': 'Place', name: place } } : {}),
+      },
+    } : {}),
   }
 }
 

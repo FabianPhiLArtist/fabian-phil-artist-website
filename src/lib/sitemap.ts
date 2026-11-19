@@ -12,7 +12,8 @@ import type { Locale } from '@/i18n/locales'
 
 export type SitemapImage = { loc: string; title: string; caption: string }
 export type SitemapAlternate = { hreflang: string; href: string }
-export type SitemapEntry = { url: string; images?: SitemapImage[]; alternates?: SitemapAlternate[] }
+export type SitemapVideo = { thumbnail: string; title: string; description: string; content: string }
+export type SitemapEntry = { url: string; images?: SitemapImage[]; alternates?: SitemapAlternate[]; videos?: SitemapVideo[] }
 
 // Same wording as the additional-view alt on the English artwork page.
 const englishAdditionalViewAlt = '{title} by Fabian PhiL, additional view {n}'
@@ -139,13 +140,42 @@ function frenchOnlyEntry(route: AppRoute): SitemapEntry[] {
 }
 
 export function sitemapEntries(): SitemapEntry[] {
-  const staticEntries = englishStaticRoutes.flatMap((route) => entriesFor(route))
+  const staticEntries = englishStaticRoutes.flatMap((route) => {
+    const entries = entriesFor(route)
+    if (route !== 'home') return entries
+    return entries.map((entry, index) => ({
+      ...entry,
+      videos: [{
+        thumbnail: absoluteUrl('/images/hero/last-samurai-interior-poster.jpg'),
+        content: absoluteUrl('/videos/hero/last-samurai-interior-zoom.mp4'),
+        title: index === 0 ? 'I am the Last Samurai — artwork in motion' : 'I am the Last Samurai — œuvre en mouvement',
+        description: index === 0
+          ? 'Video of Fabian PhiL’s artwork in a contemporary interior, highlighting its kinetic effect.'
+          : 'Vidéo de l’œuvre de Fabian PhiL dans un intérieur contemporain, illustrant son effet cinétique.',
+      }],
+    }))
+  })
   const frenchOnlyEntries = frenchWithoutEnglishSitemap.flatMap((route) => frenchOnlyEntry(route))
   const collectionEntries = collections.flatMap((collection) => entriesFor('collection', collection.slug))
   const artworkEntries = artworks.flatMap((artwork) =>
     entriesFor('artwork', artwork.id).map((entry, index) => {
       const images = artworkSitemapImages(artwork, index === 0 ? 'en' : 'fr')
-      return images.length > 0 ? { ...entry, images } : entry
+      // Artist-approved corresponding painting photographs; publication dates are optional in video sitemaps.
+      const locale = index === 0 ? 'en' : 'fr'
+      const clips = [artwork.video, ...(artwork.extraVideos ?? [])].filter((src): src is string => Boolean(src))
+      const videos: SitemapVideo[] = isPublicPagePhotograph(artwork.image)
+        ? clips.map((src, clipIndex) => ({
+            thumbnail: absoluteUrl(artwork.image),
+            title: locale === 'fr'
+              ? `${artwork.title} — œuvre en mouvement${clipIndex ? ' — vue complémentaire ' + clipIndex : ''}`
+              : `${artwork.title} — artwork in motion${clipIndex ? ' — additional view ' + clipIndex : ''}`,
+            description: locale === 'fr'
+              ? `Vidéo de l’œuvre « ${artwork.title} » de Fabian PhiL.${clipIndex ? ' Vue complémentaire ' + clipIndex + '.' : ''}`
+              : `Video of the artwork ${artwork.title} by Fabian PhiL.${clipIndex ? ' Additional view ' + clipIndex + '.' : ''}`,
+            content: absoluteUrl(src),
+          }))
+        : []
+      return { ...entry, ...(images.length ? { images } : {}), ...(videos.length ? { videos } : {}) }
     })
   )
 

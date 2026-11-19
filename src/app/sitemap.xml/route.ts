@@ -10,7 +10,7 @@ const escapeXml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;')
 
-function urlElement({ url, images, alternates }: SitemapEntry) {
+function urlElement({ url, images, alternates, videos }: SitemapEntry) {
   const imageElement = (images ?? [])
     .map(
       (image) => `
@@ -21,6 +21,13 @@ function urlElement({ url, images, alternates }: SitemapEntry) {
 </image:image>`
     )
     .join('')
+  const videoElements = (videos ?? []).map((video) => `
+<video:video>
+<video:thumbnail_loc>${escapeXml(video.thumbnail)}</video:thumbnail_loc>
+<video:title>${escapeXml(video.title)}</video:title>
+<video:description>${escapeXml(video.description)}</video:description>
+<video:content_loc>${escapeXml(video.content)}</video:content_loc>
+</video:video>`).join('')
   const alternateElements = (alternates ?? [])
     .map(
       ({ hreflang, href }) => `
@@ -28,7 +35,7 @@ function urlElement({ url, images, alternates }: SitemapEntry) {
     )
     .join('')
   return `<url>
-<loc>${escapeXml(url)}</loc>${alternateElements}${imageElement}
+<loc>${escapeXml(url)}</loc>${alternateElements}${imageElement}${videoElements}
 </url>`
 }
 
@@ -39,7 +46,7 @@ export function GET() {
     ? ' xmlns:xhtml="http://www.w3.org/1999/xhtml"'
     : ''
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"${xhtmlNamespace}>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"${xhtmlNamespace}>
 ${entries.map(urlElement).join('\n')}
 </urlset>
 `

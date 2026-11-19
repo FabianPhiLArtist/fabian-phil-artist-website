@@ -1,5 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import JsonLd from '@/components/JsonLd'
+import { absoluteUrl } from '@/lib/site'
 import Hero from '@/components/Hero'
 import ArtThatMoves from '@/components/home/ArtThatMoves'
 import ExploreArtworks from '@/components/home/ExploreArtworks'
@@ -41,6 +43,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   return (
     <>
+      <JsonLd data={{
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: 'I am the Last Samurai — ' + (fr ? 'œuvre en mouvement' : 'artwork in motion'),
+        description: fr
+          ? 'Vidéo de l’œuvre de Fabian PhiL dans un intérieur contemporain, illustrant son effet cinétique.'
+          : 'Video of Fabian PhiL’s artwork in a contemporary interior, highlighting its kinetic effect.',
+        thumbnailUrl: absoluteUrl('/images/hero/last-samurai-interior-poster.jpg'),
+        contentUrl: absoluteUrl('/videos/hero/last-samurai-interior-zoom.mp4'),
+        // Artist-supplied approximate publication date.
+        uploadDate: '2026-06-01',
+        inLanguage: fr ? 'fr' : 'en',
+      }} />
       <Hero {...copy('hero')} />
       <ExploreArtworks {...copy('explore')} />
       <ArtThatMoves {...copy('artThatMoves')} />
