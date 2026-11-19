@@ -26,8 +26,8 @@ const explore: ExploreArtworksCopy = {
   viewAll: 'Voir toutes les œuvres ',
   categories: {
     'panda-zen': { name: 'Panda / Zen', alt: 'Wanted Panda Zen Artist, œuvre Panda / Zen de Fabian PhiL' },
-    'signature-works': { name: 'Œuvres Signature', alt: 'Ooh!, portrait pop art cinétique à la cerise rose de Fabian PhiL' },
-    'pop-glasses': { name: 'Lunette Pop Art', alt: 'Wanted for Loving Art, portrait pop art aux lunettes fluo' },
+    'signature-works': { name: 'Œuvres Signature', alt: 'Why…?, portrait pop art cinétique d’Amanda Seyfried aux lunettes roses de Fabian PhiL' },
+    'pop-glasses': { name: 'Lunette Pop Art', alt: 'Wanted Smoking Rock Star, portrait pop art cinétique aux lunettes bleu foncé de Fabian PhiL' },
     'toon-clash': { name: 'Portraits & Cartoons', alt: 'Wanted Million Dollar Toon Fight, portrait entouré de personnages de cartoon' },
     'f1-motorsport': { name: 'F1 / Formule 1', alt: 'Wanted Ayrton vs Toons Racing, portrait F1' },
     'triptych-mugshots': { name: 'Triptyques et Mugshots', alt: '100 USD Andy Warhol, panneau central du triptyque' },
