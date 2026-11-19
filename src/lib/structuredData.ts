@@ -119,6 +119,17 @@ export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
       },
       ...(place ? [{ '@type': 'PropertyValue', name: french ? 'Lieu' : 'Location', value: place }] : []),
     ],
+    ...(artwork.video ? {
+      subjectOf: {
+        '@type': 'VideoObject',
+        '@id': `${url}#video`,
+        name: french ? artwork.title + ' — œuvre en mouvement' : artwork.title + ' — artwork in motion',
+        description: french ? 'Vidéo de l’œuvre « ' + artwork.title + ' » de Fabian PhiL.' : 'Video of the artwork ' + artwork.title + ' by Fabian PhiL.',
+        thumbnailUrl: absolute(artwork.image),
+        contentUrl: absolute(artwork.video),
+        inLanguage: locale,
+      },
+    } : {}),
     // Only explicitly displayed AED prices are offers. Never expose legacy EUR or gallery prices.
     ...(publicPrice !== undefined ? {
       offers: {
