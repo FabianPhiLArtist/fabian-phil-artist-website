@@ -12,7 +12,8 @@ import type { Locale } from '@/i18n/locales'
 
 export type SitemapImage = { loc: string; title: string; caption: string }
 export type SitemapAlternate = { hreflang: string; href: string }
-export type SitemapEntry = { url: string; images?: SitemapImage[]; alternates?: SitemapAlternate[] }
+export type SitemapVideo = { thumbnail: string; title: string; description: string; content: string }
+export type SitemapEntry = { url: string; images?: SitemapImage[]; alternates?: SitemapAlternate[]; videos?: SitemapVideo[] }
 
 // Same wording as the additional-view alt on the English artwork page.
 const englishAdditionalViewAlt = '{title} by Fabian PhiL, additional view {n}'
@@ -145,7 +146,16 @@ export function sitemapEntries(): SitemapEntry[] {
   const artworkEntries = artworks.flatMap((artwork) =>
     entriesFor('artwork', artwork.id).map((entry, index) => {
       const images = artworkSitemapImages(artwork, index === 0 ? 'en' : 'fr')
-      return images.length > 0 ? { ...entry, images } : entry
+      const french = index === 1
+      // Primary clips show the corresponding artwork; use its public catalogue photograph as the representative thumbnail.
+      // Extra clips are excluded until distinct thumbnails are verified.
+      const videos: SitemapVideo[] = artwork.video && isPublicPagePhotograph(artwork.image) ? [{
+        thumbnail: absoluteUrl(artwork.image),
+        title: (french ? artwork.title + ' — œuvre en mouvement' : artwork.title + ' — artwork in motion'),
+        description: french ? 'Vidéo de l’œuvre « ' + artwork.title + ' » de Fabian PhiL.' : 'Video of the artwork ' + artwork.title + ' by Fabian PhiL.',
+        content: absoluteUrl(artwork.video),
+      }] : []
+      return { ...entry, ...(images.length ? { images } : {}), ...(videos.length ? { videos } : {}) }
     })
   )
 
