@@ -13,11 +13,11 @@ export default async function ArtworkDetailPage({
   if (!french) {
     return <ArtworkDetail />
   }
-  const { imageAlt, description, inMotion, medium, size, series, seriesBlock, edition, availability } = french
+  const { imageAlt, description, inMotion, medium, size, series, seriesBlock, edition, availability, location } = french
   return (
     <ArtworkDetail
       copy={frArtworkDetailCopy}
-      text={{ imageAlt, description, inMotion, medium, size, series, seriesBlock, edition, availability }}
+      text={{ imageAlt, description, inMotion, medium, size, series, seriesBlock, edition, availability, location }}
     />
   )
 }

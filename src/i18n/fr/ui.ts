@@ -157,6 +157,7 @@ export const frArtworkDetailCopy: ArtworkDetailCopy = {
   edition: 'Édition',
   price: 'Prix',
   availability: 'Disponibilité',
+  location: 'Lieu',
   priceOnRequest: 'Prix sur demande',
   priceFormat: '{amount} AED · ≈ {usd} USD',
   noorEnquire: 'Prix sur demande',

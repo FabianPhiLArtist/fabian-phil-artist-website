@@ -47,6 +47,7 @@ export type ArtworkDetailCopy = {
   edition: string
   price: string
   availability: string
+  location: string
   priceOnRequest: string
   priceFormat: string
   noorEnquire: string
@@ -83,6 +84,7 @@ export type ArtworkDetailText = {
   size: string
   edition?: string
   availability?: string
+  location?: string
   series: string
   // Heading of the series block (whose link filters the gallery by artwork.series); defaults to series.
   seriesBlock?: string
@@ -112,6 +114,7 @@ const englishCopy: ArtworkDetailCopy = {
   edition: 'Edition',
   price: 'Price',
   availability: 'Availability',
+  location: 'Location',
   priceOnRequest: 'Price upon Inquiry',
   priceFormat: 'AED {amount} · ≈ USD {usd}',
   noorEnquire: 'Price on request',
@@ -204,6 +207,11 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
       ? text.availability ?? copy.available
       : artwork?.availabilityDetail ?? copy.available
     : copy.sold
+  // The holding place of an available work. French pages use their own text and never the English place.
+  // Sold works stay without a current place. This is not the country the collector selects.
+  const locationValue: string | undefined = artwork?.available
+    ? (text ? text.location : artwork?.location) || undefined
+    : undefined
   const description: string = text?.description ?? artwork?.description
   const mainImageAlt = text?.imageAlt ?? artwork?.imageAlt ?? `${artwork?.title}, layered plexiglass artwork by Fabian PhiL`
   const photoAlt = (src: string, index: number) =>
@@ -406,12 +414,18 @@ export default function ArtworkDetail({ copy = englishCopy, text }: { copy?: Art
                     {artworkPriceLabel(artwork, locale, { ...copy, sold: copy.soldPrice })}
                   </dd>
                 </div>
-                <div className="flex justify-between gap-6 py-3.5 border-b border-gray-200">
+                <div className={`flex justify-between gap-6 py-3.5${locationValue ? '' : ' border-b border-gray-200'}`}>
                   <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.availability}</dt>
                   <dd className="text-sm text-gray-900 font-light text-right">
                     {availabilityValue}
                   </dd>
                 </div>
+                {locationValue ? (
+                  <div className="flex justify-between gap-6 py-3.5 border-b border-gray-200">
+                    <dt className="text-[11px] tracking-[0.16em] uppercase text-gray-500 pt-0.5">{copy.location}</dt>
+                    <dd className="text-sm text-gray-900 font-light text-right">{locationValue}</dd>
+                  </div>
+                ) : null}
               </dl>
               {artwork.available && (
                 <div className="-mt-6 mb-10 space-y-1.5 text-xs text-gray-500 font-light leading-relaxed">
