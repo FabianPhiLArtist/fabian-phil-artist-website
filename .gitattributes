@@ -7,3 +7,7 @@ public/videos/artworks/you-call-this-art-model-pop-glasses-pop-art-fabian-phil.m
 
 # Hero video: small (2.5 MB), stored as a normal file so it deploys without LFS
 public/videos/hero/last-samurai-interior-zoom.mp4 -filter -diff -merge binary
+
+# Hrithik Roshan page videos (4 MB and 2 MB), normal files so they deploy without LFS
+public/videos/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil.mp4 -filter -diff -merge binary
+public/videos/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil-zoom.mp4 -filter -diff -merge binary

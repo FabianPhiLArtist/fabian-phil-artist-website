@@ -38,6 +38,7 @@ export const artworkSlugs: Record<number, string> = {
   33: 'claudia-schiffer-fashion-pop-art', // Runaway Mood
   34: 'lucy-liu-angel-pop-art', // Wanted Fashion Police Angel
   35: 'wanted-panda-hong-kong-city-pop-art-fabian-phil', // Wanted Panda Hong Kong Pop
+  36: 'hrithik-roshan-mugshot-pop-art', // Wanted for Looking Too Good
 }
 
 // French (or other) public slugs that differ from the English canonical slug. Keyed by artwork id.

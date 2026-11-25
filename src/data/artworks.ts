@@ -28,7 +28,7 @@ export interface Artwork {
 }
 
 export const artworks: Artwork[] = [
-  // Mugshot Collection (4 artworks)
+  // Mugshot Collection (5 artworks)
   {
     id: 1,
     title: "Wanted for Racing Life",
@@ -117,6 +117,37 @@ export const artworks: Artwork[] = [
     category: 'mugshot',
   },
 
+  {
+    id: 36,
+    title: "Wanted for Looking Too Good",
+    series: "Mugshot Collection",
+    image: "/images/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil.jpg",
+    images: [
+      "/images/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil.jpg",
+      "/images/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil-side-left.jpg",
+      "/images/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil-side-right.jpg",
+      "/images/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil-interior.jpg",
+      "/images/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil-gallery-view.jpg"
+    ],
+    video: "/videos/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil.mp4",
+    extraVideos: ["/videos/artworks/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil-zoom.mp4"],
+    shareImage: "/images/share/hrithik-roshan-mugshot-wanted-pop-art-fabian-phil.jpg",
+    year: "2026",
+    medium: "Industrial paint and ink on two acrylic sheets",
+    size: "70x70cm",
+    price: "Price upon inquiry",
+    priceAed: 14000,
+    location: "studio-dubai",
+    edition: "Unique original, 1/1",
+    availabilityDetail: "Available from the Artist’s Studio, Dubai",
+    description: "Wanted for Looking Too Good is a black-and-white pop art portrait inspired by Indian cinema star Hrithik Roshan, reimagined through the playful language of a police mugshot. Bold typography and fragmented vertical lines capture his distinctive expression and cinematic charisma. Painted across two layers of plexiglass, the portrait shifts subtly as the viewer moves, bringing depth and movement to the image. An original, one-of-a-kind artwork (1/1), measuring 70 × 70 cm.",
+    inMotion: "As the viewer moves, the fragmented vertical lines of the face shift across the two plexiglass layers while the Wanted typography stays readable. His expression changes subtly from one position to the next.",
+    seoTitle: "Hrithik Roshan Pop Art | Wanted for Looking Too Good",
+    metaDescription: "Discover Wanted for Looking Too Good, Fabian PhiL’s 2026 original pop art portrait of Hrithik Roshan: a mugshot-style work on two layers of plexiglass that shifts as you move.",
+    imageAlt: "Hrithik Roshan portrait in Wanted for Looking Too Good, black-and-white mugshot pop art on layered plexiglass by Fabian PhiL",
+    available: true,
+    category: 'mugshot',
+  },
   // 100 USD Bill Collection (2 artworks)
   {
     id: 5,
@@ -827,7 +858,7 @@ export const galleryGroups = [
 ]
 
 export const series = [
-  { name: 'Mugshot Collection', count: 4, category: 'mugshot' },
+  { name: 'Mugshot Collection', count: 5, category: 'mugshot' },
   { name: 'F1 Collection', count: 3, category: 'f1' },
   { name: '100 USD Bill Collection', count: 2, category: '100-usd' },
   { name: 'Moving Hair Collection', count: 2, category: 'moving-hair' },

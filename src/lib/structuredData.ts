@@ -83,7 +83,7 @@ const videoPublicationYears: Partial<Record<number, number>> = {
   7: 2025, 8: 2024, 9: 2024, 10: 2025, 11: 2026, 12: 2024,
   13: 2025, 14: 2025, 15: 2024, 18: 2024, 23: 2026, 24: 2025,
   25: 2026, 26: 2026, 28: 2026, 29: 2026, 30: 2026, 31: 2026,
-  32: 2026, 33: 2026, 34: 2026, 35: 2026,
+  32: 2026, 33: 2026, 34: 2026, 35: 2026, 36: 2026,
 }
 
 export function artworkStructuredData(artwork: Artwork, locale: Locale = 'en') {
