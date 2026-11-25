@@ -44,8 +44,8 @@ if (missingPanda.length > 0) {
 if (eligible.some((src) => src.startsWith('/images/share/') || !publicPhoto.test(src))) {
   throw new Error('Share JPEG or non-photograph entered the sitemap photograph list')
 }
-if (eligible.length !== 60) {
-  throw new Error(`Expected 60 eligible artwork photographs, found ${eligible.length}:\n${eligible.join('\n')}`)
+if (eligible.length !== 65) {
+  throw new Error(`Expected 65 eligible artwork photographs, found ${eligible.length}:\n${eligible.join('\n')}`)
 }
 
 writeFileSync(outputFile, `${JSON.stringify(eligible, null, 2)}\n`)
