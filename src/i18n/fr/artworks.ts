@@ -331,7 +331,7 @@ export const frArtworks: Partial<Record<number, FrArtworkContent>> = {
       'Wanted for Looking Too Good est un portrait pop art en noir et blanc inspiré de Hrithik Roshan, star du cinéma indien, revisité avec humour à travers les codes du portrait judiciaire. Une typographie audacieuse et des lignes verticales fragmentées soulignent son regard et son charisme. Peinte sur deux plaques de plexiglas superposées, l’image se transforme subtilement lorsque le spectateur se déplace, créant profondeur et mouvement. Œuvre originale et unique (1/1), format 70 × 70 cm.',
     inMotion:
       'Lorsque le spectateur se déplace, les lignes verticales fragmentées du visage glissent d’une plaque de plexiglas à l’autre, tandis que le graphisme Wanted reste lisible. L’expression change subtilement d’une position à l’autre.',
-    medium: 'Peinture industrielle et encre sur deux plaques de plexiglas',
+    medium: 'Peinture industrielle sur deux plaques de plexiglas',
     size: '70\u00a0×\u00a070\u00a0cm',
     edition: 'Original unique, 1/1',
     availability: 'Disponible à l’atelier de l’artiste, Dubaï',
