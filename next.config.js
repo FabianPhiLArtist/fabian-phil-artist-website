@@ -17,6 +17,10 @@ const retiredPageRedirects = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The gallery is rendered per request so a filtered URL can arrive already filtered.
+  // Next.js then streams generateMetadata and closes </head> before canonical and hreflang.
+  // Match every user agent so those tags are written into the initial <head> instead.
+  htmlLimitedBots: /.*/,
   async redirects() {
     return [...retiredPageRedirects, ...mediaRedirects, ...exhibitionMediaRedirects]
   },
