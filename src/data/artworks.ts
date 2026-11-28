@@ -13,7 +13,6 @@ export interface Artwork {
   size: string
   price: string
   priceAed?: number
-  priceUsdApprox?: number
   atGallery?: 'noor-royal'
   location?: 'studio-dubai' | 'studio-megeve' | 'noor-royal'
   description: string
@@ -41,7 +40,6 @@ export const artworks: Artwork[] = [
     size: "70x70cm",
     price: "€3,000",
     priceAed: 16000,
-    priceUsdApprox: 4300,
     location: "studio-dubai",
     description: "Wanted for Racing Life is a layered pop art portrait of Steve McQueen, using the graphic language of the mugshot to amplify his screen presence and rebellious image. Mirrored material and LED light introduce another dimension: reflections, illumination and plexiglass layers change with the room and the viewer. Created in 2024, the work connects Steve McQueen’s association with speed and independence to Fabian PhiL’s own language of movement, character and light.",
     inMotion: "Movement changes both alignment and reflection. Portrait, text, mirrored material and LED light respond differently as the viewer shifts position, making the work feel more theatrical in person than in a frontal image.",
