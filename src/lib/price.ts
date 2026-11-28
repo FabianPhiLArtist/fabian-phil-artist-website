@@ -1,7 +1,7 @@
 import { fill } from '@/lib/template'
 import type { Locale } from '@/i18n/locales'
 
-type PricedArtwork = { available: boolean; priceAed?: number; priceUsdApprox?: number; atGallery?: 'noor-royal' }
+type PricedArtwork = { available: boolean; priceAed?: number; atGallery?: 'noor-royal' }
 
 type PriceCopy = {
   priceOnRequest: string
@@ -20,7 +20,7 @@ export function artworkPriceLabel(artwork: PricedArtwork, locale: Locale, copy: 
   if (artwork.atGallery) return copy.noorEnquire
   if (typeof artwork.priceAed === 'number') {
     const numbers = new Intl.NumberFormat(locale === 'fr' ? 'fr-FR' : 'en-US')
-    const usd = artwork.priceUsdApprox ?? Math.round(artwork.priceAed / AED_PER_USD / 100) * 100
+    const usd = Math.round(artwork.priceAed / AED_PER_USD / 100) * 100
     return fill(copy.priceFormat, { amount: numbers.format(artwork.priceAed), usd: numbers.format(usd) })
   }
   return copy.priceOnRequest
